@@ -1,0 +1,22 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.py~
+
+
+*.tmp
+*.txt~
+*.ini~
+*.DS_Store
+
+
+._*
+
+# ignore pyinstaller files and folders for now
+*.spec
+build/
+dist/
+
+#doc folder
+doc/
