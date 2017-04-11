@@ -61,7 +61,7 @@ class mainFrame ( wx.Frame ):
 		
 		self.m_menubar1 = wx.MenuBar( 0 )
 		self.m_menu1 = wx.Menu()
-		self.m_menuItemAddArduino = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"Manage Arduino Boards", wx.EmptyString, wx.ITEM_NORMAL )
+		self.m_menuItemAddArduino = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"Add Arduino...", wx.EmptyString, wx.ITEM_NORMAL )
 		self.m_menu1.AppendItem( self.m_menuItemAddArduino )
 		
 		self.menuItemQuit = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"Exit", wx.EmptyString, wx.ITEM_NORMAL )
@@ -101,7 +101,7 @@ class mainFrame ( wx.Frame ):
 class DialogManageArduinos ( wx.Dialog ):
 	
 	def __init__( self, parent ):
-		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.DefaultSize, style = wx.DEFAULT_DIALOG_STYLE|wx.RESIZE_BORDER|wx.STAY_ON_TOP )
+		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"Add Arduino", pos = wx.DefaultPosition, size = wx.DefaultSize, style = wx.DEFAULT_DIALOG_STYLE|wx.RESIZE_BORDER|wx.STAY_ON_TOP )
 		
 		self.SetSizeHintsSz( wx.Size( 600,300 ), wx.DefaultSize )
 		
@@ -111,8 +111,8 @@ class DialogManageArduinos ( wx.Dialog ):
 		bSizer8.Add( self.arduinoListCtrl, 1, wx.ALL|wx.EXPAND|wx.ALIGN_CENTER_HORIZONTAL, 5 )
 		
 		m_sdbSizer1 = wx.StdDialogButtonSizer()
-		self.m_sdbSizer1Apply = wx.Button( self, wx.ID_APPLY )
-		m_sdbSizer1.AddButton( self.m_sdbSizer1Apply )
+		self.m_sdbSizer1OK = wx.Button( self, wx.ID_OK )
+		m_sdbSizer1.AddButton( self.m_sdbSizer1OK )
 		self.m_sdbSizer1Cancel = wx.Button( self, wx.ID_CANCEL )
 		m_sdbSizer1.AddButton( self.m_sdbSizer1Cancel )
 		m_sdbSizer1.Realize();
@@ -127,7 +127,7 @@ class DialogManageArduinos ( wx.Dialog ):
 		self.Centre( wx.BOTH )
 		
 		# Connect Events
-		self.m_sdbSizer1Apply.Bind( wx.EVT_BUTTON, self.onApplyClicked )
+		self.m_sdbSizer1OK.Bind( wx.EVT_BUTTON, self.onApplyClicked )
 	
 	def __del__( self ):
 		pass

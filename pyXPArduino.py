@@ -23,6 +23,8 @@ class XPArduinoFrame(gui.mainFrame):
 		self.arduinoIcon = wx.Icon("Resources/ardIcon.png", wx.BITMAP_TYPE_PNG)
 		self.inputIcon = wx.Icon("Resources/inputIcon.png", wx.BITMAP_TYPE_PNG)
 		self.outputIcon = wx.Icon("Resources/outputIcon.png", wx.BITMAP_TYPE_PNG)
+		self.switchIcon = wx.Icon("Resources/switchIcon.png", wx.BITMAP_TYPE_PNG)
+		self.potIcon = wx.Icon("Resources/potIcon.png", wx.BITMAP_TYPE_PNG)
 		
 	def refreshArduinoTree(self):
 		self.Arduino_dataViewTreeCtrl.DeleteAllItems()
@@ -33,7 +35,9 @@ class XPArduinoFrame(gui.mainFrame):
 			# insert Inputs	tree elems																					
 			self.arduinoDict[arduino]['ardTreeInputsElem'] = self.Arduino_dataViewTreeCtrl.AppendContainer(self.arduinoDict[arduino]['ardTreeElem'], 'Inputs')
 			self.arduinoDict[arduino]['ardTreeSwitchesElem'] = self.Arduino_dataViewTreeCtrl.AppendContainer(self.arduinoDict[arduino]['ardTreeInputsElem'], 'Switches')
+			self.Arduino_dataViewTreeCtrl.SetItemIcon(self.arduinoDict[arduino]['ardTreeSwitchesElem'], self.switchIcon)
 			self.arduinoDict[arduino]['ardTreePotsElem'] = self.Arduino_dataViewTreeCtrl.AppendContainer(self.arduinoDict[arduino]['ardTreeInputsElem'], 'Potentiometers')
+			self.Arduino_dataViewTreeCtrl.SetItemIcon(self.arduinoDict[arduino]['ardTreePotsElem'], self.potIcon)
 			self.arduinoDict[arduino]['ardTreeRotEncsElem'] = self.Arduino_dataViewTreeCtrl.AppendContainer(self.arduinoDict[arduino]['ardTreeInputsElem'], 'Rotary Encoders')
 			
 			# insert Outputs tree elems
