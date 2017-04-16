@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+
+<arduinoConfig>
+	<arduino name="Arduino 1" port="COM1" serial_nr="0123456789876543211" manufacturer="Arduino-LLC">
+		<inputs description="Inputs">
+			<switches description="Switches">
+			</switches>
+			<potentiometers description="Potentiometers">
+			</potentiometers>
+			<rot_encoders description="Rotary Encoders">
+			</rot_encoders>
+		</inputs>
+		<outputs description="Outputs">
+			<leds description="LEDs">
+			</leds>
+			<pwms description="PWMs">
+			</pwms>
+		</outputs>	
+	</arduino>
+	<arduino name="Arduino 2" port="COM2" serial_nr="0123456789876543212" manufacturer="Arduino-LLC">
+		<inputs description="Inputs">
+			<switches description="Switches">
+			</switches>
+			<potentiometers description="Potentiometers">
+			</potentiometers>
+			<rot_encoders description="Rotary Encoders">
+			</rot_encoders>
+		</inputs>
+		<outputs description="Outputs">
+			<leds description="LEDs">
+			</leds>
+			<pwms description="PWMs">
+			</pwms>
+		</outputs>	
+	</arduino>
+	<arduino name="Arduino 3" port="COM3" serial_nr="0123456789876543213" manufacturer="Arduino-LLC">
+		<inputs description="Inputs">
+			<switches description="Switches">
+			</switches>
+			<potentiometers description="Potentiometers">
+			</potentiometers>
+			<rot_encoders description="Rotary Encoders">
+			</rot_encoders>
+		</inputs>
+		<outputs description="Outputs">
+			<leds description="LEDs">
+			</leds>
+			<pwms description="PWMs">
+			</pwms>
+		</outputs>	
+	</arduino>
+</arduinoConfig>
