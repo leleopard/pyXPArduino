@@ -47,13 +47,20 @@ class ExampleApp(QMainWindow, mainwindow.Ui_MainWindow):
 		
 		if tag in lib.arduinoXMLconfig.INPUT_OUTPUT_TAGS:
 			menu = QMenu()
-			addCompAction = QtWidgets.QAction(tag_descr)
+			addCompAction = QtWidgets.QAction(lib.arduinoXMLconfig.INPUT_OUTPUT_TAGS_ACTIONS[tag])
 			addCompAction.triggered.connect(self.addCompAction)
 			menu.addAction(addCompAction)
 			menu.exec_(self.arduinoTreeWidget.viewport().mapToGlobal(position))
 		
 	def addCompAction(self):
 		print("add ard item")
+		selectedItem = self.arduinoTreeWidget.selectedItems()[0]
+		selectedArduinoSerialNr = selectedItem.parent().parent().text(1)
+		
+		print("Arduino serial nr:", selectedArduinoSerialNr)
+		
+		print(self.ardXMLconfig.root.findall("[@serial_nr='"+selectedArduinoSerialNr+"']"))
+		
 		
 		
 def main():
