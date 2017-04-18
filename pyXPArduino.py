@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #importing wx files
 import wx
-import gui
+import gui.gui as gui
 import XPArduinoDialogManageArduinos
 
 import lib.serialArduinoUtils

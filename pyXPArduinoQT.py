@@ -55,11 +55,12 @@ class ExampleApp(QMainWindow, mainwindow.Ui_MainWindow):
 	def addCompAction(self):
 		print("add ard item")
 		selectedItem = self.arduinoTreeWidget.selectedItems()[0]
+		selectedItemTag = selectedItem.text(2)
 		selectedArduinoSerialNr = selectedItem.parent().parent().text(1)
 		
-		print("Arduino serial nr:", selectedArduinoSerialNr)
+		self.ardXMLconfig.addInputOutput(selectedArduinoSerialNr, selectedItemTag)
 		
-		print(self.ardXMLconfig.root.findall("[@serial_nr='"+selectedArduinoSerialNr+"']"))
+		
 		
 		
 		

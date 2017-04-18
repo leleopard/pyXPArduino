@@ -17,3 +17,14 @@ class arduinoConfig():
 		for child in self.root:
 			print (child.tag, child.attrib)
 	
+	
+	def addInputOutput(self, arduinoSerialNr, inputOutputType):
+		print("Add InOutput type ",inputOutputType, "to Arduino serial nr:", arduinoSerialNr)
+		ardTag = self.root.findall(".//arduino[@serial_nr='"+arduinoSerialNr+"']")[0]
+		inputOutputTag = ardTag.findall(".//"+inputOutputType)[0]
+		switch = ET.SubElement(inputOutputTag, "switch")
+		switch.set('id', arduinoSerialNr+'1')
+		
+		ET.dump(self.root)
+		#print(self.tree)
+		#print(self.root.findall(".//arduino[@serial_nr='"+arduinoSerialNr+"']"))
