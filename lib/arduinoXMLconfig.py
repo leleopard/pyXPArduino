@@ -85,8 +85,21 @@ class arduinoConfig():
 	
 	def saveToXMLfile(self):
 		self.tree.write(self.ardXMLconfigFile)
-	##
-	# find arduino by serial number, returns a list of XML treeelems - that can be empty if not found!
+		
+	## find switch by serial number, returns a dictionary with its attribute values or None if not found.
+	#
+	def getSwitchData(self, switchSerialNr):
+		switchTag = self.root.findall(".//switch[@id='"+switchSerialNr+"']")
+		if len(switchTag) > 0: # switch has been found
+			switchDict = {'name': switchTag[0].attrib['name'],
+					'id': switchTag[0].attrib['id']}
+			return switchDict
+		else:
+			return None
+		
+	
+	## find arduino by serial number, returns a dictionary with its attribute values or None if not found.
+	# 
 	def getArduinoData(self, arduinoSerialNr):
 		ardTags = self.root.findall(".//arduino[@serial_nr='"+arduinoSerialNr+"']")
 		if len(ardTags) > 0: # arduino has been found

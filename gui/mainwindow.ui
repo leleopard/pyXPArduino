@@ -180,12 +180,27 @@
        <layout class="QHBoxLayout" name="horizontalLayout_3">
         <item>
          <widget class="QWidget" name="arduinoEditForm" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="layoutDirection">
            <enum>Qt::LeftToRight</enum>
           </property>
           <layout class="QFormLayout" name="formLayout">
+           <property name="sizeConstraint">
+            <enum>QLayout::SetDefaultConstraint</enum>
+           </property>
            <item row="0" column="0" colspan="2">
             <widget class="QLabel" name="label_7">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="font">
               <font>
                <pointsize>10</pointsize>
@@ -237,7 +252,7 @@ padding: 3px
             <widget class="QLineEdit" name="ardNameLineEdit">
              <property name="maximumSize">
               <size>
-               <width>250</width>
+               <width>16777215</width>
                <height>16777215</height>
               </size>
              </property>
@@ -281,9 +296,15 @@ padding: 3px
              <property name="enabled">
               <bool>false</bool>
              </property>
-             <property name="maximumSize">
+             <property name="minimumSize">
               <size>
                <width>250</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>350</width>
                <height>16777215</height>
               </size>
              </property>
@@ -310,9 +331,15 @@ padding: 3px
              <property name="enabled">
               <bool>false</bool>
              </property>
-             <property name="maximumSize">
+             <property name="minimumSize">
               <size>
                <width>250</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>350</width>
                <height>16777215</height>
               </size>
              </property>
@@ -342,9 +369,15 @@ padding: 3px
              <property name="enabled">
               <bool>false</bool>
              </property>
-             <property name="maximumSize">
+             <property name="minimumSize">
               <size>
                <width>250</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>350</width>
                <height>16777215</height>
               </size>
              </property>
@@ -365,6 +398,36 @@ padding: 3px
            <enum>Qt::LeftToRight</enum>
           </property>
           <layout class="QGridLayout" name="gridLayout_2">
+           <item row="16" column="1">
+            <widget class="QPushButton" name="pushButton_2">
+             <property name="text">
+              <string>Apply</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QLabel" name="label_19">
+             <property name="text">
+              <string>ID</string>
+             </property>
+            </widget>
+           </item>
+           <item row="15" column="1">
+            <spacer name="verticalSpacer_4">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Fixed</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>15</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
            <item row="1" column="1">
             <widget class="QLabel" name="label_17">
              <property name="text">
@@ -372,7 +435,7 @@ padding: 3px
              </property>
             </widget>
            </item>
-           <item row="8" column="4">
+           <item row="10" column="4">
             <widget class="QLineEdit" name="lineEdit_2">
              <property name="maximumSize">
               <size>
@@ -382,7 +445,7 @@ padding: 3px
              </property>
             </widget>
            </item>
-           <item row="8" column="3">
+           <item row="10" column="3">
             <widget class="QLabel" name="label_13">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
@@ -395,14 +458,14 @@ padding: 3px
              </property>
             </widget>
            </item>
-           <item row="7" column="1">
+           <item row="9" column="1">
             <widget class="QLabel" name="label_10">
              <property name="text">
               <string>Send XPlane Command: </string>
              </property>
             </widget>
            </item>
-           <item row="13" column="2">
+           <item row="17" column="2">
             <spacer name="verticalSpacer">
              <property name="orientation">
               <enum>Qt::Vertical</enum>
@@ -415,36 +478,20 @@ padding: 3px
              </property>
             </spacer>
            </item>
-           <item row="2" column="1">
-            <widget class="QLabel" name="label_3">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="layoutDirection">
-              <enum>Qt::LeftToRight</enum>
-             </property>
-             <property name="text">
-              <string>Name</string>
-             </property>
-            </widget>
-           </item>
-           <item row="8" column="1">
-            <widget class="QLabel" name="label_11">
-             <property name="text">
-              <string>Set Dataref: </string>
-             </property>
-            </widget>
-           </item>
-           <item row="12" column="4">
+           <item row="14" column="4">
             <widget class="QLineEdit" name="lineEdit_5">
              <property name="maximumSize">
               <size>
                <width>50</width>
                <height>16777215</height>
               </size>
+             </property>
+            </widget>
+           </item>
+           <item row="10" column="1">
+            <widget class="QLabel" name="label_11">
+             <property name="text">
+              <string>Set Dataref: </string>
              </property>
             </widget>
            </item>
@@ -455,7 +502,7 @@ padding: 3px
              </property>
             </widget>
            </item>
-           <item row="12" column="3">
+           <item row="14" column="3">
             <widget class="QLabel" name="label_16">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
@@ -468,7 +515,7 @@ padding: 3px
              </property>
             </widget>
            </item>
-           <item row="6" column="1">
+           <item row="8" column="1">
             <widget class="QLabel" name="label_9">
              <property name="font">
               <font>
@@ -482,14 +529,14 @@ padding: 3px
              </property>
             </widget>
            </item>
-           <item row="11" column="1">
+           <item row="13" column="1">
             <widget class="QLabel" name="label_12">
              <property name="text">
               <string>Send XPlane Command: </string>
              </property>
             </widget>
            </item>
-           <item row="10" column="1">
+           <item row="12" column="1">
             <widget class="QLabel" name="label_15">
              <property name="font">
               <font>
@@ -503,7 +550,7 @@ padding: 3px
              </property>
             </widget>
            </item>
-           <item row="9" column="1">
+           <item row="11" column="1">
             <spacer name="verticalSpacer_3">
              <property name="orientation">
               <enum>Qt::Vertical</enum>
@@ -519,14 +566,14 @@ padding: 3px
              </property>
             </spacer>
            </item>
-           <item row="12" column="1">
+           <item row="14" column="1">
             <widget class="QLabel" name="label_14">
              <property name="text">
               <string>Set Dataref:</string>
              </property>
             </widget>
            </item>
-           <item row="4" column="1">
+           <item row="6" column="1">
             <spacer name="verticalSpacer_2">
              <property name="orientation">
               <enum>Qt::Vertical</enum>
@@ -541,6 +588,16 @@ padding: 3px
               </size>
              </property>
             </spacer>
+           </item>
+           <item row="5" column="2">
+            <widget class="QComboBox" name="SW_PIN_comboBox">
+             <property name="maximumSize">
+              <size>
+               <width>50</width>
+               <height>16777215</height>
+              </size>
+             </property>
+            </widget>
            </item>
            <item row="0" column="1" colspan="4">
             <widget class="QLabel" name="label_8">
@@ -562,27 +619,14 @@ padding: 3px
              </property>
             </widget>
            </item>
-           <item row="3" column="1">
+           <item row="5" column="1">
             <widget class="QLabel" name="label_18">
              <property name="text">
               <string>Arduino pin:</string>
              </property>
             </widget>
            </item>
-           <item row="3" column="2">
-            <widget class="QComboBox" name="SW_PIN_comboBox">
-             <property name="maximumSize">
-              <size>
-               <width>50</width>
-               <height>16777215</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="2" colspan="2">
-            <widget class="QLineEdit" name="lineEdit_3"/>
-           </item>
-           <item row="8" column="2">
+           <item row="10" column="2">
             <widget class="QComboBox" name="SWON_XPDREF_comboBox">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -595,7 +639,7 @@ padding: 3px
              </property>
             </widget>
            </item>
-           <item row="12" column="2">
+           <item row="14" column="2">
             <widget class="QComboBox" name="SWOFF_XPDREF_comboBox">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -608,7 +652,7 @@ padding: 3px
              </property>
             </widget>
            </item>
-           <item row="7" column="2">
+           <item row="9" column="2">
             <widget class="QComboBox" name="SWON_XPCMD_comboBox">
              <property name="editable">
               <bool>true</bool>
@@ -618,9 +662,63 @@ padding: 3px
              </property>
             </widget>
            </item>
-           <item row="11" column="2">
+           <item row="13" column="2">
             <widget class="QComboBox" name="SWOFF_XPCMD_comboBox">
              <property name="editable">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="2">
+            <widget class="QLineEdit" name="SWEDIT_nameLineEdit">
+             <property name="minimumSize">
+              <size>
+               <width>250</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>350</width>
+               <height>16777215</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QLabel" name="label_3">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="layoutDirection">
+              <enum>Qt::LeftToRight</enum>
+             </property>
+             <property name="text">
+              <string>Name</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="2">
+            <widget class="QLineEdit" name="SWEDIT_IDlineEdit">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>250</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>350</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="readOnly">
               <bool>true</bool>
              </property>
             </widget>
@@ -640,7 +738,7 @@ padding: 3px
      <x>0</x>
      <y>0</y>
      <width>1213</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -783,12 +881,28 @@ padding: 3px
    <slot>ardEditingFinished()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>862</x>
-     <y>138</y>
+     <x>1184</x>
+     <y>98</y>
     </hint>
     <hint type="destinationlabel">
      <x>485</x>
      <y>-20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onSwitchEditApplyClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>342</x>
+     <y>427</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>283</x>
+     <y>22</y>
     </hint>
    </hints>
   </connection>
@@ -799,5 +913,6 @@ padding: 3px
   <slot>pickArduino()</slot>
   <slot>ardTreeSelectionChanged()</slot>
   <slot>ardEditingFinished()</slot>
+  <slot>onSwitchEditApplyClicked()</slot>
  </slots>
 </ui>

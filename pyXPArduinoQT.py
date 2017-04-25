@@ -5,6 +5,7 @@ import sys # We need sys so that we can pass argv to QApplication
 import gui.mainwindow as mainwindow# This file holds our MainWindow and all design related things
 import gui.deleteConfirmationDialog as deleteConfirmationDialog
 import gui.pyXPaddArduinoDialog as pyXPaddArduinoDialog
+import gui.pyXPpickXPCommandDialog as pyXPpickXPCommandDialog
 
 import lib.arduinoXMLconfig
 import lib.XPrefData as XPrefData
@@ -18,10 +19,11 @@ class ExampleApp(QMainWindow, mainwindow.Ui_MainWindow):
 		self.ardXMLconfig = lib.arduinoXMLconfig.arduinoConfig("ardConfig1.xml")
 		self.deleteConfirmDialog = deleteConfirmationDialog.DeleteConfirmationDialog()
 		self.addArduinoDialog = pyXPaddArduinoDialog.pyXPAddArduinoDialog()
+		self.pickXPCommandDialog = pyXPpickXPCommandDialog.pyXPpickXPCommandDialog()
 		self.refreshArduinoTree()
 		self.__setupSwitchEditScreen()
 		
-		#self.switchEditForm.hide()
+		self.switchEditForm.hide()
 		self.arduinoEditForm.hide()
 
 	def __setupSwitchEditScreen(self):
@@ -81,7 +83,23 @@ class ExampleApp(QMainWindow, mainwindow.Ui_MainWindow):
 				self.ardNameLineEdit.setText(ardData['name'])
 				self.ardDescriptionLineEdit.setText(ardData['description'])
 				self.ardManufacturerLineEdit.setText(ardData['manufacturer'])
-		
+			
+			if tag =='switch':
+				self.populateSwitchEditScreen(self.arduinoTreeWidget.selectedItems()[0].text(1))
+				self.switchEditForm.show()
+				
+	def populateSwitchEditScreen(self, switchId):
+		switchData = self.ardXMLconfig.getSwitchData(switchId)
+		self.SWEDIT_nameLineEdit.setText(switchData['name'])
+		self.SWEDIT_IDlineEdit.setText(switchData['id'])
+		self.pickXPCommandDialog.exec()
+	## Saves the changes made in the Switch Edit screen - called when user presses Apply Button.
+	#		
+	def onSwitchEditApplyClicked(self):
+		pass
+	
+	## Saves the changes made in the Arduino Edit screen - called when user finishes editing the name.
+	#	
 	def ardEditingFinished(self):
 		ardData = {'port': 			self.ardPortLineEdit.text(),
 					'name': 		self.ardNameLineEdit.text(),
