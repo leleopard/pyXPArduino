@@ -28,7 +28,7 @@ class ExampleApp(QMainWindow, mainwindow.Ui_MainWindow):
 
 	def __setupSwitchEditScreen(self):
 		self.SW_PIN_comboBox.addItems(lib.arduinoXMLconfig.DIG_IO_PINS)
-		self.SWON_XPCMD_comboBox.addItems(XPrefData.XP_COMMANDS)
+		self.SWON_XPCMD_comboBox.addItems([command[1] for command in XPrefData.XP_COMMANDS])
 		
 		
 	
