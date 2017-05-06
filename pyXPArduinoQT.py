@@ -6,6 +6,7 @@ import gui.mainwindow as mainwindow# This file holds our MainWindow and all desi
 import gui.deleteConfirmationDialog as deleteConfirmationDialog
 import gui.pyXPaddArduinoDialog as pyXPaddArduinoDialog
 import gui.pyXPpickXPCommandDialog as pyXPpickXPCommandDialog
+import gui.pyXPswitchEditForm as pyXPswitchEditForm
 
 import lib.arduinoXMLconfig
 import lib.XPrefData as XPrefData
@@ -20,23 +21,23 @@ class ExampleApp(QMainWindow, mainwindow.Ui_MainWindow):
 		self.deleteConfirmDialog = deleteConfirmationDialog.DeleteConfirmationDialog()
 		self.addArduinoDialog = pyXPaddArduinoDialog.pyXPAddArduinoDialog()
 		self.pickXPCommandDialog = pyXPpickXPCommandDialog.pyXPpickXPCommandDialog()
+		self.ardSwitchEditForm = pyXPswitchEditForm.pyXPswitchEditForm(self.editPaneWidget, self.ardXMLconfig)
+		self.horizontalLayoutEditPane.addWidget(self.ardSwitchEditForm)
+		self.ardSwitchEditForm.switchNameUpdated.connect(self.updateSwitchName)
 		self.refreshArduinoTree()
-		self.__setupSwitchEditScreen()
-		
-		self.switchEditForm.hide()
+		self.ardSwitchEditForm.hide()
 		self.arduinoEditForm.hide()
-
-	def __setupSwitchEditScreen(self):
-		self.SW_PIN_comboBox.addItems(lib.arduinoXMLconfig.DIG_IO_PINS)
 		
 	
 	def refreshArduinoTree(self):
+		print ("refreshArduinoTree")
+
 		boldFont = QtGui.QFont()
 		boldFont.setBold(True)
 		self.arduinoTreeWidget.clear()
 		
 		for arduino in self.ardXMLconfig.root: # cycle through arduinos
-			print (arduino.tag, arduino.attrib)
+			#print (arduino.tag, arduino.attrib)
 			ardTreeElem = QTreeWidgetItem([ arduino.attrib['name'], arduino.attrib['serial_nr'], arduino.tag ])
 			ardTreeElem.setFont(0, boldFont)
 			ardTreeElem.setIcon(0, QtGui.QIcon("Resources/ardIcon.png"))
@@ -64,10 +65,18 @@ class ExampleApp(QMainWindow, mainwindow.Ui_MainWindow):
 						inputOutputTypesTreeElem.addChild(inputOutputTreeElem)
 					
 		self.arduinoTreeWidget.resizeColumnToContents(0)
+		
+		
+	def updateSwitchName(self, switchID,switchName):
+		items = self.arduinoTreeWidget.findItems (switchID, QtCore.Qt.MatchExactly|QtCore.Qt.MatchRecursive,1)
+		if len(items)>0:
+			items[0].setText(0, switchName)
+			print (items)
+		
 	
 	def ardTreeSelectionChanged(self):
 		print("Ard tree selection changed")
-		self.switchEditForm.hide()
+		self.ardSwitchEditForm.hide()
 		self.arduinoEditForm.hide()
 		
 		if len(self.arduinoTreeWidget.selectedItems()) > 0:
@@ -83,18 +92,10 @@ class ExampleApp(QMainWindow, mainwindow.Ui_MainWindow):
 				self.ardManufacturerLineEdit.setText(ardData['manufacturer'])
 			
 			if tag =='switch':
-				self.populateSwitchEditScreen(self.arduinoTreeWidget.selectedItems()[0].text(1))
-				self.switchEditForm.show()
+				switchID = self.arduinoTreeWidget.selectedItems()[0].text(1)
+				self.ardSwitchEditForm.show(switchID)
 				
-	def populateSwitchEditScreen(self, switchId):
-		switchData = self.ardXMLconfig.getSwitchData(switchId)
-		self.SWEDIT_nameLineEdit.setText(switchData['name'])
-		self.SWEDIT_IDlineEdit.setText(switchData['id'])
-		self.pickXPCommandDialog.exec()
-	## Saves the changes made in the Switch Edit screen - called when user presses Apply Button.
-	#		
-	def onSwitchEditApplyClicked(self):
-		pass
+	
 	
 	## Saves the changes made in the Arduino Edit screen - called when user finishes editing the name.
 	#	
@@ -109,34 +110,39 @@ class ExampleApp(QMainWindow, mainwindow.Ui_MainWindow):
 		self.refreshArduinoTree()
 		
 	def ardTreeContextMenuRequested(self, position):
+		print("ardTreeContextMenuRequested")
 		# find which item is selected
-		tag 		= self.arduinoTreeWidget.selectedItems()[0].text(2)
-		tag_descr 	= self.arduinoTreeWidget.selectedItems()[0].text(0)
-		
-		print(self.arduinoTreeWidget.selectedItems()[0].text(2))
-		
-		if tag =='arduino':
-			menu = QMenu()
-			removeArdAction = QtWidgets.QAction('Remove Arduino...')
-			removeArdAction.triggered.connect(self.removeArduino)
-			menu.addAction(removeArdAction)
-			menu.exec_(self.arduinoTreeWidget.viewport().mapToGlobal(position))
-		
-		
-		if tag in lib.arduinoXMLconfig.INPUT_OUTPUT_TAGS:
-			menu = QMenu()
-			addCompAction = QtWidgets.QAction(lib.arduinoXMLconfig.INPUT_OUTPUT_TAGS_REF[tag]['add_action'])
-			addCompAction.triggered.connect(self.addCompAction)
-			menu.addAction(addCompAction)
-			menu.exec_(self.arduinoTreeWidget.viewport().mapToGlobal(position))
-		
-		if tag in lib.arduinoXMLconfig.INPUT_OUTPUT_ELEMS_TAGS:
-			menu = QMenu()
-			removeCompAction = QtWidgets.QAction("Delete item...")
-			removeCompAction.triggered.connect(self.removeCompAction)
-			menu.addAction(removeCompAction)
-			menu.exec_(self.arduinoTreeWidget.viewport().mapToGlobal(position))
-		
+		if len(self.arduinoTreeWidget.selectedItems()) > 0 : # check at least one item selected 
+			tag 		= self.arduinoTreeWidget.selectedItems()[0].text(2)
+			tag_descr 	= self.arduinoTreeWidget.selectedItems()[0].text(0)
+			
+			print(self.arduinoTreeWidget.selectedItems()[0].text(2))
+			
+			if tag =='arduino':
+				menu = QMenu()
+				removeArdAction = QtWidgets.QAction('Remove Arduino...')
+				removeArdAction.triggered.connect(self.removeArduino)
+				menu.addAction(removeArdAction)
+				menu.exec_(self.arduinoTreeWidget.viewport().mapToGlobal(position))
+			
+			
+			if tag in lib.arduinoXMLconfig.INPUT_OUTPUT_TAGS: # to add switches, pots, pwms etc...
+				menu = QMenu()
+				addCompAction = QtWidgets.QAction(lib.arduinoXMLconfig.INPUT_OUTPUT_TAGS_REF[tag]['add_action'])
+				addCompAction.triggered.connect(self.addCompAction)
+				menu.addAction(addCompAction)
+				menu.exec_(self.arduinoTreeWidget.viewport().mapToGlobal(position))
+			
+			if tag in lib.arduinoXMLconfig.INPUT_OUTPUT_ELEMS_TAGS:
+				menu = QMenu()
+				removeCompAction = QtWidgets.QAction("Delete item...")
+				removeCompAction.triggered.connect(self.removeCompAction)
+				menu.addAction(removeCompAction)
+				menu.exec_(self.arduinoTreeWidget.viewport().mapToGlobal(position))
+	
+	## slot called to add a component (switch, potentiometer, etc...)
+	# finds the tag of the item selected in the tree, and corresponding arduino unique ID. 
+	# adds the new component in the xml data structure, and calls a full refresh of the tree
 	def addCompAction(self):
 		print("add ard item")
 		selectedItem = self.arduinoTreeWidget.selectedItems()[0]

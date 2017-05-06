@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="newPrefix">
+    <file>minusIcon.png</file>
+    <file>plusIcon.png</file>
     <file>attention.png</file>
     <file>attention.png</file>
   </qresource>

@@ -21,7 +21,7 @@ class pyXPAddArduinoDialog(QtWidgets.QDialog, pickarduinodialog.Ui_AddArduinoDia
 			if "Ard" in description:
 				print("FOOUND ARDUINO")
 				serial_number = str(p.serial_number)
-				if ardXMLconfig.getArduinoData(serial_number) != None :  # only display the arduino if it is not already in our list
+				if ardXMLconfig.getArduinoData(serial_number) == None :  # only display the arduino if it is not already in our list
 					data = [False, str(p.device),"NAME"+str(index), description, str(p.serial_number), str(p.manufacturer)]
 					self.arduinoTableWidget.insertRow(index)
 					item = QtWidgets.QTableWidgetItem()

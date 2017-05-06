@@ -33,7 +33,7 @@
        <property name="formAlignment">
         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
        </property>
-       <item row="2" column="0">
+       <item row="4" column="0">
         <widget class="QLabel" name="label">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -52,7 +52,7 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="1">
+       <item row="4" column="1">
         <widget class="QLineEdit" name="filterCommandsLineEdit">
          <property name="minimumSize">
           <size>
@@ -68,7 +68,7 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
+       <item row="3" column="1">
         <widget class="QComboBox" name="selectCategoryComboBox">
          <property name="minimumSize">
           <size>
@@ -84,7 +84,7 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="0">
+       <item row="3" column="0">
         <widget class="QLabel" name="label_2">
          <property name="maximumSize">
           <size>
@@ -94,6 +94,29 @@
          </property>
          <property name="text">
           <string>Filter Category: </string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>Command:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="commandLineEdit">
+         <property name="minimumSize">
+          <size>
+           <width>200</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>300</width>
+           <height>16777215</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -112,6 +135,9 @@
          <width>0</width>
          <height>200</height>
         </size>
+       </property>
+       <property name="editTriggers">
+        <set>QAbstractItemView::NoEditTriggers</set>
        </property>
        <property name="selectionMode">
         <enum>QAbstractItemView::SingleSelection</enum>
@@ -194,8 +220,8 @@
    <slot>refreshCommandList()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>165</x>
-     <y>32</y>
+     <x>261</x>
+     <y>68</y>
     </hint>
     <hint type="destinationlabel">
      <x>36</x>
@@ -210,8 +236,8 @@
    <slot>refreshCommandList()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>209</x>
-     <y>52</y>
+     <x>305</x>
+     <y>94</y>
     </hint>
     <hint type="destinationlabel">
      <x>161</x>
@@ -219,8 +245,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>commandsTableWidget</sender>
+   <signal>cellDoubleClicked(int,int)</signal>
+   <receiver>Dialog</receiver>
+   <slot>pickCommand()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>540</x>
+     <y>399</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>460</x>
+     <y>-21</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>refreshCommandList()</slot>
+  <slot>pickCommand()</slot>
  </slots>
 </ui>

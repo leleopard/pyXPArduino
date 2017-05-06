@@ -91,12 +91,49 @@ class arduinoConfig():
 	def getSwitchData(self, switchSerialNr):
 		switchTag = self.root.findall(".//switch[@id='"+switchSerialNr+"']")
 		if len(switchTag) > 0: # switch has been found
+			pin =''
+			if 'pin' in switchTag[0].attrib: 
+				pin = switchTag[0].attrib['pin']
+			actions = list(switchTag[0].iter('action'))
+			print("actions:", len(actions))
+			actionsList = []
+			for action in actions:
+				print('action:',action)
+				actionsList.append({'switch_state': action.attrib['switch_state'], 
+									'action_type': action.attrib['action_type'], 
+									'cmddref': action.text})
 			switchDict = {'name': switchTag[0].attrib['name'],
-					'id': switchTag[0].attrib['id']}
+					'id': switchTag[0].attrib['id'],
+					'pin': pin, 
+					'actions': actionsList}
+			
 			return switchDict
 		else:
 			return None
+	
+	## updates switch data - id, name, arduino pin, and replace actions with those passed in parameter
+	# @param switchSerialNr  the id of the switch to update
+	# @param switchData  dictionary formatted as {'id': 'id123', 'name': 'myname', 'pin': 'arduino pin nr'}
+	# @param switchActions  list of dictionaries, one per action, each formatted as {'switch_state': 'on' or 'off', 'action_type': 'cmd' or 'dref, 'cmddref': 'command or dataref string'}
+	
+	def updateSwitchData(self, switchSerialNr, switchData, switchActions = []):
+		switchTag = self.root.findall(".//switch[@id='"+switchSerialNr+"']")
+		if len(switchTag) > 0: # switch has been found
+			switchTag[0].set('id', switchData['id'])
+			switchTag[0].set('name', switchData['name'])
+			switchTag[0].set('pin', switchData['pin'])
 		
+			for action in list(switchTag[0]): # first remove all actions
+				switchTag[0].remove(action)
+				
+			for action in switchActions:
+				actionTag = ET.SubElement(switchTag[0], 'action')
+				actionTag.set('switch_state', action['switch_state'])
+				actionTag.set('action_type', action['action_type'])
+				actionTag.text = action['cmddref']
+				
+		else:
+			return -1
 	
 	## find arduino by serial number, returns a dictionary with its attribute values or None if not found.
 	# 

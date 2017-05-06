@@ -24,22 +24,23 @@ class pyXPpickXPCommandDialog(QtWidgets.QDialog, pickXPCommandDialog.Ui_Dialog):
 			self.commandsTableWidget.insertRow(index)
 			
 			item = QtWidgets.QTableWidgetItem(command[0])
-			item.setFlags(QtCore.Qt.ItemIsEnabled)
-			item.setFlags(QtCore.Qt.ItemIsSelectable)
 			self.commandsTableWidget.setItem(index,0,item )
 			
 			item = QtWidgets.QTableWidgetItem(command[1])
-			item.setFlags(QtCore.Qt.ItemIsEditable|QtCore.Qt.ItemIsSelectable)
-			#item.setFlags(QtCore.Qt.ItemIsEditable)
 			self.commandsTableWidget.setItem(index,1,item )
 			
 			item = QtWidgets.QTableWidgetItem(command[2])
-			item.setFlags(QtCore.Qt.ItemIsEditable|QtCore.Qt.ItemIsSelectable)
-			#item.setFlags(QtCore.Qt.ItemIsEditable)
 			self.commandsTableWidget.setItem(index,2,item )
 					
 			index = index+1
 			
 		self.commandsTableWidget.resizeColumnsToContents()
 		self.commandsTableWidget.resizeRowsToContents()
-		#self.commandsTableWidget.verticalHeader().hide()
+		self.commandsTableWidget.verticalHeader().hide()
+		
+	def pickCommand(self):
+		print("pick command")
+		row = self.commandsTableWidget.currentRow()
+		self.commandLineEdit.setText(self.commandsTableWidget.item(row,1).text())
+		
+	

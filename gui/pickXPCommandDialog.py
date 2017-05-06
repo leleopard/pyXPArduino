@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'gui/pickXPCommandDialog.ui'
+# Form implementation generated from reading ui file 'pickXPCommandDialog.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.1
+# Created by: PyQt5 UI code generator 5.8.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -34,21 +34,29 @@ class Ui_Dialog(object):
         self.label.setSizePolicy(sizePolicy)
         self.label.setMaximumSize(QtCore.QSize(16777215, 30))
         self.label.setObjectName("label")
-        self.formLayout.setWidget(2, QtWidgets.QFormLayout.LabelRole, self.label)
+        self.formLayout.setWidget(4, QtWidgets.QFormLayout.LabelRole, self.label)
         self.filterCommandsLineEdit = QtWidgets.QLineEdit(Dialog)
         self.filterCommandsLineEdit.setMinimumSize(QtCore.QSize(200, 0))
         self.filterCommandsLineEdit.setMaximumSize(QtCore.QSize(300, 300))
         self.filterCommandsLineEdit.setObjectName("filterCommandsLineEdit")
-        self.formLayout.setWidget(2, QtWidgets.QFormLayout.FieldRole, self.filterCommandsLineEdit)
+        self.formLayout.setWidget(4, QtWidgets.QFormLayout.FieldRole, self.filterCommandsLineEdit)
         self.selectCategoryComboBox = QtWidgets.QComboBox(Dialog)
         self.selectCategoryComboBox.setMinimumSize(QtCore.QSize(250, 0))
         self.selectCategoryComboBox.setMaximumSize(QtCore.QSize(300, 30))
         self.selectCategoryComboBox.setObjectName("selectCategoryComboBox")
-        self.formLayout.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.selectCategoryComboBox)
+        self.formLayout.setWidget(3, QtWidgets.QFormLayout.FieldRole, self.selectCategoryComboBox)
         self.label_2 = QtWidgets.QLabel(Dialog)
         self.label_2.setMaximumSize(QtCore.QSize(16777215, 30))
         self.label_2.setObjectName("label_2")
-        self.formLayout.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.label_2)
+        self.formLayout.setWidget(3, QtWidgets.QFormLayout.LabelRole, self.label_2)
+        self.label_3 = QtWidgets.QLabel(Dialog)
+        self.label_3.setObjectName("label_3")
+        self.formLayout.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.label_3)
+        self.commandLineEdit = QtWidgets.QLineEdit(Dialog)
+        self.commandLineEdit.setMinimumSize(QtCore.QSize(200, 0))
+        self.commandLineEdit.setMaximumSize(QtCore.QSize(300, 16777215))
+        self.commandLineEdit.setObjectName("commandLineEdit")
+        self.formLayout.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.commandLineEdit)
         self.verticalLayout_2.addLayout(self.formLayout)
         self.commandsTableWidget = QtWidgets.QTableWidget(Dialog)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
@@ -57,6 +65,7 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(self.commandsTableWidget.sizePolicy().hasHeightForWidth())
         self.commandsTableWidget.setSizePolicy(sizePolicy)
         self.commandsTableWidget.setMinimumSize(QtCore.QSize(0, 200))
+        self.commandsTableWidget.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
         self.commandsTableWidget.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection)
         self.commandsTableWidget.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
         self.commandsTableWidget.setObjectName("commandsTableWidget")
@@ -82,6 +91,7 @@ class Ui_Dialog(object):
         self.buttonBox.rejected.connect(Dialog.reject)
         self.selectCategoryComboBox.currentIndexChanged['QString'].connect(Dialog.refreshCommandList)
         self.filterCommandsLineEdit.textChanged['QString'].connect(Dialog.refreshCommandList)
+        self.commandsTableWidget.cellDoubleClicked['int','int'].connect(Dialog.pickCommand)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
@@ -89,6 +99,7 @@ class Ui_Dialog(object):
         Dialog.setWindowTitle(_translate("Dialog", "Select XPlane Command"))
         self.label.setText(_translate("Dialog", "Search:"))
         self.label_2.setText(_translate("Dialog", "Filter Category: "))
+        self.label_3.setText(_translate("Dialog", "Command:"))
         item = self.commandsTableWidget.horizontalHeaderItem(0)
         item.setText(_translate("Dialog", "Category"))
         item = self.commandsTableWidget.horizontalHeaderItem(1)

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1213</width>
-    <height>752</height>
+    <height>805</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -161,9 +161,9 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="widget" native="true">
+      <widget class="QWidget" name="editPaneWidget" native="true">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
          <horstretch>3</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
@@ -175,9 +175,12 @@
         </size>
        </property>
        <property name="layoutDirection">
-        <enum>Qt::RightToLeft</enum>
+        <enum>Qt::LeftToRight</enum>
        </property>
-       <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <layout class="QHBoxLayout" name="horizontalLayoutEditPane">
+        <property name="sizeConstraint">
+         <enum>QLayout::SetDefaultConstraint</enum>
+        </property>
         <item>
          <widget class="QWidget" name="arduinoEditForm" native="true">
           <property name="sizePolicy">
@@ -392,233 +395,6 @@ padding: 3px
           </layout>
          </widget>
         </item>
-        <item>
-         <widget class="QWidget" name="switchEditForm" native="true">
-          <property name="layoutDirection">
-           <enum>Qt::LeftToRight</enum>
-          </property>
-          <layout class="QGridLayout" name="gridLayout_2">
-           <item row="16" column="1" colspan="4">
-            <layout class="QGridLayout" name="gridLayout_4">
-             <item row="0" column="1">
-              <widget class="QLabel" name="label_14">
-               <property name="text">
-                <string>Set Dataref:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0">
-              <widget class="QLabel" name="label_12">
-               <property name="text">
-                <string>Send XPlane Command: </string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QTableWidget" name="SWOFF_CMDS_tableWidget"/>
-             </item>
-             <item row="1" column="1">
-              <widget class="QTableWidget" name="tableWidget_2"/>
-             </item>
-            </layout>
-           </item>
-           <item row="3" column="1">
-            <widget class="QLabel" name="label_19">
-             <property name="text">
-              <string>ID</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QLabel" name="label_17">
-             <property name="text">
-              <string>State</string>
-             </property>
-            </widget>
-           </item>
-           <item row="15" column="1">
-            <widget class="QLabel" name="label_15">
-             <property name="font">
-              <font>
-               <pointsize>9</pointsize>
-               <weight>75</weight>
-               <bold>true</bold>
-              </font>
-             </property>
-             <property name="text">
-              <string>Switch OFF actions</string>
-             </property>
-            </widget>
-           </item>
-           <item row="6" column="1">
-            <spacer name="verticalSpacer_2">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeType">
-              <enum>QSizePolicy::Fixed</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>10</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="2" column="1">
-            <widget class="QLabel" name="label_3">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="layoutDirection">
-              <enum>Qt::LeftToRight</enum>
-             </property>
-             <property name="text">
-              <string>Name</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1" colspan="4">
-            <widget class="QLabel" name="label_8">
-             <property name="font">
-              <font>
-               <pointsize>10</pointsize>
-               <weight>75</weight>
-               <bold>true</bold>
-              </font>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">color: white;
-background: rgb(0, 151, 157);
-padding: 3px
-</string>
-             </property>
-             <property name="text">
-              <string>Edit switch</string>
-             </property>
-            </widget>
-           </item>
-           <item row="21" column="1">
-            <widget class="QPushButton" name="pushButton_2">
-             <property name="text">
-              <string>Apply</string>
-             </property>
-            </widget>
-           </item>
-           <item row="9" column="1" colspan="4">
-            <layout class="QGridLayout" name="gridLayout_3">
-             <item row="1" column="1">
-              <widget class="QLabel" name="label_11">
-               <property name="text">
-                <string>Set Dataref: </string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_10">
-               <property name="text">
-                <string>Send XPlane Commands: </string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QTableWidget" name="SWON_CMDS_tableWidget">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>75</height>
-                </size>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1">
-              <widget class="QTableWidget" name="tableWidget"/>
-             </item>
-            </layout>
-           </item>
-           <item row="3" column="3">
-            <widget class="QLineEdit" name="SWEDIT_IDlineEdit">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>250</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>350</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="3">
-            <widget class="QPushButton" name="pushButton">
-             <property name="text">
-              <string>PushButton</string>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="3">
-            <widget class="QComboBox" name="SW_PIN_comboBox">
-             <property name="maximumSize">
-              <size>
-               <width>50</width>
-               <height>16777215</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="1">
-            <widget class="QLabel" name="label_18">
-             <property name="text">
-              <string>Arduino pin:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="3">
-            <widget class="QLineEdit" name="SWEDIT_nameLineEdit">
-             <property name="minimumSize">
-              <size>
-               <width>250</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>350</width>
-               <height>16777215</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-           <item row="8" column="1">
-            <widget class="QLabel" name="label_9">
-             <property name="font">
-              <font>
-               <pointsize>9</pointsize>
-               <weight>75</weight>
-               <bold>true</bold>
-              </font>
-             </property>
-             <property name="text">
-              <string>Switch ON actions:</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </item>
        </layout>
       </widget>
      </widget>
@@ -631,7 +407,7 @@ padding: 3px
      <x>0</x>
      <y>0</y>
      <width>1213</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -685,7 +461,9 @@ padding: 3px
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>arduinoTreeWidget</sender>
@@ -763,7 +541,7 @@ padding: 3px
     </hint>
     <hint type="destinationlabel">
      <x>151</x>
-     <y>-14</y>
+     <y>0</y>
     </hint>
    </hints>
   </connection>
@@ -774,28 +552,12 @@ padding: 3px
    <slot>ardEditingFinished()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1184</x>
-     <y>98</y>
+     <x>646</x>
+     <y>92</y>
     </hint>
     <hint type="destinationlabel">
      <x>485</x>
-     <y>-20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pushButton_2</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>onSwitchEditApplyClicked()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>342</x>
-     <y>427</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>283</x>
-     <y>22</y>
+     <y>0</y>
     </hint>
    </hints>
   </connection>
@@ -807,5 +569,14 @@ padding: 3px
   <slot>ardTreeSelectionChanged()</slot>
   <slot>ardEditingFinished()</slot>
   <slot>onSwitchEditApplyClicked()</slot>
+  <slot>addSwitchOnCommand()</slot>
+  <slot>addSwitchOffCommand()</slot>
+  <slot>rmSwitchOnCommand()</slot>
+  <slot>rmSwitchOffCommand()</slot>
+  <slot>addSwitchOnDataref()</slot>
+  <slot>addSwitchOffDataref()</slot>
+  <slot>rmSwitchOnDataref()</slot>
+  <slot>rmSwitchOffDataref()</slot>
+  <slot>editXPCommand()</slot>
  </slots>
 </ui>
