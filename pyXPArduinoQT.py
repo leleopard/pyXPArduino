@@ -1,3 +1,9 @@
+LOGGING_LEVEL = "INFO"
+import logging
+LOGGING_FORMAT= '%(asctime)s %(levelname)-8s %(name)-20s %(funcName)-20s  %(message)s'
+
+logging.basicConfig(format=LOGGING_FORMAT, level=logging.INFO)
+
 from PyQt5 import QtCore, QtGui, QtWidgets # Import the PyQt5 modules we'll need
 from PyQt5.QtWidgets import QApplication, QMainWindow,QTreeWidgetItem, QMenu
 import sys # We need sys so that we can pass argv to QApplication
@@ -10,25 +16,69 @@ import gui.pyXPswitchEditForm as pyXPswitchEditForm
 
 import lib.arduinoXMLconfig
 import lib.XPrefData as XPrefData
+import lib.XPlaneUDPServer as XPUDP
+import lib.arduinoSerial as ardSerial
+import lib.Arduino as Arduino
+
+
+
 
 class ExampleApp(QMainWindow, mainwindow.Ui_MainWindow):
 	def __init__(self):
 		super(self.__class__, self).__init__()
 		self.setupUi(self)  # This is defined in design.py file automatically
 							# It sets up layout and widgets that are defined
+		self.timer = QtCore.QTimer()
+		self.timer.timeout.connect(self.updateMessages)
+		self.timer.start(500)
+		
+		XPUDP.pyXPUDPServer.initialiseUDP(('127.0.0.1',49008), ('192.168.1.1',49000), 'STEPHANE-PC')
+		XPUDP.pyXPUDPServer.start()
 		
 		self.ardXMLconfig = lib.arduinoXMLconfig.arduinoConfig("ardConfig1.xml")
+		self.arduinoList = []
+		
+		self.refreshArduinoList()
+		
+		self.ardXMLconfig.setSwitchDataChangedCallback(self.updateTreeSwitch) 
+		
 		self.deleteConfirmDialog = deleteConfirmationDialog.DeleteConfirmationDialog()
 		self.addArduinoDialog = pyXPaddArduinoDialog.pyXPAddArduinoDialog()
 		self.pickXPCommandDialog = pyXPpickXPCommandDialog.pyXPpickXPCommandDialog()
 		self.ardSwitchEditForm = pyXPswitchEditForm.pyXPswitchEditForm(self.editPaneWidget, self.ardXMLconfig)
 		self.horizontalLayoutEditPane.addWidget(self.ardSwitchEditForm)
 		self.ardSwitchEditForm.switchNameUpdated.connect(self.updateSwitchName)
+		
 		self.refreshArduinoTree()
 		self.ardSwitchEditForm.hide()
 		self.arduinoEditForm.hide()
+	
+	def refreshArduinoList(self):
+		self.arduinoList = []
+		
+		for arduino in self.ardXMLconfig.getArduinoList():
+		#serialNumber, PORT, BAUD, XPUDPServer, arduinoXMLconfig)
+			self.arduinoList.append(Arduino.Arduino(arduino['serial_nr'],
+													arduino['port'],
+													int(arduino['baud']),
+													XPUDP.pyXPUDPServer,
+													self.ardXMLconfig
+													))
+		for arduino in self.arduinoList:
+			arduino.updateSwitchList('', arduino.ardSerialNumber, 'pin')
+		
+	def closeEvent(self, event):
+		XPUDP.pyXPUDPServer.quit()
+		for arduino in self.arduinoList:
+			arduino.quit()
 		
 	
+	def ardSwitchChanged(self, pin, value):
+		print("ard switch changed callback, pin", pin)
+	
+	def updateMessages(self):
+		self.statusBar().showMessage(XPUDP.pyXPUDPServer.statusMsg)
+		
 	def refreshArduinoTree(self):
 		print ("refreshArduinoTree")
 
@@ -59,20 +109,36 @@ class ExampleApp(QMainWindow, mainwindow.Ui_MainWindow):
 					inoutputsTreeElem.addChild(inputOutputTypesTreeElem)
 					inputOutputTypesTreeElem.setExpanded(True)
 					
+					
 					for inputOutput in inputOutputTypes:  # iterate through input and output types
 						inputOutputTreeElem = QTreeWidgetItem([ inputOutput.attrib['name'], inputOutput.attrib['id'], inputOutput.tag ])
 						#inputOutputTreeElem.setFlags(QtCore.Qt.ItemIsEditable)
 						inputOutputTypesTreeElem.addChild(inputOutputTreeElem)
+						
+						#inputOutputTreeElem.setIcon(0, QtGui.QIcon("Resources/small_switch_on.png"))
 					
 		self.arduinoTreeWidget.resizeColumnToContents(0)
 		
+	def updateTreeSwitch(self, switchSerialNr, ardSerialNr, attribute):
+		'''logging.info('updateTreeSwitch')
+		items = self.arduinoTreeWidget.findItems (switchSerialNr, QtCore.Qt.MatchExactly|QtCore.Qt.MatchRecursive,1)
 		
+		if len(items)>0:
+			switchData = self.ardXMLconfig.getSwitchData(switchSerialNr)
+			switchState = switchData['state']
+			if switchState == 'on':
+				items[0].setIcon(0, QtGui.QIcon("Resources/small_switch_on.png"))
+			else:
+				items[0].setIcon(0, QtGui.QIcon("Resources/small_switch_off.png"))
+			items[0].update()
+			self.arduinoTreeWidget.repaint()
+		'''
 	def updateSwitchName(self, switchID,switchName):
 		items = self.arduinoTreeWidget.findItems (switchID, QtCore.Qt.MatchExactly|QtCore.Qt.MatchRecursive,1)
 		if len(items)>0:
 			items[0].setText(0, switchName)
-			print (items)
-		
+			#print (items)
+	
 	
 	def ardTreeSelectionChanged(self):
 		print("Ard tree selection changed")

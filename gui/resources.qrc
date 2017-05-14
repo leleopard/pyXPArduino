@@ -1,8 +1,10 @@
 <RCC>
-  <qresource prefix="newPrefix">
-    <file>minusIcon.png</file>
-    <file>plusIcon.png</file>
-    <file>attention.png</file>
-    <file>attention.png</file>
-  </qresource>
+    <qresource prefix="/newPrefix">
+        <file>minusIcon.png</file>
+        <file>plusIcon.png</file>
+        <file>attention.png</file>
+        <file>attention.png</file>
+        <file>switch_off.png</file>
+        <file>switch_on.png</file>
+    </qresource>
 </RCC>

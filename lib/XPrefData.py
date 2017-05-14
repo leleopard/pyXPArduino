@@ -1,5 +1,8 @@
 #!/usr/bin/env python
+import logging
+import re
 
+logging.info('Loading XPlane commands...')
 XP_COMMANDS = []
 XP_COMMANDS_CATEGORIES = {'All':''}
 
@@ -20,9 +23,48 @@ for line in XP_CMDFILE_LINES:
 		
 		
 	XP_COMMANDS.append([cmd_category, command_chunks[0], command_chunks[1].rstrip()])
+
+logging.info('Loading XPlane datarefs...')
+XP_DATAREFS = []
+XP_DATAREFS_CATEGORIES = {'All':''}
+
+XP_DATAREFSFILE_LINES = []
+
+with open("XPRefFiles/DataRefs.txt") as datarefsFile:
+	XP_DATAREFSFILE_LINES = datarefsFile.readlines()
 	
-print(XP_COMMANDS)
-print(XP_COMMANDS_CATEGORIES)
+
+for line in XP_DATAREFSFILE_LINES:
+	#command_chunks = line.split("\\t+", 3)
+	command_chunks = re.split("\t+", line)
+	
+	#print(command_chunks)
+	if len(command_chunks) >= 3: # ensure the line has at least 3 tab separator
+		command_elems = command_chunks[0].split("/")
+		if len(command_elems) >= 3: # ensure this text looks like a dataref
+			cmd_category = command_elems[0]+"/"+command_elems[1]+"/"+command_elems[2]
+			if cmd_category in XP_DATAREFS_CATEGORIES:
+				pass
+			else:
+				XP_DATAREFS_CATEGORIES[cmd_category] = ''
+			
+			description = ''
+			unit = ''
+			if len(command_chunks)>=4:
+				unit = command_chunks[3]
+				for i in range(4, len(command_chunks)):
+					description+= command_chunks[i]
+					
+			XP_DATAREFS.append([cmd_category, 
+								command_chunks[0], # dataref
+								command_chunks[1].rstrip(), # type
+								command_chunks[2].rstrip(), # writable
+								unit,
+								description.rstrip()] )
+	
+print(XP_DATAREFS[0])
+print(XP_DATAREFS[1])
+#print(XP_COMMANDS_CATEGORIES)
 
 def getXPCommandList(category, filter):
 	filter_upper = filter.upper()
@@ -37,3 +79,15 @@ def getXPCommandList(category, filter):
 		command_list = filtered_commands
 	return command_list
 	
+def getXPDatarefList(category, filter):
+	filter_upper = filter.upper()
+	#print('Filter text:', filter)
+	if filter !='' and len(filter) >=2:
+		filtered_datarefs = [dref for dref in XP_DATAREFS if (filter_upper in dref[1].upper() or filter_upper in dref[5].upper())]
+	else:
+		filtered_datarefs = XP_DATAREFS
+	if category != None and category != "All":
+		dref_list = [dref for dref in filtered_datarefs if dref[0] == category]
+	else:
+		dref_list = filtered_datarefs
+	return dref_list
