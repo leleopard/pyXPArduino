@@ -1,4 +1,4 @@
-LOGGING_LEVEL = "INFO"
+LOGGING_LEVEL = "WARNIN"
 import logging
 LOGGING_FORMAT= '%(asctime)s %(levelname)-8s %(name)-20s %(funcName)-20s  %(message)s'
 
@@ -13,6 +13,7 @@ import gui.deleteConfirmationDialog as deleteConfirmationDialog
 import gui.pyXPaddArduinoDialog as pyXPaddArduinoDialog
 import gui.pyXPpickXPCommandDialog as pyXPpickXPCommandDialog
 import gui.pyXPswitchEditForm as pyXPswitchEditForm
+import gui.pyXPpotentiometerEditForm as pyXPpotentiometerEditForm
 
 import lib.arduinoXMLconfig
 import lib.XPrefData as XPrefData
@@ -23,7 +24,7 @@ import lib.Arduino as Arduino
 
 
 
-class ExampleApp(QMainWindow, mainwindow.Ui_MainWindow):
+class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 	def __init__(self):
 		super(self.__class__, self).__init__()
 		self.setupUi(self)  # This is defined in design.py file automatically
@@ -35,24 +36,35 @@ class ExampleApp(QMainWindow, mainwindow.Ui_MainWindow):
 		XPUDP.pyXPUDPServer.initialiseUDP(('127.0.0.1',49008), ('192.168.1.1',49000), 'STEPHANE-PC')
 		XPUDP.pyXPUDPServer.start()
 		
+		self.updatingCompPanel = False
+		
 		self.ardXMLconfig = lib.arduinoXMLconfig.arduinoConfig("ardConfig1.xml")
 		self.arduinoList = []
 		
 		self.refreshArduinoList()
 		
-		self.ardXMLconfig.setSwitchDataChangedCallback(self.updateTreeSwitch) 
-		
 		self.deleteConfirmDialog = deleteConfirmationDialog.DeleteConfirmationDialog()
 		self.addArduinoDialog = pyXPaddArduinoDialog.pyXPAddArduinoDialog()
 		self.pickXPCommandDialog = pyXPpickXPCommandDialog.pyXPpickXPCommandDialog()
-		self.ardSwitchEditForm = pyXPswitchEditForm.pyXPswitchEditForm(self.editPaneWidget, self.ardXMLconfig)
+		#switch edit form
+		self.ardSwitchEditForm = pyXPswitchEditForm.pyXPswitchEditForm(self.editPaneWidget, self.ardXMLconfig, self.actionSave)
 		self.horizontalLayoutEditPane.addWidget(self.ardSwitchEditForm)
-		self.ardSwitchEditForm.switchNameUpdated.connect(self.updateSwitchName)
+		self.ardSwitchEditForm.nameUpdated.connect(self.updateSwitchName)
+		#potentiometer edit form
+		self.ardPotentiometerEditForm = pyXPpotentiometerEditForm.pyXPpotentiometerEditForm(self.editPaneWidget, self.ardXMLconfig, self.actionSave)
+		self.horizontalLayoutEditPane.addWidget(self.ardPotentiometerEditForm)
+		#self.ardSwitchEditForm.nameUpdated.connect(self.updateSwitchName)
+		
+		self.ardBaudComboBox.addItems(lib.arduinoXMLconfig.ARD_BAUD)
 		
 		self.refreshArduinoTree()
 		self.ardSwitchEditForm.hide()
 		self.arduinoEditForm.hide()
-	
+		self.ardPotentiometerEditForm.hide()
+		
+		self.actionSave.setEnabled(False)
+		
+		
 	def refreshArduinoList(self):
 		self.arduinoList = []
 		
@@ -65,7 +77,7 @@ class ExampleApp(QMainWindow, mainwindow.Ui_MainWindow):
 													self.ardXMLconfig
 													))
 		for arduino in self.arduinoList:
-			arduino.updateSwitchList('', arduino.ardSerialNumber, 'pin')
+			arduino.updateComponentList('*', '', arduino.ardSerialNumber, 'pin')
 		
 	def closeEvent(self, event):
 		XPUDP.pyXPUDPServer.quit()
@@ -119,20 +131,7 @@ class ExampleApp(QMainWindow, mainwindow.Ui_MainWindow):
 					
 		self.arduinoTreeWidget.resizeColumnToContents(0)
 		
-	def updateTreeSwitch(self, switchSerialNr, ardSerialNr, attribute):
-		'''logging.info('updateTreeSwitch')
-		items = self.arduinoTreeWidget.findItems (switchSerialNr, QtCore.Qt.MatchExactly|QtCore.Qt.MatchRecursive,1)
-		
-		if len(items)>0:
-			switchData = self.ardXMLconfig.getSwitchData(switchSerialNr)
-			switchState = switchData['state']
-			if switchState == 'on':
-				items[0].setIcon(0, QtGui.QIcon("Resources/small_switch_on.png"))
-			else:
-				items[0].setIcon(0, QtGui.QIcon("Resources/small_switch_off.png"))
-			items[0].update()
-			self.arduinoTreeWidget.repaint()
-		'''
+
 	def updateSwitchName(self, switchID,switchName):
 		items = self.arduinoTreeWidget.findItems (switchID, QtCore.Qt.MatchExactly|QtCore.Qt.MatchRecursive,1)
 		if len(items)>0:
@@ -141,39 +140,48 @@ class ExampleApp(QMainWindow, mainwindow.Ui_MainWindow):
 	
 	
 	def ardTreeSelectionChanged(self):
+		self.updatingCompPanel = True
 		print("Ard tree selection changed")
 		self.ardSwitchEditForm.hide()
 		self.arduinoEditForm.hide()
+		self.ardPotentiometerEditForm.hide()
 		
 		if len(self.arduinoTreeWidget.selectedItems()) > 0:
 			tag 		= self.arduinoTreeWidget.selectedItems()[0].text(2)
-				
+			compID = self.arduinoTreeWidget.selectedItems()[0].text(1)
+			
 			if tag =='arduino':
 				self.arduinoEditForm.show()
-				ardData = self.ardXMLconfig.getArduinoData(self.arduinoTreeWidget.selectedItems()[0].text(1))
+				ardData = self.ardXMLconfig.getArduinoData(compID)
 				self.ardSerialNrLineEdit.setText(ardData['serial_nr'])
+				self.ardBaudComboBox.setCurrentText(ardData['baud'])
 				self.ardPortLineEdit.setText(ardData['port'])
 				self.ardNameLineEdit.setText(ardData['name'])
 				self.ardDescriptionLineEdit.setText(ardData['description'])
 				self.ardManufacturerLineEdit.setText(ardData['manufacturer'])
 			
 			if tag =='switch':
-				switchID = self.arduinoTreeWidget.selectedItems()[0].text(1)
-				self.ardSwitchEditForm.show(switchID)
-				
-	
+				self.ardSwitchEditForm.show(compID)
+			
+			if tag =='potentiometer':
+				self.ardPotentiometerEditForm.show(compID)
+		
+		self.updatingCompPanel = False
 	
 	## Saves the changes made in the Arduino Edit screen - called when user finishes editing the name.
 	#	
 	def ardEditingFinished(self):
-		ardData = {'port': 			self.ardPortLineEdit.text(),
-					'name': 		self.ardNameLineEdit.text(),
-					'description': 	self.ardDescriptionLineEdit.text(),
-					'serial_nr': 	self.ardSerialNrLineEdit.text(),
-					'manufacturer': self.ardManufacturerLineEdit.text()}
-					
-		self.ardXMLconfig.updateArduinoData(ardData['serial_nr'], ardData)
-		self.refreshArduinoTree()
+		if self.updatingCompPanel == False:
+			ardData = {'port': 			self.ardPortLineEdit.text(),
+						'baud':			self.ardBaudComboBox.currentText(),
+						'name': 		self.ardNameLineEdit.text(),
+						'description': 	self.ardDescriptionLineEdit.text(),
+						'serial_nr': 	self.ardSerialNrLineEdit.text(),
+						'manufacturer': self.ardManufacturerLineEdit.text()}
+						
+			self.ardXMLconfig.updateArduinoData(ardData['serial_nr'], ardData)
+			self.refreshArduinoTree()
+			self.actionSave.setEnabled(True)
 		
 	def ardTreeContextMenuRequested(self, position):
 		print("ardTreeContextMenuRequested")
@@ -217,6 +225,7 @@ class ExampleApp(QMainWindow, mainwindow.Ui_MainWindow):
 		
 		self.ardXMLconfig.addInputOutput(selectedArduinoSerialNr, selectedItemTag)
 		self.refreshArduinoTree()
+		self.actionSave.setEnabled(True)
 		
 	def removeCompAction(self):
 		print("remove ard item")
@@ -229,6 +238,7 @@ class ExampleApp(QMainWindow, mainwindow.Ui_MainWindow):
 			
 			self.ardXMLconfig.removeInputOutput(selectedArduinoSerialNr, selectedItemID)
 			self.refreshArduinoTree()
+			self.actionSave.setEnabled(True)
 	
 	def removeArduino(self):
 		print("remove arduino")
@@ -241,9 +251,11 @@ class ExampleApp(QMainWindow, mainwindow.Ui_MainWindow):
 			
 			self.ardXMLconfig.removeArduino(selectedArduinoSerialNr)
 			self.refreshArduinoTree()
+			self.actionSave.setEnabled(True)
 			
 	def saveToXML(self):
 		self.ardXMLconfig.saveToXMLfile()
+		self.actionSave.setEnabled(False)
 		
 	def pickArduino(self):
 		self.addArduinoDialog.refreshArduinoList(self.ardXMLconfig)
@@ -258,14 +270,14 @@ class ExampleApp(QMainWindow, mainwindow.Ui_MainWindow):
 												ardTableWidget.item(row,3).text(),
 												ardTableWidget.item(row,4).text(),
 												ardTableWidget.item(row,5).text())
-					
+			self.actionSave.setEnabled(True)
 		self.refreshArduinoTree()
 		print(returnCode)
 		
 		
 def main():
 	app = QApplication(sys.argv)  # A new instance of QApplication
-	form = ExampleApp()                 # We set the form to be our ExampleApp (design)
+	form = pyXPArduino()                 
 	form.show()                         # Show the form
 	app.exec_()                         # and execute the app
 

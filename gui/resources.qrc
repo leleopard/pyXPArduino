@@ -6,5 +6,8 @@
         <file>attention.png</file>
         <file>switch_off.png</file>
         <file>switch_on.png</file>
+        <file>save_active.png</file>
+        <file>quit.png</file>
+        <file>plane_icon.png</file>
     </qresource>
 </RCC>

@@ -1,4 +1,5 @@
 import threading
+import sys
 import logging
 import time
 import serial
@@ -23,7 +24,11 @@ from struct import *
 #--------------------------------------------------------------------------------------------------------------------
 
 class ArduinoSerial(threading.Thread):
-
+	
+	COMP_PIN_CMDS = {'switch' : "SW_PINS:",
+	'potentiometer' : "POT_PINS:" 
+	}
+	
 	##--------------------------------------------------------------------------------------------------------------------
 	# constructor 
 	# @param PORT: port the arduino is connected to
@@ -37,7 +42,12 @@ class ArduinoSerial(threading.Thread):
 		self.serialConnection = None
 		
 		try:
-			self.serialConnection = serial.Serial(PORT, BAUD)
+			self.serialConnection = serial.Serial(PORT, BAUD, 
+												serial.EIGHTBITS, serial.PARITY_NONE, 	#bytesize=EIGHTBITS, parity=PARITY_NONE
+												serial.STOPBITS_ONE, 						#stopbits=STOPBITS_ONE, 
+												None, False, 				#timeout=None, xonxoff=False,
+												False, None, 			# rtscts=False, write_timeout=None,
+												False, )								#dsrdtr=False,
 			self.XPUDPServer = XPUDPServer
 			
 			time.sleep(0.01)  
@@ -51,22 +61,21 @@ class ArduinoSerial(threading.Thread):
 		
 		self.queuedCommands = []
 		
-		self.switchCallbacks = []
+		self.inputCallbacks = []
 	
-	## register a function to be called when the switch on a pin changes state
-	# @param pin 	the pin on which the switch is connected
+	## register a function to be called when an input changes state
 	# @param callbackFunction 	the function to be called when the switch changes state
 	#
-	def registerSwitchChangedCallback(self, callbackFunction):
-		self.switchCallbacks.append(callbackFunction)
+	def registerInputChangedCallback(self, callbackFunction):
+		self.inputCallbacks.append(callbackFunction)
 	
-	def sendSwitchPinList(self, switchPinList):
+	def sendPinList(self, componentType, pinList):
 		if self.serialConnection != None:
-			logging.info('arduinoSerial::sending pin list to arduino' + str(switchPinList))
+			logging.info('arduinoSerial::sending pin list to arduino' + str(pinList))
 			
-			command = "SW_PINS:"
+			command = self.COMP_PIN_CMDS[componentType]
 						
-			for pin in switchPinList:
+			for pin in pinList:
 				command += pin
 				command += ':'
 			command = command[:-1]
@@ -95,31 +104,36 @@ class ArduinoSerial(threading.Thread):
 			if time_running >= 1.5:
 				for command in self.queuedCommands:
 					self.serialConnection.write(command.encode())
-					time.sleep(0.01) # leave time for chars to transmit
+					#time.sleep(0.01) # leave time for chars to transmit
 				self.queuedCommands = []
-				
-			#print ("ard serial attempt to receive data...")
-			bytesToRead = self.serialConnection.in_waiting
-			if (bytesToRead>0):
-				data = self.serialConnection.read(bytesToRead)		
-				#print("Arduino data: ", data, "data length", len(data))
+			
+			data = self.serialConnection.read(self.serialConnection.in_waiting)		
+			#data = self.serialConnection.read(200)		
+			
+			if len(data) > 0:
+				#logging.error("")
+				#logging.warning("Arduino data: "+ str(data) + "data length" + str( len(data)) )
 				buffer += data.decode(encoding = 'latin_1')
-				#print("buffer: ", buffer)
+				logging.info ("buffer: " + buffer)
 				
-				commands = buffer.split('\13\10')
-				logging.info('commands: ' + str(commands))
-				for elem in commands:
-					self.__processArduinoCmd(elem)  # we should now have a complete command from arduino to process
-				buffer = commands[len(commands)-1] 	# we can now empty the buffer
-				
-				#print("")
+				if ';' in buffer: # we have at least one valid command
+					commands = buffer.split(';')
+					buffer = commands[len(commands)-1] 	# we can now empty the buffer
+					commands.pop() # remove the last element in the list which is an incomplete command
+					for elem in commands:
+						self.__processArduinoCmd(elem)  # we should now have a complete command from arduino to process
 					
-			time.sleep(0.001)	
+				else:
+					commands = []
+				logging.info('commands: ' + str(commands))
+				
+					
+			time.sleep(0.00001)	
 			
 	## 
 	def __processArduinoCmd(self, buffer):
 		logging.info ("Process arduino command: "+ buffer)
-		logging.debug("Processing arduino command, command id: "+buffer[0:4])
+		#logging.debug("Processing arduino command, command id: "+buffer[0:4])
 		if buffer [0:4] == 'CMND':
 			command = buffer[5:len(buffer)-1]
 			logging.debug("i see a command"+ command+'\0')
@@ -135,20 +149,24 @@ class ArduinoSerial(threading.Thread):
 		
 		else:
 			command_elems = buffer.split(":")
-			if command_elems[0] == 'SW' and len(command_elems) == 3:
+			if (command_elems[0] == 'SW' or command_elems[0] == 'POT') and len(command_elems) == 3:
+				value = None
+				pin = None
 				try:
 					pin = int(command_elems[1])
 					value = int(command_elems[2])
-					
-					logging.info('callbacks:'+ str(self.switchCallbacks))
+				except ValueError:
+					logging.error("Error in reading input command from Arduino")
+					logging.error("Command: " + buffer)
+				logging.info('callbacks:'+ str(self.inputCallbacks))
 				
-					for callback in self.switchCallbacks:
+				if value is not None:
+					for callback in self.inputCallbacks:
 					#logging.info('calling callback'+ callback)
-						callback(pin, value)
-					logging.info("Switch on pin"+ command_elems[1]+ " Value: "+ command_elems[2])
-				except:
-					logging.error("Error in reading SW command from Arduino")
-		
+						callback(command_elems[0], pin, value)
+					logging.info("Input "+command_elems[0]+ " on pin"+ command_elems[1]+ " Value: "+ command_elems[2])
+				
+					
 		
 	##--------------------------------------------------------------------------------------------------------------------
 	# quit. Call to stop the thread 

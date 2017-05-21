@@ -138,7 +138,7 @@ padding: 3px
     </spacer>
    </item>
    <item row="5" column="1">
-    <widget class="QComboBox" name="SW_PIN_comboBox">
+    <widget class="QComboBox" name="PIN_comboBox">
      <property name="maximumSize">
       <size>
        <width>50</width>
@@ -488,7 +488,7 @@ padding: 3px
     </layout>
    </item>
    <item row="3" column="1" colspan="3">
-    <widget class="QLineEdit" name="SWEDIT_nameLineEdit">
+    <widget class="QLineEdit" name="nameLineEdit">
      <property name="minimumSize">
       <size>
        <width>250</width>
@@ -504,7 +504,7 @@ padding: 3px
     </widget>
    </item>
    <item row="4" column="1" colspan="3">
-    <widget class="QLineEdit" name="SWEDIT_IDlineEdit">
+    <widget class="QLineEdit" name="IDlineEdit">
      <property name="enabled">
       <bool>false</bool>
      </property>
@@ -728,10 +728,10 @@ padding: 3px
    </hints>
   </connection>
   <connection>
-   <sender>SWEDIT_nameLineEdit</sender>
+   <sender>nameLineEdit</sender>
    <signal>editingFinished()</signal>
    <receiver>switchEditForm</receiver>
-   <slot>updateSwitchXMLdata()</slot>
+   <slot>updateXMLdata()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>368</x>
@@ -744,10 +744,10 @@ padding: 3px
    </hints>
   </connection>
   <connection>
-   <sender>SW_PIN_comboBox</sender>
+   <sender>PIN_comboBox</sender>
    <signal>currentIndexChanged(int)</signal>
    <receiver>switchEditForm</receiver>
-   <slot>updateSwitchXMLdata()</slot>
+   <slot>updateXMLdata()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>221</x>
@@ -763,7 +763,7 @@ padding: 3px
    <sender>SWON_CMDS_TABLE</sender>
    <signal>itemChanged(QTableWidgetItem*)</signal>
    <receiver>switchEditForm</receiver>
-   <slot>updateSwitchXMLdata()</slot>
+   <slot>updateXMLdata()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>81</x>
@@ -779,7 +779,7 @@ padding: 3px
    <sender>SWOFF_CMDS_TABLE</sender>
    <signal>itemChanged(QTableWidgetItem*)</signal>
    <receiver>switchEditForm</receiver>
-   <slot>updateSwitchXMLdata()</slot>
+   <slot>updateXMLdata()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>360</x>
@@ -795,7 +795,7 @@ padding: 3px
    <sender>testSWON_CMDS_button</sender>
    <signal>clicked()</signal>
    <receiver>switchEditForm</receiver>
-   <slot>testSwitchOnCommands()</slot>
+   <slot>testOnCommands()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>236</x>
@@ -811,7 +811,7 @@ padding: 3px
    <sender>testSWOFF_CMDS_button</sender>
    <signal>clicked()</signal>
    <receiver>switchEditForm</receiver>
-   <slot>testSwitchOffCommands()</slot>
+   <slot>testOffCommands()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>213</x>
@@ -824,10 +824,10 @@ padding: 3px
    </hints>
   </connection>
   <connection>
-   <sender>SW_PIN_comboBox</sender>
+   <sender>PIN_comboBox</sender>
    <signal>currentTextChanged(QString)</signal>
    <receiver>switchEditForm</receiver>
-   <slot>updateSwitchPin()</slot>
+   <slot>updatePin()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>204</x>
@@ -875,7 +875,7 @@ padding: 3px
    <sender>SWON_DREFS_TABLE</sender>
    <signal>itemChanged(QTableWidgetItem*)</signal>
    <receiver>switchEditForm</receiver>
-   <slot>updateSwitchXMLdata()</slot>
+   <slot>updateXMLdata()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>595</x>
@@ -891,7 +891,7 @@ padding: 3px
    <sender>SWOFF_DREFS_TABLE</sender>
    <signal>itemChanged(QTableWidgetItem*)</signal>
    <receiver>switchEditForm</receiver>
-   <slot>updateSwitchXMLdata()</slot>
+   <slot>updateXMLdata()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>587</x>
@@ -907,7 +907,7 @@ padding: 3px
    <sender>testSWOFF_DREFS_button</sender>
    <signal>clicked()</signal>
    <receiver>switchEditForm</receiver>
-   <slot>testSwitchOffDatarefs()</slot>
+   <slot>testOffDatarefs()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>593</x>
@@ -923,7 +923,7 @@ padding: 3px
    <sender>testSWON_DREFS_button</sender>
    <signal>clicked()</signal>
    <receiver>switchEditForm</receiver>
-   <slot>testSwitchOnDatarefs()</slot>
+   <slot>testOnDatarefs()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>610</x>
@@ -932,6 +932,22 @@ padding: 3px
     <hint type="destinationlabel">
      <x>774</x>
      <y>181</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>SWON_CMDS_TABLE</sender>
+   <signal>cellChanged(int,int)</signal>
+   <receiver>switchEditForm</receiver>
+   <slot>activateSave()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>321</x>
+     <y>271</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>299</x>
+     <y>179</y>
     </hint>
    </hints>
   </connection>
@@ -946,12 +962,13 @@ padding: 3px
   <slot>addSwitchOffDataref()</slot>
   <slot>rmSwitchOffDataref()</slot>
   <slot>editXPCommand()</slot>
-  <slot>updateSwitchXMLdata()</slot>
-  <slot>testSwitchOnCommands()</slot>
-  <slot>testSwitchOffCommands()</slot>
-  <slot>updateSwitchPin()</slot>
+  <slot>updateXMLdata()</slot>
+  <slot>testOnCommands()</slot>
+  <slot>testOffCommands()</slot>
+  <slot>updatePin()</slot>
   <slot>editXPDataref()</slot>
-  <slot>testSwitchOffDatarefs()</slot>
-  <slot>testSwitchOnDatarefs()</slot>
+  <slot>testOffDatarefs()</slot>
+  <slot>testOnDatarefs()</slot>
+  <slot>activateSave()</slot>
  </slots>
 </ui>

@@ -3,6 +3,8 @@
 import xml.etree.ElementTree as ET
 import logging
 
+ARD_BAUD = ['9600', '19200', '38400', '57600', '74880', '115200', '230400', '250000']
+
 INPUT_OUTPUT_TAGS = ["switches", "potentiometers", "rot_encoders", "leds", "pwms"]
 INPUT_OUTPUT_ELEMS_TAGS = ["switch", "potentiometer", "rot_encoder", "led", "pwm"]
 INPUT_OUTPUT_TAGS_REF = {"switches":		{'add_action':'Add switch','child_tag':'switch'}, 
@@ -14,6 +16,9 @@ INPUT_OUTPUT_TAGS_REF = {"switches":		{'add_action':'Add switch','child_tag':'sw
 DIG_IO_PINS = ['22','23','24','25','26','27','28','29','30','31','32','33','34','35',
 				'36','37','38','39','40','41','42','43','44','45','46','47',
 				'48','49','50','51','52','53']
+
+POT_PINS = ['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15']
+				
 class arduinoConfig():
 
 	def __init__(self, ardXMLconfigFile):
@@ -21,11 +26,9 @@ class arduinoConfig():
 		self.root = self.tree.getroot()
 		self.ardXMLconfigFile = ardXMLconfigFile
 		
-		self.switchDataChangedCallbacks = []
+		self.componentAttributeChangedCallbacks = []
 		#for child in self.root:
 		#	print (child.tag, child.attrib)
-	
-		
 	
 	def addInputOutput(self, arduinoSerialNr, inputOutputType):
 		print("Add InOutput type ",inputOutputType, "to Arduino serial nr:", arduinoSerialNr)
@@ -40,11 +43,15 @@ class arduinoConfig():
 				highest_index = index +1
 				
 		
-		switch = ET.SubElement(inputOutputTag,INPUT_OUTPUT_TAGS_REF[inputOutputTag.tag]['child_tag'])
-		switch.set('id', inputOutputTag.tag+"_"+arduinoSerialNr+"_"+str(highest_index))
-		switch.set('name', INPUT_OUTPUT_TAGS_REF[inputOutputTag.tag]['child_tag']+" "+str(highest_index))
+		inputoutput = ET.SubElement(inputOutputTag,INPUT_OUTPUT_TAGS_REF[inputOutputTag.tag]['child_tag'])
+		inputoutput.set('id', inputOutputTag.tag+"_"+arduinoSerialNr+"_"+str(highest_index))
+		inputoutput.set('name', INPUT_OUTPUT_TAGS_REF[inputOutputTag.tag]['child_tag']+" "+str(highest_index))
+		#if INPUT_OUTPUT_TAGS_REF[inputOutputTag.tag]['child_tag'] == 'switch':
+		inputoutput.set('pin', '')
+		inputoutput.set('state', 'on')
 		
 		ET.dump(self.root)
+		
 	
 	def addArduino(self, port, name, description, serial_number, manufacturer):
 		ardTag = ET.SubElement(self.root, 'arduino')
@@ -76,7 +83,7 @@ class arduinoConfig():
 	def removeArduino(self, arduinoSerialNr):
 		ardTag = self.root.findall(".//arduino[@serial_nr='"+arduinoSerialNr+"']")[0]
 		self.root.remove(ardTag)
-	
+		
 	def getArduinoList(self):
 		ardTags = self.root.findall(".//arduino")
 		ardList = []
@@ -105,18 +112,19 @@ class arduinoConfig():
 	
 	def saveToXMLfile(self):
 		self.tree.write(self.ardXMLconfigFile)
-	
-	## find actions for switch by pin and arduino serial number, returns a list of actions.
-	# @return list of actions in form [{'switch_state': action.attrib['switch_state'], 
+		
+		
+	## find actions for component by component type, pin and arduino serial number, returns a list of actions.
+	# @return list of actions in form [{'state': action.attrib['state'], 
 	#									'action_type': action.attrib['action_type'], 
 	#									'cmddref': action.text}]
-	def getSwitchActions(self, arduinoSerialNr, pin):
+	def getComponentActions(self, arduinoSerialNr, componentType, pin):
 		actionsList = []
 		ardTags = self.root.findall(".//arduino[@serial_nr='"+arduinoSerialNr+"']")
 		if len(ardTags) > 0: # arduino has been found
-			switchTag = ardTags[0].findall(".//switch[@pin='"+str(pin)+"']")
-			if len(switchTag) > 0: # switch has been found
-				actions = list(switchTag[0].iter('action'))
+			compTag = ardTags[0].findall(".//"+componentType+"[@pin='"+str(pin)+"']")
+			if len(compTag) > 0: # switch has been found
+				actions = list(compTag[0].iter('action'))
 				
 				for action in actions:
 					logging.info('getSwitchActions::action:'+str(action.text))
@@ -128,7 +136,7 @@ class arduinoConfig():
 						setToValue = action.attrib['setToValue']
 					except:
 						pass
-					actionsList.append({'switch_state': action.attrib['switch_state'], 
+					actionsList.append({'state': action.attrib['state'], 
 										'action_type': action.attrib['action_type'], 
 										'cmddref': action.text,
 										'index': index, 
@@ -136,51 +144,54 @@ class arduinoConfig():
 				
 		return actionsList
 	
-	## returns the attribute value for a switch searching by pin and arduino serial number.
+	## returns the attribute value for a component searching by component type, pin and arduino serial number.
 	# @return attribute or '' if not found
-	def getSwitchAttribute(self, arduinoSerialNr, pin, switchAttrib):
+	def getComponentAttribute(self, arduinoSerialNr, componentType, pin, attribute):
 		ardTags = self.root.findall(".//arduino[@serial_nr='"+arduinoSerialNr+"']")
 		if len(ardTags) > 0: # arduino has been found
-			switchTag = ardTags[0].findall(".//switch[@pin='"+str(pin)+"']")
-			if len(switchTag) > 0: # switch has been found
-				
-				return switchTag[0].attrib[switchAttrib]
+			compTag = ardTags[0].findall(".//"+componentType+"[@pin='"+str(pin)+"']")
+			if len(compTag) > 0: # component has been found
+				return compTag[0].attrib[attribute]
 				
 		return ''
 	
-	## return list of switches for a given arduino, search by arduino serial ID.
+	## return list of components for a given arduino, search by arduino serial ID and component type.
 	# @return list of switches in form [{'name': switchTag.attrib['name'],
 	#									'id': switchTag.attrib['id'],
-	#									'pin': pin}]
-	def getSwitchList(self, arduinoSerialNr):
-		switchList = []
+	#									'pin': pin, 
+	#									'state': compTag.attrib['state']}]
+	def getComponentList(self, arduinoSerialNr, componentType):
+		compList = []
 		ardTags = self.root.findall(".//arduino[@serial_nr='"+arduinoSerialNr+"']")
 		if len(ardTags) > 0: # arduino has been found
-			switchTags = ardTags[0].findall(".//switch")
-			for switchTag in switchTags:
+			compTags = ardTags[0].findall(".//"+componentType)
+			for compTag in compTags:
 				pin =''
-				if 'pin' in switchTag.attrib: 
-					pin = switchTag.attrib['pin']
-				switchList.append({'name': switchTag.attrib['name'],
-								'id': switchTag.attrib['id'],
-								'pin': pin})
+				if 'pin' in compTag.attrib: 
+					pin = compTag.attrib['pin']
+				compList.append({'name': compTag.attrib['name'],
+								'id': compTag.attrib['id'],
+								'pin': pin, 
+								'state': compTag.attrib['state']})
 				
-		return switchList
+		return compList
 
 	
-	## find switch by serial number, returns a dictionary with its attribute values or None if not found.
+	## find component by serial number, returns a dictionary with its attribute values or None if not found.
+	# @param compSerialNr	the ID of the component
+	# @param componentType the type of component: 'switch', 'potentiometer', 'rot_encoder', 'led', 'pwm'
 	#
-	def getSwitchData(self, switchSerialNr):
-		switchTag = self.root.findall(".//switch[@id='"+switchSerialNr+"']")
-		if len(switchTag) > 0: # switch has been found
+	def getComponentData(self, compSerialNr, componentType):
+		compTag = self.root.findall(".//"+componentType+"[@id='"+compSerialNr+"']")
+		if len(compTag) > 0: # comp has been found
 			pin =''
-			if 'pin' in switchTag[0].attrib: 
-				pin = switchTag[0].attrib['pin']
-			actions = list(switchTag[0].iter('action'))
-			print("actions:", len(actions))
+			if 'pin' in compTag[0].attrib: 
+				pin = compTag[0].attrib['pin']
+			actions = list(compTag[0].iter('action'))
+			#print("actions:", len(actions))
 			actionsList = []
 			for action in actions:
-				print('action:',action)
+				#print('action:',action)
 				
 				index = '0'
 				setToValue = '0.0'
@@ -190,54 +201,55 @@ class arduinoConfig():
 				except:
 					pass
 					
-				actionsList.append({'switch_state': action.attrib['switch_state'], 
+				actionsList.append({'state': action.attrib['state'], 
 									'action_type': action.attrib['action_type'], 
 									'cmddref': action.text,
 									'index': index, 
 									'setToValue': setToValue})
-			switchDict = {'name': switchTag[0].attrib['name'],
-					'id': switchTag[0].attrib['id'],
+			compDict = {'name': compTag[0].attrib['name'],
+					'id': compTag[0].attrib['id'],
 					'pin': pin, 
-					'state': switchTag[0].attrib['state'],
+					'state': compTag[0].attrib['state'],
 					'actions': actionsList}
 			
-			return switchDict
+			return compDict
 		else:
 			return None
 	
 	
-	## register a callback function to be called when switch data is updated, the callback will be passed the switch serial nr
+	## register a callback function to be called when a component attribute has changed data is updated
+	# @param callback 	callback function, it will be passed componentType, compSerialNr,ardSerialNr, attribute
 	#
-	
-	def setSwitchDataChangedCallback(self, callback):
-		self.switchDataChangedCallbacks.append(callback)
+	def registerComponentAttributeChangedCallback(self, callback):
+		self.componentAttributeChangedCallbacks.append(callback)
 		
 	
-	## updates switch data - id, name, arduino pin, and replace actions with those passed in parameter
-	# @param switchSerialNr  the id of the switch to update
+	## updates component data - id, name, arduino pin, and replace actions with those passed in parameter
+	# @param compSerialNr  the id of the component to update
+	# @param componentType the type of component: 'switch', 'potentiometer', 'rot_encoder', 'led', 'pwm'
 	# @param switchData  dictionary formatted as {'id': 'id123', 'name': 'myname', 'pin': 'arduino pin nr'}
 	# @param switchActions  list of dictionaries, one per action, each formatted as {'switch_state': 'on' or 'off', 'action_type': 'cmd' or 'dref, 'cmddref': 'command or dataref string'}
-	
-	def updateSwitchData(self, switchSerialNr, switchData, switchActions = []):
-		logging.info('Update Switch Data')
-		switchTag = self.root.findall(".//switch[@id='"+switchSerialNr+"']")
-		if len(switchTag) > 0: # switch has been found
+	#
+	def updateComponentData(self, compSerialNr, componentType, switchData, switchActions = []):
+		logging.info('Update Component Data, type: '+componentType)
+		compTag = self.root.findall(".//"+componentType+"[@id='"+compSerialNr+"']")
+		if len(compTag) > 0: # component has been found
 			#find the switch arduino parent element
-			ardTag = self.root.findall(".//switch[@id='"+switchSerialNr+"']......")
+			ardTag = self.root.findall(".//"+componentType+"[@id='"+compSerialNr+"']......")
 			ardSerialNr = ardTag[0].attrib['serial_nr']
 			#logging.info (ardTag)
 			#logging.info ('ARD serial nr: '+ardTag[0].attrib['serial_nr'])
 			
-			self.updateSwitchAttribute(switchSerialNr ,'id', switchData['id'])
-			self.updateSwitchAttribute(switchSerialNr ,'name', switchData['name'])
-			self.updateSwitchAttribute(switchSerialNr ,'pin', switchData['pin'])
+			self.updateComponentAttribute(compSerialNr, componentType,'id', switchData['id'])
+			self.updateComponentAttribute(compSerialNr, componentType,'name', switchData['name'])
+			self.updateComponentAttribute(compSerialNr, componentType,'pin', switchData['pin'])
 			
-			for action in list(switchTag[0]): # first remove all actions
-				switchTag[0].remove(action)
+			for action in list(compTag[0]): # first remove all actions
+				compTag[0].remove(action)
 				
 			for action in switchActions:
-				actionTag = ET.SubElement(switchTag[0], 'action')
-				actionTag.set('switch_state', action['switch_state'])
+				actionTag = ET.SubElement(compTag[0], 'action')
+				actionTag.set('state', action['state'])
 				actionTag.set('action_type', action['action_type'])
 				try:
 					actionTag.set('index', action['index'])
@@ -246,29 +258,29 @@ class arduinoConfig():
 					pass
 				actionTag.text = action['cmddref']
 			
-			#for callback in self.switchDataChangedCallbacks:
-			#	callback(switchSerialNr,ardSerialNr)
-			
 		else:
 			return -1
 	
-	## updates switch attribute - 'on' or 'off'
-	# @param switchSerialNr  the id of the switch to update
-	# @param switchState   'on' or 'off'  
+	## updates component attribute 
+	# @param compSerialNr  the id of the component to update
+	# @param componentType the type of component: 'switch', 'potentiometer', 'rot_encoder', 'led', 'pwm'
+	# @param attribute the attribute of the component to update
+	# @param attributeValue   the value to set the attribute to 
 	#
-	def updateSwitchAttribute(self, switchSerialNr, switchAttribute, attributeValue):
-		logging.info('Update switch attribute: '+switchSerialNr+' attribute: ' +switchAttribute+' value:'+attributeValue )
-		switchTag = self.root.findall(".//switch[@id='"+switchSerialNr+"']")
-		if len(switchTag) > 0: # switch has been found
-			#find the switch arduino parent element
-			ardTag = self.root.findall(".//switch[@id='"+switchSerialNr+"']......")
+	def updateComponentAttribute(self, compSerialNr, componentType, attribute, attributeValue):
+		logging.info('Update component attribute: '+compSerialNr+' attribute: ' +attribute+' value:'+attributeValue )
+		compTag = self.root.findall(".//"+componentType+"[@id='"+compSerialNr+"']")
+		if len(compTag) > 0: # component has been found
+			#print("component found")
+			#find the component arduino parent element
+			ardTag = self.root.findall(".//"+componentType+"[@id='"+compSerialNr+"']......")
 			ardSerialNr = ardTag[0].attrib['serial_nr']
-			if switchTag[0].attrib[switchAttribute] != attributeValue: # then the value has changed and must be updated
-				switchTag[0].set(switchAttribute, attributeValue)
+			if compTag[0].attrib[attribute] != attributeValue: # then the value has changed and must be updated
+				compTag[0].set(attribute, attributeValue)
 				# and we notify all callbacks of this attribute change
-				for callback in self.switchDataChangedCallbacks:
-					callback(switchSerialNr,ardSerialNr, switchAttribute)
-			
+				for callback in self.componentAttributeChangedCallbacks:
+					callback(componentType, compSerialNr,ardSerialNr, attribute)
+				
 		else:
 			return -1
 	
@@ -292,6 +304,7 @@ class arduinoConfig():
 		ardTags = self.root.findall(".//arduino[@serial_nr='"+arduinoSerialNr+"']")
 		if len(ardTags) > 0: # arduino has been found
 			ardTags[0].set('port', ardData['port'])
+			ardTags[0].set('baud', ardData['baud'])
 			ardTags[0].set('name', ardData['name'])
 			ardTags[0].set('description', ardData['description'])
 			ardTags[0].set('serial_nr', ardData['serial_nr'])

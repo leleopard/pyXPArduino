@@ -12,33 +12,36 @@ import lib.arduinoXMLconfig
 import lib.XPlaneUDPServer as XPUDP
 
 class pyXPswitchEditForm(QtWidgets.QWidget, switchEditForm.Ui_switchEditForm):
-	switchNameUpdated = QtCore.pyqtSignal(str,str)
-	switchPinUpdated = QtCore.pyqtSignal(str)
+	nameUpdated = QtCore.pyqtSignal(str,str)
+	pinUpdated = QtCore.pyqtSignal(str)
 	
-	def __init__(self,widget, ardXMLconfig):
+	def __init__(self,widget, ardXMLconfig, actionSave):
 		super(self.__class__, self).__init__(widget)
+		self.repopulating = False
 		self.setupUi(self)  # This is defined in design.py file automatically
 							# It sets up layout and widgets that are defined
-		self.switchID = ''
+		self.actionSave = actionSave
+		self.componentID = ''
+		self.componentType = "switch"
 		self.ardXMLconfig = ardXMLconfig
-		self.ardXMLconfig.setSwitchDataChangedCallback(self.updateSwitchStateButton)
+		self.ardXMLconfig.registerComponentAttributeChangedCallback(self.updateStateWidget)
 		self.pickXPCommandDialog = pyXPpickXPCommandDialog.pyXPpickXPCommandDialog()
 		self.pickXPDatarefDialog = pyXPpickXPDatarefDialog.pyXPpickXPDatarefDialog()
-		self.SW_PIN_comboBox.addItems(lib.arduinoXMLconfig.DIG_IO_PINS)
-	
+		self.PIN_comboBox.addItems(lib.arduinoXMLconfig.DIG_IO_PINS)
+		
 	
 		
-	def show(self, switchID, ardSerialNr = None):
-		print("******************show switch ID:", switchID)
-		self.switchID = switchID
-		switchData = self.ardXMLconfig.getSwitchData(switchID)
-		print(switchData)
-		self.SWEDIT_nameLineEdit.setText(switchData['name'])
-		self.SWEDIT_IDlineEdit.setText(switchData['id'])
-		pinIndex = self.SW_PIN_comboBox.findText(switchData['pin'])
-		self.SW_PIN_comboBox.setCurrentIndex(pinIndex)
+	def show(self, componentID, ardSerialNr = None):
+		self.repopulating = True
+		self.componentID = componentID
+		componentData = self.ardXMLconfig.getComponentData(componentID, self.componentType)
 		
-		switchState = switchData['state']
+		self.nameLineEdit.setText(componentData['name'])
+		self.IDlineEdit.setText(componentData['id'])
+		pinIndex = self.PIN_comboBox.findText(componentData['pin'])
+		self.PIN_comboBox.setCurrentIndex(pinIndex)
+		
+		switchState = componentData['state']
 		if switchState == 'on':
 			self.switchStateButton.setChecked(True) 
 		else:
@@ -47,9 +50,9 @@ class pyXPswitchEditForm(QtWidgets.QWidget, switchEditForm.Ui_switchEditForm):
 		self.SWON_CMDS_TABLE.setRowCount(0)
 		self.SWOFF_CMDS_TABLE.setRowCount(0)
 		
-		actions = switchData['actions']
+		actions = componentData['actions']
 		for action in actions:
-			if action['switch_state'] == 'on':
+			if action['state'] == 'on':
 				if action['action_type'] == 'cmd':
 					index = self.SWON_CMDS_TABLE.rowCount()
 					self.SWON_CMDS_TABLE.insertRow(index)
@@ -74,7 +77,7 @@ class pyXPswitchEditForm(QtWidgets.QWidget, switchEditForm.Ui_switchEditForm):
 						item = QtWidgets.QTableWidgetItem(drefList[0][4]) # unit
 						self.SWON_DREFS_TABLE.setItem(index, 4, item)
 						
-			if action['switch_state'] == 'off':
+			if action['state'] == 'off':
 				if action['action_type'] == 'cmd':
 					index = self.SWOFF_CMDS_TABLE.rowCount()
 					self.SWOFF_CMDS_TABLE.insertRow(index)
@@ -107,7 +110,8 @@ class pyXPswitchEditForm(QtWidgets.QWidget, switchEditForm.Ui_switchEditForm):
 		self.SWOFF_DREFS_TABLE.resizeColumnsToContents()
 		self.SWON_DREFS_TABLE.resizeRowsToContents()
 		self.SWOFF_DREFS_TABLE.resizeRowsToContents()
-				
+		
+		self.repopulating = False
 		super().show()
 	
 	def hide(self):
@@ -117,17 +121,21 @@ class pyXPswitchEditForm(QtWidgets.QWidget, switchEditForm.Ui_switchEditForm):
 		self.SWOFF_DREFS_TABLE.setRowCount(0)
 		super().hide()
 		
-	def updateSwitchStateButton(self, switchID, ardSerialNr = None, attribute = 'state'):
-		if switchID == self.switchID and attribute == 'state':
-			switchData = self.ardXMLconfig.getSwitchData(switchID)
-			switchState = switchData['state']
-			if switchState == 'on':
+	def updateStateWidget(self, componentType, componentID, ardSerialNr = None, attribute = 'state'):
+		logging.info ('Update switch widget'+componentType)
+		if componentType == 'switch' and componentID == self.componentID and attribute == 'state':
+			componentData = self.ardXMLconfig.getComponentData(componentID, self.componentType)
+			state = componentData['state']
+			if state == 'on':
 				self.switchStateButton.setChecked(True) 
 			else:
 				self.switchStateButton.setChecked(False) 
 		
+	def activateSave(self):
+		if self.repopulating == False:
+			self.actionSave.setEnabled(True)
 	
-	def testSwitchOnCommands(self):
+	def testOnCommands(self):
 		for i in range(0, self.SWON_CMDS_TABLE.rowCount()):
 			item = self.SWON_CMDS_TABLE.item(i,0)
 			actioncmddref = ''
@@ -135,7 +143,7 @@ class pyXPswitchEditForm(QtWidgets.QWidget, switchEditForm.Ui_switchEditForm):
 				actioncmddref = self.SWON_CMDS_TABLE.item(i,0).text()
 				XPUDP.pyXPUDPServer.sendXPCmd(actioncmddref)
 	
-	def testSwitchOffCommands(self):
+	def testOffCommands(self):
 		for i in range(0, self.SWOFF_CMDS_TABLE.rowCount()):
 			item = self.SWOFF_CMDS_TABLE.item(i,0)
 			actioncmddref = ''
@@ -143,7 +151,7 @@ class pyXPswitchEditForm(QtWidgets.QWidget, switchEditForm.Ui_switchEditForm):
 				actioncmddref = self.SWOFF_CMDS_TABLE.item(i,0).text()
 				XPUDP.pyXPUDPServer.sendXPCmd(actioncmddref)
 	
-	def testSwitchOnDatarefs(self):
+	def testOnDatarefs(self):
 		for i in range(0, self.SWON_DREFS_TABLE.rowCount()):
 			item = self.SWON_DREFS_TABLE.item(i,0)
 			actioncmddref = ''
@@ -163,7 +171,7 @@ class pyXPswitchEditForm(QtWidgets.QWidget, switchEditForm.Ui_switchEditForm):
 				
 				XPUDP.pyXPUDPServer.sendXPDref(actioncmddref, index, setToValue)
 				
-	def testSwitchOffDatarefs(self):
+	def testOffDatarefs(self):
 		for i in range(0, self.SWOFF_DREFS_TABLE.rowCount()):
 			item = self.SWOFF_DREFS_TABLE.item(i,0)
 			actioncmddref = ''
@@ -183,128 +191,138 @@ class pyXPswitchEditForm(QtWidgets.QWidget, switchEditForm.Ui_switchEditForm):
 				
 				XPUDP.pyXPUDPServer.sendXPDref(actioncmddref, index, setToValue)
 	
-	def updateSwitchXMLdata(self):
-		#print("updateSwitchXMLdata")
-		actions = []
-		index = 0
-		for i in range(0, self.SWON_CMDS_TABLE.rowCount()):
-			item = self.SWON_CMDS_TABLE.item(i,0)
-			actioncmddref = ''
-			if item != None:
-				actioncmddref = self.SWON_CMDS_TABLE.item(i,0).text()
-				
-			actions.append({'switch_state':'on', 
-						  'action_type':'cmd', 
-						  'cmddref':actioncmddref})
-			index = i
-		
-		for i in range(0, self.SWOFF_CMDS_TABLE.rowCount()):
-			item = self.SWOFF_CMDS_TABLE.item(i,0)
-			actioncmddref = ''
-			if item != None:
-				actioncmddref = self.SWOFF_CMDS_TABLE.item(i,0).text()
-				
-			actions.append({'switch_state':'off', 
-						  'action_type':'cmd', 
-						  'cmddref':actioncmddref})
-		
-		for i in range(0, self.SWON_DREFS_TABLE.rowCount()):
-			item = self.SWON_DREFS_TABLE.item(i,0)
-			actioncmddref = ''
-			if item != None:
-				actioncmddref = self.SWON_DREFS_TABLE.item(i,0).text()
+	def updateXMLdata(self):
+		if self.repopulating == False:
+			actions = []
+			index = 0
+			for i in range(0, self.SWON_CMDS_TABLE.rowCount()):
+				item = self.SWON_CMDS_TABLE.item(i,0)
+				actioncmddref = ''
+				if item != None:
+					actioncmddref = self.SWON_CMDS_TABLE.item(i,0).text()
+					
+				actions.append({'state':'on', 
+							  'action_type':'cmd', 
+							  'cmddref':actioncmddref})
+				index = i
 			
-			item = self.SWON_DREFS_TABLE.item(i,1)
-			drefIndex = ''
-			if item != None:
-				drefIndex = self.SWON_DREFS_TABLE.item(i,1).text()
+			for i in range(0, self.SWOFF_CMDS_TABLE.rowCount()):
+				item = self.SWOFF_CMDS_TABLE.item(i,0)
+				actioncmddref = ''
+				if item != None:
+					actioncmddref = self.SWOFF_CMDS_TABLE.item(i,0).text()
+					
+				actions.append({'state':'off', 
+							  'action_type':'cmd', 
+							  'cmddref':actioncmddref})
+			
+			for i in range(0, self.SWON_DREFS_TABLE.rowCount()):
+				item = self.SWON_DREFS_TABLE.item(i,0)
+				actioncmddref = ''
+				if item != None:
+					actioncmddref = self.SWON_DREFS_TABLE.item(i,0).text()
 				
-			item = self.SWON_DREFS_TABLE.item(i,2)
-			setToValue = ''
-			if item != None:
-				setToValue = self.SWON_DREFS_TABLE.item(i,2).text()
-			
-			actions.append({'switch_state':'on', 
-						  'action_type':'dref', 
-						  'cmddref':actioncmddref, 
-						  'index':drefIndex,
-						  'setToValue':  setToValue })
-			index = i
-		
-		for i in range(0, self.SWOFF_DREFS_TABLE.rowCount()):
-			item = self.SWOFF_DREFS_TABLE.item(i,0)
-			actioncmddref = ''
-			if item != None:
-				actioncmddref = self.SWOFF_DREFS_TABLE.item(i,0).text()
-			
-			item = self.SWOFF_DREFS_TABLE.item(i,1)
-			drefIndex = ''
-			if item != None:
-				drefIndex = self.SWOFF_DREFS_TABLE.item(i,1).text()
+				item = self.SWON_DREFS_TABLE.item(i,1)
+				drefIndex = ''
+				if item != None:
+					drefIndex = self.SWON_DREFS_TABLE.item(i,1).text()
+					
+				item = self.SWON_DREFS_TABLE.item(i,2)
+				setToValue = ''
+				if item != None:
+					setToValue = self.SWON_DREFS_TABLE.item(i,2).text()
 				
-			item = self.SWOFF_DREFS_TABLE.item(i,2)
-			setToValue = ''
-			if item != None:
-				setToValue = self.SWOFF_DREFS_TABLE.item(i,2).text()
+				actions.append({'state':'on', 
+							  'action_type':'dref', 
+							  'cmddref':actioncmddref, 
+							  'index':drefIndex,
+							  'setToValue':  setToValue })
+				index = i
 			
-			actions.append({'switch_state':'off', 
-						  'action_type':'dref', 
-						  'cmddref':actioncmddref, 
-						  'index':drefIndex,
-						  'setToValue':  setToValue })
-			index = i
-		
-		self.ardXMLconfig.updateSwitchData(self.switchID, {'id':self.SWEDIT_IDlineEdit.text(),
-															'name':self.SWEDIT_nameLineEdit.text(),
-															'pin':self.SW_PIN_comboBox.currentText()},
-															actions)
-															
-		self.switchNameUpdated.emit(self.SWEDIT_IDlineEdit.text(), self.SWEDIT_nameLineEdit.text())
+			for i in range(0, self.SWOFF_DREFS_TABLE.rowCount()):
+				item = self.SWOFF_DREFS_TABLE.item(i,0)
+				actioncmddref = ''
+				if item != None:
+					actioncmddref = self.SWOFF_DREFS_TABLE.item(i,0).text()
+				
+				item = self.SWOFF_DREFS_TABLE.item(i,1)
+				drefIndex = ''
+				if item != None:
+					drefIndex = self.SWOFF_DREFS_TABLE.item(i,1).text()
+					
+				item = self.SWOFF_DREFS_TABLE.item(i,2)
+				setToValue = ''
+				if item != None:
+					setToValue = self.SWOFF_DREFS_TABLE.item(i,2).text()
+				
+				actions.append({'state':'off', 
+							  'action_type':'dref', 
+							  'cmddref':actioncmddref, 
+							  'index':drefIndex,
+							  'setToValue':  setToValue })
+				index = i
+			
+			self.ardXMLconfig.updateComponentData(self.componentID, self.componentType,
+																{'id':self.IDlineEdit.text(),
+																'name':self.nameLineEdit.text(),
+																'pin':self.PIN_comboBox.currentText()},
+																actions)
+																
+			self.nameUpdated.emit(self.IDlineEdit.text(), self.nameLineEdit.text())
+			self.actionSave.setEnabled(True)
 	
-	def updateSwitchPin(self):
+	def updatePin(self):
 		print("switch pin updated")
-		self.switchPinUpdated.emit(self.SWEDIT_IDlineEdit.text())
+		self.pinUpdated.emit(self.IDlineEdit.text())
 		
 	def addSwitchOnCommand(self):
 		print("ADD SW ON COMMAND")
 		self.SWON_CMDS_TABLE.insertRow(self.SWON_CMDS_TABLE.rowCount())
 		self.SWON_CMDS_TABLE.resizeRowsToContents()
 		self.updateSwitchXMLdata()
+		self.actionSave.setEnabled(True)
 		
 	def rmSwitchOnCommand(self):
 		row = self.SWON_CMDS_TABLE.currentRow()
 		self.SWON_CMDS_TABLE.removeRow(row)
 		self.updateSwitchXMLdata()
+		self.actionSave.setEnabled(True)
 	
 	def addSwitchOnDataref(self):
 		self.SWON_DREFS_TABLE.insertRow(self.SWON_DREFS_TABLE.rowCount())
 		self.SWON_DREFS_TABLE.resizeRowsToContents()
 		self.updateSwitchXMLdata()
+		self.actionSave.setEnabled(True)
 		
 	def rmSwitchOnDataref(self):
 		row = self.SWON_DREFS_TABLE.currentRow()
 		self.SWON_DREFS_TABLE.removeRow(row)
 		self.updateSwitchXMLdata()
+		self.actionSave.setEnabled(True)
 		
 	def addSwitchOffCommand(self):
 		self.SWOFF_CMDS_TABLE.insertRow(self.SWOFF_CMDS_TABLE.rowCount())
 		self.SWOFF_CMDS_TABLE.resizeRowsToContents()
 		self.updateSwitchXMLdata()
+		self.actionSave.setEnabled(True)
 		
 	def rmSwitchOffCommand(self):
 		row = self.SWOFF_CMDS_TABLE.currentRow()
 		self.SWOFF_CMDS_TABLE.removeRow(row)
 		self.updateSwitchXMLdata()
+		self.actionSave.setEnabled(True)
 		
 	def addSwitchOffDataref(self):
 		self.SWOFF_DREFS_TABLE.insertRow(self.SWOFF_DREFS_TABLE.rowCount())
 		self.SWOFF_DREFS_TABLE.resizeRowsToContents()
 		self.updateSwitchXMLdata()
+		self.actionSave.setEnabled(True)
 		
 	def rmSwitchOffDataref(self):
 		row = self.SWOFF_DREFS_TABLE.currentRow()
 		self.SWOFF_DREFS_TABLE.removeRow(row)
 		self.updateSwitchXMLdata()
+		self.actionSave.setEnabled(True)
 		
 	## slot intended to be called from a QTableWidget. The row and cell passed in argument will be assumed to be the XPlane command to edit
 	#
@@ -324,6 +342,7 @@ class pyXPswitchEditForm(QtWidgets.QWidget, switchEditForm.Ui_switchEditForm):
 		if returnCode == 1: # command selected
 			item = QtWidgets.QTableWidgetItem(self.pickXPCommandDialog.commandLineEdit.text())
 			callingQwidgetTable.setItem(row, column, item)
+			self.actionSave.setEnabled(True)
 			
 	## slot intended to be called from a QTableWidget. The row and cell passed in argument will be assumed to be the XPlane command to edit
 	#
@@ -365,3 +384,4 @@ class pyXPswitchEditForm(QtWidgets.QWidget, switchEditForm.Ui_switchEditForm):
 					callingQwidgetTable.setItem(row, 4, item)
 				
 				callingQwidgetTable.resizeColumnsToContents()
+				self.actionSave.setEnabled(True)
