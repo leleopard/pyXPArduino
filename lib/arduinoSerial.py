@@ -25,9 +25,12 @@ from struct import *
 
 class ArduinoSerial(threading.Thread):
 	
-	COMP_PIN_CMDS = {'switch' : "SW_PINS:",
-	'potentiometer' : "POT_PINS:" 
-	}
+	COMP_PIN_CMDS = {'switch' 			: "SW_PINS:",
+					'potentiometer' 	: "POT_PINS:",
+					'pwm' 				: "PWM_PINS:",
+					'rot_encoder' 		: "ROTENC_PINS:",
+					'led' 				: "LED_PINS:",
+					}
 	
 	##--------------------------------------------------------------------------------------------------------------------
 	# constructor 
@@ -38,8 +41,10 @@ class ArduinoSerial(threading.Thread):
 	def __init__(self, PORT, BAUD, XPUDPServer = None):
 		threading.Thread.__init__(self)
 		self.running = True
+		
 		logging.info("Initialising serial Arduino connection on port: "+ str(PORT)+ ", BAUD: "+ str(BAUD))
 		self.serialConnection = None
+		self.PORT = PORT
 		
 		try:
 			self.serialConnection = serial.Serial(PORT, BAUD, 
@@ -69,6 +74,11 @@ class ArduinoSerial(threading.Thread):
 	def registerInputChangedCallback(self, callbackFunction):
 		self.inputCallbacks.append(callbackFunction)
 	
+	def sendPWMvalue(self, pin, value):
+		command = 'PWM:'+pin+':'+str(value)+'\n'
+		self.queuedCommands.append(command)
+		logging.debug ("Queuing command: "+ command)
+		
 	def sendPinList(self, componentType, pinList):
 		if self.serialConnection != None:
 			logging.info('arduinoSerial::sending pin list to arduino' + str(pinList))
@@ -82,7 +92,7 @@ class ArduinoSerial(threading.Thread):
 			command += '\n'
 			
 			self.queuedCommands.append(command)
-			logging.info ("Queuing command: "+ command)
+			logging.debug ("Queuing command: "+ command)
 			#self.serialConnection.write(command.encode())
 			
 			#time.sleep(0.01) # leave time for chars to transmit
@@ -114,7 +124,7 @@ class ArduinoSerial(threading.Thread):
 				#logging.error("")
 				#logging.warning("Arduino data: "+ str(data) + "data length" + str( len(data)) )
 				buffer += data.decode(encoding = 'latin_1')
-				logging.info ("buffer: " + buffer)
+				logging.debug ("buffer: " + buffer)
 				
 				if ';' in buffer: # we have at least one valid command
 					commands = buffer.split(';')
@@ -125,14 +135,14 @@ class ArduinoSerial(threading.Thread):
 					
 				else:
 					commands = []
-				logging.info('commands: ' + str(commands))
+				logging.debug('commands: ' + str(commands))
 				
 					
 			time.sleep(0.00001)	
 			
 	## 
 	def __processArduinoCmd(self, buffer):
-		logging.info ("Process arduino command: "+ buffer)
+		logging.debug ("Process arduino command: "+ buffer)
 		#logging.debug("Processing arduino command, command id: "+buffer[0:4])
 		if buffer [0:4] == 'CMND':
 			command = buffer[5:len(buffer)-1]
@@ -158,13 +168,13 @@ class ArduinoSerial(threading.Thread):
 				except ValueError:
 					logging.error("Error in reading input command from Arduino")
 					logging.error("Command: " + buffer)
-				logging.info('callbacks:'+ str(self.inputCallbacks))
+				logging.debug('callbacks:'+ str(self.inputCallbacks))
 				
 				if value is not None:
 					for callback in self.inputCallbacks:
-					#logging.info('calling callback'+ callback)
+					#logging.debug('calling callback'+ callback)
 						callback(command_elems[0], pin, value)
-					logging.info("Input "+command_elems[0]+ " on pin"+ command_elems[1]+ " Value: "+ command_elems[2])
+					logging.debug("Input "+command_elems[0]+ " on pin"+ command_elems[1]+ " Value: "+ command_elems[2])
 				
 					
 		
@@ -176,5 +186,5 @@ class ArduinoSerial(threading.Thread):
 		self.running = False
 		if self.serialConnection!=None:
 			self.serialConnection.close()
-		logging.info("Arduino Connection stopped...")
+		logging.info("Arduino Connection on port " + self.PORT + " stopped...")
 

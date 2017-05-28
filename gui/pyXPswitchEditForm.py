@@ -59,6 +59,15 @@ class pyXPswitchEditForm(QtWidgets.QWidget, switchEditForm.Ui_switchEditForm):
 					item = QtWidgets.QTableWidgetItem(action['cmddref'])
 					self.SWON_CMDS_TABLE.setItem(index,0, item)
 					
+					check_state = QtCore.Qt.Unchecked
+					if action['continuous'] == 'True':
+						check_state = QtCore.Qt.Checked
+					
+					item = QtWidgets.QTableWidgetItem()
+					item.setCheckState(check_state)
+					self.SWON_CMDS_TABLE.setItem(index,1, item)
+					
+					
 				if action['action_type'] == 'dref':
 					index = self.SWON_DREFS_TABLE.rowCount()
 					self.SWON_DREFS_TABLE.insertRow(index)
@@ -69,13 +78,21 @@ class pyXPswitchEditForm(QtWidgets.QWidget, switchEditForm.Ui_switchEditForm):
 					item = QtWidgets.QTableWidgetItem(action['setToValue'])
 					self.SWON_DREFS_TABLE.setItem(index,2, item)
 					
+					check_state = QtCore.Qt.Unchecked
+					if action['continuous'] == 'True':
+						check_state = QtCore.Qt.Checked
+						
+					item = QtWidgets.QTableWidgetItem()
+					item.setCheckState(check_state)
+					self.SWON_DREFS_TABLE.setItem(index,3, item)
+					
 					drefList = XPrefData.getXPDatarefList(None, action['cmddref'])
 					if len(drefList) > 0: # we have found the dataref
 						item = QtWidgets.QTableWidgetItem(drefList[0][2]) # type
-						self.SWON_DREFS_TABLE.setItem(index, 3, item)
+						self.SWON_DREFS_TABLE.setItem(index, 4, item)
 						
 						item = QtWidgets.QTableWidgetItem(drefList[0][4]) # unit
-						self.SWON_DREFS_TABLE.setItem(index, 4, item)
+						self.SWON_DREFS_TABLE.setItem(index, 5, item)
 						
 			if action['state'] == 'off':
 				if action['action_type'] == 'cmd':
@@ -83,7 +100,15 @@ class pyXPswitchEditForm(QtWidgets.QWidget, switchEditForm.Ui_switchEditForm):
 					self.SWOFF_CMDS_TABLE.insertRow(index)
 					item = QtWidgets.QTableWidgetItem(action['cmddref'])
 					self.SWOFF_CMDS_TABLE.setItem(index,0, item)
-				
+					
+					check_state = QtCore.Qt.Unchecked
+					if action['continuous'] == 'True':
+						check_state = QtCore.Qt.Checked
+						
+					item = QtWidgets.QTableWidgetItem()
+					item.setCheckState(check_state)
+					self.SWOFF_CMDS_TABLE.setItem(index,1, item)
+					
 				if action['action_type'] == 'dref':
 					index = self.SWOFF_DREFS_TABLE.rowCount()
 					self.SWOFF_DREFS_TABLE.insertRow(index)
@@ -94,17 +119,27 @@ class pyXPswitchEditForm(QtWidgets.QWidget, switchEditForm.Ui_switchEditForm):
 					item = QtWidgets.QTableWidgetItem(action['setToValue'])
 					self.SWOFF_DREFS_TABLE.setItem(index,2, item)
 					
+					check_state = QtCore.Qt.Unchecked
+					if action['continuous'] == 'True':
+						check_state = QtCore.Qt.Checked
+					
+					item = QtWidgets.QTableWidgetItem()
+					item.setCheckState(check_state)
+					self.SWOFF_DREFS_TABLE.setItem(index,3, item)
+					
 					drefList = XPrefData.getXPDatarefList(None, action['cmddref'])
 					if len(drefList) > 0: # we have found the dataref
 						item = QtWidgets.QTableWidgetItem(drefList[0][2]) # type
-						self.SWOFF_DREFS_TABLE.setItem(index, 3, item)
+						self.SWOFF_DREFS_TABLE.setItem(index, 4, item)
 						
 						item = QtWidgets.QTableWidgetItem(drefList[0][4]) # unit
-						self.SWOFF_DREFS_TABLE.setItem(index, 4, item)
+						self.SWOFF_DREFS_TABLE.setItem(index, 5, item)
 				
 		self.SWON_CMDS_TABLE.setColumnWidth(0,350)
+		self.SWON_CMDS_TABLE.setColumnWidth(1,125)
 		self.SWON_CMDS_TABLE.resizeRowsToContents()
 		self.SWOFF_CMDS_TABLE.setColumnWidth(0,350)
+		self.SWOFF_CMDS_TABLE.setColumnWidth(1,125)
 		self.SWOFF_CMDS_TABLE.resizeRowsToContents()
 		self.SWON_DREFS_TABLE.resizeColumnsToContents()
 		self.SWOFF_DREFS_TABLE.resizeColumnsToContents()
@@ -200,10 +235,16 @@ class pyXPswitchEditForm(QtWidgets.QWidget, switchEditForm.Ui_switchEditForm):
 				actioncmddref = ''
 				if item != None:
 					actioncmddref = self.SWON_CMDS_TABLE.item(i,0).text()
+				
+				action_continuous = 'False'
+				if self.SWON_CMDS_TABLE.item(i,1) != None:
+					if self.SWON_CMDS_TABLE.item(i,1).checkState() == QtCore.Qt.Checked:
+						action_continuous = 'True'
 					
 				actions.append({'state':'on', 
 							  'action_type':'cmd', 
-							  'cmddref':actioncmddref})
+							  'cmddref':actioncmddref,
+							  'continuous':action_continuous})
 				index = i
 			
 			for i in range(0, self.SWOFF_CMDS_TABLE.rowCount()):
@@ -212,9 +253,15 @@ class pyXPswitchEditForm(QtWidgets.QWidget, switchEditForm.Ui_switchEditForm):
 				if item != None:
 					actioncmddref = self.SWOFF_CMDS_TABLE.item(i,0).text()
 					
+				action_continuous = 'False'
+				if self.SWOFF_CMDS_TABLE.item(i,1) != None:
+					if self.SWOFF_CMDS_TABLE.item(i,1).checkState() == QtCore.Qt.Checked:
+						action_continuous = 'True'
+						
 				actions.append({'state':'off', 
 							  'action_type':'cmd', 
-							  'cmddref':actioncmddref})
+							  'cmddref':actioncmddref,
+							  'continuous':action_continuous})
 			
 			for i in range(0, self.SWON_DREFS_TABLE.rowCount()):
 				item = self.SWON_DREFS_TABLE.item(i,0)
@@ -232,11 +279,18 @@ class pyXPswitchEditForm(QtWidgets.QWidget, switchEditForm.Ui_switchEditForm):
 				if item != None:
 					setToValue = self.SWON_DREFS_TABLE.item(i,2).text()
 				
+				action_continuous = 'False'
+				item = self.SWON_DREFS_TABLE.item(i,3)
+				if item != None:
+					if self.SWON_DREFS_TABLE.item(i,3).checkState() == QtCore.Qt.Checked:
+						action_continuous = 'True'
+				
 				actions.append({'state':'on', 
 							  'action_type':'dref', 
 							  'cmddref':actioncmddref, 
 							  'index':drefIndex,
-							  'setToValue':  setToValue })
+							  'setToValue':  setToValue,
+							  'continuous':action_continuous })
 				index = i
 			
 			for i in range(0, self.SWOFF_DREFS_TABLE.rowCount()):
@@ -255,11 +309,18 @@ class pyXPswitchEditForm(QtWidgets.QWidget, switchEditForm.Ui_switchEditForm):
 				if item != None:
 					setToValue = self.SWOFF_DREFS_TABLE.item(i,2).text()
 				
+				action_continuous = 'False'
+				item = self.SWOFF_DREFS_TABLE.item(i,3)
+				if item != None:
+					if self.SWOFF_DREFS_TABLE.item(i,3).checkState() == QtCore.Qt.Checked:
+						action_continuous = 'True'
+				
 				actions.append({'state':'off', 
 							  'action_type':'dref', 
 							  'cmddref':actioncmddref, 
 							  'index':drefIndex,
-							  'setToValue':  setToValue })
+							  'setToValue':  setToValue,
+							  'continuous':action_continuous })
 				index = i
 			
 			self.ardXMLconfig.updateComponentData(self.componentID, self.componentType,
@@ -279,70 +340,71 @@ class pyXPswitchEditForm(QtWidgets.QWidget, switchEditForm.Ui_switchEditForm):
 		print("ADD SW ON COMMAND")
 		self.SWON_CMDS_TABLE.insertRow(self.SWON_CMDS_TABLE.rowCount())
 		self.SWON_CMDS_TABLE.resizeRowsToContents()
-		self.updateSwitchXMLdata()
+		self.updateXMLdata()
 		self.actionSave.setEnabled(True)
 		
 	def rmSwitchOnCommand(self):
 		row = self.SWON_CMDS_TABLE.currentRow()
 		self.SWON_CMDS_TABLE.removeRow(row)
-		self.updateSwitchXMLdata()
+		self.updateXMLdata()
 		self.actionSave.setEnabled(True)
 	
 	def addSwitchOnDataref(self):
 		self.SWON_DREFS_TABLE.insertRow(self.SWON_DREFS_TABLE.rowCount())
 		self.SWON_DREFS_TABLE.resizeRowsToContents()
-		self.updateSwitchXMLdata()
+		self.updateXMLdata()
 		self.actionSave.setEnabled(True)
 		
 	def rmSwitchOnDataref(self):
 		row = self.SWON_DREFS_TABLE.currentRow()
 		self.SWON_DREFS_TABLE.removeRow(row)
-		self.updateSwitchXMLdata()
+		self.updateXMLdata()
 		self.actionSave.setEnabled(True)
 		
 	def addSwitchOffCommand(self):
 		self.SWOFF_CMDS_TABLE.insertRow(self.SWOFF_CMDS_TABLE.rowCount())
 		self.SWOFF_CMDS_TABLE.resizeRowsToContents()
-		self.updateSwitchXMLdata()
+		self.updateXMLdata()
 		self.actionSave.setEnabled(True)
 		
 	def rmSwitchOffCommand(self):
 		row = self.SWOFF_CMDS_TABLE.currentRow()
 		self.SWOFF_CMDS_TABLE.removeRow(row)
-		self.updateSwitchXMLdata()
+		self.updateXMLdata()
 		self.actionSave.setEnabled(True)
 		
 	def addSwitchOffDataref(self):
 		self.SWOFF_DREFS_TABLE.insertRow(self.SWOFF_DREFS_TABLE.rowCount())
 		self.SWOFF_DREFS_TABLE.resizeRowsToContents()
-		self.updateSwitchXMLdata()
+		self.updateXMLdata()
 		self.actionSave.setEnabled(True)
 		
 	def rmSwitchOffDataref(self):
 		row = self.SWOFF_DREFS_TABLE.currentRow()
 		self.SWOFF_DREFS_TABLE.removeRow(row)
-		self.updateSwitchXMLdata()
+		self.updateXMLdata()
 		self.actionSave.setEnabled(True)
 		
 	## slot intended to be called from a QTableWidget. The row and cell passed in argument will be assumed to be the XPlane command to edit
 	#
 	def editXPCommand(self, row, column):
 		logging.info("Edit XP cmd, row:", row, " column:", column)
-		callingQwidgetTable = self.sender()
-		item = callingQwidgetTable.item(row, column)
-		if item == None:
-			text = ''
-		else:
-			text = callingQwidgetTable.item(row, column).text()
+		if column == 0:
+			callingQwidgetTable = self.sender()
+			item = callingQwidgetTable.item(row, column)
+			if item == None:
+				text = ''
+			else:
+				text = callingQwidgetTable.item(row, column).text()
+				
+			self.pickXPCommandDialog.commandLineEdit.setText(text)
 			
-		self.pickXPCommandDialog.commandLineEdit.setText(text)
-		
-		returnCode = self.pickXPCommandDialog.exec()
-		
-		if returnCode == 1: # command selected
-			item = QtWidgets.QTableWidgetItem(self.pickXPCommandDialog.commandLineEdit.text())
-			callingQwidgetTable.setItem(row, column, item)
-			self.actionSave.setEnabled(True)
+			returnCode = self.pickXPCommandDialog.exec()
+			
+			if returnCode == 1: # command selected
+				item = QtWidgets.QTableWidgetItem(self.pickXPCommandDialog.commandLineEdit.text())
+				callingQwidgetTable.setItem(row, column, item)
+				self.actionSave.setEnabled(True)
 			
 	## slot intended to be called from a QTableWidget. The row and cell passed in argument will be assumed to be the XPlane command to edit
 	#

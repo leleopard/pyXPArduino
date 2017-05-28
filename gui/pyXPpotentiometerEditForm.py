@@ -18,6 +18,7 @@ class pyXPpotentiometerEditForm(QtWidgets.QWidget, potentiometerEditForm.Ui_pote
 	
 	def __init__(self,widget, ardXMLconfig, actionSave):
 		super(self.__class__, self).__init__(widget)
+		self.lastTimeCompStateWidgetUpdated = time.time()
 		self.repopulating = False
 		self.setupUi(self)  # This is defined in design.py file automatically
 							# It sets up layout and widgets that are defined
@@ -30,7 +31,7 @@ class pyXPpotentiometerEditForm(QtWidgets.QWidget, potentiometerEditForm.Ui_pote
 		self.pickXPDatarefDialog = pyXPpickXPDatarefDialog.pyXPpickXPDatarefDialog()
 		self.PIN_comboBox.addItems(lib.arduinoXMLconfig.POT_PINS)
 		
-		self.lastTimeCompStateWidgetUpdated = time.time()
+		
 		
 	
 		
@@ -46,7 +47,10 @@ class pyXPpotentiometerEditForm(QtWidgets.QWidget, potentiometerEditForm.Ui_pote
 		
 		state = componentData['state']
 		self.valueLabel.setText(state)
-		self.valueSlider.setValue(int(state))
+		try:
+			self.valueSlider.setValue(int(state))
+		except:
+			logging.warning('could not convert state to int, state value: '+ state)
 			
 		self.CMDS_TABLE.setRowCount(0)
 		
@@ -102,14 +106,17 @@ class pyXPpotentiometerEditForm(QtWidgets.QWidget, potentiometerEditForm.Ui_pote
 	def updateStateWidget(self, componentType, componentID, ardSerialNr = None, attribute = 'state'):
 		if (time.time() - self.lastTimeCompStateWidgetUpdated) >= 0.001:
 			self.lastTimeCompStateWidgetUpdated = time.time()
-			logging.info('update state widget'+componentType+componentID)
+			logging.debug('update state widget'+componentType+componentID)
 			if componentType == 'potentiometer' and componentID == self.componentID and attribute == 'state':
 				componentData = self.ardXMLconfig.getComponentData(componentID, self.componentType)
 				state = componentData['state']
-				logging.info('update state widget to value: '+state)
+				logging.debug('update state widget to value: '+state)
 				self.valueLabel.setText(state)
-				self.valueSlider.setValue(int(state))
-		
+				try:
+					self.valueSlider.setValue(int(state))
+				except:
+					logging.warning('could not convert state to int, state value: '+ state)
+					
 	def activateSave(self):
 		if self.repopulating == False:
 			self.actionSave.setEnabled(True)
@@ -196,11 +203,11 @@ class pyXPpotentiometerEditForm(QtWidgets.QWidget, potentiometerEditForm.Ui_pote
 			self.actionSave.setEnabled(True)
 	
 	def updatePin(self):
-		print("pot pin updated")
+		logging.debug("pot pin updated")
 		self.pinUpdated.emit(self.IDlineEdit.text())
 		
 	def addCommand(self):
-		print("ADD SW ON COMMAND")
+		logging.debug("ADD SW ON COMMAND")
 		self.CMDS_TABLE.insertRow(self.CMDS_TABLE.rowCount())
 		self.CMDS_TABLE.resizeRowsToContents()
 		self.updateXMLdata()
@@ -227,7 +234,7 @@ class pyXPpotentiometerEditForm(QtWidgets.QWidget, potentiometerEditForm.Ui_pote
 	## slot intended to be called from a QTableWidget. The row and cell passed in argument will be assumed to be the XPlane command to edit
 	#
 	def editXPCommand(self, row, column):
-		logging.info("Edit XP cmd, row:", row, " column:", column)
+		logging.debug("Edit XP cmd, row:", row, " column:", column)
 		if column == 0:
 			callingQwidgetTable = self.sender()
 			item = callingQwidgetTable.item(row, column)
@@ -248,7 +255,7 @@ class pyXPpotentiometerEditForm(QtWidgets.QWidget, potentiometerEditForm.Ui_pote
 	## slot intended to be called from a QTableWidget. The row and cell passed in argument will be assumed to be the XPlane command to edit
 	#
 	def editXPDataref(self, row, column):
-		logging.info("Edit XP dref, row:"+ str(row)+ " column:" +str(column))
+		logging.debug("Edit XP dref, row:"+ str(row)+ " column:" +str(column))
 		if column == 0: #only edit dref if first column
 			callingQwidgetTable = self.sender()
 			item = callingQwidgetTable.item(row, column)

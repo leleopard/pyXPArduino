@@ -10,6 +10,12 @@
     <height>805</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="minimumSize">
    <size>
     <width>0</width>
@@ -623,6 +629,22 @@ padding: 3px
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionUDP_Settings</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>editXPUDPSettings()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>606</x>
+     <y>402</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>ardTreeContextMenuRequested()</slot>
@@ -640,5 +662,6 @@ padding: 3px
   <slot>rmSwitchOnDataref()</slot>
   <slot>rmSwitchOffDataref()</slot>
   <slot>editXPCommand()</slot>
+  <slot>editXPUDPSettings()</slot>
  </slots>
 </ui>

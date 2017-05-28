@@ -38,7 +38,7 @@ for line in XP_DATAREFSFILE_LINES:
 	#command_chunks = line.split("\\t+", 3)
 	command_chunks = re.split("\t+", line)
 	
-	#print(command_chunks)
+	#logging.debug(command_chunks)
 	if len(command_chunks) >= 3: # ensure the line has at least 3 tab separator
 		command_elems = command_chunks[0].split("/")
 		if len(command_elems) >= 3: # ensure this text looks like a dataref
@@ -61,14 +61,10 @@ for line in XP_DATAREFSFILE_LINES:
 								command_chunks[2].rstrip(), # writable
 								unit,
 								description.rstrip()] )
-	
-print(XP_DATAREFS[0])
-print(XP_DATAREFS[1])
-#print(XP_COMMANDS_CATEGORIES)
 
 def getXPCommandList(category, filter):
 	filter_upper = filter.upper()
-	#print('Filter text:', filter)
+	#logging.debug('Filter text:', filter)
 	if filter !='':
 		filtered_commands = [cmd for cmd in XP_COMMANDS if (filter_upper in cmd[1].upper() or filter_upper in cmd[2].upper())]
 	else:
@@ -91,3 +87,16 @@ def getXPDatarefList(category, filter):
 	else:
 		dref_list = filtered_datarefs
 	return dref_list
+	
+def getXPDataref(dataref):
+	logging.debug('looking for dataref: '+dataref)
+	filtered_datarefs = [dref for dref in XP_DATAREFS if (dataref == dref[1]) ]
+	if len(filtered_datarefs) > 0:
+		return filtered_datarefs[0]
+	else:
+		return ['', 
+				'', # dataref
+				'', # type
+				'', # writable
+				'',
+				''] 

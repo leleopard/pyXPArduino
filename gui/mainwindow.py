@@ -12,6 +12,11 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1213, 805)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
+        MainWindow.setSizePolicy(sizePolicy)
         MainWindow.setMinimumSize(QtCore.QSize(0, 0))
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/newPrefix/plane_icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -230,6 +235,7 @@ class Ui_MainWindow(object):
         self.arduinoTreeWidget.itemSelectionChanged.connect(MainWindow.ardTreeSelectionChanged)
         self.ardNameLineEdit.editingFinished.connect(MainWindow.ardEditingFinished)
         self.ardBaudComboBox.currentIndexChanged['int'].connect(MainWindow.ardEditingFinished)
+        self.actionUDP_Settings.triggered.connect(MainWindow.editXPUDPSettings)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):

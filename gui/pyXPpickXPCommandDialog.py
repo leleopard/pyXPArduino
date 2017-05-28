@@ -1,3 +1,4 @@
+import logging
 from PyQt5 import QtCore, QtGui, QtWidgets
 import gui.pickXPCommandDialog as pickXPCommandDialog
 
@@ -12,7 +13,7 @@ class pyXPpickXPCommandDialog(QtWidgets.QDialog, pickXPCommandDialog.Ui_Dialog):
 		self.selectCategoryComboBox.addItems(list(XPrefData.XP_COMMANDS_CATEGORIES.keys()))
 	
 	def refreshCommandList(self):
-		print("category combobox changed")
+		logging.debug("category combobox changed")
 		
 		self.commandsTableWidget.setRowCount(0)
 		
@@ -39,7 +40,7 @@ class pyXPpickXPCommandDialog(QtWidgets.QDialog, pickXPCommandDialog.Ui_Dialog):
 		self.commandsTableWidget.verticalHeader().hide()
 		
 	def pickCommand(self):
-		print("pick command")
+		logging.debug("pick command")
 		row = self.commandsTableWidget.currentRow()
 		self.commandLineEdit.setText(self.commandsTableWidget.item(row,1).text())
 		

@@ -13,7 +13,7 @@ class pyXPpickXPDatarefDialog(QtWidgets.QDialog, pickXPDatarefDialog.Ui_Dialog):
 		self.selectCategoryComboBox.addItems(list(XPrefData.XP_DATAREFS_CATEGORIES.keys()))
 	
 	def refreshDatarefList(self):
-		logging.info("category combobox changed")
+		logging.debug("category combobox changed")
 		
 		self.datarefTableWidget.setRowCount(0)
 		
@@ -49,7 +49,7 @@ class pyXPpickXPDatarefDialog(QtWidgets.QDialog, pickXPDatarefDialog.Ui_Dialog):
 		self.datarefTableWidget.verticalHeader().hide()
 		
 	def pickDataref(self):
-		logging.info("pick dataref")
+		logging.debug("pick dataref")
 		row = self.datarefTableWidget.currentRow()
 		self.datarefLineEdit.setText(self.datarefTableWidget.item(row,1).text())
 		

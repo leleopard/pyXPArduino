@@ -1,4 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
+import logging
 import gui.pickarduinodialog as pickarduinodialog
 
 import lib.arduinoXMLconfig
@@ -19,7 +20,7 @@ class pyXPAddArduinoDialog(QtWidgets.QDialog, pickarduinodialog.Ui_AddArduinoDia
 		for p in list:
 			description = str(p.description)
 			if "Ard" in description:
-				print("FOOUND ARDUINO")
+				logging.info("FOUND ARDUINO")
 				serial_number = str(p.serial_number)
 				if ardXMLconfig.getArduinoData(serial_number) == None :  # only display the arduino if it is not already in our list
 					data = [False, str(p.device),"NAME"+str(index), description, str(p.serial_number), str(p.manufacturer)]
@@ -45,7 +46,7 @@ class pyXPAddArduinoDialog(QtWidgets.QDialog, pickarduinodialog.Ui_AddArduinoDia
 					self.arduinoTableWidget.setItem(index,5,item )
 					
 					index = index + 1
-			print (p.description,  p.serial_number, p.hwid, p.vid, p.pid, p.manufacturer)
+			logging.info (p.description,  p.serial_number, p.hwid, p.vid, p.pid, p.manufacturer)
 		
 		self.arduinoTableWidget.resizeColumnsToContents()
 		self.arduinoTableWidget.resizeRowsToContents()

@@ -1,0 +1,10 @@
+QMAKE_DEFAULT_INCDIRS = \
+    "C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC\\INCLUDE" \
+    "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.14393.0\\ucrt" \
+    "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.14393.0\\shared" \
+    "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.14393.0\\um" \
+    "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.14393.0\\winrt"
+QMAKE_DEFAULT_LIBDIRS = \
+    "C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC\\LIB\\amd64" \
+    "C:\\Program Files (x86)\\Windows Kits\\10\\lib\\10.0.14393.0\\ucrt\\x64" \
+    "C:\\Program Files (x86)\\Windows Kits\\10\\lib\\10.0.14393.0\\um\\x64"

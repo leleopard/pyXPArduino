@@ -1,0 +1,505 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>pwmEditForm</class>
+ <widget class="QWidget" name="pwmEditForm">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>832</width>
+    <height>674</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="sizeConstraint">
+    <enum>QLayout::SetDefaultConstraint</enum>
+   </property>
+   <property name="horizontalSpacing">
+    <number>1</number>
+   </property>
+   <item row="11" column="6">
+    <widget class="QLabel" name="PWMoutValueLabel">
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="2">
+    <widget class="QLabel" name="drefInfoLabel">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>350</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="7">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="11" column="5">
+    <widget class="QLabel" name="label_7">
+     <property name="text">
+      <string> PWM Output Value  </string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="2" colspan="2">
+    <widget class="QLineEdit" name="drefLineEdit">
+     <property name="minimumSize">
+      <size>
+       <width>400</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>350</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="11" column="0">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>PWM Output Values:  </string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+     </property>
+    </widget>
+   </item>
+   <item row="12" column="2" rowspan="2">
+    <widget class="QLabel" name="drefsHelpText">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>350</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>300</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enter series of points: [Dataref input value, output PWM value]. The output value of the PWM in between 2 points will be linearly interpolated. Note the PWM output values must be between 0 (off) and 255 (fully on)&lt;/p&gt;&lt;p&gt;For example to set the PWM output to vary linearly between 10 and 255 when the dataref value varies between 0 and 1.0, enter: &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#0000ff;&quot;&gt;[0,10], [1.0,300]&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="textFormat">
+      <enum>Qt::RichText</enum>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="14" column="2">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Expanding</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>26</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="10" column="2">
+    <widget class="QLineEdit" name="drefIndexLineEdit">
+     <property name="maximumSize">
+      <size>
+       <width>40</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="label_19">
+     <property name="text">
+      <string>ID</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="label_18">
+     <property name="text">
+      <string>Arduino pin:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="5">
+    <widget class="QPushButton" name="pushButton">
+     <property name="minimumSize">
+      <size>
+       <width>25</width>
+       <height>20</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>50</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Pick ...</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="2">
+    <widget class="QComboBox" name="PIN_comboBox">
+     <property name="maximumSize">
+      <size>
+       <width>50</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="2" colspan="3">
+    <widget class="QLineEdit" name="IDlineEdit">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>250</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>350</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0">
+    <spacer name="verticalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>10</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="label_3">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="text">
+      <string>Name</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="5">
+    <widget class="QLabel" name="label_6">
+     <property name="text">
+      <string> Dataref Value  </string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="6">
+    <widget class="QLabel" name="drefValueLabel">
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0">
+    <widget class="QLabel" name="label_5">
+     <property name="text">
+      <string>Dataref Info</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="8">
+    <widget class="QLabel" name="label_8">
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: white;
+background: rgb(0, 151, 157);
+padding: 3px
+</string>
+     </property>
+     <property name="text">
+      <string>Edit PWM output</string>
+     </property>
+    </widget>
+   </item>
+   <item row="10" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Dataref index</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="2" colspan="3">
+    <widget class="QLineEdit" name="nameLineEdit">
+     <property name="minimumSize">
+      <size>
+       <width>250</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>350</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="11" column="2">
+    <widget class="QLineEdit" name="pwmOutputLineEdit">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>400</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>350</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>XPlane Dataref:</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>nameLineEdit</sender>
+   <signal>editingFinished()</signal>
+   <receiver>pwmEditForm</receiver>
+   <slot>updateXMLdata()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>368</x>
+     <y>74</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>510</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>PIN_comboBox</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>pwmEditForm</receiver>
+   <slot>updateXMLdata()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>163</x>
+     <y>127</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>487</x>
+     <y>-6</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>PIN_comboBox</sender>
+   <signal>currentTextChanged(QString)</signal>
+   <receiver>pwmEditForm</receiver>
+   <slot>updatePin()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>163</x>
+     <y>127</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>344</x>
+     <y>163</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>pwmEditForm</receiver>
+   <slot>editXPDataref()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>495</x>
+     <y>154</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>533</x>
+     <y>100</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>drefLineEdit</sender>
+   <signal>editingFinished()</signal>
+   <receiver>pwmEditForm</receiver>
+   <slot>updateXMLdata()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>429</x>
+     <y>157</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>673</x>
+     <y>63</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pwmOutputLineEdit</sender>
+   <signal>editingFinished()</signal>
+   <receiver>pwmEditForm</receiver>
+   <slot>updateXMLdata()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>370</x>
+     <y>224</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>542</x>
+     <y>441</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>drefLineEdit</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>pwmEditForm</receiver>
+   <slot>updateXMLdata()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>217</x>
+     <y>154</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>110</x>
+     <y>422</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>drefIndexLineEdit</sender>
+   <signal>editingFinished()</signal>
+   <receiver>pwmEditForm</receiver>
+   <slot>updateXMLdata()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>136</x>
+     <y>189</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>251</x>
+     <y>532</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>addCommand()</slot>
+  <slot>rmCommand()</slot>
+  <slot>addDataref()</slot>
+  <slot>rmDataref()</slot>
+  <slot>editXPCommand()</slot>
+  <slot>updateXMLdata()</slot>
+  <slot>testCommands()</slot>
+  <slot>updatePin()</slot>
+  <slot>editXPDataref()</slot>
+  <slot>testDatarefs()</slot>
+  <slot>activateSave()</slot>
+ </slots>
+</ui>
