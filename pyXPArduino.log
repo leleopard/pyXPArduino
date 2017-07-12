@@ -1,0 +1,9 @@
+2017-07-12 21:56:12,906 INFO     root            XPrefData                      <module>                        Loading XPlane commands...
+2017-07-12 21:56:12,910 INFO     root            XPrefData                      <module>                        Loading XPlane datarefs...
+2017-07-12 21:56:13,154 INFO     root            XPlaneUDPServer                initialiseUDP                   Initialising XPlaneUDPServer on address: ('127.0.0.1', 49008)
+2017-07-12 21:56:13,166 INFO     root            serialArduinoUtils             returnArduinoPort               Arduino with serial number 75633313233351019191 not connected
+2017-07-12 21:56:13,167 ERROR    root            Arduino                        __init__                        Arduino serial 75633313233351019191, unable to connect on port COM3
+2017-07-12 21:56:13,172 INFO     root            serialArduinoUtils             returnArduinoPort               Arduino with serial number 7553335343735120E070 not connected
+2017-07-12 21:56:13,172 ERROR    root            Arduino                        __init__                        Arduino serial 7553335343735120E070, unable to connect on port COM5
+2017-07-12 21:56:13,178 INFO     root            serialArduinoUtils             returnArduinoPort               Arduino with serial number 7563031383635150B102 connected on PORT COM3
+2017-07-12 21:56:13,202 INFO     root            Arduino                        __init__                        Arduino serial 7563031383635150B102 connected on port COM3

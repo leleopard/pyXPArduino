@@ -5,13 +5,14 @@ import logging
 
 ARD_BAUD = ['9600', '19200', '38400', '57600', '74880', '115200', '230400', '250000']
 
-INPUT_OUTPUT_TAGS = ["switches", "potentiometers", "rot_encoders", "leds", "pwms"]
-INPUT_OUTPUT_ELEMS_TAGS = ["switch", "potentiometer", "rot_encoder", "led", "pwm"]
+INPUT_OUTPUT_TAGS = ["switches", "potentiometers", "rot_encoders", "leds", "pwms", "servos"]
+INPUT_OUTPUT_ELEMS_TAGS = ["switch", "potentiometer", "rot_encoder", "led", "pwm", "servo"]
 INPUT_OUTPUT_TAGS_REF = {"switches":		{'add_action':'Add switch','child_tag':'switch'}, 
 						"potentiometers":	{'add_action':'Add potentiometer','child_tag':'potentiometer'}, 
 						"rot_encoders":		{'add_action':'Add rotary encoder','child_tag':'rot_encoder'}, 
 						"leds":				{'add_action':'Add LED','child_tag':'led'}, 
-						"pwms":				{'add_action':'Add PWM','child_tag':'pwm'}}
+						"pwms":				{'add_action':'Add PWM','child_tag':'pwm'}, 
+						"servos":			{'add_action':'Add servo','child_tag':'servo'}}
 						
 DIG_IO_PINS = ['22','23','24','25','26','27','28','29','30','31','32','33','34','35',
 				'36','37','38','39','40','41','42','43','44','45','46','47',
@@ -81,6 +82,8 @@ class arduinoConfig():
 		ledsTag.set('description', 'LEDs')
 		pwmsTag = ET.SubElement(outputTag, 'pwms')
 		pwmsTag.set('description', 'PWMs')
+		servosTag = ET.SubElement(outputTag, 'servos')
+		servosTag.set('description', 'Servos')
 		
 	def removeArduino(self, arduinoSerialNr):
 		ardTag = self.root.findall(".//arduino[@serial_nr='"+arduinoSerialNr+"']")[0]

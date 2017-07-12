@@ -23,6 +23,8 @@ from struct import *
 #
 #--------------------------------------------------------------------------------------------------------------------
 
+logger = logging.getLogger('arduinoSerial')
+
 class ArduinoSerial(threading.Thread):
 	
 	COMP_PIN_CMDS = {'switch' 			: "SW_PINS:",
@@ -30,19 +32,25 @@ class ArduinoSerial(threading.Thread):
 					'pwm' 				: "PWM_PINS:",
 					'rot_encoder' 		: "ROTENC_PINS:",
 					'led' 				: "LED_PINS:",
+					'servo'				: "SERVO_PINS:"
 					}
 	
-	##--------------------------------------------------------------------------------------------------------------------
-	# constructor 
+	OUTPUT_TYPE_CMDS = {'pwm' 				: "PWM:",
+						'servo'				: "SERVO:"
+						}
+	
+	## constructor, will attempt to open a serial connection to the Arduino
 	# @param PORT: port the arduino is connected to
 	# @param BAUD: BAUD setting for the serial port - needs to be the same as how the arduino is configured
-	#
-	#--------------------------------------------------------------------------------------------------------------------
+	# 
 	def __init__(self, PORT, BAUD, XPUDPServer = None):
 		threading.Thread.__init__(self)
 		self.running = True
+		self.queuedCommands = []
+		self.inputCallbacks = []
+		self.connected = False	# are we connected (serial connection successful) to the arduino
 		
-		logging.info("Initialising serial Arduino connection on port: "+ str(PORT)+ ", BAUD: "+ str(BAUD))
+		logger.info("Initialising serial Arduino connection on port: "+ str(PORT)+ ", BAUD: "+ str(BAUD))
 		self.serialConnection = None
 		self.PORT = PORT
 		
@@ -58,15 +66,17 @@ class ArduinoSerial(threading.Thread):
 			time.sleep(0.01)  
 			# ensure there is no stale data in the buffer
 			self.serialConnection.flushInput()  
-
+			self.connected = True
+			
 		except serial.SerialException as e:
 			errorMsg =  str(e)
-			logging.error ( "Serial exception, unable to open connection with Arduino: "+errorMsg)
+			self.connected = False
+			logger.error ( "Serial exception, unable to open connection with Arduino: "+errorMsg)
+			
 		time.sleep(0.001) # leave time for the arduino to boot up
 		
-		self.queuedCommands = []
+		self.connected = True
 		
-		self.inputCallbacks = []
 	
 	## register a function to be called when an input changes state
 	# @param callbackFunction 	the function to be called when the switch changes state
@@ -74,14 +84,15 @@ class ArduinoSerial(threading.Thread):
 	def registerInputChangedCallback(self, callbackFunction):
 		self.inputCallbacks.append(callbackFunction)
 	
-	def sendPWMvalue(self, pin, value):
-		command = 'PWM:'+pin+':'+str(value)+'\n'
+	def sendOutputValue(self, pin, outputType, value):
+		logger.debug('serial connection, sending output value '+ str(value) + ' for output type ' + outputType)
+		command = self.OUTPUT_TYPE_CMDS[outputType]+pin+':'+str(value)+'\n'
 		self.queuedCommands.append(command)
-		logging.debug ("Queuing command: "+ command)
+		logger.debug ("Queuing output command: "+ command)
 		
 	def sendPinList(self, componentType, pinList):
 		if self.serialConnection != None:
-			logging.info('arduinoSerial::sending pin list to arduino' + str(pinList))
+			logger.info('arduinoSerial::sending pin list to arduino' + str(pinList))
 			
 			command = self.COMP_PIN_CMDS[componentType]
 						
@@ -92,7 +103,7 @@ class ArduinoSerial(threading.Thread):
 			command += '\n'
 			
 			self.queuedCommands.append(command)
-			logging.debug ("Queuing command: "+ command)
+			logger.debug ("Queuing command: "+ command)
 			#self.serialConnection.write(command.encode())
 			
 			#time.sleep(0.01) # leave time for chars to transmit
@@ -121,10 +132,10 @@ class ArduinoSerial(threading.Thread):
 			#data = self.serialConnection.read(200)		
 			
 			if len(data) > 0:
-				#logging.error("")
-				#logging.warning("Arduino data: "+ str(data) + "data length" + str( len(data)) )
+				#logger.error("")
+				#logger.warning("Arduino data: "+ str(data) + "data length" + str( len(data)) )
 				buffer += data.decode(encoding = 'latin_1')
-				logging.debug ("buffer: " + buffer)
+				logger.debug ("buffer: " + buffer)
 				
 				if ';' in buffer: # we have at least one valid command
 					commands = buffer.split(';')
@@ -135,25 +146,25 @@ class ArduinoSerial(threading.Thread):
 					
 				else:
 					commands = []
-				logging.debug('commands: ' + str(commands))
+				logger.debug('commands: ' + str(commands))
 				
 					
 			time.sleep(0.00001)	
 			
 	## 
 	def __processArduinoCmd(self, buffer):
-		logging.debug ("Process arduino command: "+ buffer)
+		logger.debug ("Process arduino command: "+ buffer)
 		#logging.debug("Processing arduino command, command id: "+buffer[0:4])
 		if buffer [0:4] == 'CMND':
 			command = buffer[5:len(buffer)-1]
-			logging.debug("i see a command"+ command+'\0')
+			logger.debug("i see a command"+ command+'\0')
 			
 			self.XPUDPServer.sendXPCmd(command+'\0')
 		
 		elif buffer [0:4] == 'DREF':
 			dataref = buffer[5:len(buffer)-1]
 						
-			logging.debug("i see a dataref"+ dataref+'\0')
+			logger.debug("i see a dataref"+ dataref+'\0')
 			
 			self.XPUDPServer.sendXPDref(dataref+'\0')
 		
@@ -166,25 +177,23 @@ class ArduinoSerial(threading.Thread):
 					pin = int(command_elems[1])
 					value = int(command_elems[2])
 				except ValueError:
-					logging.error("Error in reading input command from Arduino")
-					logging.error("Command: " + buffer)
-				logging.debug('callbacks:'+ str(self.inputCallbacks))
+					logger.error("Error in reading input command from Arduino")
+					logger.error("Command: " + buffer)
+				logger.debug('callbacks:'+ str(self.inputCallbacks))
 				
 				if value is not None:
 					for callback in self.inputCallbacks:
-					#logging.debug('calling callback'+ callback)
+					#logger.debug('calling callback'+ callback)
 						callback(command_elems[0], pin, value)
-					logging.debug("Input "+command_elems[0]+ " on pin"+ command_elems[1]+ " Value: "+ command_elems[2])
+					logger.debug("Input "+command_elems[0]+ " on pin"+ command_elems[1]+ " Value: "+ command_elems[2])
 				
 					
 		
-	##--------------------------------------------------------------------------------------------------------------------
-	# quit. Call to stop the thread 
+	## quit - Call to stop the thread 
 	#
-	#--------------------------------------------------------------------------------------------------------------------
 	def quit(self):
 		self.running = False
 		if self.serialConnection!=None:
 			self.serialConnection.close()
-		logging.info("Arduino Connection on port " + self.PORT + " stopped...")
+		logger.info("Arduino Connection on port " + self.PORT + " stopped...")
 

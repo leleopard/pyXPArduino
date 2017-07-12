@@ -40,4 +40,5 @@ FORMS += \
     ../potentiometerEditForm.ui \
     ../pwmEditForm.ui \
     ../switchEditForm.ui \
-    ../xpudpconfigdialog.ui
+    ../xpudpconfigdialog.ui \
+    ../servoEditForm.ui

@@ -5,6 +5,7 @@ pyuic5 pickXPCommandDialog.ui -o pickXPCommandDialog.py
 pyuic5 pickXPDatarefDialog.ui -o pickXPDatarefDialog.py
 pyuic5 switchEditForm.ui -o switchEditForm.py
 pyuic5 pwmEditForm.ui -o pwmEditForm.py
+pyuic5 servoEditForm.ui -o servoEditForm.py
 pyuic5 potentiometerEditForm.ui -o potentiometerEditForm.py
 pyuic5 xpudpconfigdialog.ui -o xpudpconfigdialog.py
 

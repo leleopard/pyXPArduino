@@ -1,8 +1,9 @@
 LOGGING_LEVEL = "WARNIN"
 import logging
-LOGGING_FORMAT= '%(asctime)s %(levelname)-8s %(name)-20s %(funcName)-20s  %(message)s'
-
-logging.basicConfig(format=LOGGING_FORMAT, level=logging.DEBUG)
+import logging.config
+#LOGGING_FORMAT= '%(asctime)s %(levelname)-8s %(name)-10s %(module)-30s %(funcName)-30s  %(message)s'
+logging.config.fileConfig('logging.conf')
+#logging.basicConfig(format=LOGGING_FORMAT, level=logging.DEBUG)
 
 from PyQt5 import QtCore, QtGui, QtWidgets # Import the PyQt5 modules we'll need
 from PyQt5.QtWidgets import QApplication, QMainWindow,QTreeWidgetItem, QMenu
@@ -17,6 +18,7 @@ import gui.pyXPUDPConfigDialog as pyXPUDPConfigDialog
 import gui.pyXPswitchEditForm as pyXPswitchEditForm
 import gui.pyXPpotentiometerEditForm as pyXPpotentiometerEditForm
 import gui.pyXPpwmEditForm as pyXPpwmEditForm
+import gui.pyXPservoEditForm as pyXPservoEditForm
 
 
 import lib.arduinoXMLconfig
@@ -63,10 +65,15 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 		self.horizontalLayoutEditPane.addWidget(self.ardPotentiometerEditForm)
 		self.ardPotentiometerEditForm.nameUpdated.connect(self.updateComponentName)
 		
-		#potentiometer edit form
+		#PWM edit form
 		self.ardPWMEditForm = pyXPpwmEditForm.pyXPpwmEditForm(self.editPaneWidget, self.ardXMLconfig, self.actionSave)
 		self.horizontalLayoutEditPane.addWidget(self.ardPWMEditForm)
 		self.ardPWMEditForm.nameUpdated.connect(self.updateComponentName)
+		
+		#Servo edit form
+		self.ardServoEditForm = pyXPservoEditForm.pyXPservoEditForm(self.editPaneWidget, self.ardXMLconfig, self.actionSave)
+		self.horizontalLayoutEditPane.addWidget(self.ardServoEditForm)
+		self.ardServoEditForm.nameUpdated.connect(self.updateComponentName)
 		
 		self.ardBaudComboBox.addItems(lib.arduinoXMLconfig.ARD_BAUD)
 		
@@ -75,6 +82,7 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 		self.arduinoEditForm.hide()
 		self.ardPotentiometerEditForm.hide()
 		self.ardPWMEditForm.hide()
+		self.ardServoEditForm.hide()
 		
 		self.actionSave.setEnabled(False)
 		
@@ -161,6 +169,7 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 		self.arduinoEditForm.hide()
 		self.ardPotentiometerEditForm.hide()
 		self.ardPWMEditForm.hide()
+		self.ardServoEditForm.hide()
 		
 		if len(self.arduinoTreeWidget.selectedItems()) > 0:
 			tag 		= self.arduinoTreeWidget.selectedItems()[0].text(2)
@@ -184,6 +193,9 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 				
 			if tag =='pwm':
 				self.ardPWMEditForm.show(compID)
+			
+			if tag =='servo':
+				self.ardServoEditForm.show(compID)
 		
 		self.updatingCompPanel = False
 	
