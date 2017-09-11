@@ -7,12 +7,12 @@ import lib.XPlaneUDPServer as XPUDP
 
 
 class pyXPUDPConfigDialog(QtWidgets.QDialog, xpudpconfigdialog.Ui_Dialog):
-	def __init__(self):
+	def __init__(self, XMLconfigFile):
 		super(self.__class__, self).__init__()
 		self.setupUi(self)  # This is defined in design.py file automatically
 							# It sets up layout and widgets that are defined
 		
-		self.ardXMLconfigFile = 'UDPSettings.xml'
+		self.ardXMLconfigFile = XMLconfigFile
 		self.tree = ET.parse(self.ardXMLconfigFile)
 		self.root = self.tree.getroot()
 		

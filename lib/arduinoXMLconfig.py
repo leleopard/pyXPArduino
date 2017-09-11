@@ -128,7 +128,7 @@ class arduinoConfig():
 		ardTags = self.root.findall(".//arduino[@serial_nr='"+arduinoSerialNr+"']")
 		if len(ardTags) > 0: # arduino has been found
 			compTag = ardTags[0].findall(".//"+componentType+"[@pin='"+str(pin)+"']")
-			if len(compTag) > 0: # switch has been found
+			if len(compTag) > 0: # component has been found
 				actions = list(compTag[0].iter('action'))
 				
 				for action in actions:
@@ -137,6 +137,10 @@ class arduinoConfig():
 					index = '0'
 					setToValue = '0.0'
 					continuous = 'False'
+					cmddref = ''
+					if action.text != None:
+						cmddref = action.text
+					
 					try:
 						index = action.attrib['index']
 						setToValue = action.attrib['setToValue']
@@ -145,7 +149,7 @@ class arduinoConfig():
 						pass
 					actionsList.append({'state': action.attrib['state'], 
 										'action_type': action.attrib['action_type'], 
-										'cmddref': action.text,
+										'cmddref': cmddref,
 										'index': index, 
 										'setToValue': setToValue,
 										'continuous': continuous})

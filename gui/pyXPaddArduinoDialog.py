@@ -46,7 +46,7 @@ class pyXPAddArduinoDialog(QtWidgets.QDialog, pickarduinodialog.Ui_AddArduinoDia
 					self.arduinoTableWidget.setItem(index,5,item )
 					
 					index = index + 1
-			logging.info (p.description,  p.serial_number, p.hwid, p.vid, p.pid, p.manufacturer)
+			logging.info (p.description,  p.serial_number, str(p.hwid), str(p.vid), str(p.pid), p.manufacturer)
 		
 		self.arduinoTableWidget.resizeColumnsToContents()
 		self.arduinoTableWidget.resizeRowsToContents()

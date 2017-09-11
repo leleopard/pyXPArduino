@@ -6,6 +6,8 @@ import time
 import re
 from operator import itemgetter
 
+logger = logging.getLogger('Arduino')
+
 class Arduino(threading.Thread):
 	
 	## constructor 
@@ -25,10 +27,10 @@ class Arduino(threading.Thread):
 		
 		connected_PORT = lib.serialArduinoUtils.returnArduinoPort(ardSerialNumber)
 		
-		logging.debug("connected_PORT = "+ str(connected_PORT))
+		logger.debug("connected_PORT = "+ str(connected_PORT))
 		if connected_PORT == None: # then the arduino is not connected, no point trying to get a serial connection going
 			self.connected = False
-			logging.error("Arduino serial "+self.ardSerialNumber+", unable to connect on port "+PORT)
+			logger.error("Arduino serial "+self.ardSerialNumber+", unable to connect on port "+PORT)
 			
 		else: # the arduino is connected, we will attempt to connect on the the PORT value found as the arduino could have been reconnected to another port
 			self.serialConnection = ardSerial.ArduinoSerial(connected_PORT, BAUD)
@@ -40,10 +42,10 @@ class Arduino(threading.Thread):
 				time.sleep(0.01) 
 				self.updateComponentList('*', '', self.ardSerialNumber, 'pin') # set the pins as switches on arduino
 				self.connected = True
-				logging.info("Arduino serial "+self.ardSerialNumber+" connected on port "+PORT)
+				logger.info("Arduino serial "+self.ardSerialNumber+" connected on port "+PORT)
 			else:
 				self.connected = False
-				logging.error("Arduino serial "+self.ardSerialNumber+", unable to connect on port "+PORT)
+				logger.error("Arduino serial "+self.ardSerialNumber+", unable to connect on port "+PORT)
 				
 				
 	##  run. Do not call - use the start() method to start the thread, which will call run() 
@@ -66,7 +68,7 @@ class Arduino(threading.Thread):
 	def __refreshOutputs(self, outputType):
 		if self.connected == True:
 			compList = self.ardXMLconfig.getComponentList(self.ardSerialNumber, outputType)
-			
+			logger.debug('refresh outputs for output type: '+str(outputType))
 			for comp in compList:
 				if comp['pin'] != '':
 					compActions = self.ardXMLconfig.getComponentActions(self.ardSerialNumber, outputType, comp['pin'] )
@@ -78,13 +80,13 @@ class Arduino(threading.Thread):
 							prevDrefValue = float(action['state'])
 						except ValueError:
 							pass
-							#logging.warning('Unable to convert dref value, defaulting to 0.0')
+							#logger.warning('Unable to convert dref value, defaulting to 0.0')
 						if abs(prevDrefValue - drefValue) > 0.01:
 							action['state'] = str(drefValue)
-							logging.debug(outputType+' XPLANE DREF value, DREF: '+action['cmddref']+' Value: '+str(drefValue))
+							logger.debug(outputType+' XPLANE DREF value, DREF: '+action['cmddref']+' Value: '+str(drefValue))
 							pointsList = self.__returnPointsList(action['setToValue'])
 							outPWMvalue = self.__returnLinearInterpolationY(drefValue, pointsList)
-							logging.debug('Out '+ outputType + ' value: '+ str(outPWMvalue))
+							logger.debug('Out '+ outputType + ' value: '+ str(outPWMvalue))
 							self.ardXMLconfig.updateComponentActions(self.ardSerialNumber, outputType, comp['pin'], compActions )
 							
 							try:
@@ -100,19 +102,19 @@ class Arduino(threading.Thread):
 	#
 	def inputChanged(self, inputType, pin, value):
 		if self.connected == True:
-			logging.debug("ARD CLASS ard input changed callback, input Type: "+inputType+ ", pin" + str(pin) + " value:" + str(value))
+			logger.debug("ARD CLASS ard input changed callback, input Type: "+inputType+ ", pin" + str(pin) + " value:" + str(value))
 			if inputType == 'SW':
 				switch_state = 'on'
 				if value == 0 :
 					switch_state = 'off'
 					
-				logging.debug('updating switch state to value:' + switch_state)
+				logger.debug('updating switch state to value:' + switch_state)
 				compID = self.ardXMLconfig.getComponentAttribute( self.ardSerialNumber,'switch', pin, 'id')
 				self.ardXMLconfig.updateComponentAttribute(compID, 'switch', 'state', switch_state)
 				
 				for action in self.ardXMLconfig.getComponentActions(self.ardSerialNumber, 'switch', pin):
 					if action['cmddref']!= None:
-						logging.debug ("action type: "+ action['action_type']
+						logger.debug ("action type: "+ action['action_type']
 										+ " action state: "+action['state'] 
 										+ "switch state: " + switch_state
 										+ " action: " + action ['cmddref'] )
@@ -135,28 +137,28 @@ class Arduino(threading.Thread):
 				
 				for action in self.ardXMLconfig.getComponentActions(self.ardSerialNumber, 'potentiometer', pin):
 					if action['cmddref']!= None:
-						logging.debug ("action type: "+ action['action_type']
+						logger.debug ("action type: "+ action['action_type']
 										+ " action state: "+action['state'] 
 										+ "pot state: " + state
 										+ " action: " + action ['cmddref'] )
 						
 						if action['action_type'] == 'dref' :
-							logging.debug('DREF set to value:'+action['setToValue'])
+							logger.debug('DREF set to value:'+action['setToValue'])
 							pointsList = self.__returnPointsList(action['setToValue'])
-							logging.debug('Points list: ' + str(pointsList))
+							logger.debug('Points list: ' + str(pointsList))
 							if len(pointsList) > 0:
 								outValue = self.__returnLinearInterpolationY(float(state), pointsList)
 								
-								logging.debug('Output value to XP DREF: ' +str(outValue))
+								logger.debug('Output value to XP DREF: ' +str(outValue))
 								self.XPUDPServer.sendXPDref(action['cmddref'],action['index'],outValue)
 						
 						if action['action_type'] == 'cmd' :
-							logging.debug('CMD state:'+action['state'])
+							logger.debug('CMD state:'+action['state'])
 							intervalsList = self.__returnPointsList(action['state'])
-							logging.debug('Intervals list: ' + str(intervalsList))
+							logger.debug('Intervals list: ' + str(intervalsList))
 							if len(intervalsList) > 0:
 								if self.__isValueInIntervals(float(state), intervalsList):
-									logging.debug('Send XPlane CMD : ' +action['cmddref'])
+									logger.debug('Send XPlane CMD : ' +action['cmddref'])
 									self.XPUDPServer.sendXPCmd(action['cmddref'])
 							
 	## gets the list of input and output components for this arduino of the type passed in argument, and initialises the arduino board pins 
@@ -175,7 +177,7 @@ class Arduino(threading.Thread):
 				for switch in switchList:
 					if switch['pin'] != '':
 						switchPinList.append(switch['pin'])
-				logging.debug ('Ard serial '+ self.ardSerialNumber+ 'switch pin list: ' + str(switchPinList))
+				logger.debug ('Ard serial '+ self.ardSerialNumber+ 'switch pin list: ' + str(switchPinList))
 				self.serialConnection.sendPinList('switch', switchPinList)
 			
 			if componentType == '*' or componentType == 'potentiometer':
@@ -185,7 +187,7 @@ class Arduino(threading.Thread):
 				for comp in compList:
 					if comp['pin'] != '':
 						compPinList.append(comp['pin'])
-				logging.debug ('Ard serial '+ self.ardSerialNumber+ 'pot pin list: ' + str(compPinList))
+				logger.debug ('Ard serial '+ self.ardSerialNumber+ 'pot pin list: ' + str(compPinList))
 				self.serialConnection.sendPinList('potentiometer', compPinList)
 			
 			if componentType == '*' or componentType == 'pwm':
@@ -195,7 +197,7 @@ class Arduino(threading.Thread):
 				for comp in compList:
 					if comp['pin'] != '':
 						compPinList.append(comp['pin'])
-				logging.debug ('Ard serial '+ self.ardSerialNumber+ 'pwm pin list: ' + str(compPinList))
+				logger.debug ('Ard serial '+ self.ardSerialNumber+ 'pwm pin list: ' + str(compPinList))
 				self.serialConnection.sendPinList('pwm', compPinList)
 	
 			if componentType == '*' or componentType == 'servo':
@@ -205,7 +207,7 @@ class Arduino(threading.Thread):
 				for comp in compList:
 					if comp['pin'] != '':
 						compPinList.append(comp['pin'])
-				logging.debug ('Ard serial '+ self.ardSerialNumber+ 'servo pin list: ' + str(compPinList))
+				logger.debug ('Ard serial '+ self.ardSerialNumber+ 'servo pin list: ' + str(compPinList))
 				self.serialConnection.sendPinList('servo', compPinList)
 	
 	## stop the thread, call when exiting the application to cleanly close the connections
@@ -214,7 +216,7 @@ class Arduino(threading.Thread):
 		if self.connected == True:
 			self.serialConnection.quit()
 		self.running = False
-		logging.info('Arduino thread stopped, ard serial nr'+self.ardSerialNumber)
+		logger.info('Arduino thread stopped, ard serial nr'+self.ardSerialNumber)
 	
 	## returns True if value is in any of the intervals passed in the intervalsList, False otherwise 
 	# @param value 	float value 
@@ -230,7 +232,7 @@ class Arduino(threading.Thread):
 	def __returnLinearInterpolationY(self, xValue, linearSeriesPoints):
 		nrPoints = len(linearSeriesPoints)
 		if nrPoints>0:
-			logging.debug('xValue: '+ str(xValue) +', linearSeriesPoints: '+ str(linearSeriesPoints))
+			logger.debug('xValue: '+ str(xValue) +', linearSeriesPoints: '+ str(linearSeriesPoints))
 			if xValue < linearSeriesPoints[0][0]: 
 				return linearSeriesPoints[0][1]
 			
@@ -253,7 +255,7 @@ class Arduino(threading.Thread):
 	#
 	def __returnPointsList(self, pointsString):
 		pointsList = []
-		logging.debug('Points list string: '+pointsString)
+		logger.debug('Points list string: '+pointsString)
 		pointsStringList = re.findall('\[[ -]*?[0-9]+.*?[0-9]*?[,]+[ -]*?[0-9]+.*?[0-9]*?[ ]*?\]', 
 										pointsString)	# find all points format [nr,nr]
 		

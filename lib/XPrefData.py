@@ -89,7 +89,7 @@ def getXPDatarefList(category, filter):
 	return dref_list
 	
 def getXPDataref(dataref):
-	logging.debug('looking for dataref: '+dataref)
+	logging.debug('looking for dataref: '+str(dataref))
 	filtered_datarefs = [dref for dref in XP_DATAREFS if (dataref == dref[1]) ]
 	if len(filtered_datarefs) > 0:
 		return filtered_datarefs[0]

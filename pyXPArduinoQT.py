@@ -2,7 +2,7 @@ LOGGING_LEVEL = "WARNIN"
 import logging
 import logging.config
 #LOGGING_FORMAT= '%(asctime)s %(levelname)-8s %(name)-10s %(module)-30s %(funcName)-30s  %(message)s'
-logging.config.fileConfig('logging.conf')
+logging.config.fileConfig('config/logging.conf')
 #logging.basicConfig(format=LOGGING_FORMAT, level=logging.DEBUG)
 
 from PyQt5 import QtCore, QtGui, QtWidgets # Import the PyQt5 modules we'll need
@@ -39,15 +39,15 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 		self.timer = QtCore.QTimer()
 		self.timer.timeout.connect(self.updateMessages)
 		self.timer.start(500)
-		
+		XMLconfigFile = 'config/UDPSettings.xml'
 		#XPUDP.pyXPUDPServer.initialiseUDP(('127.0.0.1',49008), ('192.168.1.1',49000), 'STEPHANE-PC')
-		XPUDP.pyXPUDPServer.initialiseUDPXMLConfig('UDPSettings.xml')
+		XPUDP.pyXPUDPServer.initialiseUDPXMLConfig(XMLconfigFile)
 		
 		XPUDP.pyXPUDPServer.start()
 		
 		self.updatingCompPanel = False
 		
-		self.ardXMLconfig = lib.arduinoXMLconfig.arduinoConfig("ardConfig1.xml")
+		self.ardXMLconfig = lib.arduinoXMLconfig.arduinoConfig("config/ardConfig1.xml")
 		self.arduinoList = []
 		
 		self.refreshArduinoList()
@@ -55,7 +55,7 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 		self.deleteConfirmDialog = deleteConfirmationDialog.DeleteConfirmationDialog()
 		self.addArduinoDialog = pyXPaddArduinoDialog.pyXPAddArduinoDialog()
 		self.pickXPCommandDialog = pyXPpickXPCommandDialog.pyXPpickXPCommandDialog()
-		self.editXPUDPConfigDialog = pyXPUDPConfigDialog.pyXPUDPConfigDialog()
+		self.editXPUDPConfigDialog = pyXPUDPConfigDialog.pyXPUDPConfigDialog(XMLconfigFile)
 		#switch edit form
 		self.ardSwitchEditForm = pyXPswitchEditForm.pyXPswitchEditForm(self.editPaneWidget, self.ardXMLconfig, self.actionSave)
 		self.horizontalLayoutEditPane.addWidget(self.ardSwitchEditForm)

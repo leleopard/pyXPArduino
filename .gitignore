@@ -20,3 +20,6 @@ dist/
 
 #doc folder
 doc/
+
+#config folder
+config/

@@ -107,7 +107,7 @@ class XPlaneUDPServer(threading.Thread):
 	# @param XMLConfigFile: relative path to XML config file
 	#
 	def initialiseUDPXMLConfig(self, XMLConfigFile):
-		self.ardXMLconfigFile = 'UDPSettings.xml'
+		self.ardXMLconfigFile = XMLConfigFile
 		self.tree = ET.parse(self.ardXMLconfigFile)
 		self.root = self.tree.getroot()
 		

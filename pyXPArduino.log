@@ -1,53 +1,6 @@
-2017-07-12 23:18:30,619 INFO     root            XPrefData                      <module>                        Loading XPlane commands...
-2017-07-12 23:18:30,623 INFO     root            XPrefData                      <module>                        Loading XPlane datarefs...
-2017-07-12 23:18:30,871 INFO     root            XPlaneUDPServer                initialiseUDP                   Initialising XPlaneUDPServer on address: ('127.0.0.1', 49008)
-2017-07-12 23:18:30,883 INFO     root            serialArduinoUtils             returnArduinoPort               Arduino with serial number 75633313233351019191 not connected
-2017-07-12 23:18:30,883 ERROR    root            Arduino                        __init__                        Arduino serial 75633313233351019191, unable to connect on port COM3
-2017-07-12 23:18:30,890 INFO     root            serialArduinoUtils             returnArduinoPort               Arduino with serial number 7553335343735120E070 connected on PORT COM5
-2017-07-12 23:18:30,915 INFO     root            Arduino                        __init__                        Arduino serial 7553335343735120E070 connected on port COM5
-2017-07-12 23:18:30,922 INFO     root            serialArduinoUtils             returnArduinoPort               Arduino with serial number 7563031383635150B102 connected on PORT COM3
-2017-07-12 23:18:30,947 INFO     root            Arduino                        __init__                        Arduino serial 7563031383635150B102 connected on port COM3
-2017-07-12 23:18:37,227 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
-2017-07-12 23:18:37,228 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
-2017-07-12 23:18:37,232 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
-2017-07-12 23:18:37,233 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
-2017-07-12 23:18:37,234 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
-2017-07-12 23:18:37,235 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
-2017-07-12 23:18:37,241 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
-2017-07-12 23:18:37,242 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
-2017-07-12 23:18:37,242 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
-2017-07-12 23:18:37,244 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
-2017-07-12 23:18:42,666 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
-2017-07-12 23:18:42,670 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
-2017-07-12 23:18:42,671 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
-2017-07-12 23:18:42,671 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
-2017-07-12 23:18:42,674 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
-2017-07-12 23:18:42,675 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
-2017-07-12 23:18:48,098 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
-2017-07-12 23:18:48,102 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
-2017-07-12 23:18:48,102 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
-2017-07-12 23:18:48,103 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
-2017-07-12 23:18:48,106 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
-2017-07-12 23:18:48,106 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
-2017-07-12 23:18:53,532 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
-2017-07-12 23:18:53,533 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
-2017-07-12 23:18:53,535 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
-2017-07-12 23:18:53,537 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
-2017-07-12 23:18:53,538 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
-2017-07-12 23:18:53,540 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
-2017-07-12 23:18:58,964 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
-2017-07-12 23:18:58,966 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
-2017-07-12 23:18:58,970 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
-2017-07-12 23:18:58,970 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
-2017-07-12 23:18:58,970 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
-2017-07-12 23:18:58,973 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
-2017-07-12 23:19:04,394 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
-2017-07-12 23:19:04,398 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
-2017-07-12 23:19:04,399 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
-2017-07-12 23:19:04,399 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
-2017-07-12 23:19:04,403 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
-2017-07-12 23:19:04,403 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
-2017-07-12 23:19:07,130 INFO     root            XPlaneUDPServer                quit                            UDP Server stopped...
-2017-07-12 23:19:07,131 INFO     root            Arduino                        quit                            Arduino thread stopped, ard serial nr75633313233351019191
-2017-07-12 23:19:07,134 INFO     root            Arduino                        quit                            Arduino thread stopped, ard serial nr7553335343735120E070
-2017-07-12 23:19:07,159 INFO     root            Arduino                        quit                            Arduino thread stopped, ard serial nr7563031383635150B102
+2017-09-11 23:12:33,053 INFO     root            XPrefData                      <module>                        Loading XPlane commands...
+2017-09-11 23:12:33,058 INFO     root            XPrefData                      <module>                        Loading XPlane datarefs...
+2017-09-11 23:12:34,107 INFO     root            XPlaneUDPServer                initialiseUDP                   Initialising XPlaneUDPServer on address: ('127.0.0.1', 49008)
+2017-09-11 23:12:34,123 INFO     root            serialArduinoUtils             returnArduinoPort               Arduino with serial number 75633313233351019191 not connected
+2017-09-11 23:12:34,123 INFO     root            serialArduinoUtils             returnArduinoPort               Arduino with serial number 7563031383635150B102 not connected
+2017-09-11 23:12:39,500 INFO     root            XPlaneUDPServer                quit                            UDP Server stopped...
