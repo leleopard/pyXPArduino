@@ -1,2 +1,2 @@
 1. Install python 3
-2. The config folder needs to be created manually at this point
+2. Rename the 'initial_config' folder to 'config'
