@@ -215,7 +215,7 @@
      <item>
       <widget class="QLabel" name="label_9">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="text">
         <string>Forward XPlane UDP traffic to IP addresses</string>
@@ -223,9 +223,9 @@
       </widget>
      </item>
      <item>
-      <widget class="QToolButton" name="toolButton_2">
+      <widget class="QToolButton" name="ADD_FWDIP_BTN">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="text">
         <string>...</string>
@@ -237,9 +237,9 @@
       </widget>
      </item>
      <item>
-      <widget class="QToolButton" name="toolButton">
+      <widget class="QToolButton" name="RM_FWDIP_BTN">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="text">
         <string>...</string>
@@ -266,9 +266,9 @@
     </layout>
    </item>
    <item>
-    <widget class="QTableWidget" name="tableWidget">
+    <widget class="QTableWidget" name="FWDIPs_TABLE">
      <property name="enabled">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
      <column>
       <property name="text">
@@ -382,9 +382,60 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>ADD_FWDIP_BTN</sender>
+   <signal>clicked()</signal>
+   <receiver>Dialog</receiver>
+   <slot>addFWDIP()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>237</x>
+     <y>177</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>320</x>
+     <y>155</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>RM_FWDIP_BTN</sender>
+   <signal>clicked()</signal>
+   <receiver>Dialog</receiver>
+   <slot>rmFWDIP()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>273</x>
+     <y>180</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>446</x>
+     <y>168</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>FWDIPs_TABLE</sender>
+   <signal>itemChanged(QTableWidgetItem*)</signal>
+   <receiver>Dialog</receiver>
+   <slot>saveToXMLfile()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>538</x>
+     <y>289</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>591</x>
+     <y>143</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>buttonBoxClicked()</slot>
   <slot>redirectCheckboxStateChanged()</slot>
+  <slot>addFWDIP()</slot>
+  <slot>rmFWDIP()</slot>
+  <slot>saveToXMLfile()</slot>
  </slots>
 </ui>

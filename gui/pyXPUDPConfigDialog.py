@@ -45,6 +45,8 @@ class pyXPUDPConfigDialog(QtWidgets.QDialog, xpudpconfigdialog.Ui_Dialog):
 		XPCompNameTag = self.root.findall(".//XPComputerName")
 		RedirectUDPtrafficTag = self.root.findall(".//RedirectUDPtraffic")
 		IPRedirectTag = self.root.findall(".//RedirectIP")
+		ForwardIPAddressesTag = self.root.findall(".//ForwardIPAddresses")
+		ForwardIPAddressesTags = ForwardIPAddressesTag[0].findall(".//IP")
 		
 		try:
 			self.IP_Address_LineEdit.setText(IPTag[0].attrib['address'])
@@ -65,10 +67,39 @@ class pyXPUDPConfigDialog(QtWidgets.QDialog, xpudpconfigdialog.Ui_Dialog):
 				self.RedIP_Port_LineEdit.setText('')
 				self.RedIP_Address_LineEdit.setEnabled(False)
 				self.RedIP_Port_LineEdit.setEnabled(False)
-				
+			
+			self.FWDIPs_TABLE.setRowCount(0)
+			
+			if len(ForwardIPAddressesTags) > 0:
+				for forwardIPtag in ForwardIPAddressesTags:
+					IPaddress = forwardIPtag.attrib['address']
+					port = forwardIPtag.attrib['port']
+					logging.debug('Forward IP address, IP: '+str(IPaddress)+', port: '+str(port))
+					index = self.FWDIPs_TABLE.rowCount()
+					self.FWDIPs_TABLE.insertRow(index)
+					item = QtWidgets.QTableWidgetItem(IPaddress)
+					self.FWDIPs_TABLE.setItem(index,0, item)
+					item = QtWidgets.QTableWidgetItem(port)
+					self.FWDIPs_TABLE.setItem(index,1, item)
+			
+			self.FWDIPs_TABLE.setColumnWidth(0,350)
+			self.FWDIPs_TABLE.setColumnWidth(1,300)
+			self.FWDIPs_TABLE.resizeRowsToContents()
+		
 		except:
 			logging.error('error while retrieving xml data', exc_info=True)
 	
+	def addFWDIP(self):
+		self.FWDIPs_TABLE.insertRow(self.FWDIPs_TABLE.rowCount())
+		self.FWDIPs_TABLE.resizeRowsToContents()
+		self.saveToXMLfile()
+		
+	def rmFWDIP(self):
+		row = self.FWDIPs_TABLE.currentRow()
+		self.FWDIPs_TABLE.removeRow(row)
+		self.saveToXMLfile()
+		
+		
 	def redirectCheckboxStateChanged(self):
 		if self.XP_RedirectTraffic_checkBox.isChecked() == True:
 			self.RedIP_Address_LineEdit.setEnabled(True)
@@ -90,7 +121,22 @@ class pyXPUDPConfigDialog(QtWidgets.QDialog, xpudpconfigdialog.Ui_Dialog):
 		else:
 			XPUDP.pyXPUDPServer.disableRedirectUDPtoXP()
 		
-		
+		fwdIPAdresses = []
+		for i in range(0, self.FWDIPs_TABLE.rowCount()):
+			item = self.FWDIPs_TABLE.item(i,0)
+			address = ''
+			if item != None:
+				address = self.FWDIPs_TABLE.item(i,0).text()
+			
+			item = self.FWDIPs_TABLE.item(i,1)
+			port = ''
+			if item != None:
+				port = self.FWDIPs_TABLE.item(i,1).text()
+				
+			if address != '' and port != '':
+				fwdIPAdresses.append((address,port))
+				
+		XPUDP.pyXPUDPServer.enableForwardXPpackets(fwdIPAdresses)
 		
 	def saveToXMLfile(self):
 		IPTag = self.root.findall(".//IP")
@@ -98,6 +144,8 @@ class pyXPUDPConfigDialog(QtWidgets.QDialog, xpudpconfigdialog.Ui_Dialog):
 		XPCompNameTag = self.root.findall(".//XPComputerName")
 		RedirectUDPtrafficTag = self.root.findall(".//RedirectUDPtraffic")
 		IPRedirectTag = self.root.findall(".//RedirectIP")
+		ForwardIPAddressesTag = self.root.findall(".//ForwardIPAddresses")
+		ForwardIPAddressesTags = ForwardIPAddressesTag[0].findall(".//IP")
 		
 		IPTag[0].set('address', self.IP_Address_LineEdit.text())
 		IPTag[0].set('port', self.IP_Port_LineEdit.text())
@@ -114,6 +162,26 @@ class pyXPUDPConfigDialog(QtWidgets.QDialog, xpudpconfigdialog.Ui_Dialog):
 			RedirectUDPtrafficTag[0].set('state', 'False')
 			IPRedirectTag[0].set('address', '')
 			IPRedirectTag[0].set('port', '')
+		
+		# first lets remove all IP fwd addresses 
+		for forwardIPAddress in list(ForwardIPAddressesTag[0]):
+			ForwardIPAddressesTag[0].remove(forwardIPAddress)
+		
+		for i in range(0, self.FWDIPs_TABLE.rowCount()):
+			item = self.FWDIPs_TABLE.item(i,0)
+			address = ''
+			if item != None:
+				address = self.FWDIPs_TABLE.item(i,0).text()
+			
+			item = self.FWDIPs_TABLE.item(i,1)
+			port = ''
+			if item != None:
+				port = self.FWDIPs_TABLE.item(i,1).text()
+				
+			forwardIPTag = ET.SubElement(ForwardIPAddressesTag[0],'IP')
+			forwardIPTag.set('address',address)
+			forwardIPTag.set('port',port)
+			
 		
 		self.tree.write(self.ardXMLconfigFile)
 		
