@@ -31,12 +31,13 @@ class ArduinoSerial(threading.Thread):
 					'potentiometer' 	: "POT_PINS:",
 					'pwm' 				: "PWM_PINS:",
 					'rot_encoder' 		: "ROTENC_PINS:",
-					'led' 				: "LED_PINS:",
+					'dig_output' 		: "DIGOUT_PINS:",
 					'servo'				: "SERVO_PINS:"
 					}
 	
 	OUTPUT_TYPE_CMDS = {'pwm' 				: "PWM:",
-						'servo'				: "SERVO:"
+						'servo'				: "SERVO:",
+						'dig_output'		: "DIGOUT:"
 						}
 	
 	## constructor, will attempt to open a serial connection to the Arduino

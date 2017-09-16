@@ -5,12 +5,12 @@ import logging
 
 ARD_BAUD = ['9600', '19200', '38400', '57600', '74880', '115200', '230400', '250000']
 
-INPUT_OUTPUT_TAGS = ["switches", "potentiometers", "rot_encoders", "leds", "pwms", "servos"]
-INPUT_OUTPUT_ELEMS_TAGS = ["switch", "potentiometer", "rot_encoder", "led", "pwm", "servo"]
+INPUT_OUTPUT_TAGS = ["switches", "potentiometers", "rot_encoders", "dig_outputs", "pwms", "servos"]
+INPUT_OUTPUT_ELEMS_TAGS = ["switch", "potentiometer", "rot_encoder", "dig_output", "pwm", "servo"]
 INPUT_OUTPUT_TAGS_REF = {"switches":		{'add_action':'Add switch','child_tag':'switch'}, 
 						"potentiometers":	{'add_action':'Add potentiometer','child_tag':'potentiometer'}, 
 						"rot_encoders":		{'add_action':'Add rotary encoder','child_tag':'rot_encoder'}, 
-						"leds":				{'add_action':'Add LED','child_tag':'led'}, 
+						"dig_outputs":		{'add_action':'Add digital output','child_tag':'dig_output'}, 
 						"pwms":				{'add_action':'Add PWM','child_tag':'pwm'}, 
 						"servos":			{'add_action':'Add servo','child_tag':'servo'}}
 						
@@ -78,8 +78,8 @@ class arduinoConfig():
 		rot_encodersTag = ET.SubElement(inputTag, 'rot_encoders')
 		rot_encodersTag.set('description', 'Rotary Encoders')
 		
-		ledsTag = ET.SubElement(outputTag, 'leds')
-		ledsTag.set('description', 'LEDs')
+		digOutputsTag = ET.SubElement(outputTag, 'dig_outputs')
+		digOutputsTag.set('description', 'Digital Outputs')
 		pwmsTag = ET.SubElement(outputTag, 'pwms')
 		pwmsTag.set('description', 'PWMs')
 		servosTag = ET.SubElement(outputTag, 'servos')
