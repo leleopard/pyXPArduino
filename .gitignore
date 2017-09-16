@@ -23,3 +23,9 @@ doc/
 
 #config folder
 config/
+
+#log file
+pyXPArduino.log
+
+#tests folder
+tests-old/
