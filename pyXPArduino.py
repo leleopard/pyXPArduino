@@ -18,6 +18,7 @@ import gui.pyXPUDPConfigDialog as pyXPUDPConfigDialog
 import gui.pyXPswitchEditForm as pyXPswitchEditForm
 import gui.pyXPpotentiometerEditForm as pyXPpotentiometerEditForm
 import gui.pyXPpwmEditForm as pyXPpwmEditForm
+import gui.pyXPdigOutputEditForm as pyXPdigOutputEditForm
 import gui.pyXPservoEditForm as pyXPservoEditForm
 
 
@@ -70,6 +71,11 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 		self.horizontalLayoutEditPane.addWidget(self.ardPWMEditForm)
 		self.ardPWMEditForm.nameUpdated.connect(self.updateComponentName)
 		
+		#Digital output edit form
+		self.ardDigOutputEditForm = pyXPdigOutputEditForm.pyXPdigOutputEditForm(self.editPaneWidget, self.ardXMLconfig, self.actionSave)
+		self.horizontalLayoutEditPane.addWidget(self.ardDigOutputEditForm)
+		self.ardDigOutputEditForm.nameUpdated.connect(self.updateComponentName)
+		
 		#Servo edit form
 		self.ardServoEditForm = pyXPservoEditForm.pyXPservoEditForm(self.editPaneWidget, self.ardXMLconfig, self.actionSave)
 		self.horizontalLayoutEditPane.addWidget(self.ardServoEditForm)
@@ -82,6 +88,7 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 		self.arduinoEditForm.hide()
 		self.ardPotentiometerEditForm.hide()
 		self.ardPWMEditForm.hide()
+		self.ardDigOutputEditForm.hide()
 		self.ardServoEditForm.hide()
 		
 		self.actionSave.setEnabled(False)
@@ -169,6 +176,7 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 		self.arduinoEditForm.hide()
 		self.ardPotentiometerEditForm.hide()
 		self.ardPWMEditForm.hide()
+		self.ardDigOutputEditForm.hide()
 		self.ardServoEditForm.hide()
 		
 		if len(self.arduinoTreeWidget.selectedItems()) > 0:
@@ -196,6 +204,9 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 			
 			if tag =='servo':
 				self.ardServoEditForm.show(compID)
+				
+			if tag == 'dig_output':
+				self.ardDigOutputEditForm.show(compID)
 		
 		self.updatingCompPanel = False
 	

@@ -41,4 +41,5 @@ FORMS += \
     ../pwmEditForm.ui \
     ../switchEditForm.ui \
     ../xpudpconfigdialog.ui \
-    ../servoEditForm.ui
+    ../servoEditForm.ui \
+    ../digOutputEditForm.ui
