@@ -74,7 +74,7 @@ class pyXPdigOutputEditForm(QtWidgets.QWidget, digOutputEditForm.Ui_digOutputEdi
 		dataref = self.drefLineEdit.text()
 		index = self.drefIndexLineEdit.text()
 		drefValue = XPUDP.pyXPUDPServer.getData(dataref + "[" + index + "]")
-		
+		#logging.info('dataref value: '+str(drefValue))
 		self.drefValueLabel.setText("{0:.4f}".format(drefValue))
 		
 	def activateSave(self):

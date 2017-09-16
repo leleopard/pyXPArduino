@@ -12,6 +12,9 @@ __pycache__/
 
 
 ._*
+#log file
+*.log
+pyXPArduino.log
 
 # ignore pyinstaller files and folders for now
 *.spec
@@ -24,8 +27,7 @@ doc/
 #config folder
 config/
 
-#log file
-pyXPArduino.log
+
 
 #tests folder
 tests-old/
