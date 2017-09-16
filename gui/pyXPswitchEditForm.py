@@ -157,7 +157,7 @@ class pyXPswitchEditForm(QtWidgets.QWidget, switchEditForm.Ui_switchEditForm):
 		super().hide()
 		
 	def updateStateWidget(self, componentType, componentID, ardSerialNr = None, attribute = 'state'):
-		logging.info ('Update switch widget'+componentType)
+		logging.debug ('Update switch widget'+componentType)
 		if componentType == 'switch' and componentID == self.componentID and attribute == 'state':
 			componentData = self.ardXMLconfig.getComponentData(componentID, self.componentType)
 			state = componentData['state']

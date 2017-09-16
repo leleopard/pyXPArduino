@@ -1,0 +1,113 @@
+2017-09-16 16:35:09,185 INFO     root            XPrefData                      <module>                        Loading XPlane commands...
+2017-09-16 16:35:09,190 INFO     root            XPrefData                      <module>                        Loading XPlane datarefs...
+2017-09-16 16:35:09,804 INFO     root            XPlaneUDPServer                initialiseUDP                   Initialising XPlaneUDPServer on address: ('127.0.0.1', 49008)
+2017-09-16 16:35:09,892 INFO     root            serialArduinoUtils             returnArduinoPort               Arduino with serial number 7563031383635150B102 connected on PORT COM4
+2017-09-16 16:35:09,893 INFO     arduinoSerial   arduinoSerial                  __init__                        Initialising serial Arduino connection on port: COM4, BAUD: 115200
+2017-09-16 16:35:09,925 INFO     Arduino         Arduino                        __init__                        Arduino serial 7563031383635150B102 connected on port COM3
+2017-09-16 16:35:09,926 INFO     arduinoSerial   arduinoSerial                  sendPinList                     arduinoSerial::sending pin list to arduino['33', '31', '35', '37', '41', '39']
+2017-09-16 16:35:09,926 INFO     arduinoSerial   arduinoSerial                  sendPinList                     arduinoSerial::sending pin list to arduino['0', '1', '2', '3', '4', '5', '6', '7']
+2017-09-16 16:35:09,927 INFO     arduinoSerial   arduinoSerial                  sendPinList                     arduinoSerial::sending pin list to arduino['9', '8', '11', '12']
+2017-09-16 16:35:09,927 INFO     arduinoSerial   arduinoSerial                  sendPinList                     arduinoSerial::sending pin list to arduino['10']
+2017-09-16 16:35:11,428 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetswitch
+2017-09-16 16:35:11,430 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetswitch
+2017-09-16 16:35:11,434 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,436 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,437 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,439 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,440 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,442 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,443 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,446 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,450 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,450 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,451 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,452 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,454 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,455 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,458 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,458 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,459 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,462 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,462 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,463 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,467 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,467 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,471 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,471 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,472 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,475 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,475 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,476 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,479 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,479 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,480 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,483 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,483 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,484 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,487 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,487 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,491 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,492 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,492 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,495 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,495 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,496 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,499 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,499 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,500 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,503 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,503 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,508 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,508 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,509 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,511 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,511 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,512 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,516 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,516 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,517 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,520 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,520 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,524 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,524 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,525 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,528 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,528 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,529 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,532 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,532 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,533 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,536 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,536 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,540 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,540 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,541 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,544 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,544 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,545 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,548 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,548 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,549 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,557 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:11,561 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:12,204 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:12,220 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:20,655 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:20,666 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:20,675 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:20,687 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:20,691 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:20,695 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:20,707 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:20,732 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:21,474 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:21,486 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:21,510 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:21,512 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:21,526 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:21,531 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:22,292 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:22,306 INFO     root            pyXPswitchEditForm             updateStateWidget               Update switch widgetpotentiometer
+2017-09-16 16:35:24,136 INFO     root            XPlaneUDPServer                quit                            UDP Server stopped...
+2017-09-16 16:35:24,138 INFO     arduinoSerial   arduinoSerial                  quit                            Arduino Connection on port COM4 stopped...
+2017-09-16 16:35:24,139 INFO     Arduino         Arduino                        quit                            Arduino thread stopped, ard serial nr7563031383635150B102
