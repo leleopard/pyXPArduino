@@ -5,6 +5,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import gui.xpudpconfigdialog as xpudpconfigdialog
 import lib.XPlaneUDPServer as XPUDP
 
+logger = logging.getLogger('UDPconfigdialog')
 
 class pyXPUDPConfigDialog(QtWidgets.QDialog, xpudpconfigdialog.Ui_Dialog):
 	def __init__(self, XMLconfigFile):
@@ -32,11 +33,11 @@ class pyXPUDPConfigDialog(QtWidgets.QDialog, xpudpconfigdialog.Ui_Dialog):
 		self.UDPStatusLabel.setText(XPUDP.pyXPUDPServer.statusMsg)
 	
 	def buttonBoxClicked(self, button):
-		logging.debug('button box clicked')
+		logger.debug('button box clicked')
 		print(button)
 		
 		if button == self.buttonBox.button(QtWidgets.QDialogButtonBox.Apply):
-			logging.debug('apply clicked')
+			logger.debug('apply clicked')
 			self.restartUDPServer()
 		
 	def refreshForm(self):
@@ -74,7 +75,7 @@ class pyXPUDPConfigDialog(QtWidgets.QDialog, xpudpconfigdialog.Ui_Dialog):
 				for forwardIPtag in ForwardIPAddressesTags:
 					IPaddress = forwardIPtag.attrib['address']
 					port = forwardIPtag.attrib['port']
-					logging.debug('Forward IP address, IP: '+str(IPaddress)+', port: '+str(port))
+					logger.debug('Forward IP address, IP: '+str(IPaddress)+', port: '+str(port))
 					index = self.FWDIPs_TABLE.rowCount()
 					self.FWDIPs_TABLE.insertRow(index)
 					item = QtWidgets.QTableWidgetItem(IPaddress)
@@ -87,7 +88,7 @@ class pyXPUDPConfigDialog(QtWidgets.QDialog, xpudpconfigdialog.Ui_Dialog):
 			self.FWDIPs_TABLE.resizeRowsToContents()
 		
 		except:
-			logging.error('error while retrieving xml data', exc_info=True)
+			logger.error('error while retrieving xml data', exc_info=True)
 	
 	def addFWDIP(self):
 		self.FWDIPs_TABLE.insertRow(self.FWDIPs_TABLE.rowCount())
@@ -134,8 +135,8 @@ class pyXPUDPConfigDialog(QtWidgets.QDialog, xpudpconfigdialog.Ui_Dialog):
 				port = self.FWDIPs_TABLE.item(i,1).text()
 				
 			if address != '' and port != '':
-				fwdIPAdresses.append((address,port))
-				
+				fwdIPAdresses.append((address,int(port)))
+		logger.debug('setting fwd IP addresses to:'+str(fwdIPAdresses))
 		XPUDP.pyXPUDPServer.enableForwardXPpackets(fwdIPAdresses)
 		
 	def saveToXMLfile(self):

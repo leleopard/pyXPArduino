@@ -389,11 +389,11 @@ class XPlaneUDPServer(threading.Thread):
 					
 				if len(self.forwardXPDataAddresses) > 0: # loop through forward addresses and send fwd_data packet
 					for i in range(0,len(self.forwardXPDataAddresses)) :
-						if self.forwardXPDataAddresses[i][1] == True:
-							self.sendSock.sendto(fwddata,self.forwardXPDataAddresses[i][0])
-						else :
-							if data[0:5].decode('ascii') != "DATA|":
-								self.sendSock.sendto(fwddata,self.forwardXPDataAddresses[i][0])
+						#if self.forwardXPDataAddresses[i][1] == True:
+						self.sendSock.sendto(fwddata,self.forwardXPDataAddresses[i])
+						#else :
+						#	if data[0:5].decode('ascii') != "DATA|":
+						#		self.sendSock.sendto(fwddata,self.forwardXPDataAddresses[i][0])
 						
 			except socket.error as msg: pass
 				#print ("UDP Xplane receive error code ", str(msg[0]), " Message: ", str(msg[1]) )   
