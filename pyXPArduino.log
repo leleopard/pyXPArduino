@@ -1,0 +1,26 @@
+2017-09-16 17:09:34,138 INFO     root            XPrefData                      <module>                        Loading XPlane commands...
+2017-09-16 17:09:34,141 INFO     root            XPrefData                      <module>                        Loading XPlane datarefs...
+2017-09-16 17:09:34,274 INFO     root            XPlaneUDPServer                initialiseUDP                   Initialising XPlaneUDPServer on address: ('127.0.0.1', 49008)
+2017-09-16 17:09:34,357 INFO     root            serialArduinoUtils             returnArduinoPort               Arduino with serial number 7563031383635150B102 connected on PORT COM4
+2017-09-16 17:09:34,357 INFO     arduinoSerial   arduinoSerial                  __init__                        Initialising serial Arduino connection on port: COM4, BAUD: 115200
+2017-09-16 17:09:34,388 INFO     Arduino         Arduino                        __init__                        Arduino serial 7563031383635150B102 connected on port COM3
+2017-09-16 17:09:34,388 INFO     arduinoSerial   arduinoSerial                  sendPinList                     arduinoSerial::sending pin list to arduino['33', '31', '35', '37', '41', '39']
+2017-09-16 17:09:34,388 INFO     arduinoSerial   arduinoSerial                  sendPinList                     arduinoSerial::sending pin list to arduino['0', '1', '2', '3', '4', '5', '6', '7']
+2017-09-16 17:09:34,389 INFO     arduinoSerial   arduinoSerial                  sendPinList                     arduinoSerial::sending pin list to arduino['9', '8', '11', '12']
+2017-09-16 17:09:34,389 INFO     arduinoSerial   arduinoSerial                  sendPinList                     arduinoSerial::sending pin list to arduino['10']
+2017-09-16 17:09:34,519 DEBUG    UDPconfigdialog pyXPUDPConfigDialog            refreshForm                     Forward IP address, IP: 192.168.1.144, port: 49006
+2017-09-16 17:09:34,521 DEBUG    UDPconfigdialog pyXPUDPConfigDialog            refreshForm                     Forward IP address, IP: 192.168.1.144, port: 49007
+2017-09-16 17:09:34,522 DEBUG    UDPconfigdialog pyXPUDPConfigDialog            refreshForm                     Forward IP address, IP: 192.168.1.101, port: 49007
+2017-09-16 17:09:40,063 DEBUG    UDPconfigdialog pyXPUDPConfigDialog            refreshForm                     Forward IP address, IP: 192.168.1.144, port: 49006
+2017-09-16 17:09:40,064 DEBUG    UDPconfigdialog pyXPUDPConfigDialog            refreshForm                     Forward IP address, IP: 192.168.1.144, port: 49007
+2017-09-16 17:09:40,067 DEBUG    UDPconfigdialog pyXPUDPConfigDialog            refreshForm                     Forward IP address, IP: 192.168.1.101, port: 49007
+2017-09-16 17:09:42,127 DEBUG    UDPconfigdialog pyXPUDPConfigDialog            buttonBoxClicked                button box clicked
+2017-09-16 17:09:42,130 INFO     root            XPlaneUDPServer                initialiseUDP                   Initialising XPlaneUDPServer on address: ('127.0.0.1', 49008)
+2017-09-16 17:09:42,131 DEBUG    UDPconfigdialog pyXPUDPConfigDialog            restartUDPServer                setting fwd IP addresses to:[('192.168.1.144', 49006), ('192.168.1.144', 49007), ('192.168.1.101', 49007)]
+2017-09-16 17:16:36,685 INFO     arduinoSerial   arduinoSerial                  sendPinList                     arduinoSerial::sending pin list to arduino['33', '31', '35', '37', '41', '39', '30']
+2017-09-16 17:16:48,231 INFO     arduinoSerial   arduinoSerial                  sendPinList                     arduinoSerial::sending pin list to arduino['33', '31', '35', '37', '41', '39', '32']
+2017-09-16 17:16:58,454 INFO     arduinoSerial   arduinoSerial                  sendPinList                     arduinoSerial::sending pin list to arduino['33', '31', '35', '37', '41', '39', '38']
+2017-09-16 17:22:33,900 INFO     root            XPlaneUDPServer                __resubscribeRREFs              Attempt to re subscribe datarefs with XPlane
+2017-09-16 21:29:29,730 INFO     root            XPlaneUDPServer                quit                            UDP Server stopped...
+2017-09-16 21:29:29,731 INFO     arduinoSerial   arduinoSerial                  quit                            Arduino Connection on port COM4 stopped...
+2017-09-16 21:29:29,731 INFO     Arduino         Arduino                        quit                            Arduino thread stopped, ard serial nr7563031383635150B102
