@@ -9,12 +9,12 @@ __pycache__/
 *.txt~
 *.ini~
 *.DS_Store
-
+*.log
 
 ._*
 #log file
-*.log
-pyXPArduino.log
+
+#pyXPArduino.log
 
 # ignore pyinstaller files and folders for now
 *.spec
