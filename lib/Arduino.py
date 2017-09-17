@@ -60,6 +60,7 @@ class Arduino(threading.Thread):
 			if self.connected == True:
 				self.__refreshOutputs('pwm')
 				self.__refreshOutputs('servo')
+				self.__refreshOutputs('dig_output')
 			time.sleep(0.01) 
 	
 	## internal method, refreshes the outputs of the arduino if connected (queues commands on the arduinoSerial instance) - called in loop by the thread main loop
@@ -68,7 +69,7 @@ class Arduino(threading.Thread):
 	def __refreshOutputs(self, outputType):
 		if self.connected == True:
 			compList = self.ardXMLconfig.getComponentList(self.ardSerialNumber, outputType)
-			logger.debug('refresh outputs for output type: '+str(outputType))
+			#logger.debug('refresh outputs for output type: '+str(outputType))
 			for comp in compList:
 				if comp['pin'] != '':
 					compActions = self.ardXMLconfig.getComponentActions(self.ardSerialNumber, outputType, comp['pin'] )
@@ -168,6 +169,7 @@ class Arduino(threading.Thread):
 	# @param attribute			has to be 'pin'
 	#
 	def updateComponentList(self, componentType, switchSerialNr, ardSerialNr, attribute):
+		logger.debug('update component list, component type: '+str(componentType))
 		if ardSerialNr == self.ardSerialNumber and attribute == 'pin' and self.connected == True: # only update pins if this is us and the attribute that has changed is pin
 			
 			if componentType == '*' or componentType == 'switch':
@@ -209,6 +211,16 @@ class Arduino(threading.Thread):
 						compPinList.append(comp['pin'])
 				logger.debug ('Ard serial '+ self.ardSerialNumber+ 'servo pin list: ' + str(compPinList))
 				self.serialConnection.sendPinList('servo', compPinList)
+				
+			if componentType == '*' or componentType == 'dig_output':
+				compList = self.ardXMLconfig.getComponentList(self.ardSerialNumber, 'dig_output')
+				compPinList = []
+				
+				for comp in compList:
+					if comp['pin'] != '':
+						compPinList.append(comp['pin'])
+				logger.debug ('Ard serial '+ self.ardSerialNumber+ 'dig_output pin list: ' + str(compPinList))
+				self.serialConnection.sendPinList('dig_output', compPinList)
 	
 	## stop the thread, call when exiting the application to cleanly close the connections
 	#

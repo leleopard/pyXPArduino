@@ -105,7 +105,7 @@ class pyXPpwmEditForm(QtWidgets.QWidget, pwmEditForm.Ui_pwmEditForm):
 			self.actionSave.setEnabled(True)
 	
 	def updatePin(self):
-		logging.debug("pot pin updated")
+		logging.debug("pwm pin updated")
 		self.pinUpdated.emit(self.IDlineEdit.text())
 		
 	
