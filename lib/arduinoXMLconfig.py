@@ -63,7 +63,7 @@ class arduinoConfig():
 		ardTag.set('description', description)
 		ardTag.set('serial_nr', serial_number)
 		ardTag.set('manufacturer', manufacturer)
-		ardTag.set('baud', '250000')
+		ardTag.set('baud', '115200')
 		
 		inputTag = ET.SubElement(ardTag, 'inputs')
 		inputTag.set('description', 'Inputs')
