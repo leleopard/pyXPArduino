@@ -117,6 +117,9 @@ class XPlaneUDPServer(threading.Thread):
 		XPIPTag = self.root.findall(".//XPIP")
 		XPCompNameTag = self.root.findall(".//XPComputerName")
 		RedirectUDPtrafficTag = self.root.findall(".//RedirectUDPtraffic")
+		IPRedirectTag = self.root.findall(".//RedirectIP")
+		ForwardIPAddressesTag = self.root.findall(".//ForwardIPAddresses")
+		ForwardIPAddressesTags = ForwardIPAddressesTag[0].findall(".//IP")
 		
 		try:
 			Address = (IPTag[0].attrib['address'], int(IPTag[0].attrib['port']))
@@ -128,6 +131,20 @@ class XPlaneUDPServer(threading.Thread):
 			state = RedirectUDPtrafficTag[0].attrib['state']
 			if state == 'True':
 				pass#self.XP_RedirectTraffic_checkBox.setChecked(True)
+				RedIPAddress = (IPRedirectTag[0].attrib['address'], int(IPRedirectTag[0].attrib['port']))
+				self.enableRedirectUDPtoXP(RedIPAddress, XPAddress)
+				logger.info('Set redirection of traffic received to XP on address'+str(RedIPAddress))
+				
+			fwdIPAdresses = []
+			if len(ForwardIPAddressesTags) > 0:
+				for forwardIPtag in ForwardIPAddressesTags:
+					address = forwardIPtag.attrib['address']
+					port = forwardIPtag.attrib['port']
+					
+					if address != '' and port != '':
+						fwdIPAdresses.append((address,int(port)))
+			logger.info('setting fwd IP addresses to:'+str(fwdIPAdresses))
+			self.enableForwardXPpackets(fwdIPAdresses)
 			
 		except:
 			logger.error('error while retrieving xml data', exc_info=True)
