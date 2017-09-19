@@ -42,4 +42,5 @@ FORMS += \
     ../switchEditForm.ui \
     ../xpudpconfigdialog.ui \
     ../servoEditForm.ui \
-    ../digOutputEditForm.ui
+    ../digOutputEditForm.ui \
+    ../rotencoderEditForm.ui
