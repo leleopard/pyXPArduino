@@ -171,7 +171,7 @@ class ArduinoSerial(threading.Thread):
 		
 		else:
 			command_elems = buffer.split(":")
-			if (command_elems[0] == 'SW' or command_elems[0] == 'POT') and len(command_elems) == 3:
+			if (command_elems[0] == 'SW' or command_elems[0] == 'POT' or command_elems[0] == 'ROTENC') and len(command_elems) == 3:
 				value = None
 				pin = None
 				try:

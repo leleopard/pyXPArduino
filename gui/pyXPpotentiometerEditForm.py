@@ -31,9 +31,7 @@ class pyXPpotentiometerEditForm(QtWidgets.QWidget, potentiometerEditForm.Ui_pote
 		self.pickXPDatarefDialog = pyXPpickXPDatarefDialog.pyXPpickXPDatarefDialog()
 		self.PIN_comboBox.addItems(lib.arduinoXMLconfig.POT_PINS)
 		
-		
-		
-	
+
 		
 	def show(self, componentID, ardSerialNr = None):
 		self.repopulating = True

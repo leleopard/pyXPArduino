@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>switchEditForm</class>
- <widget class="QWidget" name="switchEditForm">
+ <class>rotencoderEditForm</class>
+ <widget class="QWidget" name="rotencoderEditForm">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -39,7 +39,7 @@ padding: 3px
 </string>
      </property>
      <property name="text">
-      <string>Edit switch</string>
+      <string>Edit rotary encoder</string>
      </property>
     </widget>
    </item>
@@ -50,7 +50,7 @@ padding: 3px
      </property>
     </widget>
    </item>
-   <item row="6" column="0">
+   <item row="8" column="0">
     <spacer name="verticalSpacer_2">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -73,34 +73,6 @@ padding: 3px
      </property>
     </widget>
    </item>
-   <item row="7" column="0">
-    <widget class="QLabel" name="label_9">
-     <property name="font">
-      <font>
-       <pointsize>9</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>Switch ON actions:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="9" column="0">
-    <widget class="QLabel" name="label_15">
-     <property name="font">
-      <font>
-       <pointsize>9</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>Switch OFF actions</string>
-     </property>
-    </widget>
-   </item>
    <item row="3" column="0">
     <widget class="QLabel" name="label_3">
      <property name="sizePolicy">
@@ -117,14 +89,52 @@ padding: 3px
      </property>
     </widget>
    </item>
-   <item row="5" column="0">
-    <widget class="QLabel" name="label_18">
+   <item row="11" column="0">
+    <widget class="QLabel" name="label_15">
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
      <property name="text">
-      <string>Arduino pin:</string>
+      <string>Rotary encoder DOWN actions</string>
      </property>
     </widget>
    </item>
-   <item row="12" column="0">
+   <item row="5" column="0">
+    <widget class="QLabel" name="label_18">
+     <property name="text">
+      <string>Arduino pin A:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="0">
+    <widget class="QLabel" name="label_9">
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Rotary encoder UP actions:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1">
+    <widget class="QComboBox" name="PINA_comboBox">
+     <property name="maximumSize">
+      <size>
+       <width>50</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="14" column="0">
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -137,20 +147,10 @@ padding: 3px
      </property>
     </spacer>
    </item>
-   <item row="5" column="1">
-    <widget class="QComboBox" name="PIN_comboBox">
-     <property name="maximumSize">
-      <size>
-       <width>50</width>
-       <height>16777215</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="8" column="0" colspan="5">
+   <item row="10" column="0" colspan="5">
     <layout class="QGridLayout" name="gridLayout_3">
      <item row="4" column="1">
-      <widget class="QTableWidget" name="SWON_CMDS_TABLE">
+      <widget class="QTableWidget" name="UP_CMDS_TABLE">
        <property name="minimumSize">
         <size>
          <width>0</width>
@@ -170,7 +170,7 @@ padding: 3px
       </widget>
      </item>
      <item row="4" column="4">
-      <widget class="QTableWidget" name="SWON_DREFS_TABLE">
+      <widget class="QTableWidget" name="UP_DREFS_TABLE">
        <column>
         <property name="text">
          <string>Dataref</string>
@@ -222,7 +222,7 @@ padding: 3px
         </widget>
        </item>
        <item>
-        <widget class="QToolButton" name="SWON_ADDCMD_BTN">
+        <widget class="QToolButton" name="UP_ADDCMD_BTN">
          <property name="text">
           <string>...</string>
          </property>
@@ -237,7 +237,7 @@ padding: 3px
         </widget>
        </item>
        <item>
-        <widget class="QToolButton" name="SWON_RMCMD_BTN">
+        <widget class="QToolButton" name="UP_RMCMD_BTN">
          <property name="text">
           <string>...</string>
          </property>
@@ -251,7 +251,7 @@ padding: 3px
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="testSWON_CMDS_button">
+        <widget class="QPushButton" name="testUP_CMDS_button">
          <property name="text">
           <string>Test</string>
          </property>
@@ -282,7 +282,7 @@ padding: 3px
         </widget>
        </item>
        <item>
-        <widget class="QToolButton" name="SWON_ADDDREF_BTN">
+        <widget class="QToolButton" name="UP_ADDDREF_BTN">
          <property name="text">
           <string>...</string>
          </property>
@@ -296,7 +296,7 @@ padding: 3px
         </widget>
        </item>
        <item>
-        <widget class="QToolButton" name="SWON_RMDREF_BTN">
+        <widget class="QToolButton" name="UP_RMDREF_BTN">
          <property name="text">
           <string>...</string>
          </property>
@@ -310,7 +310,7 @@ padding: 3px
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="testSWON_DREFS_button">
+        <widget class="QPushButton" name="testUPON_DREFS_button">
          <property name="text">
           <string>Test</string>
          </property>
@@ -333,10 +333,10 @@ padding: 3px
      </item>
     </layout>
    </item>
-   <item row="10" column="0" colspan="5">
+   <item row="12" column="0" colspan="5">
     <layout class="QGridLayout" name="gridLayout_4">
      <item row="6" column="0">
-      <widget class="QTableWidget" name="SWOFF_CMDS_TABLE">
+      <widget class="QTableWidget" name="DOWN_CMDS_TABLE">
        <column>
         <property name="text">
          <string>Command</string>
@@ -350,7 +350,7 @@ padding: 3px
       </widget>
      </item>
      <item row="6" column="1">
-      <widget class="QTableWidget" name="SWOFF_DREFS_TABLE">
+      <widget class="QTableWidget" name="DOWN_DREFS_TABLE">
        <column>
         <property name="text">
          <string>Dataref</string>
@@ -393,7 +393,7 @@ padding: 3px
         </widget>
        </item>
        <item>
-        <widget class="QToolButton" name="SWOFF_ADDCMD_BTN">
+        <widget class="QToolButton" name="DOWN_ADDCMD_BTN">
          <property name="text">
           <string>...</string>
          </property>
@@ -408,7 +408,7 @@ padding: 3px
         </widget>
        </item>
        <item>
-        <widget class="QToolButton" name="SWOFF_RMCMD_BTN">
+        <widget class="QToolButton" name="DOWN_RMCMD_BTN">
          <property name="text">
           <string>...</string>
          </property>
@@ -423,7 +423,7 @@ padding: 3px
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="testSWOFF_CMDS_button">
+        <widget class="QPushButton" name="testDOWN_CMDS_button">
          <property name="text">
           <string>Test</string>
          </property>
@@ -454,7 +454,7 @@ padding: 3px
         </widget>
        </item>
        <item>
-        <widget class="QToolButton" name="SWOFF_ADDDREF_BTN">
+        <widget class="QToolButton" name="DOWN_ADDDREF_BTN">
          <property name="text">
           <string>...</string>
          </property>
@@ -469,7 +469,7 @@ padding: 3px
         </widget>
        </item>
        <item>
-        <widget class="QToolButton" name="SWOFF_RMDREF_BTN">
+        <widget class="QToolButton" name="DOWN_RMDREF_BTN">
          <property name="text">
           <string>...</string>
          </property>
@@ -484,7 +484,7 @@ padding: 3px
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="testSWOFF_DREFS_button">
+        <widget class="QPushButton" name="testDOWN_DREFS_button">
          <property name="text">
           <string>Test</string>
          </property>
@@ -520,28 +520,6 @@ padding: 3px
        <width>350</width>
        <height>16777215</height>
       </size>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="1" colspan="3">
-    <widget class="QLineEdit" name="IDlineEdit">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>250</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>350</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="readOnly">
-      <bool>true</bool>
      </property>
     </widget>
    </item>
@@ -581,6 +559,65 @@ padding: 3px
      </property>
     </widget>
    </item>
+   <item row="4" column="1" colspan="3">
+    <widget class="QLineEdit" name="IDlineEdit">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>250</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>350</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="1">
+    <widget class="QComboBox" name="PINB_comboBox">
+     <property name="maximumSize">
+      <size>
+       <width>50</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Arduino pin B:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="3">
+    <widget class="QComboBox" name="steps_comboBox">
+     <property name="maximumSize">
+      <size>
+       <width>50</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="2">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Steps per notch: </string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <resources>
@@ -588,14 +625,14 @@ padding: 3px
  </resources>
  <connections>
   <connection>
-   <sender>SWON_ADDCMD_BTN</sender>
+   <sender>UP_ADDCMD_BTN</sender>
    <signal>clicked()</signal>
-   <receiver>switchEditForm</receiver>
-   <slot>addSwitchOnCommand()</slot>
+   <receiver>rotencoderEditForm</receiver>
+   <slot>addRotencUpCommand()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>147</x>
-     <y>196</y>
+     <y>222</y>
     </hint>
     <hint type="destinationlabel">
      <x>150</x>
@@ -604,14 +641,14 @@ padding: 3px
    </hints>
   </connection>
   <connection>
-   <sender>SWON_RMCMD_BTN</sender>
+   <sender>UP_RMCMD_BTN</sender>
    <signal>clicked()</signal>
-   <receiver>switchEditForm</receiver>
-   <slot>rmSwitchOnCommand()</slot>
+   <receiver>rotencoderEditForm</receiver>
+   <slot>rmRotencUpCommand()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>177</x>
-     <y>198</y>
+     <y>224</y>
     </hint>
     <hint type="destinationlabel">
      <x>210</x>
@@ -620,14 +657,14 @@ padding: 3px
    </hints>
   </connection>
   <connection>
-   <sender>SWON_ADDDREF_BTN</sender>
+   <sender>UP_ADDDREF_BTN</sender>
    <signal>clicked()</signal>
-   <receiver>switchEditForm</receiver>
-   <slot>addSwitchOnDataref()</slot>
+   <receiver>rotencoderEditForm</receiver>
+   <slot>addRotencUpDataref()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>501</x>
-     <y>199</y>
+     <y>225</y>
     </hint>
     <hint type="destinationlabel">
      <x>381</x>
@@ -636,14 +673,14 @@ padding: 3px
    </hints>
   </connection>
   <connection>
-   <sender>SWON_RMDREF_BTN</sender>
+   <sender>UP_RMDREF_BTN</sender>
    <signal>clicked()</signal>
-   <receiver>switchEditForm</receiver>
-   <slot>rmSwitchOnDataref()</slot>
+   <receiver>rotencoderEditForm</receiver>
+   <slot>rmRotencUpDataref()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>538</x>
-     <y>198</y>
+     <y>224</y>
     </hint>
     <hint type="destinationlabel">
      <x>456</x>
@@ -652,14 +689,14 @@ padding: 3px
    </hints>
   </connection>
   <connection>
-   <sender>SWOFF_ADDCMD_BTN</sender>
+   <sender>DOWN_ADDCMD_BTN</sender>
    <signal>clicked()</signal>
-   <receiver>switchEditForm</receiver>
-   <slot>addSwitchOffCommand()</slot>
+   <receiver>rotencoderEditForm</receiver>
+   <slot>addRotencDownCommand()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>141</x>
-     <y>433</y>
+     <y>451</y>
     </hint>
     <hint type="destinationlabel">
      <x>119</x>
@@ -668,14 +705,14 @@ padding: 3px
    </hints>
   </connection>
   <connection>
-   <sender>SWOFF_RMCMD_BTN</sender>
+   <sender>DOWN_RMCMD_BTN</sender>
    <signal>clicked()</signal>
-   <receiver>switchEditForm</receiver>
-   <slot>rmSwitchOffCommand()</slot>
+   <receiver>rotencoderEditForm</receiver>
+   <slot>rmRotencDownCommand()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>174</x>
-     <y>437</y>
+     <y>455</y>
     </hint>
     <hint type="destinationlabel">
      <x>166</x>
@@ -684,14 +721,14 @@ padding: 3px
    </hints>
   </connection>
   <connection>
-   <sender>SWOFF_ADDDREF_BTN</sender>
+   <sender>DOWN_ADDDREF_BTN</sender>
    <signal>clicked()</signal>
-   <receiver>switchEditForm</receiver>
-   <slot>addSwitchOffDataref()</slot>
+   <receiver>rotencoderEditForm</receiver>
+   <slot>addRotencDownDataref()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>494</x>
-     <y>434</y>
+     <y>452</y>
     </hint>
     <hint type="destinationlabel">
      <x>471</x>
@@ -700,14 +737,14 @@ padding: 3px
    </hints>
   </connection>
   <connection>
-   <sender>SWOFF_RMDREF_BTN</sender>
+   <sender>DOWN_RMDREF_BTN</sender>
    <signal>clicked()</signal>
-   <receiver>switchEditForm</receiver>
-   <slot>rmSwitchOffDataref()</slot>
+   <receiver>rotencoderEditForm</receiver>
+   <slot>rmRotencDownDataref()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>524</x>
-     <y>430</y>
+     <y>448</y>
     </hint>
     <hint type="destinationlabel">
      <x>607</x>
@@ -716,9 +753,9 @@ padding: 3px
    </hints>
   </connection>
   <connection>
-   <sender>SWON_CMDS_TABLE</sender>
+   <sender>UP_CMDS_TABLE</sender>
    <signal>cellDoubleClicked(int,int)</signal>
-   <receiver>switchEditForm</receiver>
+   <receiver>rotencoderEditForm</receiver>
    <slot>editXPCommand()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -732,9 +769,9 @@ padding: 3px
    </hints>
   </connection>
   <connection>
-   <sender>SWOFF_CMDS_TABLE</sender>
+   <sender>DOWN_CMDS_TABLE</sender>
    <signal>cellDoubleClicked(int,int)</signal>
-   <receiver>switchEditForm</receiver>
+   <receiver>rotencoderEditForm</receiver>
    <slot>editXPCommand()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -750,7 +787,7 @@ padding: 3px
   <connection>
    <sender>nameLineEdit</sender>
    <signal>editingFinished()</signal>
-   <receiver>switchEditForm</receiver>
+   <receiver>rotencoderEditForm</receiver>
    <slot>updateXMLdata()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -764,13 +801,13 @@ padding: 3px
    </hints>
   </connection>
   <connection>
-   <sender>PIN_comboBox</sender>
+   <sender>PINA_comboBox</sender>
    <signal>currentIndexChanged(int)</signal>
-   <receiver>switchEditForm</receiver>
+   <receiver>rotencoderEditForm</receiver>
    <slot>updateXMLdata()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>221</x>
+     <x>260</x>
      <y>132</y>
     </hint>
     <hint type="destinationlabel">
@@ -780,9 +817,9 @@ padding: 3px
    </hints>
   </connection>
   <connection>
-   <sender>SWON_CMDS_TABLE</sender>
+   <sender>UP_CMDS_TABLE</sender>
    <signal>itemChanged(QTableWidgetItem*)</signal>
-   <receiver>switchEditForm</receiver>
+   <receiver>rotencoderEditForm</receiver>
    <slot>updateXMLdata()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -796,9 +833,9 @@ padding: 3px
    </hints>
   </connection>
   <connection>
-   <sender>SWOFF_CMDS_TABLE</sender>
+   <sender>DOWN_CMDS_TABLE</sender>
    <signal>itemChanged(QTableWidgetItem*)</signal>
-   <receiver>switchEditForm</receiver>
+   <receiver>rotencoderEditForm</receiver>
    <slot>updateXMLdata()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -812,14 +849,14 @@ padding: 3px
    </hints>
   </connection>
   <connection>
-   <sender>testSWON_CMDS_button</sender>
+   <sender>testUP_CMDS_button</sender>
    <signal>clicked()</signal>
-   <receiver>switchEditForm</receiver>
+   <receiver>rotencoderEditForm</receiver>
    <slot>testOnCommands()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>236</x>
-     <y>198</y>
+     <y>224</y>
     </hint>
     <hint type="destinationlabel">
      <x>212</x>
@@ -828,14 +865,14 @@ padding: 3px
    </hints>
   </connection>
   <connection>
-   <sender>testSWOFF_CMDS_button</sender>
+   <sender>testDOWN_CMDS_button</sender>
    <signal>clicked()</signal>
-   <receiver>switchEditForm</receiver>
+   <receiver>rotencoderEditForm</receiver>
    <slot>testOffCommands()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>213</x>
-     <y>430</y>
+     <y>448</y>
     </hint>
     <hint type="destinationlabel">
      <x>306</x>
@@ -844,13 +881,13 @@ padding: 3px
    </hints>
   </connection>
   <connection>
-   <sender>PIN_comboBox</sender>
+   <sender>PINA_comboBox</sender>
    <signal>currentTextChanged(QString)</signal>
-   <receiver>switchEditForm</receiver>
+   <receiver>rotencoderEditForm</receiver>
    <slot>updatePin()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>204</x>
+     <x>243</x>
      <y>135</y>
     </hint>
     <hint type="destinationlabel">
@@ -860,9 +897,9 @@ padding: 3px
    </hints>
   </connection>
   <connection>
-   <sender>SWON_DREFS_TABLE</sender>
+   <sender>UP_DREFS_TABLE</sender>
    <signal>cellDoubleClicked(int,int)</signal>
-   <receiver>switchEditForm</receiver>
+   <receiver>rotencoderEditForm</receiver>
    <slot>editXPDataref()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -876,9 +913,9 @@ padding: 3px
    </hints>
   </connection>
   <connection>
-   <sender>SWOFF_DREFS_TABLE</sender>
+   <sender>DOWN_DREFS_TABLE</sender>
    <signal>cellDoubleClicked(int,int)</signal>
-   <receiver>switchEditForm</receiver>
+   <receiver>rotencoderEditForm</receiver>
    <slot>editXPDataref()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -892,9 +929,9 @@ padding: 3px
    </hints>
   </connection>
   <connection>
-   <sender>SWON_DREFS_TABLE</sender>
+   <sender>UP_DREFS_TABLE</sender>
    <signal>itemChanged(QTableWidgetItem*)</signal>
-   <receiver>switchEditForm</receiver>
+   <receiver>rotencoderEditForm</receiver>
    <slot>updateXMLdata()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -908,9 +945,9 @@ padding: 3px
    </hints>
   </connection>
   <connection>
-   <sender>SWOFF_DREFS_TABLE</sender>
+   <sender>DOWN_DREFS_TABLE</sender>
    <signal>itemChanged(QTableWidgetItem*)</signal>
-   <receiver>switchEditForm</receiver>
+   <receiver>rotencoderEditForm</receiver>
    <slot>updateXMLdata()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -924,14 +961,14 @@ padding: 3px
    </hints>
   </connection>
   <connection>
-   <sender>testSWOFF_DREFS_button</sender>
+   <sender>testDOWN_DREFS_button</sender>
    <signal>clicked()</signal>
-   <receiver>switchEditForm</receiver>
+   <receiver>rotencoderEditForm</receiver>
    <slot>testOffDatarefs()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>593</x>
-     <y>437</y>
+     <y>455</y>
     </hint>
     <hint type="destinationlabel">
      <x>656</x>
@@ -940,14 +977,14 @@ padding: 3px
    </hints>
   </connection>
   <connection>
-   <sender>testSWON_DREFS_button</sender>
+   <sender>testUPON_DREFS_button</sender>
    <signal>clicked()</signal>
-   <receiver>switchEditForm</receiver>
+   <receiver>rotencoderEditForm</receiver>
    <slot>testOnDatarefs()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>610</x>
-     <y>200</y>
+     <y>226</y>
     </hint>
     <hint type="destinationlabel">
      <x>774</x>
@@ -956,9 +993,9 @@ padding: 3px
    </hints>
   </connection>
   <connection>
-   <sender>SWON_CMDS_TABLE</sender>
+   <sender>UP_CMDS_TABLE</sender>
    <signal>cellChanged(int,int)</signal>
-   <receiver>switchEditForm</receiver>
+   <receiver>rotencoderEditForm</receiver>
    <slot>activateSave()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -971,16 +1008,80 @@ padding: 3px
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>PINB_comboBox</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>rotencoderEditForm</receiver>
+   <slot>updateXMLdata()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>251</x>
+     <y>160</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>307</x>
+     <y>128</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>PINB_comboBox</sender>
+   <signal>currentTextChanged(QString)</signal>
+   <receiver>rotencoderEditForm</receiver>
+   <slot>updatePin()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>243</x>
+     <y>154</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>353</x>
+     <y>206</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>steps_comboBox</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>rotencoderEditForm</receiver>
+   <slot>updateXMLdata()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>578</x>
+     <y>132</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>628</x>
+     <y>119</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>steps_comboBox</sender>
+   <signal>currentTextChanged(QString)</signal>
+   <receiver>rotencoderEditForm</receiver>
+   <slot>updatePin()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>562</x>
+     <y>132</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>617</x>
+     <y>141</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
-  <slot>addSwitchOnCommand()</slot>
-  <slot>rmSwitchOnCommand()</slot>
-  <slot>addSwitchOnDataref()</slot>
-  <slot>rmSwitchOnDataref()</slot>
-  <slot>addSwitchOffCommand()</slot>
-  <slot>rmSwitchOffCommand()</slot>
-  <slot>addSwitchOffDataref()</slot>
-  <slot>rmSwitchOffDataref()</slot>
+  <slot>addRotencUpCommand()</slot>
+  <slot>rmRotencUpCommand()</slot>
+  <slot>addRotencUpDataref()</slot>
+  <slot>rmRotencUpDataref()</slot>
+  <slot>addRotencDownCommand()</slot>
+  <slot>rmRotencDownCommand()</slot>
+  <slot>addRotencDownDataref()</slot>
+  <slot>rmRotencDownDataref()</slot>
   <slot>editXPCommand()</slot>
   <slot>updateXMLdata()</slot>
   <slot>testOnCommands()</slot>

@@ -156,6 +156,7 @@ class arduinoConfig():
 				
 		return actionsList
 	
+	## IS THIS USED ANYWHERE?? WHY NOT USE updateComponentData() or get updateComponentData to use this??
 	## update actions for component by component type, pin and arduino serial number.
 	# @param actionsList list of actions in form [{'state': action.attrib['state'], 
 	#									'action_type': action.attrib['action_type'], 
@@ -207,9 +208,18 @@ class arduinoConfig():
 				pin =''
 				if 'pin' in compTag.attrib: 
 					pin = compTag.attrib['pin']
+				pin2 =''
+				if 'pin2' in compTag.attrib: 
+					pin2 = compTag.attrib['pin2']
+				stepsPerNotch = ''
+				if 'stepsPerNotch' in compTag.attrib: 
+					stepsPerNotch = compTag.attrib['stepsPerNotch']
+					
 				compList.append({'name': compTag.attrib['name'],
 								'id': compTag.attrib['id'],
 								'pin': pin, 
+								'pin2': pin2,
+								'stepsPerNotch': stepsPerNotch,
 								'state': compTag.attrib['state']})
 				
 		return compList
@@ -223,8 +233,15 @@ class arduinoConfig():
 		compTag = self.root.findall(".//"+componentType+"[@id='"+compSerialNr+"']")
 		if len(compTag) > 0: # comp has been found
 			pin =''
+			pin2 = ''
+			stepsPerNotch = ''
 			if 'pin' in compTag[0].attrib: 
 				pin = compTag[0].attrib['pin']
+			if 'pin2' in compTag[0].attrib: 
+				pin2 = compTag[0].attrib['pin2']
+			if 'stepsPerNotch' in compTag[0].attrib: 
+				stepsPerNotch = compTag[0].attrib['stepsPerNotch']
+				
 			actions = list(compTag[0].iter('action'))
 			#print("actions:", len(actions))
 			actionsList = []
@@ -249,7 +266,9 @@ class arduinoConfig():
 									'continuous': continuous})
 			compDict = {'name': compTag[0].attrib['name'],
 					'id': compTag[0].attrib['id'],
-					'pin': pin, 
+					'pin': pin,
+					'pin2': pin2,
+					'stepsPerNotch': stepsPerNotch,
 					'state': compTag[0].attrib['state'],
 					'actions': actionsList}
 			
@@ -268,10 +287,10 @@ class arduinoConfig():
 	## updates component data - id, name, arduino pin, and replace actions with those passed in parameter
 	# @param compSerialNr  the id of the component to update
 	# @param componentType the type of component: 'switch', 'potentiometer', 'rot_encoder', 'led', 'pwm'
-	# @param switchData  dictionary formatted as {'id': 'id123', 'name': 'myname', 'pin': 'arduino pin nr'}
-	# @param switchActions  list of dictionaries, one per action, each formatted as {'switch_state': 'on' or 'off', 'action_type': 'cmd' or 'dref, 'cmddref': 'command or dataref string'}
+	# @param compData  dictionary formatted as {'id': 'id123', 'name': 'myname', 'pin': 'arduino pin nr', 'pin2': can be ommitted, but used for encoders}
+	# @param actions  list of dictionaries, one per action, each formatted as {'state': 'on' or 'off' (switch) 'up' or 'down(rot encoder), 'action_type': 'cmd' or 'dref, 'cmddref': 'command or dataref string'}
 	#
-	def updateComponentData(self, compSerialNr, componentType, switchData, switchActions = []):
+	def updateComponentData(self, compSerialNr, componentType, compData, actions = []):
 		logging.debug('Update Component Data, type: '+componentType)
 		compTag = self.root.findall(".//"+componentType+"[@id='"+compSerialNr+"']")
 		if len(compTag) > 0: # component has been found
@@ -281,14 +300,18 @@ class arduinoConfig():
 			#logging.debug (ardTag)
 			#logging.debug ('ARD serial nr: '+ardTag[0].attrib['serial_nr'])
 			
-			self.updateComponentAttribute(compSerialNr, componentType,'id', switchData['id'])
-			self.updateComponentAttribute(compSerialNr, componentType,'name', switchData['name'])
-			self.updateComponentAttribute(compSerialNr, componentType,'pin', switchData['pin'])
+			self.updateComponentAttribute(compSerialNr, componentType,'id', compData['id'])
+			self.updateComponentAttribute(compSerialNr, componentType,'name', compData['name'])
+			self.updateComponentAttribute(compSerialNr, componentType,'pin', compData['pin'])
+			if 'pin2' in compData: # test if 2nd pin provided
+				self.updateComponentAttribute(compSerialNr, componentType,'pin2', compData['pin2'])
+			if 'stepsPerNotch' in compData: # test if stepsPerNotch provided
+				self.updateComponentAttribute(compSerialNr, componentType,'stepsPerNotch', compData['stepsPerNotch'])
 			
 			for action in list(compTag[0]): # first remove all actions
 				compTag[0].remove(action)
 				
-			for action in switchActions:
+			for action in actions:
 				actionTag = ET.SubElement(compTag[0], 'action')
 				actionTag.set('state', action['state'])
 				actionTag.set('action_type', action['action_type'])
@@ -312,7 +335,7 @@ class arduinoConfig():
 	## updates component attribute 
 	# @param compSerialNr  the id of the component to update
 	# @param componentType the type of component: 'switch', 'potentiometer', 'rot_encoder', 'led', 'pwm'
-	# @param attribute the attribute of the component to update
+	# @param attribute the attribute of the component to update - note if the attribute does not exist the function will create it! this is for backward compability purpose when implementing rot encoder
 	# @param attributeValue   the value to set the attribute to 
 	#
 	def updateComponentAttribute(self, compSerialNr, componentType, attribute, attributeValue):
@@ -323,6 +346,8 @@ class arduinoConfig():
 			#find the component arduino parent element
 			ardTag = self.root.findall(".//"+componentType+"[@id='"+compSerialNr+"']......")
 			ardSerialNr = ardTag[0].attrib['serial_nr']
+			if attribute not in compTag[0].attrib: # this attribute does not exist so lets create it
+				compTag[0].set(attribute, '')
 			if compTag[0].attrib[attribute] != attributeValue: # then the value has changed and must be updated
 				compTag[0].set(attribute, attributeValue)
 				# and we notify all callbacks of this attribute change

@@ -20,7 +20,7 @@ import gui.pyXPpotentiometerEditForm as pyXPpotentiometerEditForm
 import gui.pyXPpwmEditForm as pyXPpwmEditForm
 import gui.pyXPdigOutputEditForm as pyXPdigOutputEditForm
 import gui.pyXPservoEditForm as pyXPservoEditForm
-
+import gui.pyXProtencoderEditForm as pyXProtencoderEditForm
 
 import lib.arduinoXMLconfig
 import lib.XPrefData as XPrefData
@@ -61,6 +61,12 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 		self.ardSwitchEditForm = pyXPswitchEditForm.pyXPswitchEditForm(self.editPaneWidget, self.ardXMLconfig, self.actionSave)
 		self.horizontalLayoutEditPane.addWidget(self.ardSwitchEditForm)
 		self.ardSwitchEditForm.nameUpdated.connect(self.updateComponentName)
+		
+		#rot encoder edit form
+		self.ardRotencoderEditForm = pyXProtencoderEditForm.pyXProtencoderEditForm(self.editPaneWidget, self.ardXMLconfig, self.actionSave)
+		self.horizontalLayoutEditPane.addWidget(self.ardRotencoderEditForm)
+		self.ardRotencoderEditForm.nameUpdated.connect(self.updateComponentName)
+		
 		#potentiometer edit form
 		self.ardPotentiometerEditForm = pyXPpotentiometerEditForm.pyXPpotentiometerEditForm(self.editPaneWidget, self.ardXMLconfig, self.actionSave)
 		self.horizontalLayoutEditPane.addWidget(self.ardPotentiometerEditForm)
@@ -90,6 +96,7 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 		self.ardPWMEditForm.hide()
 		self.ardDigOutputEditForm.hide()
 		self.ardServoEditForm.hide()
+		self.ardRotencoderEditForm.hide()
 		
 		self.actionSave.setEnabled(False)
 		
@@ -178,6 +185,7 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 		self.ardPWMEditForm.hide()
 		self.ardDigOutputEditForm.hide()
 		self.ardServoEditForm.hide()
+		self.ardRotencoderEditForm.hide()
 		
 		if len(self.arduinoTreeWidget.selectedItems()) > 0:
 			tag 		= self.arduinoTreeWidget.selectedItems()[0].text(2)
@@ -195,6 +203,9 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 			
 			if tag =='switch':
 				self.ardSwitchEditForm.show(compID)
+			
+			if tag == 'rot_encoder':
+				self.ardRotencoderEditForm.show(compID)
 			
 			if tag =='potentiometer':
 				self.ardPotentiometerEditForm.show(compID)
