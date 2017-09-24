@@ -386,4 +386,16 @@ class arduinoConfig():
 			
 		else :
 			return -1
+	
+	## updates arduino attribute 
+	# @param arduinoSerialNr  the serial number of the arduino
+	# @param attribute the attribute of the component to update - note if the attribute does not exist the function will create it!
+	# @param attributeValue   the value to set the attribute to 
+	#
+	def updateArduinoAttribute(self, arduinoSerialNr, attribute, attributeValue):
+		ardTags = self.root.findall(".//arduino[@serial_nr='"+arduinoSerialNr+"']")
+		if len(ardTags) > 0: # arduino has been found
+			ardTags[0].set(attribute, attributeValue)
 			
+		else :
+			return -1

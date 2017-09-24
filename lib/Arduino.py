@@ -26,11 +26,11 @@ class Arduino(threading.Thread):
 		# Initialise connection, first we will check that the Arduino with this serial nr is still connected on this port
 		
 		connected_PORT = lib.serialArduinoUtils.returnArduinoPort(ardSerialNumber)
-		
+		ardDataDict = self.ardXMLconfig.getArduinoData(self.ardSerialNumber)
 		logger.debug("connected_PORT = "+ str(connected_PORT))
 		if connected_PORT == None: # then the arduino is not connected, no point trying to get a serial connection going
 			self.connected = False
-			logger.error("Arduino serial "+self.ardSerialNumber+", unable to connect on port "+PORT)
+			logger.error("Arduino serial "+self.ardSerialNumber+", name: "+ardDataDict['name']+", unable to connect on port "+PORT)
 			
 		else: # the arduino is connected, we will attempt to connect on the the PORT value found as the arduino could have been reconnected to another port
 			self.serialConnection = ardSerial.ArduinoSerial(connected_PORT, BAUD)
@@ -41,11 +41,12 @@ class Arduino(threading.Thread):
 				self.ardXMLconfig.registerComponentAttributeChangedCallback(self.updateComponentList) # 
 				time.sleep(0.01) 
 				self.updateComponentList('*', '', self.ardSerialNumber, 'pin') # set the pins as switches on arduino
+				self.ardXMLconfig.updateArduinoAttribute(self.ardSerialNumber, 'baud',str(BAUD))
 				self.connected = True
-				logger.info("Arduino serial "+self.ardSerialNumber+" connected on port "+PORT)
+				logger.info("Arduino serial "+self.ardSerialNumber+", name: "+ardDataDict['name']+", connected on port "+PORT)
 			else:
 				self.connected = False
-				logger.error("Arduino serial "+self.ardSerialNumber+", unable to connect on port "+PORT)
+				logger.error("Arduino serial "+self.ardSerialNumber+", name: "+ardDataDict['name']+", unable to connect on port "+PORT)
 				
 				
 	##  run. Do not call - use the start() method to start the thread, which will call run() 
