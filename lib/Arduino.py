@@ -41,7 +41,7 @@ class Arduino(threading.Thread):
 				self.ardXMLconfig.registerComponentAttributeChangedCallback(self.updateComponentList) # 
 				time.sleep(0.01) 
 				self.updateComponentList('*', '', self.ardSerialNumber, 'pin') # set the pins as switches on arduino
-				self.ardXMLconfig.updateArduinoAttribute(self.ardSerialNumber, 'baud',str(BAUD))
+				self.ardXMLconfig.updateArduinoAttribute(self.ardSerialNumber, 'port',str(PORT))
 				self.connected = True
 				logger.info("Arduino serial "+self.ardSerialNumber+", name: "+ardDataDict['name']+", connected on port "+PORT)
 			else:
