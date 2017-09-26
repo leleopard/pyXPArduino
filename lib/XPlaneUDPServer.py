@@ -37,7 +37,7 @@ class XPlaneUDPServer(threading.Thread):
 	def __init__(self):
 		threading.Thread.__init__(self)
 		self.running = True
-		self.updatingRREFdict = False
+		self.updatingRREFdict = True
 		self.statusMsg = "Not connected"
 		
 		self.XPbeacon = {
@@ -76,7 +76,7 @@ class XPlaneUDPServer(threading.Thread):
 			self.dataList.append([0,0,0,0,0,0,0,0]) # initialise the dataList with 0 values
 			
 		self.continuousXPCommandsQueue = []
-		
+		self.updatingRREFdict = False
 
 	## Initialise the UDP sockets to communicate with XPlane
 	# @param Address: tuple of IP address (str), UDP port (int) we are listening on

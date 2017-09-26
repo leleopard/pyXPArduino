@@ -46,6 +46,7 @@ class ArduinoSerial(threading.Thread):
 	# 
 	def __init__(self, PORT, BAUD, XPUDPServer = None):
 		threading.Thread.__init__(self)
+		self.arduinoReady = False
 		self.running = True
 		self.queuedCommands = []
 		self.inputCallbacks = []
@@ -86,26 +87,27 @@ class ArduinoSerial(threading.Thread):
 		self.inputCallbacks.append(callbackFunction)
 	
 	def sendOutputValue(self, pin, outputType, value):
-		logger.debug('serial connection, sending output value '+ str(value) + ' for output type ' + outputType)
-		command = self.OUTPUT_TYPE_CMDS[outputType]+pin+':'+str(value)+'\n'
-		self.queuedCommands.append(command)
-		logger.debug ("Queuing output command: "+ command)
+		if self.arduinoReady == True:
+			logger.debug('serial connection, sending output value '+ str(value) + ' for output type ' + outputType)
+			command = self.OUTPUT_TYPE_CMDS[outputType]+pin+':'+str(value)+'\n'
+			self.queuedCommands.append(command)
+			logger.debug ("Queuing output command: "+ command)
 		
 	def sendPinList(self, componentType, pinList):
 		if self.serialConnection != None:
 			logger.info('arduinoSerial::sending pin list to arduino' + str(pinList))
-			
-			command = self.COMP_PIN_CMDS[componentType]
-						
-			for pin in pinList:
-				command += pin
-				command += ':'
-			command = command[:-1]
-			command += '\n'
-			
-			self.queuedCommands.append(command)
-			logger.debug ("Queuing command: "+ command)
-			#self.serialConnection.write(command.encode())
+			if len(pinList)>0: # only send if there are any pins!
+				command = self.COMP_PIN_CMDS[componentType]
+							
+				for pin in pinList:
+					command += pin
+					command += ':'
+				command = command[:-1]
+				command += '\n'
+				
+				self.queuedCommands.append(command)
+				logger.debug ("Queuing command: "+ command)
+				#self.serialConnection.write(command.encode())
 			
 			#time.sleep(0.01) # leave time for chars to transmit
 	
@@ -123,7 +125,8 @@ class ArduinoSerial(threading.Thread):
 			time_running = time.time() - startTime
 			
 			# send commands
-			if time_running >= 1.5:
+			if self.arduinoReady == True :
+			#time_running >= 1.5:
 				for command in self.queuedCommands:
 					self.serialConnection.write(command.encode())
 					#time.sleep(0.01) # leave time for chars to transmit
@@ -156,6 +159,10 @@ class ArduinoSerial(threading.Thread):
 	def __processArduinoCmd(self, buffer):
 		logger.debug ("Process arduino command: "+ buffer)
 		#logging.debug("Processing arduino command, command id: "+buffer[0:4])
+		if buffer [0:5] == 'READY':
+			logger.debug("Arduino is ready")
+			self.arduinoReady = True
+			
 		if buffer [0:4] == 'CMND':
 			command = buffer[5:len(buffer)-1]
 			logger.debug("i see a command"+ command+'\0')
