@@ -75,7 +75,7 @@ class ArduinoSerial(threading.Thread):
 			self.connected = False
 			logger.error ( "Serial exception, unable to open connection with Arduino: "+errorMsg)
 			
-		time.sleep(0.001) # leave time for the arduino to boot up
+		time.sleep(0.5) # leave time for the arduino to boot up
 		
 		self.connected = True
 		
@@ -89,7 +89,7 @@ class ArduinoSerial(threading.Thread):
 	def sendOutputValue(self, pin, outputType, value):
 		if self.arduinoReady == True:
 			logger.debug('serial connection, sending output value '+ str(value) + ' for output type ' + outputType)
-			command = self.OUTPUT_TYPE_CMDS[outputType]+pin+':'+str(value)+'\n'
+			command = self.OUTPUT_TYPE_CMDS[outputType]+pin+':'+str(value)+';'
 			self.queuedCommands.append(command)
 			logger.debug ("Queuing output command: "+ command)
 		
@@ -103,13 +103,10 @@ class ArduinoSerial(threading.Thread):
 					command += pin
 					command += ':'
 				command = command[:-1]
-				command += '\n'
+				command += ';'
 				
 				self.queuedCommands.append(command)
 				logger.debug ("Queuing command: "+ command)
-				#self.serialConnection.write(command.encode())
-			
-			#time.sleep(0.01) # leave time for chars to transmit
 	
 	
 	##--------------------------------------------------------------------------------------------------------------------
@@ -120,16 +117,23 @@ class ArduinoSerial(threading.Thread):
 	def run(self):
 		buffer =""
 		startTime = time.time()
+		lastTime = time.time()
 		
 		while self.running and self.serialConnection!=None:
 			time_running = time.time() - startTime
-			
+			current_time = time.time()
+			#if current_time-lastTime > 0.5:
+			#	logger.info('ard serial running')
+			#	lastTime = current_time
+				
 			# send commands
 			if self.arduinoReady == True :
 			#time_running >= 1.5:
+				if len(self.queuedCommands) >0:
+					logger.debug('command queue: '+str(self.queuedCommands))
 				for command in self.queuedCommands:
 					self.serialConnection.write(command.encode())
-					#time.sleep(0.01) # leave time for chars to transmit
+					time.sleep(0.02) # leave time for arduino to process to transmit
 				self.queuedCommands = []
 			
 			data = self.serialConnection.read(self.serialConnection.in_waiting)		
@@ -153,7 +157,7 @@ class ArduinoSerial(threading.Thread):
 				logger.debug('commands: ' + str(commands))
 				
 					
-			time.sleep(0.00001)	
+			time.sleep(0.001)	
 			
 	## 
 	def __processArduinoCmd(self, buffer):

@@ -113,8 +113,9 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 													self.ardXMLconfig
 													))
 		for arduino in self.arduinoList:
-			arduino.updateComponentList('*', '', arduino.ardSerialNumber, 'pin')
 			arduino.start()
+			arduino.updateComponentList('*', '', arduino.ardSerialNumber, 'pin')
+			
 		
 	def closeEvent(self, event):
 		XPUDP.pyXPUDPServer.quit()

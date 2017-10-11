@@ -37,7 +37,8 @@ class XPlaneUDPServer(threading.Thread):
 	def __init__(self):
 		threading.Thread.__init__(self)
 		self.running = True
-		self.updatingRREFdict = True
+		self.updatingRREFdict = False
+		
 		self.statusMsg = "Not connected"
 		
 		self.XPbeacon = {
@@ -69,6 +70,7 @@ class XPlaneUDPServer(threading.Thread):
 		self.RREF_sockets = [] # list to store RREF sockets, one for each dataref subscribed. Not very elegant, but XPlane does not seem to be able to deal with multiple RREF requests from the same socket
 		self.datarefsDict = {} # dictionary to store dataref values received from XP
 		self.datarefsIndices = {}
+		self.RREFdatarefsRequestQueue = []
 		
 		self.dataList =[] # list to store the Data Set values received from XP as configured in the Data Input & Output screen
 		self.cmddata = None
@@ -76,7 +78,7 @@ class XPlaneUDPServer(threading.Thread):
 			self.dataList.append([0,0,0,0,0,0,0,0]) # initialise the dataList with 0 values
 			
 		self.continuousXPCommandsQueue = []
-		self.updatingRREFdict = False
+		#self.updatingRREFdict = False
 
 	## Initialise the UDP sockets to communicate with XPlane
 	# @param Address: tuple of IP address (str), UDP port (int) we are listening on
@@ -214,11 +216,14 @@ class XPlaneUDPServer(threading.Thread):
 		else:
 			logger.error ( "Invalid key")
 	
-
+	def requestXPDref(self, dataref):
+		self.RREFdatarefsRequestQueue.append(dataref)
+		
+		
 	## Request Dataref from XPlane - note calling getData('somedataref') will achieve the same effect and might be easier (will call this function in the background)
 	# @param string for the dataref to be requested from XPlane - refer to the XPlane doc for a list of available datarefs
 	#
-	def requestXPDref(self, dataref):
+	def __requestXPDref(self, dataref):
 		self.updatingRREFdict = True
 		
 		if self.XPAddress is not None: # check if we have XPlane's IP, if so continue, else log an error 
@@ -366,10 +371,14 @@ class XPlaneUDPServer(threading.Thread):
 	#
 	def run(self):
 		lasttimeXPbeaconreceived = time.time()
+		lasttimeRREFreceived = time.time()
 		
+		lastTime = time.time()
 		while self.running:
 			current_time = time.time()
-			
+			if current_time-lastTime > 0.5:
+				logger.debug('XP Server running')
+				lastTime = current_time
 			##---------------------------------------------------
 			#	check XPlane beacon
 			##---------------------------------------------------
@@ -421,19 +430,44 @@ class XPlaneUDPServer(threading.Thread):
 			#	Process incoming RREF dataref data
 			##---------------------------------------------------
 			try:
-				if self.updatingRREFdict == False: # to avoid having issues with dictionary iteration
+				logger.debug('updatingRREFdict: '+str(self.updatingRREFdict)+ 'XP alive: '+ str(self.XPalive))
+				#if self.updatingRREFdict == False: # to avoid having issues with dictionary iteration
+				#print(self.datarefsIndices)
+				self.iteratingRREFdict = True
+				tempRREFdict = self.datarefsIndices.copy()
+				#for index, RREF in self.datarefsIndices.items():
+				for index, RREF in tempRREFdict.items():
+					dataref = RREF[0]
+					#rrefdata, rrefaddr = self.datarefsIndices[index][1].recvfrom(8192)
+					rrefdata, rrefaddr = tempRREFdict[index][1].recvfrom(8192)
 					
-					for index, RREF in self.datarefsIndices.items():
-						dataref = RREF[0]
-						rrefdata, rrefaddr = self.datarefsIndices[index][1].recvfrom(8192)
+					if rrefdata[0:4].decode('ascii') == 'RREF':
+						lasttimeRREFreceived = current_time
+						index = unpack('<i', rrefdata[5:9])[0]
+						value = unpack('<f', rrefdata[9:13])[0]
 						
-						if rrefdata[0:4].decode('ascii') == 'RREF':
-							index = unpack('<i', rrefdata[5:9])[0]
-							value = unpack('<f', rrefdata[9:13])[0]
-							
-							self.datarefsDict[dataref] = value
+						self.datarefsDict[dataref] = value
+						logger.debug('received RREF, dataref'+str(dataref)+', value:'+str(value))
+				
+				deltaLastRREFreceived = current_time - lasttimeRREFreceived 
+				logger.debug('last time rref received was '+ str(deltaLastRREFreceived)+ ' s ago')
+				
+				if (current_time - lasttimeRREFreceived > 0.5) and self.XPalive == True: # attempt to re subscribe RREFs if none received in a while
+					logger.debug('not received RREFs in a while, attempting to resubscribe')
+					self.__resubscribeRREFs()
+				
+				self.iteratingRREFdict = False
 			
 			except socket.error as msg: pass
+				#pass
+				#logger.error('Error processing incoming RREF data', exc_info=True)
+			
+			##---------------------------------------------------
+			#	Subscribe RREFS 
+			##---------------------------------------------------
+			for dataref in self.RREFdatarefsRequestQueue:
+				self.__requestXPDref(dataref)
+			self.RREFdatarefsRequestQueue = []
 			
 			##---------------------------------------------------
 			#	Send continuous XP Commands
@@ -463,7 +497,7 @@ class XPlaneUDPServer(threading.Thread):
 					#print "UDP ARD receive error code ", str(msg[0]), " Message: ", str(msg[1]) 
 			
 			
-			time.sleep(0.01)
+			time.sleep(0.001)
 	
 	def __closeSockets(self):
 		try:

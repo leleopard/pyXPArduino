@@ -39,8 +39,8 @@ class Arduino(threading.Thread):
 				self.serialConnection.registerInputChangedCallback(self.inputChanged)
 				
 				self.ardXMLconfig.registerComponentAttributeChangedCallback(self.updateComponentList) # 
-				time.sleep(0.01) 
-				self.updateComponentList('*', '', self.ardSerialNumber, 'pin') # set the pins as switches on arduino
+				time.sleep(0.2) 
+				#self.updateComponentList('*', '', self.ardSerialNumber, 'pin') # set the pins as switches on arduino
 				self.ardXMLconfig.updateArduinoAttribute(self.ardSerialNumber, 'port',str(PORT))
 				self.connected = True
 				logger.info("Arduino serial "+self.ardSerialNumber+", name: "+ardDataDict['name']+", connected on port "+PORT)
@@ -55,19 +55,27 @@ class Arduino(threading.Thread):
 	def run(self):
 		buffer =""
 		startTime = time.time()
+		forceRefresh = True
+		lastTime = time.time();
 		
 		while self.running:
-			# obtain list of pwm outputs & associated actions
+			# obtain list of outputs & associated actions
+			if time.time() - lastTime > 1.0:
+				forceRefresh = True
+				lastTime = time.time()
+				
 			if self.connected == True:
-				self.__refreshOutputs('pwm')
-				self.__refreshOutputs('servo')
-				self.__refreshOutputs('dig_output')
+				self.__refreshOutputs('pwm', forceRefresh)
+				self.__refreshOutputs('servo', forceRefresh)
+				self.__refreshOutputs('dig_output', forceRefresh)
+				forceRefresh = False # forcing Refresh only on first run of the loop
 			time.sleep(0.01) 
 	
 	## internal method, refreshes the outputs of the arduino if connected (queues commands on the arduinoSerial instance) - called in loop by the thread main loop
 	# @param outputType 	the type of output to refresh ('pwm', 'servo' etc...) although not used at present
+	# @param forceRefresh	forces refresh of the output, even if the value of the dataref has moved by less than 0.01 - useful for initialisation
 	#
-	def __refreshOutputs(self, outputType):
+	def __refreshOutputs(self, outputType, forceRefresh = False):
 		if self.connected == True:
 			compList = self.ardXMLconfig.getComponentList(self.ardSerialNumber, outputType)
 			#logger.debug('refresh outputs for output type: '+str(outputType))
@@ -83,7 +91,7 @@ class Arduino(threading.Thread):
 						except ValueError:
 							pass
 							#logger.warning('Unable to convert dref value, defaulting to 0.0')
-						if abs(prevDrefValue - drefValue) > 0.01:
+						if (abs(prevDrefValue - drefValue) > 0.01) or forceRefresh == True:
 							action['state'] = str(drefValue)
 							logger.debug(outputType+' XPLANE DREF value, DREF: '+action['cmddref']+' Value: '+str(drefValue))
 							pointsList = self.__returnPointsList(action['setToValue'])
