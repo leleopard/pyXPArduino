@@ -40,6 +40,13 @@ class pyXProtencoderEditForm(QtWidgets.QWidget, rotencoderEditForm.Ui_rotencoder
 		
 		self.nameLineEdit.setText(componentData['name'])
 		self.IDlineEdit.setText(componentData['id'])
+		self.multiplierLineEdit.setText(componentData['multiplier'])
+		self.IDlineEdit.setText(componentData['id'])
+		check_state = QtCore.Qt.Unchecked
+		if componentData['acceleration'] == 'True':
+			check_state = QtCore.Qt.Checked
+		self.acceleration_checkBox.setCheckState(check_state)
+		
 		pinIndex = self.PINA_comboBox.findText(componentData['pin'])
 		self.PINA_comboBox.setCurrentIndex(pinIndex)
 		
@@ -333,12 +340,18 @@ class pyXProtencoderEditForm(QtWidgets.QWidget, rotencoderEditForm.Ui_rotencoder
 							  'continuous':action_continuous })
 				index = i
 			
+			acceleration = 'False'
+			if self.acceleration_checkBox.checkState() == QtCore.Qt.Checked:
+				acceleration = 'True'
+			
 			self.ardXMLconfig.updateComponentData(self.componentID, self.componentType,
 																{'id':self.IDlineEdit.text(),
 																'name':self.nameLineEdit.text(),
 																'pin':self.PINA_comboBox.currentText(),
 																'pin2':self.PINB_comboBox.currentText(),
-																'stepsPerNotch': self.steps_comboBox.currentText()},
+																'stepsPerNotch': self.steps_comboBox.currentText(),
+																'acceleration': acceleration,
+																'multiplier':self.multiplierLineEdit.text()},
 																actions)
 																
 			self.nameUpdated.emit(self.IDlineEdit.text(), self.nameLineEdit.text())

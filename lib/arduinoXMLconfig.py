@@ -234,14 +234,21 @@ class arduinoConfig():
 		if len(compTag) > 0: # comp has been found
 			pin =''
 			pin2 = ''
-			stepsPerNotch = ''
+			stepsPerNotch = '4'
+			acceleration = 'False'
+			multiplier = '1.0'
 			if 'pin' in compTag[0].attrib: 
 				pin = compTag[0].attrib['pin']
 			if 'pin2' in compTag[0].attrib: 
 				pin2 = compTag[0].attrib['pin2']
 			if 'stepsPerNotch' in compTag[0].attrib: 
 				stepsPerNotch = compTag[0].attrib['stepsPerNotch']
-				
+			if 'acceleration' in compTag[0].attrib: 
+				acceleration = compTag[0].attrib['acceleration']
+			if 'multiplier' in compTag[0].attrib: 
+				multiplier = compTag[0].attrib['multiplier']
+			
+			
 			actions = list(compTag[0].iter('action'))
 			#print("actions:", len(actions))
 			actionsList = []
@@ -270,6 +277,8 @@ class arduinoConfig():
 					'pin2': pin2,
 					'stepsPerNotch': stepsPerNotch,
 					'state': compTag[0].attrib['state'],
+					'acceleration': acceleration,
+					'multiplier': multiplier,
 					'actions': actionsList}
 			
 			return compDict
@@ -307,6 +316,12 @@ class arduinoConfig():
 				self.updateComponentAttribute(compSerialNr, componentType,'pin2', compData['pin2'])
 			if 'stepsPerNotch' in compData: # test if stepsPerNotch provided
 				self.updateComponentAttribute(compSerialNr, componentType,'stepsPerNotch', compData['stepsPerNotch'])
+			if 'acceleration' in compData: # test if acceleration provided
+				self.updateComponentAttribute(compSerialNr, componentType,'acceleration', compData['acceleration'])
+			if 'multiplier' in compData: # test if multiplier provided
+				self.updateComponentAttribute(compSerialNr, componentType,'multiplier', compData['multiplier'])
+		
+			
 			
 			for action in list(compTag[0]): # first remove all actions
 				compTag[0].remove(action)

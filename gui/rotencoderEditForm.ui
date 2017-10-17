@@ -43,14 +43,69 @@ padding: 3px
      </property>
     </widget>
    </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="label_3">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>110</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="text">
+      <string>Name</string>
+     </property>
+    </widget>
+   </item>
+   <item row="12" column="0">
+    <widget class="QLabel" name="label_15">
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Rotary encoder DOWN actions</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="label_19">
+     <property name="maximumSize">
+      <size>
+       <width>110</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>ID</string>
+     </property>
+    </widget>
+   </item>
    <item row="1" column="0">
     <widget class="QLabel" name="label_17">
+     <property name="maximumSize">
+      <size>
+       <width>110</width>
+       <height>16777215</height>
+      </size>
+     </property>
      <property name="text">
       <string>State</string>
      </property>
     </widget>
    </item>
-   <item row="8" column="0">
+   <item row="9" column="0">
     <spacer name="verticalSpacer_2">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -66,61 +121,16 @@ padding: 3px
      </property>
     </spacer>
    </item>
-   <item row="4" column="0">
-    <widget class="QLabel" name="label_19">
-     <property name="text">
-      <string>ID</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0">
-    <widget class="QLabel" name="label_3">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="layoutDirection">
-      <enum>Qt::LeftToRight</enum>
-     </property>
-     <property name="text">
-      <string>Name</string>
-     </property>
-    </widget>
-   </item>
-   <item row="11" column="0">
-    <widget class="QLabel" name="label_15">
-     <property name="font">
-      <font>
-       <pointsize>9</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>Rotary encoder DOWN actions</string>
-     </property>
-    </widget>
-   </item>
    <item row="5" column="0">
     <widget class="QLabel" name="label_18">
+     <property name="maximumSize">
+      <size>
+       <width>110</width>
+       <height>16777215</height>
+      </size>
+     </property>
      <property name="text">
       <string>Arduino pin A:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="9" column="0">
-    <widget class="QLabel" name="label_9">
-     <property name="font">
-      <font>
-       <pointsize>9</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>Rotary encoder UP actions:</string>
      </property>
     </widget>
    </item>
@@ -134,7 +144,21 @@ padding: 3px
      </property>
     </widget>
    </item>
-   <item row="14" column="0">
+   <item row="10" column="0">
+    <widget class="QLabel" name="label_9">
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Rotary encoder UP actions:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="15" column="0">
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -147,7 +171,7 @@ padding: 3px
      </property>
     </spacer>
    </item>
-   <item row="10" column="0" colspan="5">
+   <item row="11" column="0" colspan="5">
     <layout class="QGridLayout" name="gridLayout_3">
      <item row="4" column="1">
       <widget class="QTableWidget" name="UP_CMDS_TABLE">
@@ -167,10 +191,18 @@ padding: 3px
          <string>Send continuously</string>
         </property>
        </column>
+       <column>
+        <property name="text">
+         <string>Nr times send per step</string>
+        </property>
+       </column>
       </widget>
      </item>
      <item row="4" column="4">
       <widget class="QTableWidget" name="UP_DREFS_TABLE">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <column>
         <property name="text">
          <string>Dataref</string>
@@ -283,6 +315,9 @@ padding: 3px
        </item>
        <item>
         <widget class="QToolButton" name="UP_ADDDREF_BTN">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="text">
           <string>...</string>
          </property>
@@ -297,6 +332,9 @@ padding: 3px
        </item>
        <item>
         <widget class="QToolButton" name="UP_RMDREF_BTN">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="text">
           <string>...</string>
          </property>
@@ -311,6 +349,9 @@ padding: 3px
        </item>
        <item>
         <widget class="QPushButton" name="testUPON_DREFS_button">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="text">
           <string>Test</string>
          </property>
@@ -333,7 +374,7 @@ padding: 3px
      </item>
     </layout>
    </item>
-   <item row="12" column="0" colspan="5">
+   <item row="13" column="0" colspan="5">
     <layout class="QGridLayout" name="gridLayout_4">
      <item row="6" column="0">
       <widget class="QTableWidget" name="DOWN_CMDS_TABLE">
@@ -347,10 +388,18 @@ padding: 3px
          <string>Send continuously</string>
         </property>
        </column>
+       <column>
+        <property name="text">
+         <string>Nr times send per step</string>
+        </property>
+       </column>
       </widget>
      </item>
      <item row="6" column="1">
       <widget class="QTableWidget" name="DOWN_DREFS_TABLE">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <column>
         <property name="text">
          <string>Dataref</string>
@@ -455,6 +504,9 @@ padding: 3px
        </item>
        <item>
         <widget class="QToolButton" name="DOWN_ADDDREF_BTN">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="text">
           <string>...</string>
          </property>
@@ -470,6 +522,9 @@ padding: 3px
        </item>
        <item>
         <widget class="QToolButton" name="DOWN_RMDREF_BTN">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="text">
           <string>...</string>
          </property>
@@ -485,6 +540,9 @@ padding: 3px
        </item>
        <item>
         <widget class="QPushButton" name="testDOWN_DREFS_button">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="text">
           <string>Test</string>
          </property>
@@ -507,6 +565,16 @@ padding: 3px
      </item>
     </layout>
    </item>
+   <item row="7" column="1">
+    <widget class="QComboBox" name="PINB_comboBox">
+     <property name="maximumSize">
+      <size>
+       <width>50</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
+   </item>
    <item row="3" column="1" colspan="3">
     <widget class="QLineEdit" name="nameLineEdit">
      <property name="minimumSize">
@@ -520,6 +588,19 @@ padding: 3px
        <width>350</width>
        <height>16777215</height>
       </size>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0">
+    <widget class="QLabel" name="label">
+     <property name="maximumSize">
+      <size>
+       <width>110</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Arduino pin B:</string>
      </property>
     </widget>
    </item>
@@ -581,23 +662,6 @@ padding: 3px
      </property>
     </widget>
    </item>
-   <item row="7" column="1">
-    <widget class="QComboBox" name="PINB_comboBox">
-     <property name="maximumSize">
-      <size>
-       <width>50</width>
-       <height>16777215</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="0">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Arduino pin B:</string>
-     </property>
-    </widget>
-   </item>
    <item row="5" column="3">
     <widget class="QComboBox" name="steps_comboBox">
      <property name="maximumSize">
@@ -618,6 +682,49 @@ padding: 3px
      </property>
     </widget>
    </item>
+   <item row="7" column="3">
+    <widget class="QCheckBox" name="acceleration_checkBox">
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="2">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>Acceleration</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="0">
+    <widget class="QLabel" name="label_5">
+     <property name="maximumSize">
+      <size>
+       <width>110</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Multiplier</string>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="1">
+    <widget class="QLineEdit" name="multiplierLineEdit">
+     <property name="maximumSize">
+      <size>
+       <width>50</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>1.0</string>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <resources>
@@ -631,8 +738,8 @@ padding: 3px
    <slot>addRotencUpCommand()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>147</x>
-     <y>222</y>
+     <x>156</x>
+     <y>261</y>
     </hint>
     <hint type="destinationlabel">
      <x>150</x>
@@ -647,8 +754,8 @@ padding: 3px
    <slot>rmRotencUpCommand()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>177</x>
-     <y>224</y>
+     <x>181</x>
+     <y>261</y>
     </hint>
     <hint type="destinationlabel">
      <x>210</x>
@@ -663,8 +770,8 @@ padding: 3px
    <slot>addRotencUpDataref()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>501</x>
-     <y>225</y>
+     <x>511</x>
+     <y>261</y>
     </hint>
     <hint type="destinationlabel">
      <x>381</x>
@@ -679,8 +786,8 @@ padding: 3px
    <slot>rmRotencUpDataref()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>538</x>
-     <y>224</y>
+     <x>540</x>
+     <y>261</y>
     </hint>
     <hint type="destinationlabel">
      <x>456</x>
@@ -695,8 +802,8 @@ padding: 3px
    <slot>addRotencDownCommand()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>141</x>
-     <y>451</y>
+     <x>155</x>
+     <y>484</y>
     </hint>
     <hint type="destinationlabel">
      <x>119</x>
@@ -711,8 +818,8 @@ padding: 3px
    <slot>rmRotencDownCommand()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>174</x>
-     <y>455</y>
+     <x>184</x>
+     <y>484</y>
     </hint>
     <hint type="destinationlabel">
      <x>166</x>
@@ -727,8 +834,8 @@ padding: 3px
    <slot>addRotencDownDataref()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>494</x>
-     <y>452</y>
+     <x>508</x>
+     <y>484</y>
     </hint>
     <hint type="destinationlabel">
      <x>471</x>
@@ -743,8 +850,8 @@ padding: 3px
    <slot>rmRotencDownDataref()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>524</x>
-     <y>448</y>
+     <x>537</x>
+     <y>484</y>
     </hint>
     <hint type="destinationlabel">
      <x>607</x>
@@ -807,8 +914,8 @@ padding: 3px
    <slot>updateXMLdata()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>260</x>
-     <y>132</y>
+     <x>249</x>
+     <y>143</y>
     </hint>
     <hint type="destinationlabel">
      <x>487</x>
@@ -839,8 +946,8 @@ padding: 3px
    <slot>updateXMLdata()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>360</x>
-     <y>481</y>
+     <x>370</x>
+     <y>657</y>
     </hint>
     <hint type="destinationlabel">
      <x>563</x>
@@ -855,8 +962,8 @@ padding: 3px
    <slot>testOnCommands()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>236</x>
-     <y>224</y>
+     <x>258</x>
+     <y>262</y>
     </hint>
     <hint type="destinationlabel">
      <x>212</x>
@@ -871,8 +978,8 @@ padding: 3px
    <slot>testOffCommands()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>213</x>
-     <y>448</y>
+     <x>265</x>
+     <y>485</y>
     </hint>
     <hint type="destinationlabel">
      <x>306</x>
@@ -967,8 +1074,8 @@ padding: 3px
    <slot>testOffDatarefs()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>593</x>
-     <y>455</y>
+     <x>618</x>
+     <y>485</y>
     </hint>
     <hint type="destinationlabel">
      <x>656</x>
@@ -983,8 +1090,8 @@ padding: 3px
    <slot>testOnDatarefs()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>610</x>
-     <y>226</y>
+     <x>621</x>
+     <y>262</y>
     </hint>
     <hint type="destinationlabel">
      <x>774</x>
@@ -1015,8 +1122,8 @@ padding: 3px
    <slot>updateXMLdata()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>251</x>
-     <y>160</y>
+     <x>249</x>
+     <y>169</y>
     </hint>
     <hint type="destinationlabel">
      <x>307</x>
@@ -1047,8 +1154,8 @@ padding: 3px
    <slot>updateXMLdata()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>578</x>
-     <y>132</y>
+     <x>573</x>
+     <y>143</y>
     </hint>
     <hint type="destinationlabel">
      <x>628</x>
@@ -1069,6 +1176,38 @@ padding: 3px
     <hint type="destinationlabel">
      <x>617</x>
      <y>141</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>multiplierLineEdit</sender>
+   <signal>editingFinished()</signal>
+   <receiver>rotencoderEditForm</receiver>
+   <slot>updateXMLdata()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>210</x>
+     <y>191</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>165</x>
+     <y>162</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>acceleration_checkBox</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>rotencoderEditForm</receiver>
+   <slot>updateXMLdata()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>528</x>
+     <y>164</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>466</x>
+     <y>206</y>
     </hint>
    </hints>
   </connection>

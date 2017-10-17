@@ -172,10 +172,18 @@ class Arduino(threading.Thread):
 									self.XPUDPServer.sendXPCmd(action['cmddref'])
 									
 			if inputType == 'ROTENC':
+				acceleration = self.ardXMLconfig.getComponentAttribute( self.ardSerialNumber,'rot_encoder', pin, 'acceleration')
+				multiplier = self.ardXMLconfig.getComponentAttribute( self.ardSerialNumber,'rot_encoder', pin, 'multiplier')
+				
 				rot_enc_state = 'up'
 				if value < 0 :
 					rot_enc_state = 'down'
-					
+				if acceleration == 'True':
+					numberTimesSendAction = int(abs(value))
+				else:
+					numberTimesSendAction = 1
+				numberTimesSendAction = numberTimesSendAction * int(multiplier)
+				
 				logger.debug('updating rot encoder state to value:' + rot_enc_state)
 				compID = self.ardXMLconfig.getComponentAttribute( self.ardSerialNumber,'rot_encoder', pin, 'id')
 				self.ardXMLconfig.updateComponentAttribute(compID, 'rot_encoder', 'state', rot_enc_state)
@@ -191,7 +199,8 @@ class Arduino(threading.Thread):
 							sendContinuous = True
 						
 						if action['action_type'] == 'cmd' and action['state'] == rot_enc_state:
-							self.XPUDPServer.sendXPCmd(action ['cmddref'], sendContinuous)
+							for i in range(0, numberTimesSendAction):
+								self.XPUDPServer.sendXPCmd(action ['cmddref'], sendContinuous)
 						if action['action_type'] == 'cmd' and action['state'] != rot_enc_state and action['continuous'] == 'True': # suppress any continuous cmd
 							self.XPUDPServer.stopSendingXPCmd(action ['cmddref'])
 							
