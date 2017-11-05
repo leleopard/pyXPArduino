@@ -41,7 +41,9 @@ class arduinoConfig():
 		items = list(inputOutputTag.iter(INPUT_OUTPUT_TAGS_REF[inputOutputTag.tag]['child_tag']))
 		highest_index = 0
 		for item in items:
-			index = int(str(item.attrib['id'])[-1:])
+			item_id = str(item.attrib['id'])
+			tokens = item_id.split("_")
+			index = int(tokens[2])
 			if index>= highest_index:
 				highest_index = index +1
 				
