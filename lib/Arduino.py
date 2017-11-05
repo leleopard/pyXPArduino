@@ -173,7 +173,7 @@ class Arduino(threading.Thread):
 									
 			if inputType == 'ROTENC':
 				acceleration = self.ardXMLconfig.getComponentAttribute( self.ardSerialNumber,'rot_encoder', pin, 'acceleration')
-				multiplier = self.ardXMLconfig.getComponentAttribute( self.ardSerialNumber,'rot_encoder', pin, 'multiplier')
+				multiplier = float(self.ardXMLconfig.getComponentAttribute( self.ardSerialNumber,'rot_encoder', pin, 'multiplier'))
 				
 				rot_enc_state = 'up'
 				if value < 0 :
