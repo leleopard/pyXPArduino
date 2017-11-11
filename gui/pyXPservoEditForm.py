@@ -29,7 +29,7 @@ class pyXPservoEditForm(QtWidgets.QWidget, servoEditForm.Ui_servoEditForm):
 		self.ardXMLconfig.registerComponentAttributeChangedCallback(self.updateStateWidget)
 		self.pickXPCommandDialog = pyXPpickXPCommandDialog.pyXPpickXPCommandDialog()
 		self.pickXPDatarefDialog = pyXPpickXPDatarefDialog.pyXPpickXPDatarefDialog()
-		self.PIN_comboBox.addItems(lib.arduinoXMLconfig.PWM_PINS)
+		self.PIN_comboBox.addItems(lib.arduinoXMLconfig.SERVO_PINS)
 		
 		self.timer = QtCore.QTimer()
 		self.timer.timeout.connect(self.updateStateWidget)
