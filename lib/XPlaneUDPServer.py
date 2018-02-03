@@ -339,8 +339,11 @@ class XPlaneUDPServer(threading.Thread):
 		logger.debug('sending DREF'+dataref)
 		
 		if self.XPAddress is not None:
-			val = float(value)
-			
+			val = 0.0
+			try:
+				val = float(value)
+			except:
+				pass
 			dataref += '['+str(index)+']'
 			
 			bytesval = pack('<f',val)

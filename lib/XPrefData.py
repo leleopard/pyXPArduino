@@ -76,6 +76,8 @@ def getXPCommandList(category, filter):
 	return command_list
 	
 def getXPDatarefList(category, filter):
+	if filter is None:
+		filter = ''
 	filter_upper = filter.upper()
 	#print('Filter text:', filter)
 	if filter !='' and len(filter) >=2:
