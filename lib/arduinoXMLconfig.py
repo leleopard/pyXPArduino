@@ -30,6 +30,7 @@ class arduinoConfig():
 		self.ardXMLconfigFile = ardXMLconfigFile
 
 		self.componentAttributeChangedCallbacks = []
+		self.arduinoAttributeChangedCallbacks = []
 		#for child in self.root:
 		#	print (child.tag, child.attrib)
 
@@ -264,6 +265,12 @@ class arduinoConfig():
 	def registerComponentAttributeChangedCallback(self, callback):
 		self.componentAttributeChangedCallbacks.append(callback)
 
+	## register a callback function to be called when an arduino attribute has changed data
+	# @param callback 	callback function, it will be passed ardSerialNr, attribute
+	#
+	def registerArduinoAttributeChangedCallback(self, callback):
+		self.arduinoAttributeChangedCallbacks.append(callback)
+
 
 	## updates component data - id, name, arduino pin, and replace actions with those passed in parameter
 	# @param compSerialNr  the id of the component to update
@@ -351,12 +358,35 @@ class arduinoConfig():
 	def updateArduinoData(self, arduinoSerialNr, ardData):
 		ardTags = self.root.findall(".//arduino[@serial_nr='"+arduinoSerialNr+"']")
 		if len(ardTags) > 0: # arduino has been found
-			ardTags[0].set('port', ardData['port'])
-			ardTags[0].set('baud', ardData['baud'])
-			ardTags[0].set('name', ardData['name'])
-			ardTags[0].set('description', ardData['description'])
-			ardTags[0].set('serial_nr', ardData['serial_nr'])
-			ardTags[0].set('manufacturer', ardData['manufacturer'])
+			if ardTags[0].attrib['port'] != ardData['port']:
+				ardTags[0].set('port', ardData['port'])
+				for callback in self.arduinoAttributeChangedCallbacks:
+					callback(arduinoSerialNr, 'port')
+
+			if ardTags[0].attrib['baud'] != ardData['baud']:
+				ardTags[0].set('baud', ardData['baud'])
+				for callback in self.arduinoAttributeChangedCallbacks:
+					callback(arduinoSerialNr, 'baud')
+
+			if ardTags[0].attrib['name'] != ardData['name']:
+				ardTags[0].set('name', ardData['name'])
+				for callback in self.arduinoAttributeChangedCallbacks:
+					callback(arduinoSerialNr, 'name')
+
+			if ardTags[0].attrib['description'] != ardData['description']:
+				ardTags[0].set('description', ardData['description'])
+				for callback in self.arduinoAttributeChangedCallbacks:
+					callback(arduinoSerialNr, 'description')
+
+			if ardTags[0].attrib['serial_nr'] != ardData['serial_nr']:
+				ardTags[0].set('serial_nr', ardData['serial_nr'])
+				for callback in self.arduinoAttributeChangedCallbacks:
+					callback(arduinoSerialNr, 'serial_nr')
+
+			if ardTags[0].attrib['manufacturer'] != ardData['manufacturer']:
+				ardTags[0].set('manufacturer', ardData['manufacturer'])
+				for callback in self.arduinoAttributeChangedCallbacks:
+					callback(arduinoSerialNr, 'manufacturer')
 
 
 		else :

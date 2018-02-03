@@ -2,4 +2,4 @@
 2. Create a new folder named 'config' and copy the contents of the 'initial_config' folder in it
 3. install pyQt5: pip install PyQt5
 4. install Serial: pip install pyserial
-
+5. install pyxpudpserver: pip3 install pyxpudpserver

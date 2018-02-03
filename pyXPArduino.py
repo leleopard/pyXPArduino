@@ -5,6 +5,8 @@ import logging.config
 logging.config.fileConfig('config/logging.conf')
 #logging.basicConfig(format=LOGGING_FORMAT, level=logging.DEBUG)
 
+import os, getpass
+
 from PyQt5 import QtCore, QtGui, QtWidgets # Import the PyQt5 modules we'll need
 from PyQt5.QtWidgets import QApplication, QMainWindow,QTreeWidgetItem, QMenu
 import sys # We need sys so that we can pass argv to QApplication
@@ -40,6 +42,9 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 		self.timer = QtCore.QTimer()
 		self.timer.timeout.connect(self.updateMessages)
 		self.timer.start(500)
+
+		logging.info("Running as user: "+getpass.getuser())
+
 		XMLconfigFile = 'config/UDPSettings.xml'
 		#XPUDP.pyXPUDPServer.initialiseUDP(('127.0.0.1',49008), ('192.168.1.1',49000), 'STEPHANE-PC')
 		XPUDP.pyXPUDPServer.initialiseUDPXMLConfig(XMLconfigFile)
@@ -100,8 +105,6 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 		for arduino in self.ardXMLconfig.getArduinoList():
 		#serialNumber, PORT, BAUD, XPUDPServer, arduinoXMLconfig)
 			self.arduinoList.append(Arduino.Arduino(arduino['serial_nr'],
-													arduino['port'],
-													int(arduino['baud']),
 													XPUDP.pyXPUDPServer,
 													self.ardXMLconfig
 													))

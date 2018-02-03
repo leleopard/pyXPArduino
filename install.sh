@@ -11,5 +11,9 @@ if [ "$RESPONSE" = "y" ]; then
   pip3 install pyxpudpserver
   pip3 install PyQt5
   pip3 install pyserial
-  echo "Done!"
+
+  echo "Enabling your user to write to the USB ports"
+  sudo adduser $USER dialout
+
+  echo "Done! You need to logout and login again for your user permissions to USB serial ports to take effect"
 fi
