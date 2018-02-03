@@ -8,6 +8,7 @@ pyuic5 pwmEditForm.ui -o pwmEditForm.py
 pyuic5 digOutputEditForm.ui -o digOutputEditForm.py
 pyuic5 servoEditForm.ui -o servoEditForm.py
 pyuic5 potentiometerEditForm.ui -o potentiometerEditForm.py
+pyuic5 rotencoderEditForm.ui -o rotencoderEditForm.py
 pyuic5 xpudpconfigdialog.ui -o xpudpconfigdialog.py
 
 pyrcc5 resources.qrc -o ../resources_rc.py

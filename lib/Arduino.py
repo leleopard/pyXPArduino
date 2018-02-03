@@ -72,19 +72,27 @@ class Arduino(threading.Thread):
 	def run(self):
 		buffer =""
 		startTime = time.time()
+		forceRefresh = True
+		lastTime = time.time();
 
 		while self.running:
-			# obtain list of pwm outputs & associated actions
+			# obtain list of outputs & associated actions
+			if time.time() - lastTime > 1.0:
+				forceRefresh = True
+				lastTime = time.time()
+
 			if self.connected == True:
-				self.__refreshOutputs('pwm')
-				self.__refreshOutputs('servo')
-				self.__refreshOutputs('dig_output')
+				self.__refreshOutputs('pwm', forceRefresh)
+				self.__refreshOutputs('servo', forceRefresh)
+				self.__refreshOutputs('dig_output', forceRefresh)
+				forceRefresh = False # forcing Refresh only on first run of the loop
 			time.sleep(0.01)
 
 	## internal method, refreshes the outputs of the arduino if connected (queues commands on the arduinoSerial instance) - called in loop by the thread main loop
 	# @param outputType 	the type of output to refresh ('pwm', 'servo' etc...) although not used at present
+	# @param forceRefresh	forces refresh of the output, even if the value of the dataref has moved by less than 0.01 - useful for initialisation
 	#
-	def __refreshOutputs(self, outputType):
+	def __refreshOutputs(self, outputType, forceRefresh = False):
 		if self.connected == True:
 			compList = self.ardXMLconfig.getComponentList(self.ardSerialNumber, outputType)
 			#logger.debug('refresh outputs for output type: '+str(outputType))
@@ -100,7 +108,7 @@ class Arduino(threading.Thread):
 						except ValueError:
 							pass
 							#logger.warning('Unable to convert dref value, defaulting to 0.0')
-						if abs(prevDrefValue - drefValue) > 0.01:
+						if (abs(prevDrefValue - drefValue) > 0.01) or forceRefresh == True:
 							action['state'] = str(drefValue)
 							logger.debug(outputType+' XPLANE DREF value, DREF: '+action['cmddref']+' Value: '+str(drefValue))
 							pointsList = self.__returnPointsList(action['setToValue'])
@@ -113,7 +121,7 @@ class Arduino(threading.Thread):
 							except:
 								pass
 
-	## if arduino connected, executes the commands and datarefs associated with a switch connected to that pin when it changes state
+	## if arduino connected, executes the commands and datarefs associated with a component connected to that pin when it changes state
 	# will be called by the arduinoSerial connection when it receives a command from the arduino
 	# @param inputType 	the arduino code for the input ('SW', 'POT'...)
 	# @param pin	the number of the pin
@@ -180,6 +188,42 @@ class Arduino(threading.Thread):
 									logger.debug('Send XPlane CMD : ' +action['cmddref'])
 									self.XPUDPServer.sendXPCmd(action['cmddref'])
 
+			if inputType == 'ROTENC':
+				acceleration = self.ardXMLconfig.getComponentAttribute( self.ardSerialNumber,'rot_encoder', pin, 'acceleration')
+				multiplier = float(self.ardXMLconfig.getComponentAttribute( self.ardSerialNumber,'rot_encoder', pin, 'multiplier'))
+
+				rot_enc_state = 'up'
+				if value < 0 :
+					rot_enc_state = 'down'
+				if acceleration == 'True':
+					numberTimesSendAction = int(abs(value))
+				else:
+					numberTimesSendAction = 1
+				numberTimesSendAction = numberTimesSendAction * int(multiplier)
+
+				logger.debug('updating rot encoder state to value:' + rot_enc_state)
+				compID = self.ardXMLconfig.getComponentAttribute( self.ardSerialNumber,'rot_encoder', pin, 'id')
+				self.ardXMLconfig.updateComponentAttribute(compID, 'rot_encoder', 'state', rot_enc_state)
+
+				for action in self.ardXMLconfig.getComponentActions(self.ardSerialNumber, 'rot_encoder', pin):
+					if action['cmddref']!= None:
+						logger.debug ("action type: "+ action['action_type']
+										+ " action state: "+action['state']
+										+ "rot_encoder state: " + rot_enc_state
+										+ " action: " + action ['cmddref'] )
+						sendContinuous = False
+						if action['continuous'] == 'True':
+							sendContinuous = True
+
+						if action['action_type'] == 'cmd' and action['state'] == rot_enc_state:
+							for i in range(0, numberTimesSendAction):
+								self.XPUDPServer.sendXPCmd(action ['cmddref'], sendContinuous)
+						if action['action_type'] == 'cmd' and action['state'] != rot_enc_state and action['continuous'] == 'True': # suppress any continuous cmd
+							self.XPUDPServer.stopSendingXPCmd(action ['cmddref'])
+
+						if action['action_type'] == 'dref' and action['state'] == rot_enc_state:
+							self.XPUDPServer.sendXPDref(action['cmddref'],action['index'],action['setToValue'])
+
 	## gets the list of input and output components for this arduino of the type passed in argument, and initialises the arduino board pins
 	# @param componentType	the type of component to update, pass '*' to update all types.
 	# @param switchSerialNr		not used?
@@ -187,8 +231,8 @@ class Arduino(threading.Thread):
 	# @param attribute			has to be 'pin'
 	#
 	def updateComponentList(self, componentType, switchSerialNr, ardSerialNr, attribute):
-		logger.debug('update component list, component type: '+str(componentType))
-		if ardSerialNr == self.ardSerialNumber and attribute == 'pin' and self.connected == True: # only update pins if this is us and the attribute that has changed is pin
+		logger.debug('update component list, component type: '+str(componentType)+ 'attribute: '+str(attribute) )
+		if ardSerialNr == self.ardSerialNumber and (attribute == 'pin' or attribute =='pin2' or attribute == 'stepsPerNotch') and self.connected == True: # only update pins if this is us and the attribute that has changed is pin
 
 			if componentType == '*' or componentType == 'switch':
 				switchList = self.ardXMLconfig.getComponentList(self.ardSerialNumber, 'switch')
@@ -209,6 +253,17 @@ class Arduino(threading.Thread):
 						compPinList.append(comp['pin'])
 				logger.debug ('Ard serial '+ self.ardSerialNumber+ 'pot pin list: ' + str(compPinList))
 				self.serialConnection.sendPinList('potentiometer', compPinList)
+
+			if componentType == '*' or componentType == 'rot_encoder':
+				logger.debug('updating rot_encoder')
+				compList = self.ardXMLconfig.getComponentList(self.ardSerialNumber, 'rot_encoder')
+				compPinList = []
+
+				for comp in compList:
+					if comp['pin'] != '' and comp['pin2'] != '' :
+						compPinList.append(comp['pin']+','+comp['pin2']+','+comp['stepsPerNotch'])
+				logger.debug ('Ard serial '+ self.ardSerialNumber+ 'rot encoder pin list: ' + str(compPinList))
+				self.serialConnection.sendPinList('rot_encoder', compPinList)
 
 			if componentType == '*' or componentType == 'pwm':
 				compList = self.ardXMLconfig.getComponentList(self.ardSerialNumber, 'pwm')
