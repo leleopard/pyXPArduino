@@ -30,6 +30,8 @@ import pyxpudpserver as XPUDP
 import lib.arduinoSerial as ardSerial
 import lib.Arduino as Arduino
 
+VERSION = "v1.1"
+XMLconfigFile = 'config/UDPSettings.xml'
 
 class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 	def __init__(self):
@@ -42,18 +44,18 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 		self.timer = QtCore.QTimer()
 		self.timer.timeout.connect(self.updateMessages)
 		self.timer.start(500)
+		self.setWindowTitle("pyXPArduino "+VERSION)
+		logging.debug("Running as user: "+getpass.getuser())
 
-		logging.info("Running as user: "+getpass.getuser())
-
-		XMLconfigFile = 'config/UDPSettings.xml'
-		#XPUDP.pyXPUDPServer.initialiseUDP(('127.0.0.1',49008), ('192.168.1.1',49000), 'STEPHANE-PC')
 		XPUDP.pyXPUDPServer.initialiseUDPXMLConfig(XMLconfigFile)
 
 		XPUDP.pyXPUDPServer.start()
 
-		self.updatingCompPanel = False
+		self.updatingCompPanel = True
 
 		self.ardXMLconfig = lib.arduinoXMLconfig.arduinoConfig("config/ardConfig1.xml")
+		self.ardXMLconfig.registerArduinoAttributeChangedCallback(self.handleArduinoAttributeChange)
+
 		self.arduinoList = []
 
 		self.refreshArduinoList()
@@ -104,7 +106,7 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 		self.ardRotencoderEditForm.hide()
 
 		self.actionSave.setEnabled(False)
-
+		self.updatingCompPanel = False
 
 	def refreshArduinoList(self):
 		self.arduinoList = []
@@ -179,6 +181,27 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 			items[0].setText(0, compName)
 			#print (items)
 
+	def handleArduinoAttributeChange(self, ardSerialNr, attribute):
+		logging.info('ard attribute changed')
+		self.__updateArduinoEditFormData(ardSerialNr)
+
+	def __updateArduinoEditFormData(self, ardID):
+		ardData = self.ardXMLconfig.getArduinoData(ardID)
+		logging.info("ard data:"+str(ardData))
+		self.ardSerialNrLineEdit.setText(ardData['serial_nr'])
+		self.ardBaudComboBox.setCurrentText(ardData['baud'])
+		self.ardPortLineEdit.setText(ardData['port'])
+		self.ardNameLineEdit.setText(ardData['name'])
+		self.ardDescriptionLineEdit.setText(ardData['description'])
+		self.ardManufacturerLineEdit.setText(ardData['manufacturer'])
+		self.ardSerialConnStatusLabel.setText(ardData['connected'])
+		if ardData['connected'] == 'Connected':
+			self.ardSerialConnStatusLabel.setStyleSheet("QLabel { background-color : transparent; color : green; }")
+		else:
+			self.ardSerialConnStatusLabel.setStyleSheet("QLabel { font-weight: bold; background-color : transparent; color : red; }")
+
+		self.ardFirmwareVersionLabel.setText(ardData['firmware_version'])
+		self.ardStatusLabel.setText(ardData['ard_status'])
 
 	def ardTreeSelectionChanged(self):
 		self.updatingCompPanel = True
@@ -196,14 +219,9 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 			compID = self.arduinoTreeWidget.selectedItems()[0].text(1)
 
 			if tag =='arduino':
+				self.__updateArduinoEditFormData(compID)
 				self.arduinoEditForm.show()
-				ardData = self.ardXMLconfig.getArduinoData(compID)
-				self.ardSerialNrLineEdit.setText(ardData['serial_nr'])
-				self.ardBaudComboBox.setCurrentText(ardData['baud'])
-				self.ardPortLineEdit.setText(ardData['port'])
-				self.ardNameLineEdit.setText(ardData['name'])
-				self.ardDescriptionLineEdit.setText(ardData['description'])
-				self.ardManufacturerLineEdit.setText(ardData['manufacturer'])
+
 
 			if tag =='switch':
 				self.ardSwitchEditForm.show(compID)
@@ -228,6 +246,7 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 	## Saves the changes made in the Arduino Edit screen - called when user finishes editing the name.
 	#
 	def ardEditingFinished(self):
+		logging.debug('ardEditingFinished, ardBaudComboBox: '+self.ardBaudComboBox.currentText())
 		if self.updatingCompPanel == False:
 			ardData = {'port': 			self.ardPortLineEdit.text(),
 						'baud':			self.ardBaudComboBox.currentText(),
@@ -237,7 +256,8 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 						'manufacturer': self.ardManufacturerLineEdit.text()}
 
 			self.ardXMLconfig.updateArduinoData(ardData['serial_nr'], ardData)
-			self.refreshArduinoTree()
+			#self.refreshArduinoTree()
+			self.updateComponentName( self.ardSerialNrLineEdit.text(),self.ardNameLineEdit.text())
 			self.actionSave.setEnabled(True)
 
 	def ardTreeContextMenuRequested(self, position):

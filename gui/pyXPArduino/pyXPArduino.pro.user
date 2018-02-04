@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<<<<<<< HEAD
-<!-- Written by QtCreator 4.5.0, 2018-02-03T14:15:09. -->
-=======
-<!-- Written by QtCreator 4.2.1, 2017-10-13T20:56:25. -->
->>>>>>> 6c095ec4d2f5637f791468919c5fa7060ca7b482
+<!-- Written by QtCreator 4.5.0, 2018-02-03T22:23:29. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -314,7 +310,7 @@
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">pyXPArduino.pro</value>
     <value type="bool" key="Qt4ProjectManager.Qt4RunConfiguration.UseDyldImageSuffix">false</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory"></value>
-    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory.default"></value>
+    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory.default">/home/stephane/Desktop/pyXPArduino/gui/build-pyXPArduino-Desktop_Qt_5_10_0_GCC_64bit-Debug</value>
     <value type="uint" key="RunConfiguration.QmlDebugServerPort">3768</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>

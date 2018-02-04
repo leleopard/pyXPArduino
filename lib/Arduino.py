@@ -23,6 +23,7 @@ class Arduino(threading.Thread):
 		self.ardXMLconfig = arduinoXMLconfig
 		self.XPUDPServer = XPUDPServer
 		self.ardXMLconfig.registerArduinoAttributeChangedCallback(self.handleArduinoAttributeChange)
+		self.ardXMLconfig.updateArduinoAttribute(ardSerialNumber, 'connected', 'Disconnected')
 
 		self.connect()
 
@@ -32,10 +33,12 @@ class Arduino(threading.Thread):
 
 	def disconnect(self):
 		if self.connected == True:
+			self.ardXMLconfig.updateArduinoAttribute(self.ardSerialNumber, 'connected', 'Disconnected')
 			self.serialConnection.quit()
 
 	def connect(self):
 		# Initialise connection, first we will check that the Arduino with this serial nr is still connected on this port
+		self.ardXMLconfig.updateArduinoAttribute(self.ardSerialNumber, 'connected', 'Disconnected')
 		ardData = self.ardXMLconfig.getArduinoData(self.ardSerialNumber)
 
 		connected_PORT = lib.serialArduinoUtils.returnArduinoPort(self.ardSerialNumber)
@@ -50,6 +53,7 @@ class Arduino(threading.Thread):
 			if self.serialConnection.connected == True:
 				self.serialConnection.start()
 				self.serialConnection.registerInputChangedCallback(self.inputChanged)
+				self.serialConnection.registerArduinoStateChangedCallback(self.ardStateChanged)
 
 				self.ardXMLconfig.registerComponentAttributeChangedCallback(self.updateComponentList) #
 				time.sleep(0.01)
@@ -60,8 +64,16 @@ class Arduino(threading.Thread):
 				self.connected = False
 				logger.error("Arduino serial "+self.ardSerialNumber+", unable to connect on port "+ardData['port'])
 
+		if self.connected == True:
+			self.ardXMLconfig.updateArduinoAttribute(self.ardSerialNumber, 'connected', 'Connected')
+		else:
+			self.ardXMLconfig.updateArduinoAttribute(self.ardSerialNumber, 'connected', 'Disconnected')
+
+	def ardStateChanged(self, ardState):
+		pass
+		
 	def handleArduinoAttributeChange(self, ardSerialNr, attribute):
-		logging.info("ard attribute changed: "+attribute)
+		logging.debug("ard attribute changed: "+attribute)
 		if attribute == 'baud':
 			self.reconnect()
 
@@ -300,6 +312,7 @@ class Arduino(threading.Thread):
 	def quit(self):
 		self.disconnect()
 		self.running = False
+		self.connected = False
 		logger.info('Arduino thread stopped, ard serial nr'+self.ardSerialNumber)
 
 	## returns True if value is in any of the intervals passed in the intervalsList, False otherwise

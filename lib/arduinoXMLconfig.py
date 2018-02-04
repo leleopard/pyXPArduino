@@ -390,12 +390,23 @@ class arduinoConfig():
 	def getArduinoData(self, arduinoSerialNr):
 		ardTags = self.root.findall(".//arduino[@serial_nr='"+arduinoSerialNr+"']")
 		if len(ardTags) > 0: # arduino has been found
+			if 'connected' not in ardTags[0].attrib: # this attribute does not exist so lets create it
+				ardTags[0].set('connected', '')
+			if 'firmware_version' not in ardTags[0].attrib: # this attribute does not exist so lets create it
+				ardTags[0].set('firmware_version', '')
+			if 'ard_status' not in ardTags[0].attrib: # this attribute does not exist so lets create it
+				ardTags[0].set('ard_status', '')
+
 			ardDict = {'port': ardTags[0].attrib['port'],
 					'baud': ardTags[0].attrib['baud'],
 					'name': ardTags[0].attrib['name'],
 					'description': ardTags[0].attrib['description'],
 					'serial_nr': ardTags[0].attrib['serial_nr'],
-					'manufacturer': ardTags[0].attrib['manufacturer']}
+					'manufacturer': ardTags[0].attrib['manufacturer'],
+					'connected': ardTags[0].attrib['connected'],
+					'firmware_version': ardTags[0].attrib['firmware_version'],
+					'ard_status': ardTags[0].attrib['ard_status']}
+
 			return ardDict
 		else:
 			return None
@@ -447,6 +458,7 @@ class arduinoConfig():
 		ardTags = self.root.findall(".//arduino[@serial_nr='"+arduinoSerialNr+"']")
 		if len(ardTags) > 0: # arduino has been found
 			ardTags[0].set(attribute, attributeValue)
-
+			for callback in self.arduinoAttributeChangedCallbacks:
+				callback(arduinoSerialNr, attribute)
 		else :
 			return -1

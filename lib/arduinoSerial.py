@@ -48,9 +48,12 @@ class ArduinoSerial(threading.Thread):
 	def __init__(self, PORT, BAUD, XPUDPServer = None):
 		threading.Thread.__init__(self)
 		self.arduinoReady = False
+		self.arduinoFirmwareVersion = ''
 		self.running = True
 		self.queuedCommands = []
 		self.inputCallbacks = []
+		self.ardStateChangedCallbacks = []
+
 		self.connected = False	# are we connected (serial connection successful) to the arduino
 		logging.info("Ardserial running as user: "+getpass.getuser())
 		logger.info("Initialising serial Arduino connection on port: "+ str(PORT)+ ", BAUD: "+ str(BAUD))
@@ -78,14 +81,18 @@ class ArduinoSerial(threading.Thread):
 
 		time.sleep(0.5) # leave time for the arduino to boot up
 
-		self.connected = True
-
 
 	## register a function to be called when an input changes state
 	# @param callbackFunction 	the function to be called when the switch changes state
 	#
 	def registerInputChangedCallback(self, callbackFunction):
 		self.inputCallbacks.append(callbackFunction)
+
+	def registerArduinoStateChangedCallback(self, callbackFunction):
+		'''
+
+		'''
+		self.ardStateChangedCallbacks.append(callbackFunction)
 
 	def sendOutputValue(self, pin, outputType, value):
 		if self.arduinoReady == True:
@@ -167,6 +174,8 @@ class ArduinoSerial(threading.Thread):
 		if buffer [0:5] == 'READY':
 			logger.debug("Arduino is ready")
 			self.arduinoReady = True
+			for callback in self.ardStateChangedCallbacks:
+				callback(self.arduinoReady)
 
 		if buffer [0:4] == 'CMND':
 			command = buffer[5:len(buffer)-1]
@@ -208,4 +217,6 @@ class ArduinoSerial(threading.Thread):
 		self.running = False
 		if self.serialConnection!=None:
 			self.serialConnection.close()
+		self.arduinoReady == False
+		self.arduinoFirmwareVersion = ''
 		logger.info("Arduino Connection on port " + self.PORT + " stopped...")
