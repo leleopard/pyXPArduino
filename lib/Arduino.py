@@ -24,6 +24,7 @@ class Arduino(threading.Thread):
 		self.XPUDPServer = XPUDPServer
 		self.ardXMLconfig.registerArduinoAttributeChangedCallback(self.handleArduinoAttributeChange)
 		self.ardXMLconfig.updateArduinoAttribute(ardSerialNumber, 'connected', 'Disconnected')
+		self.ardXMLconfig.updateArduinoAttribute(self.ardSerialNumber, 'ard_status', 'Not Running')
 
 		self.connect()
 
@@ -34,11 +35,13 @@ class Arduino(threading.Thread):
 	def disconnect(self):
 		if self.connected == True:
 			self.ardXMLconfig.updateArduinoAttribute(self.ardSerialNumber, 'connected', 'Disconnected')
+			self.ardXMLconfig.updateArduinoAttribute(self.ardSerialNumber, 'ard_status', 'Not Running')
 			self.serialConnection.quit()
 
 	def connect(self):
 		# Initialise connection, first we will check that the Arduino with this serial nr is still connected on this port
 		self.ardXMLconfig.updateArduinoAttribute(self.ardSerialNumber, 'connected', 'Disconnected')
+		self.ardXMLconfig.updateArduinoAttribute(self.ardSerialNumber, 'ard_status', 'Not Running')
 		ardData = self.ardXMLconfig.getArduinoData(self.ardSerialNumber)
 
 		connected_PORT = lib.serialArduinoUtils.returnArduinoPort(self.ardSerialNumber)
@@ -51,12 +54,13 @@ class Arduino(threading.Thread):
 		else: # the arduino is connected, we will attempt to connect on the the PORT value found as the arduino could have been reconnected to another port
 			self.serialConnection = ardSerial.ArduinoSerial(connected_PORT, ardData['baud'])
 			if self.serialConnection.connected == True:
-				self.serialConnection.start()
 				self.serialConnection.registerInputChangedCallback(self.inputChanged)
 				self.serialConnection.registerArduinoStateChangedCallback(self.ardStateChanged)
-
 				self.ardXMLconfig.registerComponentAttributeChangedCallback(self.updateComponentList) #
 				time.sleep(0.01)
+
+				self.serialConnection.start()
+
 				self.updateComponentList('*', '', self.ardSerialNumber, 'pin') # set the pins as switches on arduino
 				self.connected = True
 				logger.info("Arduino serial "+self.ardSerialNumber+" connected on port "+ardData['port'])
@@ -69,9 +73,16 @@ class Arduino(threading.Thread):
 		else:
 			self.ardXMLconfig.updateArduinoAttribute(self.ardSerialNumber, 'connected', 'Disconnected')
 
-	def ardStateChanged(self, ardState):
-		pass
-		
+	def ardStateChanged(self, ardState, arduinoFirmwareVersion):
+		logger.warning('ard state has changed: '+str(self.serialConnection.arduinoReady))
+		if ardState == True:
+			self.ardXMLconfig.updateArduinoAttribute(self.ardSerialNumber, 'ard_status', 'Running')
+		else:
+			self.ardXMLconfig.updateArduinoAttribute(self.ardSerialNumber, 'ard_status', 'Not Running')
+
+		self.ardXMLconfig.updateArduinoAttribute(self.ardSerialNumber, 'firmware_version', arduinoFirmwareVersion)
+
+
 	def handleArduinoAttributeChange(self, ardSerialNr, attribute):
 		logging.debug("ard attribute changed: "+attribute)
 		if attribute == 'baud':

@@ -67,6 +67,11 @@ class ArduinoSerial(threading.Thread):
 												None, False, 				#timeout=None, xonxoff=False,
 												False, None, 			# rtscts=False, write_timeout=None,
 												False, )								#dsrdtr=False,
+			#reset arduino
+			self.serialConnection.setDTR(False) # Drop DTR
+			time.sleep(0.022)
+			self.serialConnection.setDTR(True)  # UP the DTR back
+
 			self.XPUDPServer = XPUDPServer
 
 			time.sleep(0.01)
@@ -89,9 +94,12 @@ class ArduinoSerial(threading.Thread):
 		self.inputCallbacks.append(callbackFunction)
 
 	def registerArduinoStateChangedCallback(self, callbackFunction):
-		'''
+		"""
+		Register callback to be called when the Arduino changes state. After initialisation, the Arduino board will send a message signaling it is ready to accept commands, and the version number of the firmware it is running
 
-		'''
+		:param callbackFunction: function that will be called when the state (True for arduino ready or False) or the version of the firmware (string) has changed. Your function will be passed 2 parameters: the state (bool) and the version nr (string)
+
+		"""
 		self.ardStateChangedCallbacks.append(callbackFunction)
 
 	def sendOutputValue(self, pin, outputType, value):
@@ -126,6 +134,9 @@ class ArduinoSerial(threading.Thread):
 		buffer =""
 		startTime = time.time()
 		lastTime = time.time()
+
+		for callback in self.ardStateChangedCallbacks:
+			callback(self.arduinoReady, self.arduinoFirmwareVersion)
 
 		while self.running and self.serialConnection!=None:
 			time_running = time.time() - startTime
@@ -172,10 +183,10 @@ class ArduinoSerial(threading.Thread):
 		logger.debug ("Process arduino command: "+ buffer)
 		#logging.debug("Processing arduino command, command id: "+buffer[0:4])
 		if buffer [0:5] == 'READY':
-			logger.debug("Arduino is ready")
+			logger.info("Arduino is ready")
 			self.arduinoReady = True
 			for callback in self.ardStateChangedCallbacks:
-				callback(self.arduinoReady)
+				callback(self.arduinoReady, self.arduinoFirmwareVersion)
 
 		if buffer [0:4] == 'CMND':
 			command = buffer[5:len(buffer)-1]
@@ -192,6 +203,12 @@ class ArduinoSerial(threading.Thread):
 
 		else:
 			command_elems = buffer.split(":")
+			if command_elems[0] == 'VERSION':
+				self.arduinoFirmwareVersion = command_elems[1]
+				logger.info("Arduino is running firmware version "+self.arduinoFirmwareVersion)
+				for callback in self.ardStateChangedCallbacks:
+					callback(self.arduinoReady, self.arduinoFirmwareVersion)
+
 			if (command_elems[0] == 'SW' or command_elems[0] == 'POT' or command_elems[0] == 'ROTENC') and len(command_elems) == 3:
 				value = None
 				pin = None
@@ -219,4 +236,6 @@ class ArduinoSerial(threading.Thread):
 			self.serialConnection.close()
 		self.arduinoReady == False
 		self.arduinoFirmwareVersion = ''
+		for callback in self.ardStateChangedCallbacks:
+			callback(self.arduinoReady, self.arduinoFirmwareVersion)
 		logger.info("Arduino Connection on port " + self.PORT + " stopped...")

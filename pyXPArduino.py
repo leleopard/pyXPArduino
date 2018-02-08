@@ -145,7 +145,12 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 			#logging.debug (arduino.tag, arduino.attrib)
 			ardTreeElem = QTreeWidgetItem([ arduino.attrib['name'], arduino.attrib['serial_nr'], arduino.tag ])
 			ardTreeElem.setFont(0, boldFont)
-			ardTreeElem.setIcon(0, QtGui.QIcon("Resources/ardIcon.png"))
+
+			if arduino.attrib['connected'] == 'Connected':
+				ardTreeElem.setIcon(0, QtGui.QIcon("Resources/ardIcon2.png"))
+			else:
+				ardTreeElem.setIcon(0, QtGui.QIcon("Resources/ardIconDisconnected.png"))
+
 			self.arduinoTreeWidget.addTopLevelItem(ardTreeElem)
 			ardTreeElem.setExpanded(True)
 
@@ -196,9 +201,26 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 		self.ardManufacturerLineEdit.setText(ardData['manufacturer'])
 		self.ardSerialConnStatusLabel.setText(ardData['connected'])
 		if ardData['connected'] == 'Connected':
-			self.ardSerialConnStatusLabel.setStyleSheet("QLabel { background-color : transparent; color : green; }")
+			self.ardSerialConnStatusLabel.setStyleSheet("QLabel { background-color : green; color : white; }")
+			items = self.arduinoTreeWidget.findItems (ardID, QtCore.Qt.MatchExactly|QtCore.Qt.MatchRecursive,1)
+			if len(items)>0:
+				items[0].setIcon(0, QtGui.QIcon("Resources/ardIcon2.png"))
 		else:
-			self.ardSerialConnStatusLabel.setStyleSheet("QLabel { font-weight: bold; background-color : transparent; color : red; }")
+			self.ardSerialConnStatusLabel.setStyleSheet("QLabel { font-weight: bold; background-color : red; color : white; }")
+			items = self.arduinoTreeWidget.findItems (ardID, QtCore.Qt.MatchExactly|QtCore.Qt.MatchRecursive,1)
+			if len(items)>0:
+				items[0].setIcon(0, QtGui.QIcon("Resources/ardIconDisconnected.png"))
+
+		if ardData['ard_status'] == 'Running':
+			self.ardStatusLabel.setStyleSheet("QLabel { background-color : green; color : white; }")
+			items = self.arduinoTreeWidget.findItems (ardID, QtCore.Qt.MatchExactly|QtCore.Qt.MatchRecursive,1)
+			if len(items)>0:
+				items[0].setIcon(0, QtGui.QIcon("Resources/ardIcon2.png"))
+		else:
+			self.ardStatusLabel.setStyleSheet("QLabel { font-weight: bold; background-color : red; color : white; }")
+			items = self.arduinoTreeWidget.findItems (ardID, QtCore.Qt.MatchExactly|QtCore.Qt.MatchRecursive,1)
+			if len(items)>0:
+				items[0].setIcon(0, QtGui.QIcon("Resources/ardIconDisconnected.png"))
 
 		self.ardFirmwareVersionLabel.setText(ardData['firmware_version'])
 		self.ardStatusLabel.setText(ardData['ard_status'])

@@ -487,8 +487,17 @@ padding: 3px</string>
            </item>
            <item row="5" column="1">
             <widget class="QLabel" name="ardStatusLabel">
+             <property name="maximumSize">
+              <size>
+               <width>150</width>
+               <height>16777215</height>
+              </size>
+             </property>
              <property name="text">
               <string/>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
              </property>
             </widget>
            </item>
