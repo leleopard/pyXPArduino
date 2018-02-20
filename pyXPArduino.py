@@ -1,11 +1,15 @@
-LOGGING_LEVEL = "WARNIN"
 import logging
 import logging.config
-#LOGGING_FORMAT= '%(asctime)s %(levelname)-8s %(name)-10s %(module)-30s %(funcName)-30s  %(message)s'
-logging.config.fileConfig('config/logging.conf')
-#logging.basicConfig(format=LOGGING_FORMAT, level=logging.DEBUG)
+import os, getpass, sys
 
-import os, getpass
+if getattr(sys, 'frozen', False):
+    # we are running in a bundle
+    working_dir = sys._MEIPASS
+else:
+	working_dir = os.getcwd()
+
+print(os.path.join(os.getcwd(),'config/logging.conf'))
+logging.config.fileConfig(os.path.join(working_dir,'config/logging.conf'))
 
 from PyQt5 import QtCore, QtGui, QtWidgets # Import the PyQt5 modules we'll need
 from PyQt5.QtWidgets import QApplication, QMainWindow,QTreeWidgetItem, QMenu
@@ -31,7 +35,8 @@ import lib.arduinoSerial as ardSerial
 import lib.Arduino as Arduino
 
 VERSION = "v1.1"
-XMLconfigFile = 'config/UDPSettings.xml'
+XMLconfigFile = os.path.join(working_dir,'config/UDPSettings.xml')
+ardConfigFile = os.path.join(working_dir,'config/ardConfig1.xml')
 
 class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 	def __init__(self):
@@ -52,8 +57,9 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 		XPUDP.pyXPUDPServer.start()
 
 		self.updatingCompPanel = True
+		self._refreshingArduinoTree = False
 
-		self.ardXMLconfig = lib.arduinoXMLconfig.arduinoConfig("config/ardConfig1.xml")
+		self.ardXMLconfig = lib.arduinoXMLconfig.arduinoConfig(ardConfigFile)
 		self.ardXMLconfig.registerArduinoAttributeChangedCallback(self.handleArduinoAttributeChange)
 
 		self.arduinoList = []
@@ -109,15 +115,18 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 		self.updatingCompPanel = False
 
 	def refreshArduinoList(self):
-		self.arduinoList = []
+		for arduino in self.arduinoList: # first stop all arduinos
+			arduino.quit()
 
-		for arduino in self.ardXMLconfig.getArduinoList():
+		self.arduinoList = [] # reset the list
+
+		for arduino in self.ardXMLconfig.getArduinoList(): #re populate the list
 		#serialNumber, PORT, BAUD, XPUDPServer, arduinoXMLconfig)
 			self.arduinoList.append(Arduino.Arduino(arduino['serial_nr'],
 													XPUDP.pyXPUDPServer,
 													self.ardXMLconfig
 													))
-		for arduino in self.arduinoList:
+		for arduino in self.arduinoList: # start all arduinos
 			arduino.start()
 			arduino.updateComponentList('*', '', arduino.ardSerialNumber, 'pin')
 
@@ -135,6 +144,7 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 		self.statusBar().showMessage(XPUDP.pyXPUDPServer.statusMsg)
 
 	def refreshArduinoTree(self):
+		self._refreshingArduinoTree = True
 		logging.debug ("refreshArduinoTree")
 
 		boldFont = QtGui.QFont()
@@ -178,7 +188,7 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 						#inputOutputTreeElem.setIcon(0, QtGui.QIcon("Resources/small_switch_on.png"))
 
 		self.arduinoTreeWidget.resizeColumnToContents(0)
-
+		self._refreshingArduinoTree = False
 
 	def updateComponentName(self, compID,compName):
 		items = self.arduinoTreeWidget.findItems (compID, QtCore.Qt.MatchExactly|QtCore.Qt.MatchRecursive,1)
@@ -188,7 +198,8 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 
 	def handleArduinoAttributeChange(self, ardSerialNr, attribute):
 		logging.info('ard attribute changed')
-		self.__updateArduinoEditFormData(ardSerialNr)
+		if self._refreshingArduinoTree == False:
+			self.__updateArduinoEditFormData(ardSerialNr)
 
 	def __updateArduinoEditFormData(self, ardID):
 		ardData = self.ardXMLconfig.getArduinoData(ardID)
@@ -269,7 +280,7 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 	#
 	def ardEditingFinished(self):
 		logging.debug('ardEditingFinished, ardBaudComboBox: '+self.ardBaudComboBox.currentText())
-		if self.updatingCompPanel == False:
+		if self.updatingCompPanel == False and self.refreshArduinoTree == False:
 			ardData = {'port': 			self.ardPortLineEdit.text(),
 						'baud':			self.ardBaudComboBox.currentText(),
 						'name': 		self.ardNameLineEdit.text(),
@@ -362,6 +373,7 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 		returnCode = self.addArduinoDialog.exec()
 
 		if returnCode == 1: # add selected arduinos
+			logging.debug("Adding selected arduinos")
 			ardTableWidget = self.addArduinoDialog.arduinoTableWidget
 			for row in range(0, ardTableWidget.rowCount()):
 				if ardTableWidget.item(row,0).checkState() == QtCore.Qt.Checked :
@@ -371,6 +383,7 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 												ardTableWidget.item(row,4).text(),
 												ardTableWidget.item(row,5).text())
 			self.actionSave.setEnabled(True)
+		self.refreshArduinoList()
 		self.refreshArduinoTree()
 		logging.debug(returnCode)
 

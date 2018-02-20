@@ -63,13 +63,15 @@ class arduinoConfig():
 
 
 	def addArduino(self, port, name, description, serial_number, manufacturer):
+		logging.info('Adding Arduino: port: %s, name: %s, description: %s, serial nr: %s, manufacturer: %s', port, name, description, serial_number, manufacturer)
 		ardTag = ET.SubElement(self.root, 'arduino')
 		ardTag.set('port', port)
 		ardTag.set('name', name)
 		ardTag.set('description', description)
 		ardTag.set('serial_nr', serial_number)
 		ardTag.set('manufacturer', manufacturer)
-		ardTag.set('baud', '115200')
+		ardTag.set('baud', '57600')
+		ardTag.set('connected', '')
 
 		inputTag = ET.SubElement(ardTag, 'inputs')
 		inputTag.set('description', 'Inputs')

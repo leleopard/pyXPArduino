@@ -160,7 +160,7 @@ class ArduinoSerial(threading.Thread):
 
 			if len(data) > 0:
 				#logger.error("")
-				logger.warning("Arduino data ("+ str( len(data)) +" chars): "+ str(data) )
+				logger.debug("Arduino data ("+ str( len(data)) +" chars): "+ str(data) )
 				buffer += data.decode(encoding = 'latin_1')
 				#logger.debug ("buffer: " + buffer)
 
