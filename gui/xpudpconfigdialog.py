@@ -145,6 +145,8 @@ class Ui_Dialog(object):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Edit XPlane UDP settings"))
         self.label.setText(_translate("Dialog", "Our IP Address XPlane is sending to "))
+        self.XPIP_Address_LineEdit.setInputMask(_translate("Dialog", "000.000.000.000;_"))
+        self.IP_Address_LineEdit.setInputMask(_translate("Dialog", "900.900.900.900"))
         self.label_3.setText(_translate("Dialog", "XPlane computer Network Name"))
         self.label_6.setText(_translate("Dialog", "Port"))
         self.label_2.setText(_translate("Dialog", "XPlane IP Address"))

@@ -31,6 +31,9 @@
          <height>16777215</height>
         </size>
        </property>
+       <property name="inputMask">
+        <string>000.000.000.000;_</string>
+       </property>
       </widget>
      </item>
      <item row="0" column="2">
@@ -40,6 +43,9 @@
          <width>150</width>
          <height>16777215</height>
         </size>
+       </property>
+       <property name="inputMask">
+        <string>900.900.900.900</string>
        </property>
       </widget>
      </item>

@@ -1,3 +1,9 @@
+# To distribute, run: pyinstaller pyXPArduino.spec
+#
+#
+#
+
+
 import logging
 import logging.config
 import os, getpass, sys
