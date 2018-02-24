@@ -27,7 +27,7 @@
     <widget class="QLabel" name="label_8">
      <property name="font">
       <font>
-       <pointsize>10</pointsize>
+       <pointsize>11</pointsize>
        <weight>75</weight>
        <bold>true</bold>
       </font>
@@ -77,7 +77,7 @@ padding: 3px
     <widget class="QLabel" name="label_9">
      <property name="font">
       <font>
-       <pointsize>9</pointsize>
+       <pointsize>11</pointsize>
        <weight>75</weight>
        <bold>true</bold>
       </font>
@@ -91,7 +91,7 @@ padding: 3px
     <widget class="QLabel" name="label_15">
      <property name="font">
       <font>
-       <pointsize>9</pointsize>
+       <pointsize>11</pointsize>
        <weight>75</weight>
        <bold>true</bold>
       </font>

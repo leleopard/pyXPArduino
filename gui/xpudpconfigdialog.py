@@ -145,7 +145,7 @@ class Ui_Dialog(object):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Edit XPlane UDP settings"))
         self.label.setText(_translate("Dialog", "Our IP Address XPlane is sending to "))
-        self.XPIP_Address_LineEdit.setInputMask(_translate("Dialog", "000.000.000.000;_"))
+        self.XPIP_Address_LineEdit.setInputMask(_translate("Dialog", "900.900.900.900"))
         self.IP_Address_LineEdit.setInputMask(_translate("Dialog", "900.900.900.900"))
         self.label_3.setText(_translate("Dialog", "XPlane computer Network Name"))
         self.label_6.setText(_translate("Dialog", "Port"))
@@ -157,6 +157,7 @@ class Ui_Dialog(object):
         self.label_10.setText(_translate("Dialog", "IP address we are receiving traffic to redirect "))
         self.label_11.setText(_translate("Dialog", "IP"))
         self.label_12.setText(_translate("Dialog", "Port"))
+        self.RedIP_Address_LineEdit.setInputMask(_translate("Dialog", "900.900.900.900"))
         self.label_9.setText(_translate("Dialog", "Forward XPlane UDP traffic to IP addresses"))
         self.ADD_FWDIP_BTN.setText(_translate("Dialog", "..."))
         self.RM_FWDIP_BTN.setText(_translate("Dialog", "..."))

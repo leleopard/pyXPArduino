@@ -27,104 +27,130 @@ SERVO_PINS = ['','11', '12', '13'] # TO COMPLETE
 
 class arduinoConfig():
 
-	def __init__(self, ardXMLconfigFile):
-		self.tree = ET.parse(ardXMLconfigFile)
-		self.root = self.tree.getroot()
-		self.ardXMLconfigFile = ardXMLconfigFile
-
+	def __init__(self):
 		self.componentAttributeChangedCallbacks = []
 		self.arduinoAttributeChangedCallbacks = []
-		#for child in self.root:
-		#	print (child.tag, child.attrib)
+		self.configFileLoaded = False
+
+	def loadConfigFile(self, ardXMLconfigFile):
+		try:
+			self.tree = ET.parse(ardXMLconfigFile)
+			self.root = self.tree.getroot()
+			self.ardXMLconfigFile = ardXMLconfigFile
+			self.configFileLoaded = True
+
+		except:
+			logging.error('Error while loading arduino config file', exc_info=True)
+			self.configFileLoaded = False
+
+
+	def createConfigFile(self, ardXMLconfigFile):
+		config_file = open(ardXMLconfigFile, "w")
+		config_file.write("<arduinoConfig></arduinoConfig>")
+		config_file.close()
+
 
 	def addInputOutput(self, arduinoSerialNr, inputOutputType):
-		logging.debug("Add InOutput type ",inputOutputType, "to Arduino serial nr:", arduinoSerialNr)
-		ardTag = self.root.findall(".//arduino[@serial_nr='"+arduinoSerialNr+"']")[0]
-		inputOutputTag = ardTag.findall(".//"+inputOutputType)[0]
-		# find all existing items under this tag
-		items = list(inputOutputTag.iter(INPUT_OUTPUT_TAGS_REF[inputOutputTag.tag]['child_tag']))
-		highest_index = 0
-		for item in items:
-			item_id = str(item.attrib['id'])
-			tokens = item_id.split("_")
-			index = int(tokens[2])
-			if index>= highest_index:
-				highest_index = index +1
+		if self.configFileLoaded == True:
+			logging.debug("Add InOutput type ",inputOutputType, "to Arduino serial nr:", arduinoSerialNr)
+			ardTag = self.root.findall(".//arduino[@serial_nr='"+arduinoSerialNr+"']")[0]
+			inputOutputTag = ardTag.findall(".//"+inputOutputType)[0]
+			# find all existing items under this tag
+			items = list(inputOutputTag.iter(INPUT_OUTPUT_TAGS_REF[inputOutputTag.tag]['child_tag']))
+			highest_index = 0
+			for item in items:
+				item_id = str(item.attrib['id'])
+				tokens = item_id.split("-")
+				index = int(tokens[1])
+				if index>= highest_index:
+					highest_index = index +1
 
 
-		inputoutput = ET.SubElement(inputOutputTag,INPUT_OUTPUT_TAGS_REF[inputOutputTag.tag]['child_tag'])
-		inputoutput.set('id', inputOutputTag.tag+"_"+arduinoSerialNr+"_"+str(highest_index))
-		inputoutput.set('name', INPUT_OUTPUT_TAGS_REF[inputOutputTag.tag]['child_tag']+" "+str(highest_index))
-		#if INPUT_OUTPUT_TAGS_REF[inputOutputTag.tag]['child_tag'] == 'switch':
-		inputoutput.set('pin', '')
-		inputoutput.set('state', 'on')
-
-		ET.dump(self.root)
-
+			inputoutput = ET.SubElement(inputOutputTag,INPUT_OUTPUT_TAGS_REF[inputOutputTag.tag]['child_tag'])
+			inputoutput.set('id', inputOutputTag.tag+"_"+arduinoSerialNr+"-"+str(highest_index))
+			inputoutput.set('name', INPUT_OUTPUT_TAGS_REF[inputOutputTag.tag]['child_tag']+" "+str(highest_index))
+			#if INPUT_OUTPUT_TAGS_REF[inputOutputTag.tag]['child_tag'] == 'switch':
+			inputoutput.set('pin', '')
+			inputoutput.set('state', 'on')
 
 	def addArduino(self, port, name, description, serial_number, manufacturer):
-		logging.info('Adding Arduino: port: %s, name: %s, description: %s, serial nr: %s, manufacturer: %s', port, name, description, serial_number, manufacturer)
-		ardTag = ET.SubElement(self.root, 'arduino')
-		ardTag.set('port', port)
-		ardTag.set('name', name)
-		ardTag.set('description', description)
-		ardTag.set('serial_nr', serial_number)
-		ardTag.set('manufacturer', manufacturer)
-		ardTag.set('baud', '57600')
-		ardTag.set('connected', '')
+		if self.configFileLoaded == True:
+			logging.info('Adding Arduino: port: %s, name: %s, description: %s, serial nr: %s, manufacturer: %s', port, name, description, serial_number, manufacturer)
+			ardTag = ET.SubElement(self.root, 'arduino')
+			ardTag.set('port', port)
+			ardTag.set('name', name)
+			ardTag.set('description', description)
+			ardTag.set('serial_nr', serial_number)
+			ardTag.set('manufacturer', manufacturer)
+			ardTag.set('baud', '57600')
+			ardTag.set('connected', '')
 
-		inputTag = ET.SubElement(ardTag, 'inputs')
-		inputTag.set('description', 'Inputs')
+			inputTag = ET.SubElement(ardTag, 'inputs')
+			inputTag.set('description', 'Inputs')
 
-		outputTag = ET.SubElement(ardTag, 'outputs')
-		outputTag.set('description', 'Outputs')
+			outputTag = ET.SubElement(ardTag, 'outputs')
+			outputTag.set('description', 'Outputs')
 
-		switchesTag = ET.SubElement(inputTag, 'switches')
-		switchesTag.set('description', 'Switches')
-		potentiometersTag = ET.SubElement(inputTag, 'potentiometers')
-		potentiometersTag.set('description', 'Potentiometers')
-		rot_encodersTag = ET.SubElement(inputTag, 'rot_encoders')
-		rot_encodersTag.set('description', 'Rotary Encoders')
+			switchesTag = ET.SubElement(inputTag, 'switches')
+			switchesTag.set('description', 'Switches')
+			potentiometersTag = ET.SubElement(inputTag, 'potentiometers')
+			potentiometersTag.set('description', 'Potentiometers')
+			rot_encodersTag = ET.SubElement(inputTag, 'rot_encoders')
+			rot_encodersTag.set('description', 'Rotary Encoders')
 
-		digOutputsTag = ET.SubElement(outputTag, 'dig_outputs')
-		digOutputsTag.set('description', 'Digital Outputs')
-		pwmsTag = ET.SubElement(outputTag, 'pwms')
-		pwmsTag.set('description', 'PWMs')
-		servosTag = ET.SubElement(outputTag, 'servos')
-		servosTag.set('description', 'Servos')
+			digOutputsTag = ET.SubElement(outputTag, 'dig_outputs')
+			digOutputsTag.set('description', 'Digital Outputs')
+			pwmsTag = ET.SubElement(outputTag, 'pwms')
+			pwmsTag.set('description', 'PWMs')
+			servosTag = ET.SubElement(outputTag, 'servos')
+			servosTag.set('description', 'Servos')
+		else:
+			logging.warning("No config file loaded, please create config file first")
 
 	def removeArduino(self, arduinoSerialNr):
-		ardTag = self.root.findall(".//arduino[@serial_nr='"+arduinoSerialNr+"']")[0]
-		self.root.remove(ardTag)
+		if self.configFileLoaded == True:
+			ardTag = self.root.findall(".//arduino[@serial_nr='"+arduinoSerialNr+"']")[0]
+			self.root.remove(ardTag)
+		else:
+			logging.warning("No config file loaded, please create config file first")
+
 
 	def getArduinoList(self):
-		ardTags = self.root.findall(".//arduino")
 		ardList = []
-		if len(ardTags) > 0: # arduino has been found
-			for ardTag in ardTags:
-				ardDict = {'port': ardTag.attrib['port'],
-						'baud': ardTag.attrib['baud'],
-						'name': ardTag.attrib['name'],
-						'description': ardTag.attrib['description'],
-						'serial_nr': ardTag.attrib['serial_nr'],
-						'manufacturer': ardTag.attrib['manufacturer']}
-				ardList.append(ardDict)
+		if self.configFileLoaded == True:
+			ardTags = self.root.findall(".//arduino")
+
+			if len(ardTags) > 0: # arduino has been found
+				for ardTag in ardTags:
+					ardDict = {'port': ardTag.attrib['port'],
+							'baud': ardTag.attrib['baud'],
+							'name': ardTag.attrib['name'],
+							'description': ardTag.attrib['description'],
+							'serial_nr': ardTag.attrib['serial_nr'],
+							'manufacturer': ardTag.attrib['manufacturer']}
+					ardList.append(ardDict)
 			return ardList
 		else:
+			logging.warning("No config file loaded, please create config file first")
 			return ardList
 
 	def removeInputOutput(self, arduinoSerialNr, inputOutputID):
-		logging.debug("Remove InOutput ID ",inputOutputID, "from Arduino serial nr:", arduinoSerialNr)
-		ardTag = self.root.findall(".//arduino[@serial_nr='"+arduinoSerialNr+"']")[0]
-		inputOutputTag = ardTag.findall(".//*[@id='"+inputOutputID+"']")[0]
-		logging.debug("ID to remove found: ", inputOutputTag.attrib['id'])
-		parent = ardTag.findall(".//*[@id='"+inputOutputID+"']/..")[0]
-		parent.remove(inputOutputTag)
+		if self.configFileLoaded == True:
+			logging.debug("Remove InOutput ID ",inputOutputID, "from Arduino serial nr:", arduinoSerialNr)
+			ardTag = self.root.findall(".//arduino[@serial_nr='"+arduinoSerialNr+"']")[0]
+			inputOutputTag = ardTag.findall(".//*[@id='"+inputOutputID+"']")[0]
+			logging.debug("ID to remove found: ", inputOutputTag.attrib['id'])
+			parent = ardTag.findall(".//*[@id='"+inputOutputID+"']/..")[0]
+			parent.remove(inputOutputTag)
+		else:
+			logging.warning("No config file loaded, please create config file first")
 
-		ET.dump(self.root)
 
 	def saveToXMLfile(self):
-		self.tree.write(self.ardXMLconfigFile)
+		if self.configFileLoaded == True:
+			self.tree.write(self.ardXMLconfigFile)
+		else:
+			logging.warning("No config file loaded, please create config file first")
 
 
 	## find actions for component by component type, pin and arduino serial number, returns a list of actions.
@@ -133,72 +159,53 @@ class arduinoConfig():
 	#									'cmddref': action.text}]
 	def getComponentActions(self, arduinoSerialNr, componentType, pin):
 		actionsList = []
-		ardTags = self.root.findall(".//arduino[@serial_nr='"+arduinoSerialNr+"']")
-		if len(ardTags) > 0: # arduino has been found
-			compTag = ardTags[0].findall(".//"+componentType+"[@pin='"+str(pin)+"']")
-			if len(compTag) > 0: # component has been found
-				actions = list(compTag[0].iter('action'))
+		if self.configFileLoaded == True:
+			ardTags = self.root.findall(".//arduino[@serial_nr='"+arduinoSerialNr+"']")
+			if len(ardTags) > 0: # arduino has been found
+				compTag = ardTags[0].findall(".//"+componentType+"[@pin='"+str(pin)+"']")
+				if len(compTag) > 0: # component has been found
+					actions = list(compTag[0].iter('action'))
 
-				for action in actions:
-					#logging.debug('getComponentActions::action:'+str(action.text))
+					for action in actions:
+						#logging.debug('getComponentActions::action:'+str(action.text))
 
-					index = '0'
-					setToValue = '0.0'
-					continuous = 'False'
-					cmddref = ''
-					if action.text != None:
-						cmddref = action.text
+						index = '0'
+						setToValue = '0.0'
+						continuous = 'False'
+						cmddref = ''
+						if action.text != None:
+							cmddref = action.text
 
-					try:
-						index = action.attrib['index']
-						setToValue = action.attrib['setToValue']
-						continuous = action.attrib['continuous']
-					except:
-						pass
-					actionsList.append({'state': action.attrib['state'],
-										'action_type': action.attrib['action_type'],
-										'cmddref': cmddref,
-										'index': index,
-										'setToValue': setToValue,
-										'continuous': continuous})
+						try:
+							index = action.attrib['index']
+							setToValue = action.attrib['setToValue']
+							continuous = action.attrib['continuous']
+						except:
+							pass
+						actionsList.append({'state': action.attrib['state'],
+											'action_type': action.attrib['action_type'],
+											'cmddref': cmddref,
+											'index': index,
+											'setToValue': setToValue,
+											'continuous': continuous})
+		else:
+			logging.warning("No config file loaded, please create config file first")
 
 		return actionsList
-
-	## IS THIS USED ANYWHERE?? WHY NOT USE updateComponentData() or get updateComponentData to use this??
-	## update actions for component by component type, pin and arduino serial number.
-	# @param actionsList list of actions in form [{'state': action.attrib['state'],
-	#									'action_type': action.attrib['action_type'],
-	#									'cmddref': action.text}]
-	def updateComponentActions(self, arduinoSerialNr, componentType, pin, actionsList):
-		ardTags = self.root.findall(".//arduino[@serial_nr='"+arduinoSerialNr+"']")
-		if len(ardTags) > 0: # arduino has been found
-			compTag = ardTags[0].findall(".//"+componentType+"[@pin='"+str(pin)+"']")
-			if len(compTag) > 0: # switch has been found
-
-				for action in list(compTag[0]): # first remove all actions
-					compTag[0].remove(action)
-
-				for action in actionsList:
-					actionTag = ET.SubElement(compTag[0], 'action')
-					actionTag.set('state', action['state'])
-					actionTag.set('action_type', action['action_type'])
-					try:
-						actionTag.set('index', action['index'])
-						actionTag.set('setToValue', action['setToValue'])
-					except:
-						pass
-					actionTag.text = action['cmddref']
-
 
 
 	## returns the attribute value for a component searching by component type, pin and arduino serial number.
 	# @return attribute or '' if not found
 	def getComponentAttribute(self, arduinoSerialNr, componentType, pin, attribute):
-		ardTags = self.root.findall(".//arduino[@serial_nr='"+arduinoSerialNr+"']")
-		if len(ardTags) > 0: # arduino has been found
-			compTag = ardTags[0].findall(".//"+componentType+"[@pin='"+str(pin)+"']")
-			if len(compTag) > 0: # component has been found
-				return compTag[0].attrib[attribute]
+		if self.configFileLoaded == True:
+			ardTags = self.root.findall(".//arduino[@serial_nr='"+arduinoSerialNr+"']")
+			if len(ardTags) > 0: # arduino has been found
+				compTag = ardTags[0].findall(".//"+componentType+"[@pin='"+str(pin)+"']")
+				if len(compTag) > 0: # component has been found
+					return compTag[0].attrib[attribute]
+			return ''
+		else:
+			logging.warning("No config file loaded, please create config file first")
 
 		return ''
 
@@ -209,26 +216,29 @@ class arduinoConfig():
 	#									'state': compTag.attrib['state']}]
 	def getComponentList(self, arduinoSerialNr, componentType):
 		compList = []
-		ardTags = self.root.findall(".//arduino[@serial_nr='"+arduinoSerialNr+"']")
-		if len(ardTags) > 0: # arduino has been found
-			compTags = ardTags[0].findall(".//"+componentType)
-			for compTag in compTags:
-				pin =''
-				if 'pin' in compTag.attrib:
-					pin = compTag.attrib['pin']
-				pin2 =''
-				if 'pin2' in compTag.attrib:
-					pin2 = compTag.attrib['pin2']
-				stepsPerNotch = ''
-				if 'stepsPerNotch' in compTag.attrib:
-					stepsPerNotch = compTag.attrib['stepsPerNotch']
+		if self.configFileLoaded == True:
+			ardTags = self.root.findall(".//arduino[@serial_nr='"+arduinoSerialNr+"']")
+			if len(ardTags) > 0: # arduino has been found
+				compTags = ardTags[0].findall(".//"+componentType)
+				for compTag in compTags:
+					pin =''
+					if 'pin' in compTag.attrib:
+						pin = compTag.attrib['pin']
+					pin2 =''
+					if 'pin2' in compTag.attrib:
+						pin2 = compTag.attrib['pin2']
+					stepsPerNotch = ''
+					if 'stepsPerNotch' in compTag.attrib:
+						stepsPerNotch = compTag.attrib['stepsPerNotch']
 
-				compList.append({'name': compTag.attrib['name'],
-								'id': compTag.attrib['id'],
-								'pin': pin,
-								'pin2': pin2,
-								'stepsPerNotch': stepsPerNotch,
-								'state': compTag.attrib['state']})
+					compList.append({'name': compTag.attrib['name'],
+									'id': compTag.attrib['id'],
+									'pin': pin,
+									'pin2': pin2,
+									'stepsPerNotch': stepsPerNotch,
+									'state': compTag.attrib['state']})
+		else:
+			logging.warning("No config file loaded, please create config file first")
 
 		return compList
 
@@ -238,59 +248,63 @@ class arduinoConfig():
 	# @param componentType the type of component: 'switch', 'potentiometer', 'rot_encoder', 'led', 'pwm'
 	#
 	def getComponentData(self, compSerialNr, componentType):
-		compTag = self.root.findall(".//"+componentType+"[@id='"+compSerialNr+"']")
-		if len(compTag) > 0: # comp has been found
-			pin =''
-			pin2 = ''
-			stepsPerNotch = '4'
-			acceleration = 'False'
-			multiplier = '1.0'
-			if 'pin' in compTag[0].attrib:
-				pin = compTag[0].attrib['pin']
-			if 'pin2' in compTag[0].attrib:
-				pin2 = compTag[0].attrib['pin2']
-			if 'stepsPerNotch' in compTag[0].attrib:
-				stepsPerNotch = compTag[0].attrib['stepsPerNotch']
-			if 'acceleration' in compTag[0].attrib:
-				acceleration = compTag[0].attrib['acceleration']
-			if 'multiplier' in compTag[0].attrib:
-				multiplier = compTag[0].attrib['multiplier']
+		if self.configFileLoaded == True:
+			compTag = self.root.findall(".//"+componentType+"[@id='"+compSerialNr+"']")
+			if len(	compTag) > 0: # comp has been found
+				pin =''
+				pin2 = ''
+				stepsPerNotch = '4'
+				acceleration = 'False'
+				multiplier = '1.0'
+				if 'pin' in compTag[0].attrib:
+					pin = compTag[0].attrib['pin']
+				if 'pin2' in compTag[0].attrib:
+					pin2 = compTag[0].attrib['pin2']
+				if 'stepsPerNotch' in compTag[0].attrib:
+					stepsPerNotch = compTag[0].attrib['stepsPerNotch']
+				if 'acceleration' in compTag[0].attrib:
+					acceleration = compTag[0].attrib['acceleration']
+				if 'multiplier' in compTag[0].attrib:
+					multiplier = compTag[0].attrib['multiplier']
 
 
-			actions = list(compTag[0].iter('action'))
-			#print("actions:", len(actions))
-			actionsList = []
-			for action in actions:
-				#print('action:',action)
+				actions = list(compTag[0].iter('action'))
+				#print("actions:", len(actions))
+				actionsList = []
+				for action in actions:
+					#print('action:',action)
 
-				index = '0'
-				setToValue = '0.0'
-				continuous = 'False'
-				try:
-					index = action.attrib['index']
-					setToValue = action.attrib['setToValue']
-					continuous = action.attrib['continuous']
-				except:
-					pass
+					index = '0'
+					setToValue = '0.0'
+					continuous = 'False'
+					try:
+						index = action.attrib['index']
+						setToValue = action.attrib['setToValue']
+						continuous = action.attrib['continuous']
+					except:
+						pass
 
-				actionsList.append({'state': action.attrib['state'],
-									'action_type': action.attrib['action_type'],
-									'cmddref': action.text,
-									'index': index,
-									'setToValue': setToValue,
-									'continuous': continuous})
-			compDict = {'name': compTag[0].attrib['name'],
-					'id': compTag[0].attrib['id'],
-					'pin': pin,
-					'pin2': pin2,
-					'stepsPerNotch': stepsPerNotch,
-					'state': compTag[0].attrib['state'],
-					'acceleration': acceleration,
-					'multiplier': multiplier,
-					'actions': actionsList}
+					actionsList.append({'state': action.attrib['state'],
+										'action_type': action.attrib['action_type'],
+										'cmddref': action.text,
+										'index': index,
+										'setToValue': setToValue,
+										'continuous': continuous})
+				compDict = {'name': compTag[0].attrib['name'],
+						'id': compTag[0].attrib['id'],
+						'pin': pin,
+						'pin2': pin2,
+						'stepsPerNotch': stepsPerNotch,
+						'state': compTag[0].attrib['state'],
+						'acceleration': acceleration,
+						'multiplier': multiplier,
+						'actions': actionsList}
 
-			return compDict
+				return compDict
+			else:
+				return None
 		else:
+			logging.warning("No config file loaded, please create config file first")
 			return None
 
 
@@ -302,7 +316,7 @@ class arduinoConfig():
 
 	## register a callback function to be called when an arduino attribute has changed data
 	# @param callback 	callback function, it will be passed ardSerialNr, attribute
-	#
+	# 
 	def registerArduinoAttributeChangedCallback(self, callback):
 		self.arduinoAttributeChangedCallbacks.append(callback)
 
@@ -314,51 +328,55 @@ class arduinoConfig():
 	# @param actions  list of dictionaries, one per action, each formatted as {'state': 'on' or 'off' (switch) 'up' or 'down(rot encoder), 'action_type': 'cmd' or 'dref, 'cmddref': 'command or dataref string'}
 	#
 	def updateComponentData(self, compSerialNr, componentType, compData, actions = []):
-		logging.debug('Update Component Data, type: '+componentType)
-		compTag = self.root.findall(".//"+componentType+"[@id='"+compSerialNr+"']")
-		if len(compTag) > 0: # component has been found
-			#find the switch arduino parent element
-			ardTag = self.root.findall(".//"+componentType+"[@id='"+compSerialNr+"']......")
-			ardSerialNr = ardTag[0].attrib['serial_nr']
-			#logging.debug (ardTag)
-			#logging.debug ('ARD serial nr: '+ardTag[0].attrib['serial_nr'])
+		if self.configFileLoaded == True:
+			logging.debug('Update Component Data, type: '+componentType)
+			compTag = self.root.findall(".//"+componentType+"[@id='"+compSerialNr+"']")
+			if len(compTag) > 0: # component has been found
+				#find the switch arduino parent element
+				ardTag = self.root.findall(".//"+componentType+"[@id='"+compSerialNr+"']......")
+				ardSerialNr = ardTag[0].attrib['serial_nr']
+				#logging.debug (ardTag)
+				#logging.debug ('ARD serial nr: '+ardTag[0].attrib['serial_nr'])
 
-			self.updateComponentAttribute(compSerialNr, componentType,'id', compData['id'])
-			self.updateComponentAttribute(compSerialNr, componentType,'name', compData['name'])
-			self.updateComponentAttribute(compSerialNr, componentType,'pin', compData['pin'])
-			if 'pin2' in compData: # test if 2nd pin provided
-				self.updateComponentAttribute(compSerialNr, componentType,'pin2', compData['pin2'])
-			if 'stepsPerNotch' in compData: # test if stepsPerNotch provided
-				self.updateComponentAttribute(compSerialNr, componentType,'stepsPerNotch', compData['stepsPerNotch'])
-			if 'acceleration' in compData: # test if acceleration provided
-				self.updateComponentAttribute(compSerialNr, componentType,'acceleration', compData['acceleration'])
-			if 'multiplier' in compData: # test if multiplier provided
-				self.updateComponentAttribute(compSerialNr, componentType,'multiplier', compData['multiplier'])
+				self.updateComponentAttribute(compSerialNr, componentType,'id', compData['id'])
+				self.updateComponentAttribute(compSerialNr, componentType,'name', compData['name'])
+				self.updateComponentAttribute(compSerialNr, componentType,'pin', compData['pin'])
+				if 'pin2' in compData: # test if 2nd pin provided
+					self.updateComponentAttribute(compSerialNr, componentType,'pin2', compData['pin2'])
+				if 'stepsPerNotch' in compData: # test if stepsPerNotch provided
+					self.updateComponentAttribute(compSerialNr, componentType,'stepsPerNotch', compData['stepsPerNotch'])
+				if 'acceleration' in compData: # test if acceleration provided
+					self.updateComponentAttribute(compSerialNr, componentType,'acceleration', compData['acceleration'])
+				if 'multiplier' in compData: # test if multiplier provided
+					self.updateComponentAttribute(compSerialNr, componentType,'multiplier', compData['multiplier'])
 
 
 
-			for action in list(compTag[0]): # first remove all actions
-				compTag[0].remove(action)
+				for action in list(compTag[0]): # first remove all actions
+					compTag[0].remove(action)
 
-			for action in actions:
-				actionTag = ET.SubElement(compTag[0], 'action')
-				actionTag.set('state', action['state'])
-				actionTag.set('action_type', action['action_type'])
-				try:
-					actionTag.set('continuous', action['continuous'])
-				except:
-					actionTag.set('continuous', '')
-				try:
-					actionTag.set('index', action['index'])
-				except:
-					actionTag.set('index', '')
-				try:
-					actionTag.set('setToValue', action['setToValue'])
-				except:
-					actionTag.set('setToValue', '')
-				actionTag.text = action['cmddref']
+				for action in actions:
+					actionTag = ET.SubElement(compTag[0], 'action')
+					actionTag.set('state', action['state'])
+					actionTag.set('action_type', action['action_type'])
+					try:
+						actionTag.set('continuous', action['continuous'])
+					except:
+						actionTag.set('continuous', '')
+					try:
+						actionTag.set('index', action['index'])
+					except:
+						actionTag.set('index', '')
+					try:
+						actionTag.set('setToValue', action['setToValue'])
+					except:
+						actionTag.set('setToValue', '')
+					actionTag.text = action['cmddref']
 
+			else:
+				return -1
 		else:
+			logging.warning("No config file loaded, please create config file first")
 			return -1
 
 	## updates component attribute
@@ -368,86 +386,95 @@ class arduinoConfig():
 	# @param attributeValue   the value to set the attribute to
 	#
 	def updateComponentAttribute(self, compSerialNr, componentType, attribute, attributeValue):
-		logging.debug('Update component attribute: '+compSerialNr+' attribute: ' +attribute+' value:'+attributeValue )
-		compTag = self.root.findall(".//"+componentType+"[@id='"+compSerialNr+"']")
-		if len(compTag) > 0: # component has been found
-			#print("component found")
-			#find the component arduino parent element
-			ardTag = self.root.findall(".//"+componentType+"[@id='"+compSerialNr+"']......")
-			ardSerialNr = ardTag[0].attrib['serial_nr']
-			if attribute not in compTag[0].attrib: # this attribute does not exist so lets create it
-				compTag[0].set(attribute, '')
-			if compTag[0].attrib[attribute] != attributeValue: # then the value has changed and must be updated
-				compTag[0].set(attribute, attributeValue)
-				# and we notify all callbacks of this attribute change
-				for callback in self.componentAttributeChangedCallbacks:
-					callback(componentType, compSerialNr,ardSerialNr, attribute)
-
+		if self.configFileLoaded == True:
+			logging.debug('Update component attribute: '+compSerialNr+' attribute: ' +attribute+' value:'+attributeValue )
+			compTag = self.root.findall(".//"+componentType+"[@id='"+compSerialNr+"']")
+			if len(compTag) > 0: # component has been found
+				#print("component found")
+				#find the component arduino parent element
+				ardTag = self.root.findall(".//"+componentType+"[@id='"+compSerialNr+"']......")
+				ardSerialNr = ardTag[0].attrib['serial_nr']
+				if attribute not in compTag[0].attrib: # this attribute does not exist so lets create it
+					compTag[0].set(attribute, '')
+				if compTag[0].attrib[attribute] != attributeValue: # then the value has changed and must be updated
+					compTag[0].set(attribute, attributeValue)
+					# and we notify all callbacks of this attribute change
+					for callback in self.componentAttributeChangedCallbacks:
+						callback(componentType, compSerialNr,ardSerialNr, attribute)
+			else:
+				return -1
 		else:
+			logging.warning("No config file loaded, please create config file first")
 			return -1
 
 	## find arduino by serial number, returns a dictionary with its attribute values or None if not found.
 	# @param arduinoSerialNr  the serial number of the arduino
 	#
 	def getArduinoData(self, arduinoSerialNr):
-		ardTags = self.root.findall(".//arduino[@serial_nr='"+arduinoSerialNr+"']")
-		if len(ardTags) > 0: # arduino has been found
-			if 'connected' not in ardTags[0].attrib: # this attribute does not exist so lets create it
-				ardTags[0].set('connected', '')
-			if 'firmware_version' not in ardTags[0].attrib: # this attribute does not exist so lets create it
-				ardTags[0].set('firmware_version', '')
-			if 'ard_status' not in ardTags[0].attrib: # this attribute does not exist so lets create it
-				ardTags[0].set('ard_status', '')
+		if self.configFileLoaded == True:
+			ardTags = self.root.findall(".//arduino[@serial_nr='"+arduinoSerialNr+"']")
+			if len(ardTags) > 0: # arduino has been found
+				if 'connected' not in ardTags[0].attrib: # this attribute does not exist so lets create it
+					ardTags[0].set('connected', '')
+				if 'firmware_version' not in ardTags[0].attrib: # this attribute does not exist so lets create it
+					ardTags[0].set('firmware_version', '')
+				if 'ard_status' not in ardTags[0].attrib: # this attribute does not exist so lets create it
+					ardTags[0].set('ard_status', '')
 
-			ardDict = {'port': ardTags[0].attrib['port'],
-					'baud': ardTags[0].attrib['baud'],
-					'name': ardTags[0].attrib['name'],
-					'description': ardTags[0].attrib['description'],
-					'serial_nr': ardTags[0].attrib['serial_nr'],
-					'manufacturer': ardTags[0].attrib['manufacturer'],
-					'connected': ardTags[0].attrib['connected'],
-					'firmware_version': ardTags[0].attrib['firmware_version'],
-					'ard_status': ardTags[0].attrib['ard_status']}
+				ardDict = {'port': ardTags[0].attrib['port'],
+						'baud': ardTags[0].attrib['baud'],
+						'name': ardTags[0].attrib['name'],
+						'description': ardTags[0].attrib['description'],
+						'serial_nr': ardTags[0].attrib['serial_nr'],
+						'manufacturer': ardTags[0].attrib['manufacturer'],
+						'connected': ardTags[0].attrib['connected'],
+						'firmware_version': ardTags[0].attrib['firmware_version'],
+						'ard_status': ardTags[0].attrib['ard_status']}
 
-			return ardDict
+				return ardDict
+			else:
+				return None
 		else:
+			logging.warning("No config file loaded, please create config file first")
 			return None
 
 	def updateArduinoData(self, arduinoSerialNr, ardData):
-		ardTags = self.root.findall(".//arduino[@serial_nr='"+arduinoSerialNr+"']")
-		if len(ardTags) > 0: # arduino has been found
-			if ardTags[0].attrib['port'] != ardData['port']:
-				ardTags[0].set('port', ardData['port'])
-				for callback in self.arduinoAttributeChangedCallbacks:
-					callback(arduinoSerialNr, 'port')
+		if self.configFileLoaded == True:
+			ardTags = self.root.findall(".//arduino[@serial_nr='"+arduinoSerialNr+"']")
+			if len(ardTags) > 0: # arduino has been found
+				if ardTags[0].attrib['port'] != ardData['port']:
+					ardTags[0].set('port', ardData['port'])
+					for callback in self.arduinoAttributeChangedCallbacks:
+						callback(arduinoSerialNr, 'port')
 
-			if ardTags[0].attrib['baud'] != ardData['baud']:
-				ardTags[0].set('baud', ardData['baud'])
-				for callback in self.arduinoAttributeChangedCallbacks:
-					callback(arduinoSerialNr, 'baud')
+				if ardTags[0].attrib['baud'] != ardData['baud']:
+					ardTags[0].set('baud', ardData['baud'])
+					for callback in self.arduinoAttributeChangedCallbacks:
+						callback(arduinoSerialNr, 'baud')
 
-			if ardTags[0].attrib['name'] != ardData['name']:
-				ardTags[0].set('name', ardData['name'])
-				for callback in self.arduinoAttributeChangedCallbacks:
-					callback(arduinoSerialNr, 'name')
+				if ardTags[0].attrib['name'] != ardData['name']:
+					ardTags[0].set('name', ardData['name'])
+					for callback in self.arduinoAttributeChangedCallbacks:
+						callback(arduinoSerialNr, 'name')
 
-			if ardTags[0].attrib['description'] != ardData['description']:
-				ardTags[0].set('description', ardData['description'])
-				for callback in self.arduinoAttributeChangedCallbacks:
-					callback(arduinoSerialNr, 'description')
+				if ardTags[0].attrib['description'] != ardData['description']:
+					ardTags[0].set('description', ardData['description'])
+					for callback in self.arduinoAttributeChangedCallbacks:
+						callback(arduinoSerialNr, 'description')
 
-			if ardTags[0].attrib['serial_nr'] != ardData['serial_nr']:
-				ardTags[0].set('serial_nr', ardData['serial_nr'])
-				for callback in self.arduinoAttributeChangedCallbacks:
-					callback(arduinoSerialNr, 'serial_nr')
+				if ardTags[0].attrib['serial_nr'] != ardData['serial_nr']:
+					ardTags[0].set('serial_nr', ardData['serial_nr'])
+					for callback in self.arduinoAttributeChangedCallbacks:
+						callback(arduinoSerialNr, 'serial_nr')
 
-			if ardTags[0].attrib['manufacturer'] != ardData['manufacturer']:
-				ardTags[0].set('manufacturer', ardData['manufacturer'])
-				for callback in self.arduinoAttributeChangedCallbacks:
-					callback(arduinoSerialNr, 'manufacturer')
-
-
-		else :
+				if ardTags[0].attrib['manufacturer'] != ardData['manufacturer']:
+					ardTags[0].set('manufacturer', ardData['manufacturer'])
+					for callback in self.arduinoAttributeChangedCallbacks:
+						callback(arduinoSerialNr, 'manufacturer')
+			else :
+				return -1
+		else:
+			logging.warning("No config file loaded, please create config file first")
 			return -1
 
 
@@ -457,10 +484,14 @@ class arduinoConfig():
 	# @param attributeValue   the value to set the attribute to
 	#
 	def updateArduinoAttribute(self, arduinoSerialNr, attribute, attributeValue):
-		ardTags = self.root.findall(".//arduino[@serial_nr='"+arduinoSerialNr+"']")
-		if len(ardTags) > 0: # arduino has been found
-			ardTags[0].set(attribute, attributeValue)
-			for callback in self.arduinoAttributeChangedCallbacks:
-				callback(arduinoSerialNr, attribute)
-		else :
+		if self.configFileLoaded == True:
+			ardTags = self.root.findall(".//arduino[@serial_nr='"+arduinoSerialNr+"']")
+			if len(ardTags) > 0: # arduino has been found
+				ardTags[0].set(attribute, attributeValue)
+				for callback in self.arduinoAttributeChangedCallbacks:
+					callback(arduinoSerialNr, attribute)
+			else :
+				return -1
+		else:
+			logging.warning("No config file loaded, please create config file first")
 			return -1

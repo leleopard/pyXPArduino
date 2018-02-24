@@ -396,7 +396,7 @@
              </property>
              <property name="font">
               <font>
-               <pointsize>10</pointsize>
+               <pointsize>11</pointsize>
                <weight>75</weight>
                <bold>true</bold>
               </font>
@@ -446,7 +446,7 @@ padding: 3px
             <widget class="QLabel" name="label_8">
              <property name="font">
               <font>
-               <pointsize>10</pointsize>
+               <pointsize>11</pointsize>
                <weight>75</weight>
                <bold>true</bold>
               </font>
@@ -454,7 +454,10 @@ padding: 3px
              <property name="styleSheet">
               <string notr="true">color: white;
 background: rgb(0, 151, 157);
-padding: 3px</string>
+padding: 3px;
+font-size: 150%;
+
+</string>
              </property>
              <property name="text">
               <string>Arduino status</string>
@@ -463,6 +466,9 @@ padding: 3px</string>
            </item>
            <item row="4" column="0">
             <widget class="QLabel" name="label_9">
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
              <property name="text">
               <string>Serial Connection Status</string>
              </property>
@@ -539,6 +545,8 @@ padding: 3px</string>
     <property name="title">
      <string>File</string>
     </property>
+    <addaction name="actionCreate_new_Arduino_config_file"/>
+    <addaction name="actionOpen_Arduino_config_file"/>
     <addaction name="actionSave"/>
     <addaction name="actionQuit"/>
    </widget>
@@ -551,7 +559,7 @@ padding: 3px</string>
    </widget>
    <widget class="QMenu" name="menuX_Plane">
     <property name="title">
-     <string>X Plane</string>
+     <string>X Plane Settings</string>
     </property>
     <addaction name="actionUDP_Settings"/>
    </widget>
@@ -583,11 +591,19 @@ padding: 3px</string>
    </property>
   </action>
   <action name="actionAdd_Arduino">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/newPrefix/plusIcon.png</normaloff>:/newPrefix/plusIcon.png</iconset>
+   </property>
    <property name="text">
     <string>Add Arduino</string>
    </property>
   </action>
   <action name="actionUDP_Settings">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/newPrefix/settings.png</normaloff>:/newPrefix/settings.png</iconset>
+   </property>
    <property name="text">
     <string>UDP Settings</string>
    </property>
@@ -608,6 +624,24 @@ padding: 3px</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionOpen_Arduino_config_file">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/newPrefix/open.png</normaloff>:/newPrefix/open.png</iconset>
+   </property>
+   <property name="text">
+    <string>Open Arduino config file...</string>
+   </property>
+  </action>
+  <action name="actionCreate_new_Arduino_config_file">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/newPrefix/file_plus.png</normaloff>:/newPrefix/file_plus.png</iconset>
+   </property>
+   <property name="text">
+    <string>Create new Arduino config file</string>
    </property>
   </action>
  </widget>
@@ -743,6 +777,38 @@ padding: 3px</string>
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionOpen_Arduino_config_file</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>openArduinoConfigFile()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>606</x>
+     <y>402</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionCreate_new_Arduino_config_file</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>createArduinoConfigFile()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>606</x>
+     <y>402</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>ardTreeContextMenuRequested()</slot>
@@ -761,5 +827,7 @@ padding: 3px</string>
   <slot>rmSwitchOffDataref()</slot>
   <slot>editXPCommand()</slot>
   <slot>editXPUDPSettings()</slot>
+  <slot>openArduinoConfigFile()</slot>
+  <slot>createArduinoConfigFile()</slot>
  </slots>
 </ui>

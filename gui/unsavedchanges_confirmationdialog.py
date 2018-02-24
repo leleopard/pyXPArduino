@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'confirmationdialog.ui'
+# Form implementation generated from reading ui file 'unsavedchanges_confirmationdialog.ui'
 #
 # Created by: PyQt5 UI code generator 5.10
 #
@@ -8,17 +8,17 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-class Ui_deleteConfirmationDialog(object):
-    def setupUi(self, deleteConfirmationDialog):
-        deleteConfirmationDialog.setObjectName("deleteConfirmationDialog")
-        deleteConfirmationDialog.setWindowModality(QtCore.Qt.ApplicationModal)
-        deleteConfirmationDialog.resize(385, 98)
-        deleteConfirmationDialog.setModal(True)
-        self.verticalLayout = QtWidgets.QVBoxLayout(deleteConfirmationDialog)
+class Ui_confirmationDialog(object):
+    def setupUi(self, confirmationDialog):
+        confirmationDialog.setObjectName("confirmationDialog")
+        confirmationDialog.setWindowModality(QtCore.Qt.ApplicationModal)
+        confirmationDialog.resize(385, 98)
+        confirmationDialog.setModal(True)
+        self.verticalLayout = QtWidgets.QVBoxLayout(confirmationDialog)
         self.verticalLayout.setObjectName("verticalLayout")
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.label = QtWidgets.QLabel(deleteConfirmationDialog)
+        self.label = QtWidgets.QLabel(confirmationDialog)
         self.label.setMaximumSize(QtCore.QSize(32, 16777215))
         font = QtGui.QFont()
         font.setPointSize(9)
@@ -30,29 +30,30 @@ class Ui_deleteConfirmationDialog(object):
         self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setObjectName("label")
         self.horizontalLayout.addWidget(self.label)
-        self.label_2 = QtWidgets.QLabel(deleteConfirmationDialog)
+        self.label_2 = QtWidgets.QLabel(confirmationDialog)
         font = QtGui.QFont()
         font.setPointSize(11)
         font.setBold(True)
         font.setWeight(75)
         self.label_2.setFont(font)
+        self.label_2.setWordWrap(True)
         self.label_2.setObjectName("label_2")
         self.horizontalLayout.addWidget(self.label_2)
         self.verticalLayout.addLayout(self.horizontalLayout)
-        self.buttonBox = QtWidgets.QDialogButtonBox(deleteConfirmationDialog)
+        self.buttonBox = QtWidgets.QDialogButtonBox(confirmationDialog)
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
         self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Yes)
         self.buttonBox.setObjectName("buttonBox")
         self.verticalLayout.addWidget(self.buttonBox)
 
-        self.retranslateUi(deleteConfirmationDialog)
-        self.buttonBox.accepted.connect(deleteConfirmationDialog.accept)
-        self.buttonBox.rejected.connect(deleteConfirmationDialog.reject)
-        QtCore.QMetaObject.connectSlotsByName(deleteConfirmationDialog)
+        self.retranslateUi(confirmationDialog)
+        self.buttonBox.accepted.connect(confirmationDialog.accept)
+        self.buttonBox.rejected.connect(confirmationDialog.reject)
+        QtCore.QMetaObject.connectSlotsByName(confirmationDialog)
 
-    def retranslateUi(self, deleteConfirmationDialog):
+    def retranslateUi(self, confirmationDialog):
         _translate = QtCore.QCoreApplication.translate
-        deleteConfirmationDialog.setWindowTitle(_translate("deleteConfirmationDialog", "Delete Item"))
-        self.label_2.setText(_translate("deleteConfirmationDialog", "Are you sure you want to delete the item?"))
+        confirmationDialog.setWindowTitle(_translate("confirmationDialog", "Delete Item"))
+        self.label_2.setText(_translate("confirmationDialog", "You have unsaved changes, these will be lost! Are you sure you want to continue?"))
 
 import resources_rc

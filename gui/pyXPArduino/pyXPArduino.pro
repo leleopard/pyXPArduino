@@ -43,4 +43,5 @@ FORMS += \
     ../xpudpconfigdialog.ui \
     ../servoEditForm.ui \
     ../digOutputEditForm.ui \
-    ../rotencoderEditForm.ui
+    ../rotencoderEditForm.ui \
+    ../unsavedchanges_confirmationdialog.ui

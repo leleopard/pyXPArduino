@@ -113,7 +113,7 @@ class Ui_servoEditForm(object):
         self.gridLayout.addWidget(self.label_5, 7, 0, 1, 1)
         self.label_8 = QtWidgets.QLabel(servoEditForm)
         font = QtGui.QFont()
-        font.setPointSize(10)
+        font.setPointSize(11)
         font.setBold(True)
         font.setWeight(75)
         self.label_8.setFont(font)

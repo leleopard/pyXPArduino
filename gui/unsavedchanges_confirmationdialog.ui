@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>deleteConfirmationDialog</class>
- <widget class="QDialog" name="deleteConfirmationDialog">
+ <class>confirmationDialog</class>
+ <widget class="QDialog" name="confirmationDialog">
   <property name="windowModality">
    <enum>Qt::ApplicationModal</enum>
   </property>
@@ -58,7 +58,10 @@
         </font>
        </property>
        <property name="text">
-        <string>Are you sure you want to delete the item?</string>
+        <string>You have unsaved changes, these will be lost! Are you sure you want to continue?</string>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -83,7 +86,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>deleteConfirmationDialog</receiver>
+   <receiver>confirmationDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -99,7 +102,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>deleteConfirmationDialog</receiver>
+   <receiver>confirmationDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

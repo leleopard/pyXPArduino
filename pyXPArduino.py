@@ -21,8 +21,11 @@ from PyQt5 import QtCore, QtGui, QtWidgets # Import the PyQt5 modules we'll need
 from PyQt5.QtWidgets import QApplication, QMainWindow,QTreeWidgetItem, QMenu
 import sys # We need sys so that we can pass argv to QApplication
 
+import xml.etree.ElementTree as ET
+
 import gui.mainwindow as mainwindow# This file holds our MainWindow and all design related things
 import gui.deleteConfirmationDialog as deleteConfirmationDialog
+import gui.pyXPunsavedChangesConfirmationDialog as unsavedChangesConfirmationDialog
 import gui.pyXPaddArduinoDialog as pyXPaddArduinoDialog
 import gui.pyXPpickXPCommandDialog as pyXPpickXPCommandDialog
 import gui.pyXPUDPConfigDialog as pyXPUDPConfigDialog
@@ -41,8 +44,9 @@ import lib.arduinoSerial as ardSerial
 import lib.Arduino as Arduino
 
 VERSION = "v1.1"
-XMLconfigFile = os.path.join(working_dir,'config/UDPSettings.xml')
-ardConfigFile = os.path.join(working_dir,'config/ardConfig1.xml')
+mainConfigFile = os.path.join(working_dir,'config/config.xml')
+UDPconfigFile = os.path.join(working_dir,'config/UDPSettings.xml')
+#ardConfigFile = '' # os.path.join(working_dir,'config/ardConfig1.xml')
 
 class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 	def __init__(self):
@@ -56,26 +60,51 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 		self.timer.timeout.connect(self.updateMessages)
 		self.timer.start(500)
 		self.setWindowTitle("pyXPArduino "+VERSION)
-		logging.debug("Running as user: "+getpass.getuser())
 
-		XPUDP.pyXPUDPServer.initialiseUDPXMLConfig(XMLconfigFile)
+		# build status bar
+		self.statusBar = QtWidgets.QStatusBar()
+		self.statusBar.setStyleSheet("QStatusBar { border-top:1px; border-style: solid;border-color: grey; }")
+
+		self.setStatusBar(self.statusBar)
+
+		self.statusBarArdXMLfileName = QtWidgets.QLabel()
+		#self.statusBarArdXMLfileName.setStyleSheet("QLabel { border-top:2px; border-style: solid;border-color: grey; }")
+		self.statusBar.addWidget(self.statusBarArdXMLfileName,1)
+
+		#spacer = QtWidgets.QSpacerItem(20,40,QtWidgets.QSizePolicy.Minimum,QtWidgets.QSizePolicy.Expanding)
+		#self.statusBar.addWidget(spacer)
+
+		self.statusBarUDPServerStatus = QtWidgets.QLabel()
+		self.statusBarUDPServerStatus.setStyleSheet("QLabel { border-left:2px; border-style: solid;border-color: grey; }")
+		self.statusBar.addWidget(self.statusBarUDPServerStatus,1)
+
+
+		logging.debug("Running as user: "+getpass.getuser())
+		self.loadConfig()
+
+		XPUDP.pyXPUDPServer.initialiseUDPXMLConfig(UDPconfigFile)
 
 		XPUDP.pyXPUDPServer.start()
 
 		self.updatingCompPanel = True
 		self._refreshingArduinoTree = False
 
-		self.ardXMLconfig = lib.arduinoXMLconfig.arduinoConfig(ardConfigFile)
+		self.ardXMLconfig = lib.arduinoXMLconfig.arduinoConfig()
+		self.ardXMLconfig.loadConfigFile(self.ardConfigFile)
 		self.ardXMLconfig.registerArduinoAttributeChangedCallback(self.handleArduinoAttributeChange)
 
 		self.arduinoList = []
 
 		self.refreshArduinoList()
 
+
+
 		self.deleteConfirmDialog = deleteConfirmationDialog.DeleteConfirmationDialog()
+		self.unsavedChangesConfirmationDialog = unsavedChangesConfirmationDialog.unsavedChangesConfirmationDialog()
+
 		self.addArduinoDialog = pyXPaddArduinoDialog.pyXPAddArduinoDialog()
 		self.pickXPCommandDialog = pyXPpickXPCommandDialog.pyXPpickXPCommandDialog()
-		self.editXPUDPConfigDialog = pyXPUDPConfigDialog.pyXPUDPConfigDialog(XMLconfigFile)
+		self.editXPUDPConfigDialog = pyXPUDPConfigDialog.pyXPUDPConfigDialog(UDPconfigFile)
 		#switch edit form
 		self.ardSwitchEditForm = pyXPswitchEditForm.pyXPswitchEditForm(self.editPaneWidget, self.ardXMLconfig, self.actionSave)
 		self.horizontalLayoutEditPane.addWidget(self.ardSwitchEditForm)
@@ -120,6 +149,68 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 		self.actionSave.setEnabled(False)
 		self.updatingCompPanel = False
 
+	def loadConfig(self):
+		self.xmlcfgtree = ET.parse(mainConfigFile)
+		self.xmlcfgroot = self.xmlcfgtree.getroot()
+
+		ardTags = self.xmlcfgroot.findall(".//ardConfigFilePath")
+		if len(ardTags) > 0: # arduino config file tag
+			self.ardConfigFile = ardTags[0].text
+			logging.info("arduino config file located at: "+str(self.ardConfigFile))
+			self.statusBarArdXMLfileName.setText("Ard config file: "+str(self.ardConfigFile))
+
+	def openArduinoConfigFile(self):
+		proceed = True
+		if self.actionSave.isEnabled() == True: #check first if we have unsaved changes and prompt for confirmation
+			proceed = False
+			returnCode = self.unsavedChangesConfirmationDialog.exec()
+			if returnCode == 1:
+				proceed = True
+
+		if proceed == True:
+			logging.info('Open Arduino config file')
+			filename = QtWidgets.QFileDialog.getOpenFileName(self, "Open Arduino config file", '//', "XML files (*.xml)")
+			logging.info("File name: "+ str(filename))
+
+			if filename[0] is not '': # if a file has been selected
+				ardTags = self.xmlcfgroot.findall(".//ardConfigFilePath")
+				if len(ardTags) > 0: # arduino config file tag
+					ardTags[0].text = filename[0] # update it and write to config file on disk
+					self.ardConfigFile = ardTags[0].text
+					self.xmlcfgtree.write(mainConfigFile)
+
+				self.statusBarArdXMLfileName.setText("Ard config file: "+str(self.ardConfigFile))
+				self.ardXMLconfig.loadConfigFile(self.ardConfigFile)
+				self.refreshArduinoList()
+				self.refreshArduinoTree()
+
+	def createArduinoConfigFile(self):
+		proceed = True
+		if self.actionSave.isEnabled() == True: #check first if we have unsaved changes and prompt for confirmation
+			proceed = False
+			returnCode = self.unsavedChangesConfirmationDialog.exec()
+			if returnCode == 1:
+				proceed = True
+
+		if proceed == True:
+
+			logging.info('Create Arduino config file')
+			filename = QtWidgets.QFileDialog.getSaveFileName(self, "Create new Arduino config file", '//', "XML files (*.xml)")
+			logging.info("File name: "+ str(filename))
+
+			if filename[0] is not '': # if a file has been selected
+				ardTags = self.xmlcfgroot.findall(".//ardConfigFilePath")
+				if len(ardTags) > 0: # arduino config file tag
+					ardTags[0].text = filename[0] # update it and write to config file on disk
+					self.ardConfigFile = ardTags[0].text
+					self.xmlcfgtree.write(mainConfigFile)
+
+				self.statusBarArdXMLfileName.setText("Ard config file: "+str(self.ardConfigFile))
+				self.ardXMLconfig.createConfigFile(filename[0])
+				self.ardXMLconfig.loadConfigFile(self.ardConfigFile)
+				self.refreshArduinoList()
+				self.refreshArduinoTree()
+
 	def refreshArduinoList(self):
 		for arduino in self.arduinoList: # first stop all arduinos
 			arduino.quit()
@@ -138,16 +229,25 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 
 
 	def closeEvent(self, event):
-		XPUDP.pyXPUDPServer.quit()
-		for arduino in self.arduinoList:
-			arduino.quit()
+		proceed = True
+		if self.actionSave.isEnabled() == True:
+			proceed = False
+			returnCode = self.unsavedChangesConfirmationDialog.exec()
+			if returnCode == 1:
+				proceed = True
 
+		if proceed == True:
+			XPUDP.pyXPUDPServer.quit()
+			for arduino in self.arduinoList:
+				arduino.quit()
+		else:
+			event.ignore()
 
 	def ardSwitchChanged(self, pin, value):
 		logging.debug("ard switch changed callback, pin", pin)
 
 	def updateMessages(self):
-		self.statusBar().showMessage(XPUDP.pyXPUDPServer.statusMsg)
+		self.statusBarUDPServerStatus.setText(XPUDP.pyXPUDPServer.statusMsg)
 
 	def refreshArduinoTree(self):
 		self._refreshingArduinoTree = True
@@ -156,42 +256,50 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 		boldFont = QtGui.QFont()
 		boldFont.setBold(True)
 		self.arduinoTreeWidget.clear()
+		if self.ardXMLconfig.configFileLoaded == True:
+			for arduino in self.ardXMLconfig.root: # cycle through arduinos
+				#logging.debug (arduino.tag, arduino.attrib)
+				ardTreeElem = QTreeWidgetItem([ arduino.attrib['name'], arduino.attrib['serial_nr'], arduino.tag ])
+				ardTreeElem.setFont(0, boldFont)
 
-		for arduino in self.ardXMLconfig.root: # cycle through arduinos
-			#logging.debug (arduino.tag, arduino.attrib)
-			ardTreeElem = QTreeWidgetItem([ arduino.attrib['name'], arduino.attrib['serial_nr'], arduino.tag ])
-			ardTreeElem.setFont(0, boldFont)
+				if arduino.attrib['connected'] == 'Connected':
+					icon = QtGui.QIcon()
+					icon.addPixmap(QtGui.QPixmap(":/newPrefix/ardIcon2.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+					ardTreeElem.setIcon(0, icon)
+				else:
+					icon = QtGui.QIcon()
+					icon.addPixmap(QtGui.QPixmap(":/newPrefix/ardIconDisconnected.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+					ardTreeElem.setIcon(0, icon)
 
-			if arduino.attrib['connected'] == 'Connected':
-				ardTreeElem.setIcon(0, QtGui.QIcon("Resources/ardIcon2.png"))
-			else:
-				ardTreeElem.setIcon(0, QtGui.QIcon("Resources/ardIconDisconnected.png"))
+				self.arduinoTreeWidget.addTopLevelItem(ardTreeElem)
+				ardTreeElem.setExpanded(True)
 
-			self.arduinoTreeWidget.addTopLevelItem(ardTreeElem)
-			ardTreeElem.setExpanded(True)
+				for inoutputs in arduino: # cycle through input outputs
+					inoutputsTreeElem = QTreeWidgetItem([ inoutputs.attrib['description'], '', inoutputs.tag ])
+					if inoutputs.tag == "inputs":
+						icon = QtGui.QIcon()
+						icon.addPixmap(QtGui.QPixmap(":/newPrefix/inputIcon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+						inoutputsTreeElem.setIcon(0, icon)
+					if inoutputs.tag == "outputs":
+						icon = QtGui.QIcon()
+						icon.addPixmap(QtGui.QPixmap(":/newPrefix/outputIcon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+						inoutputsTreeElem.setIcon(0, icon)
 
-			for inoutputs in arduino: # cycle through input outputs
-				inoutputsTreeElem = QTreeWidgetItem([ inoutputs.attrib['description'], '', inoutputs.tag ])
-				if inoutputs.tag == "inputs":
-					inoutputsTreeElem.setIcon(0, QtGui.QIcon("Resources/inputIcon.png"))
-				if inoutputs.tag == "outputs":
-					inoutputsTreeElem.setIcon(0, QtGui.QIcon("Resources/outputIcon.png"))
+					ardTreeElem.addChild(inoutputsTreeElem)
+					inoutputsTreeElem.setExpanded(True)
 
-				ardTreeElem.addChild(inoutputsTreeElem)
-				inoutputsTreeElem.setExpanded(True)
-
-				for inputOutputTypes in inoutputs:  # iterate through input and output types
-					inputOutputTypesTreeElem = QTreeWidgetItem([ inputOutputTypes.attrib['description'], '', inputOutputTypes.tag ])
-					inoutputsTreeElem.addChild(inputOutputTypesTreeElem)
-					inputOutputTypesTreeElem.setExpanded(True)
+					for inputOutputTypes in inoutputs:  # iterate through input and output types
+						inputOutputTypesTreeElem = QTreeWidgetItem([ inputOutputTypes.attrib['description'], '', inputOutputTypes.tag ])
+						inoutputsTreeElem.addChild(inputOutputTypesTreeElem)
+						inputOutputTypesTreeElem.setExpanded(True)
 
 
-					for inputOutput in inputOutputTypes:  # iterate through input and output types
-						inputOutputTreeElem = QTreeWidgetItem([ inputOutput.attrib['name'], inputOutput.attrib['id'], inputOutput.tag ])
-						#inputOutputTreeElem.setFlags(QtCore.Qt.ItemIsEditable)
-						inputOutputTypesTreeElem.addChild(inputOutputTreeElem)
+						for inputOutput in inputOutputTypes:  # iterate through input and output types
+							inputOutputTreeElem = QTreeWidgetItem([ inputOutput.attrib['name'], inputOutput.attrib['id'], inputOutput.tag ])
+							#inputOutputTreeElem.setFlags(QtCore.Qt.ItemIsEditable)
+							inputOutputTypesTreeElem.addChild(inputOutputTreeElem)
 
-						#inputOutputTreeElem.setIcon(0, QtGui.QIcon("Resources/small_switch_on.png"))
+							#inputOutputTreeElem.setIcon(0, QtGui.QIcon("Resources/small_switch_on.png"))
 
 		self.arduinoTreeWidget.resizeColumnToContents(0)
 		self._refreshingArduinoTree = False
@@ -221,23 +329,31 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 			self.ardSerialConnStatusLabel.setStyleSheet("QLabel { background-color : green; color : white; }")
 			items = self.arduinoTreeWidget.findItems (ardID, QtCore.Qt.MatchExactly|QtCore.Qt.MatchRecursive,1)
 			if len(items)>0:
-				items[0].setIcon(0, QtGui.QIcon("Resources/ardIcon2.png"))
+				icon = QtGui.QIcon()
+				icon.addPixmap(QtGui.QPixmap(":/newPrefix/ardIcon2.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+				items[0].setIcon(0, icon)
 		else:
 			self.ardSerialConnStatusLabel.setStyleSheet("QLabel { font-weight: bold; background-color : red; color : white; }")
 			items = self.arduinoTreeWidget.findItems (ardID, QtCore.Qt.MatchExactly|QtCore.Qt.MatchRecursive,1)
 			if len(items)>0:
-				items[0].setIcon(0, QtGui.QIcon("Resources/ardIconDisconnected.png"))
+				icon = QtGui.QIcon()
+				icon.addPixmap(QtGui.QPixmap(":/newPrefix/ardIconDisconnected.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+				items[0].setIcon(0, icon)
 
 		if ardData['ard_status'] == 'Running':
 			self.ardStatusLabel.setStyleSheet("QLabel { background-color : green; color : white; }")
 			items = self.arduinoTreeWidget.findItems (ardID, QtCore.Qt.MatchExactly|QtCore.Qt.MatchRecursive,1)
 			if len(items)>0:
-				items[0].setIcon(0, QtGui.QIcon("Resources/ardIcon2.png"))
+				icon = QtGui.QIcon()
+				icon.addPixmap(QtGui.QPixmap(":/newPrefix/ardIcon2.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+				items[0].setIcon(0, icon)
 		else:
 			self.ardStatusLabel.setStyleSheet("QLabel { font-weight: bold; background-color : red; color : white; }")
 			items = self.arduinoTreeWidget.findItems (ardID, QtCore.Qt.MatchExactly|QtCore.Qt.MatchRecursive,1)
 			if len(items)>0:
-				items[0].setIcon(0, QtGui.QIcon("Resources/ardIconDisconnected.png"))
+				icon = QtGui.QIcon()
+				icon.addPixmap(QtGui.QPixmap(":/newPrefix/ardIconDisconnected.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+				items[0].setIcon(0, icon)
 
 		self.ardFirmwareVersionLabel.setText(ardData['firmware_version'])
 		self.ardStatusLabel.setText(ardData['ard_status'])
@@ -392,6 +508,8 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 		self.refreshArduinoList()
 		self.refreshArduinoTree()
 		logging.debug(returnCode)
+
+
 
 	def editXPUDPSettings(self):
 		logging.debug('edit XP UDP config')
