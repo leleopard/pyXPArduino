@@ -90,13 +90,13 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 		self._refreshingArduinoTree = False
 
 		self.ardXMLconfig = lib.arduinoXMLconfig.arduinoConfig()
+		self.ardXMLconfig.registerFileLoadedStatusCallback(self.handleArdFileLoadedStatusChanged)
 		self.ardXMLconfig.loadConfigFile(self.ardConfigFile)
 		self.ardXMLconfig.registerArduinoAttributeChangedCallback(self.handleArduinoAttributeChange)
 
 		self.arduinoList = []
 
 		self.refreshArduinoList()
-
 
 
 		self.deleteConfirmDialog = deleteConfirmationDialog.DeleteConfirmationDialog()
@@ -158,6 +158,14 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 			self.ardConfigFile = ardTags[0].text
 			logging.info("arduino config file located at: "+str(self.ardConfigFile))
 			self.statusBarArdXMLfileName.setText("Ard config file: "+str(self.ardConfigFile))
+
+	def handleArdFileLoadedStatusChanged(self, status):
+		if status == True:
+			self.actionAdd_Arduino.setEnabled(True)
+			self.arduinoTreeWidget.setEnabled(True)
+		else:
+			self.actionAdd_Arduino.setEnabled(False)
+			self.arduinoTreeWidget.setEnabled(False)
 
 	def openArduinoConfigFile(self):
 		proceed = True
@@ -316,47 +324,48 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 			self.__updateArduinoEditFormData(ardSerialNr)
 
 	def __updateArduinoEditFormData(self, ardID):
-		ardData = self.ardXMLconfig.getArduinoData(ardID)
-		logging.info("ard data:"+str(ardData))
-		self.ardSerialNrLineEdit.setText(ardData['serial_nr'])
-		self.ardBaudComboBox.setCurrentText(ardData['baud'])
-		self.ardPortLineEdit.setText(ardData['port'])
-		self.ardNameLineEdit.setText(ardData['name'])
-		self.ardDescriptionLineEdit.setText(ardData['description'])
-		self.ardManufacturerLineEdit.setText(ardData['manufacturer'])
-		self.ardSerialConnStatusLabel.setText(ardData['connected'])
-		if ardData['connected'] == 'Connected':
-			self.ardSerialConnStatusLabel.setStyleSheet("QLabel { background-color : green; color : white; }")
-			items = self.arduinoTreeWidget.findItems (ardID, QtCore.Qt.MatchExactly|QtCore.Qt.MatchRecursive,1)
-			if len(items)>0:
-				icon = QtGui.QIcon()
-				icon.addPixmap(QtGui.QPixmap(":/newPrefix/ardIcon2.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-				items[0].setIcon(0, icon)
-		else:
-			self.ardSerialConnStatusLabel.setStyleSheet("QLabel { font-weight: bold; background-color : red; color : white; }")
-			items = self.arduinoTreeWidget.findItems (ardID, QtCore.Qt.MatchExactly|QtCore.Qt.MatchRecursive,1)
-			if len(items)>0:
-				icon = QtGui.QIcon()
-				icon.addPixmap(QtGui.QPixmap(":/newPrefix/ardIconDisconnected.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-				items[0].setIcon(0, icon)
+		if len(self.arduinoTreeWidget.selectedItems()) > 0 and self.arduinoTreeWidget.selectedItems()[0].text(1) == ardID : # only update if that ard is selected in the tree
+			ardData = self.ardXMLconfig.getArduinoData(ardID)
+			logging.info("ard data:"+str(ardData))
+			self.ardSerialNrLineEdit.setText(ardData['serial_nr'])
+			self.ardBaudComboBox.setCurrentText(ardData['baud'])
+			self.ardPortLineEdit.setText(ardData['port'])
+			self.ardNameLineEdit.setText(ardData['name'])
+			self.ardDescriptionLineEdit.setText(ardData['description'])
+			self.ardManufacturerLineEdit.setText(ardData['manufacturer'])
+			self.ardSerialConnStatusLabel.setText(ardData['connected'])
+			if ardData['connected'] == 'Connected':
+				self.ardSerialConnStatusLabel.setStyleSheet("QLabel { background-color : green; color : white; }")
+				items = self.arduinoTreeWidget.findItems (ardID, QtCore.Qt.MatchExactly|QtCore.Qt.MatchRecursive,1)
+				if len(items)>0:
+					icon = QtGui.QIcon()
+					icon.addPixmap(QtGui.QPixmap(":/newPrefix/ardIcon2.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+					items[0].setIcon(0, icon)
+			else:
+				self.ardSerialConnStatusLabel.setStyleSheet("QLabel { font-weight: bold; background-color : red; color : white; }")
+				items = self.arduinoTreeWidget.findItems (ardID, QtCore.Qt.MatchExactly|QtCore.Qt.MatchRecursive,1)
+				if len(items)>0:
+					icon = QtGui.QIcon()
+					icon.addPixmap(QtGui.QPixmap(":/newPrefix/ardIconDisconnected.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+					items[0].setIcon(0, icon)
 
-		if ardData['ard_status'] == 'Running':
-			self.ardStatusLabel.setStyleSheet("QLabel { background-color : green; color : white; }")
-			items = self.arduinoTreeWidget.findItems (ardID, QtCore.Qt.MatchExactly|QtCore.Qt.MatchRecursive,1)
-			if len(items)>0:
-				icon = QtGui.QIcon()
-				icon.addPixmap(QtGui.QPixmap(":/newPrefix/ardIcon2.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-				items[0].setIcon(0, icon)
-		else:
-			self.ardStatusLabel.setStyleSheet("QLabel { font-weight: bold; background-color : red; color : white; }")
-			items = self.arduinoTreeWidget.findItems (ardID, QtCore.Qt.MatchExactly|QtCore.Qt.MatchRecursive,1)
-			if len(items)>0:
-				icon = QtGui.QIcon()
-				icon.addPixmap(QtGui.QPixmap(":/newPrefix/ardIconDisconnected.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-				items[0].setIcon(0, icon)
+			if ardData['ard_status'] == 'Running':
+				self.ardStatusLabel.setStyleSheet("QLabel { background-color : green; color : white; }")
+				items = self.arduinoTreeWidget.findItems (ardID, QtCore.Qt.MatchExactly|QtCore.Qt.MatchRecursive,1)
+				if len(items)>0:
+					icon = QtGui.QIcon()
+					icon.addPixmap(QtGui.QPixmap(":/newPrefix/ardIcon2.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+					items[0].setIcon(0, icon)
+			else:
+				self.ardStatusLabel.setStyleSheet("QLabel { font-weight: bold; background-color : red; color : white; }")
+				items = self.arduinoTreeWidget.findItems (ardID, QtCore.Qt.MatchExactly|QtCore.Qt.MatchRecursive,1)
+				if len(items)>0:
+					icon = QtGui.QIcon()
+					icon.addPixmap(QtGui.QPixmap(":/newPrefix/ardIconDisconnected.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+					items[0].setIcon(0, icon)
 
-		self.ardFirmwareVersionLabel.setText(ardData['firmware_version'])
-		self.ardStatusLabel.setText(ardData['ard_status'])
+			self.ardFirmwareVersionLabel.setText(ardData['firmware_version'])
+			self.ardStatusLabel.setText(ardData['ard_status'])
 
 	def ardTreeSelectionChanged(self):
 		self.updatingCompPanel = True
@@ -401,8 +410,9 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 	## Saves the changes made in the Arduino Edit screen - called when user finishes editing the name.
 	#
 	def ardEditingFinished(self):
-		logging.debug('ardEditingFinished, ardBaudComboBox: '+self.ardBaudComboBox.currentText())
-		if self.updatingCompPanel == False and self.refreshArduinoTree == False:
+		logging.info('ardEditingFinished, ardBaudComboBox: '+self.ardBaudComboBox.currentText())
+		if self.updatingCompPanel == False and self._refreshingArduinoTree == False:
+			logging.info("updating data")
 			ardData = {'port': 			self.ardPortLineEdit.text(),
 						'baud':			self.ardBaudComboBox.currentText(),
 						'name': 		self.ardNameLineEdit.text(),

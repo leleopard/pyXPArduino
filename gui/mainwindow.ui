@@ -547,7 +547,9 @@ font-size: 150%;
     </property>
     <addaction name="actionCreate_new_Arduino_config_file"/>
     <addaction name="actionOpen_Arduino_config_file"/>
+    <addaction name="separator"/>
     <addaction name="actionSave"/>
+    <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuArduino">
@@ -555,7 +557,6 @@ font-size: 150%;
      <string>Arduino</string>
     </property>
     <addaction name="actionAdd_Arduino"/>
-    <addaction name="actionAdd_component"/>
    </widget>
    <widget class="QMenu" name="menuX_Plane">
     <property name="title">
@@ -576,9 +577,12 @@ font-size: 150%;
     <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
-    <bool>false</bool>
+    <bool>true</bool>
    </attribute>
    <addaction name="actionSave"/>
+   <addaction name="actionCreate_new_Arduino_config_file"/>
+   <addaction name="actionOpen_Arduino_config_file"/>
+   <addaction name="actionAdd_Arduino"/>
   </widget>
   <action name="actionQuit">
    <property name="icon">

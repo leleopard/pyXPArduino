@@ -2,6 +2,7 @@
 
 import xml.etree.ElementTree as ET
 import logging
+logger = logging.getLogger('arduinoXMLconfig')
 
 ARD_BAUD = ['9600', '19200', '38400', '57600', '74880', '115200', '230400', '250000']
 
@@ -30,6 +31,7 @@ class arduinoConfig():
 	def __init__(self):
 		self.componentAttributeChangedCallbacks = []
 		self.arduinoAttributeChangedCallbacks = []
+		self.fileLoadedStatusCallbacks = []
 		self.configFileLoaded = False
 
 	def loadConfigFile(self, ardXMLconfigFile):
@@ -40,9 +42,14 @@ class arduinoConfig():
 			self.configFileLoaded = True
 
 		except:
-			logging.error('Error while loading arduino config file', exc_info=True)
+			logger.error('Error while loading arduino config file', exc_info=True)
 			self.configFileLoaded = False
 
+		for callback in self.fileLoadedStatusCallbacks:
+			callback(self.configFileLoaded)
+
+	def registerFileLoadedStatusCallback(self, callback):
+		self.fileLoadedStatusCallbacks.append(callback)
 
 	def createConfigFile(self, ardXMLconfigFile):
 		config_file = open(ardXMLconfigFile, "w")
@@ -52,7 +59,7 @@ class arduinoConfig():
 
 	def addInputOutput(self, arduinoSerialNr, inputOutputType):
 		if self.configFileLoaded == True:
-			logging.debug("Add InOutput type ",inputOutputType, "to Arduino serial nr:", arduinoSerialNr)
+			logger.debug("Add InOutput type "+str(inputOutputType)+ " to Arduino serial nr: "+str(arduinoSerialNr))
 			ardTag = self.root.findall(".//arduino[@serial_nr='"+arduinoSerialNr+"']")[0]
 			inputOutputTag = ardTag.findall(".//"+inputOutputType)[0]
 			# find all existing items under this tag
@@ -75,7 +82,7 @@ class arduinoConfig():
 
 	def addArduino(self, port, name, description, serial_number, manufacturer):
 		if self.configFileLoaded == True:
-			logging.info('Adding Arduino: port: %s, name: %s, description: %s, serial nr: %s, manufacturer: %s', port, name, description, serial_number, manufacturer)
+			logger.info('Adding Arduino: port: %s, name: %s, description: %s, serial nr: %s, manufacturer: %s', port, name, description, serial_number, manufacturer)
 			ardTag = ET.SubElement(self.root, 'arduino')
 			ardTag.set('port', port)
 			ardTag.set('name', name)
@@ -105,14 +112,14 @@ class arduinoConfig():
 			servosTag = ET.SubElement(outputTag, 'servos')
 			servosTag.set('description', 'Servos')
 		else:
-			logging.warning("No config file loaded, please create config file first")
+			logger.warning("No config file loaded, please create config file first")
 
 	def removeArduino(self, arduinoSerialNr):
 		if self.configFileLoaded == True:
 			ardTag = self.root.findall(".//arduino[@serial_nr='"+arduinoSerialNr+"']")[0]
 			self.root.remove(ardTag)
 		else:
-			logging.warning("No config file loaded, please create config file first")
+			logger.warning("No config file loaded, please create config file first")
 
 
 	def getArduinoList(self):
@@ -131,26 +138,26 @@ class arduinoConfig():
 					ardList.append(ardDict)
 			return ardList
 		else:
-			logging.warning("No config file loaded, please create config file first")
+			logger.warning("No config file loaded, please create config file first")
 			return ardList
 
 	def removeInputOutput(self, arduinoSerialNr, inputOutputID):
 		if self.configFileLoaded == True:
-			logging.debug("Remove InOutput ID ",inputOutputID, "from Arduino serial nr:", arduinoSerialNr)
+			logger.debug("Remove InOutput ID ",inputOutputID, "from Arduino serial nr:", arduinoSerialNr)
 			ardTag = self.root.findall(".//arduino[@serial_nr='"+arduinoSerialNr+"']")[0]
 			inputOutputTag = ardTag.findall(".//*[@id='"+inputOutputID+"']")[0]
-			logging.debug("ID to remove found: ", inputOutputTag.attrib['id'])
+			logger.debug("ID to remove found: ", inputOutputTag.attrib['id'])
 			parent = ardTag.findall(".//*[@id='"+inputOutputID+"']/..")[0]
 			parent.remove(inputOutputTag)
 		else:
-			logging.warning("No config file loaded, please create config file first")
+			logger.warning("No config file loaded, please create config file first")
 
 
 	def saveToXMLfile(self):
 		if self.configFileLoaded == True:
 			self.tree.write(self.ardXMLconfigFile)
 		else:
-			logging.warning("No config file loaded, please create config file first")
+			logger.warning("No config file loaded, please create config file first")
 
 
 	## find actions for component by component type, pin and arduino serial number, returns a list of actions.
@@ -167,7 +174,7 @@ class arduinoConfig():
 					actions = list(compTag[0].iter('action'))
 
 					for action in actions:
-						#logging.debug('getComponentActions::action:'+str(action.text))
+						#logger.debug('getComponentActions::action:'+str(action.text))
 
 						index = '0'
 						setToValue = '0.0'
@@ -189,7 +196,7 @@ class arduinoConfig():
 											'setToValue': setToValue,
 											'continuous': continuous})
 		else:
-			logging.warning("No config file loaded, please create config file first")
+			logger.warning("No config file loaded, please create config file first")
 
 		return actionsList
 
@@ -205,7 +212,7 @@ class arduinoConfig():
 					return compTag[0].attrib[attribute]
 			return ''
 		else:
-			logging.warning("No config file loaded, please create config file first")
+			logger.warning("No config file loaded, please create config file first")
 
 		return ''
 
@@ -238,7 +245,7 @@ class arduinoConfig():
 									'stepsPerNotch': stepsPerNotch,
 									'state': compTag.attrib['state']})
 		else:
-			logging.warning("No config file loaded, please create config file first")
+			logger.warning("No config file loaded, please create config file first")
 
 		return compList
 
@@ -304,7 +311,7 @@ class arduinoConfig():
 			else:
 				return None
 		else:
-			logging.warning("No config file loaded, please create config file first")
+			logger.warning("No config file loaded, please create config file first")
 			return None
 
 
@@ -316,7 +323,7 @@ class arduinoConfig():
 
 	## register a callback function to be called when an arduino attribute has changed data
 	# @param callback 	callback function, it will be passed ardSerialNr, attribute
-	# 
+	#
 	def registerArduinoAttributeChangedCallback(self, callback):
 		self.arduinoAttributeChangedCallbacks.append(callback)
 
@@ -329,14 +336,14 @@ class arduinoConfig():
 	#
 	def updateComponentData(self, compSerialNr, componentType, compData, actions = []):
 		if self.configFileLoaded == True:
-			logging.debug('Update Component Data, type: '+componentType)
+			logger.debug('Update Component Data, type: '+componentType)
 			compTag = self.root.findall(".//"+componentType+"[@id='"+compSerialNr+"']")
 			if len(compTag) > 0: # component has been found
 				#find the switch arduino parent element
 				ardTag = self.root.findall(".//"+componentType+"[@id='"+compSerialNr+"']......")
 				ardSerialNr = ardTag[0].attrib['serial_nr']
-				#logging.debug (ardTag)
-				#logging.debug ('ARD serial nr: '+ardTag[0].attrib['serial_nr'])
+				#logger.debug (ardTag)
+				#logger.debug ('ARD serial nr: '+ardTag[0].attrib['serial_nr'])
 
 				self.updateComponentAttribute(compSerialNr, componentType,'id', compData['id'])
 				self.updateComponentAttribute(compSerialNr, componentType,'name', compData['name'])
@@ -376,7 +383,7 @@ class arduinoConfig():
 			else:
 				return -1
 		else:
-			logging.warning("No config file loaded, please create config file first")
+			logger.warning("No config file loaded, please create config file first")
 			return -1
 
 	## updates component attribute
@@ -387,7 +394,7 @@ class arduinoConfig():
 	#
 	def updateComponentAttribute(self, compSerialNr, componentType, attribute, attributeValue):
 		if self.configFileLoaded == True:
-			logging.debug('Update component attribute: '+compSerialNr+' attribute: ' +attribute+' value:'+attributeValue )
+			logger.debug('Update component attribute: '+compSerialNr+' attribute: ' +attribute+' value:'+attributeValue )
 			compTag = self.root.findall(".//"+componentType+"[@id='"+compSerialNr+"']")
 			if len(compTag) > 0: # component has been found
 				#print("component found")
@@ -404,7 +411,7 @@ class arduinoConfig():
 			else:
 				return -1
 		else:
-			logging.warning("No config file loaded, please create config file first")
+			logger.warning("No config file loaded, please create config file first")
 			return -1
 
 	## find arduino by serial number, returns a dictionary with its attribute values or None if not found.
@@ -435,11 +442,12 @@ class arduinoConfig():
 			else:
 				return None
 		else:
-			logging.warning("No config file loaded, please create config file first")
+			logger.warning("No config file loaded, please create config file first")
 			return None
 
 	def updateArduinoData(self, arduinoSerialNr, ardData):
 		if self.configFileLoaded == True:
+			logger.debug("updating arduino data for arduino serial nr %s, data: %s",arduinoSerialNr, ardData)
 			ardTags = self.root.findall(".//arduino[@serial_nr='"+arduinoSerialNr+"']")
 			if len(ardTags) > 0: # arduino has been found
 				if ardTags[0].attrib['port'] != ardData['port']:
@@ -474,7 +482,7 @@ class arduinoConfig():
 			else :
 				return -1
 		else:
-			logging.warning("No config file loaded, please create config file first")
+			logger.warning("No config file loaded, please create config file first")
 			return -1
 
 
@@ -493,5 +501,5 @@ class arduinoConfig():
 			else :
 				return -1
 		else:
-			logging.warning("No config file loaded, please create config file first")
+			logger.warning("No config file loaded, please create config file first")
 			return -1
