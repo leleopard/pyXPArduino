@@ -1,0 +1,45 @@
+{
+	"version": 1,
+	"disable_existing_loggers": false,
+	"formatters": {
+		"simple": {
+			"format": "%(asctime)s %(levelname)-8s %(name)-15s %(module)-30s %(funcName)-30s  %(message)s"
+		}
+	},
+
+	"handlers": {
+		"consoleHandler": {
+			"class": "logging.StreamHandler",
+			"level": "DEBUG",
+			"formatter": "simple",
+			"stream": "ext://sys.stdout"
+		},
+		"fileHandler": {
+			"class":"logging.FileHandler",
+			"level":"DEBUG",
+			"formatter": "simple",
+			"filename": "pyXPArduino.log",
+			"mode": "w"
+		}
+	},
+
+	"loggers": {
+		"arduinoSerial": {
+			"level": "INFO"
+		},
+		"Arduino": {
+			"level": "INFO"
+		},
+		"UDPserver": {
+			"level": "INFO"
+		},
+		"arduinoXMLconfig": {
+			"level": "INFO"
+		}
+	},
+
+	"root": {
+		"level": "INFO",
+		"handlers": ["consoleHandler", "fileHandler"]
+	}
+}

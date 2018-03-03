@@ -101,40 +101,6 @@
      </property>
     </widget>
    </item>
-   <item row="12" column="2" rowspan="2">
-    <widget class="QLabel" name="drefsHelpText">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>350</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>300</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enter series of points: [Dataref input value, output PWM value]. The output value of the PWM in between 2 points will be linearly interpolated. Note the PWM output values must be between 0 (off) and 255 (fully on)&lt;/p&gt;&lt;p&gt;For example to set the PWM output to vary linearly between 10 and 255 when the dataref value varies between 0 and 1.0, enter: &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#0000ff;&quot;&gt;[0,10], [1.0,300]&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="textFormat">
-      <enum>Qt::RichText</enum>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-     </property>
-     <property name="wordWrap">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
    <item row="14" column="2">
     <spacer name="verticalSpacer">
      <property name="orientation">
@@ -351,6 +317,40 @@ padding: 3px
     <widget class="QLabel" name="label_2">
      <property name="text">
       <string>XPlane Dataref:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="12" column="2" colspan="5">
+    <widget class="QLabel" name="drefsHelpText">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>350</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>600</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enter series of points: [Dataref input value, output PWM value]. The output value of the PWM in between 2 points will be linearly interpolated. Note the PWM output values must be between 0 (off) and 255 (fully on)&lt;/p&gt;&lt;p&gt;For example to set the PWM output to vary linearly between 10 and 255 when the dataref value varies between 0 and 1.0, enter: &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#0000ff;&quot;&gt;[0,10], [1.0,300]&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="textFormat">
+      <enum>Qt::RichText</enum>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
      </property>
     </widget>
    </item>

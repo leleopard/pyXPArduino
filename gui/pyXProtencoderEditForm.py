@@ -174,7 +174,7 @@ class pyXProtencoderEditForm(QtWidgets.QWidget, rotencoderEditForm.Ui_rotencoder
 		super().hide()
 
 	def updateStateWidget(self, componentType, componentID, ardSerialNr = None, attribute = 'state'):
-		logging.debug ('Update rot encoder widget'+componentType)
+		logging.debug ('Update rot encoder widget'+str(componentType))
 		if componentType == 'rot_encoder' and componentID == self.componentID and attribute == 'state':
 			componentData = self.ardXMLconfig.getComponentData(componentID, self.componentType)
 			state = componentData['state']
@@ -413,7 +413,7 @@ class pyXProtencoderEditForm(QtWidgets.QWidget, rotencoderEditForm.Ui_rotencoder
 	## slot intended to be called from a QTableWidget. The row and cell passed in argument will be assumed to be the XPlane command to edit
 	#
 	def editXPCommand(self, row, column):
-		logging.info("Edit XP cmd, row:", row, " column:", column)
+		logging.debug("Edit XP cmd, row:"+str(row)+ " column:"+str(column))
 		if column == 0:
 			callingQwidgetTable = self.sender()
 			item = callingQwidgetTable.item(row, column)
@@ -434,7 +434,7 @@ class pyXProtencoderEditForm(QtWidgets.QWidget, rotencoderEditForm.Ui_rotencoder
 	## slot intended to be called from a QTableWidget. The row and cell passed in argument will be assumed to be the XPlane command to edit
 	#
 	def editXPDataref(self, row, column):
-		logging.info("Edit XP dref, row:"+ str(row)+ " column:" +str(column))
+		logging.debug("Edit XP dref, row:"+ str(row)+ " column:" +str(column))
 		if column == 0: #only edit dref if first column
 			callingQwidgetTable = self.sender()
 			item = callingQwidgetTable.item(row, column)

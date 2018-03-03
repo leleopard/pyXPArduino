@@ -55,8 +55,8 @@ class ArduinoSerial(threading.Thread):
 		self.ardStateChangedCallbacks = []
 
 		self.connected = False	# are we connected (serial connection successful) to the arduino
-		logging.info("Ardserial running as user: "+getpass.getuser())
-		logger.info("Initialising serial Arduino connection on port: "+ str(PORT)+ ", BAUD: "+ str(BAUD))
+		logger.debug("Ardserial running as user: "+getpass.getuser())
+		logger.debug("Initialising serial Arduino connection on port: "+ str(PORT)+ ", BAUD: "+ str(BAUD))
 		self.serialConnection = None
 		self.PORT = PORT
 
@@ -111,7 +111,7 @@ class ArduinoSerial(threading.Thread):
 
 	def sendPinList(self, componentType, pinList):
 		if self.serialConnection != None:
-			logger.info('arduinoSerial::sending pin list to arduino' + str(pinList))
+			logger.debug('arduinoSerial::sending pin list to arduino' + str(pinList))
 			if len(pinList)>0: # only send if there are any pins!
 				command = self.COMP_PIN_CMDS[componentType]
 

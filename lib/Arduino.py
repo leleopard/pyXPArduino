@@ -49,7 +49,7 @@ class Arduino(threading.Thread):
 		logger.debug("connected_PORT = "+ str(connected_PORT))
 		if connected_PORT == None: # then the arduino is not connected, no point trying to get a serial connection going
 			self.connected = False
-			logger.error("Arduino serial "+self.ardSerialNumber+", unable to connect on port "+ardData['port'])
+			logger.error("Arduino serial nr "+self.ardSerialNumber+", unable to connect on port "+ardData['port'])
 
 		else: # the arduino is connected, we will attempt to connect on the the PORT value found as the arduino could have been reconnected to another port
 			self.serialConnection = ardSerial.ArduinoSerial(connected_PORT, ardData['baud'])
@@ -63,10 +63,10 @@ class Arduino(threading.Thread):
 
 				self.updateComponentList('*', '', self.ardSerialNumber, 'pin') # set the pins as switches on arduino
 				self.connected = True
-				logger.info("Arduino serial "+self.ardSerialNumber+" connected on port "+ardData['port'])
+				logger.info("Arduino serial nr "+str(self.ardSerialNumber)+" connected on port: "+str(connected_PORT)+", BAUD: "+ str(ardData['baud']))
 			else:
 				self.connected = False
-				logger.error("Arduino serial "+self.ardSerialNumber+", unable to connect on port "+ardData['port'])
+				logger.error("Arduino serial nr "+self.ardSerialNumber+", unable to connect on port "+str(connected_PORT)+", BAUD: "+ str(ardData['baud']))
 
 		if self.connected == True:
 			self.ardXMLconfig.updateArduinoAttribute(self.ardSerialNumber, 'connected', 'Connected')
@@ -74,7 +74,7 @@ class Arduino(threading.Thread):
 			self.ardXMLconfig.updateArduinoAttribute(self.ardSerialNumber, 'connected', 'Disconnected')
 
 	def ardStateChanged(self, ardState, arduinoFirmwareVersion):
-		logger.warning('ard state has changed: '+str(self.serialConnection.arduinoReady))
+		logger.debug('ard state has changed: '+str(self.serialConnection.arduinoReady))
 		if ardState == True:
 			self.ardXMLconfig.updateArduinoAttribute(self.ardSerialNumber, 'ard_status', 'Running')
 		else:

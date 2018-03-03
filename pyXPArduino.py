@@ -2,24 +2,24 @@
 #
 #
 #
-
-
+import json
 import logging
 import logging.config
 import os, getpass, sys
 
 if getattr(sys, 'frozen', False):
-    # we are running in a bundle
-    working_dir = sys._MEIPASS
+	# we are running in a bundle
+	working_dir = sys._MEIPASS
 else:
 	working_dir = os.getcwd()
 
-print(os.path.join(os.getcwd(),'config/logging.conf'))
-logging.config.fileConfig(os.path.join(working_dir,'config/logging.conf'))
+with open(os.path.join(working_dir,"config/logging_conf.json"), "r") as fd:
+	logging.config.dictConfig(json.load(fd))
 
 from PyQt5 import QtCore, QtGui, QtWidgets # Import the PyQt5 modules we'll need
 from PyQt5.QtWidgets import QApplication, QMainWindow,QTreeWidgetItem, QMenu
 import sys # We need sys so that we can pass argv to QApplication
+import gui.pyXPQTableLogger as pyXPQTableLogger
 
 import xml.etree.ElementTree as ET
 
@@ -46,7 +46,6 @@ import lib.Arduino as Arduino
 VERSION = "v1.1"
 mainConfigFile = os.path.join(working_dir,'config/config.xml')
 UDPconfigFile = os.path.join(working_dir,'config/UDPSettings.xml')
-#ardConfigFile = '' # os.path.join(working_dir,'config/ardConfig1.xml')
 
 class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 	def __init__(self):
@@ -55,6 +54,11 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 							# It sets up layout and widgets that are defined
 
 		#self.showMaximized()
+		self.QTableLogger = pyXPQTableLogger.pyXPQTableLogger()
+		self.QTableLogger.setupQtWidget(self.centralwidget)
+		self.gridLayout.addWidget(self.QTableLogger.widget, 1, 0, 1, 1)
+		logging.getLogger().addHandler(self.QTableLogger)
+
 
 		self.timer = QtCore.QTimer()
 		self.timer.timeout.connect(self.updateMessages)
@@ -68,19 +72,15 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 		self.setStatusBar(self.statusBar)
 
 		self.statusBarArdXMLfileName = QtWidgets.QLabel()
-		#self.statusBarArdXMLfileName.setStyleSheet("QLabel { border-top:2px; border-style: solid;border-color: grey; }")
 		self.statusBar.addWidget(self.statusBarArdXMLfileName,1)
-
-		#spacer = QtWidgets.QSpacerItem(20,40,QtWidgets.QSizePolicy.Minimum,QtWidgets.QSizePolicy.Expanding)
-		#self.statusBar.addWidget(spacer)
 
 		self.statusBarUDPServerStatus = QtWidgets.QLabel()
 		self.statusBarUDPServerStatus.setStyleSheet("QLabel { border-left:2px; border-style: solid;border-color: grey; }")
 		self.statusBar.addWidget(self.statusBarUDPServerStatus,1)
 
-
 		logging.debug("Running as user: "+getpass.getuser())
 		self.loadConfig()
+		XPrefData.loadXPReferenceFiles()
 
 		XPUDP.pyXPUDPServer.initialiseUDPXMLConfig(UDPconfigFile)
 
@@ -98,12 +98,12 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 
 		self.refreshArduinoList()
 
-
 		self.deleteConfirmDialog = deleteConfirmationDialog.DeleteConfirmationDialog()
 		self.unsavedChangesConfirmationDialog = unsavedChangesConfirmationDialog.unsavedChangesConfirmationDialog()
 
 		self.addArduinoDialog = pyXPaddArduinoDialog.pyXPAddArduinoDialog()
 		self.pickXPCommandDialog = pyXPpickXPCommandDialog.pyXPpickXPCommandDialog()
+		self.pickXPCommandDialog.refreshCommandList()
 		self.editXPUDPConfigDialog = pyXPUDPConfigDialog.pyXPUDPConfigDialog(UDPconfigFile)
 		#switch edit form
 		self.ardSwitchEditForm = pyXPswitchEditForm.pyXPswitchEditForm(self.editPaneWidget, self.ardXMLconfig, self.actionSave)
@@ -319,14 +319,14 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 			#print (items)
 
 	def handleArduinoAttributeChange(self, ardSerialNr, attribute):
-		logging.info('ard attribute changed')
+		logging.debug('ard attribute changed')
 		if self._refreshingArduinoTree == False:
 			self.__updateArduinoEditFormData(ardSerialNr)
 
 	def __updateArduinoEditFormData(self, ardID):
 		if len(self.arduinoTreeWidget.selectedItems()) > 0 and self.arduinoTreeWidget.selectedItems()[0].text(1) == ardID : # only update if that ard is selected in the tree
 			ardData = self.ardXMLconfig.getArduinoData(ardID)
-			logging.info("ard data:"+str(ardData))
+			logging.debug("ard data:"+str(ardData))
 			self.ardSerialNrLineEdit.setText(ardData['serial_nr'])
 			self.ardBaudComboBox.setCurrentText(ardData['baud'])
 			self.ardPortLineEdit.setText(ardData['port'])
@@ -410,9 +410,9 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 	## Saves the changes made in the Arduino Edit screen - called when user finishes editing the name.
 	#
 	def ardEditingFinished(self):
-		logging.info('ardEditingFinished, ardBaudComboBox: '+self.ardBaudComboBox.currentText())
+		logging.debug('ardEditingFinished, ardBaudComboBox: '+self.ardBaudComboBox.currentText())
 		if self.updatingCompPanel == False and self._refreshingArduinoTree == False:
-			logging.info("updating data")
+			logging.debug("updating data")
 			ardData = {'port': 			self.ardPortLineEdit.text(),
 						'baud':			self.ardBaudComboBox.currentText(),
 						'name': 		self.ardNameLineEdit.text(),

@@ -2,65 +2,72 @@
 import logging
 import re
 
-logging.info('Loading XPlane commands...')
+
 XP_COMMANDS = []
 XP_COMMANDS_CATEGORIES = {'All':''}
 
 XP_CMDFILE_LINES = []
 
-with open("XPRefFiles/Commands.txt") as commandsFile:
-	XP_CMDFILE_LINES = commandsFile.readlines()
-	
-
-for line in XP_CMDFILE_LINES:
-	command_chunks = line.split(None, 1)
-	command_elems = command_chunks[0].split("/")
-	cmd_category = command_elems[0]+"/"+command_elems[1]
-	if cmd_category in XP_COMMANDS_CATEGORIES:
-		pass
-	else:
-		XP_COMMANDS_CATEGORIES[cmd_category] = ''
-		
-		
-	XP_COMMANDS.append([cmd_category, command_chunks[0], command_chunks[1].rstrip()])
-
-logging.info('Loading XPlane datarefs...')
 XP_DATAREFS = []
 XP_DATAREFS_CATEGORIES = {'All':''}
 
 XP_DATAREFSFILE_LINES = []
 
-with open("XPRefFiles/DataRefs.txt") as datarefsFile:
-	XP_DATAREFSFILE_LINES = datarefsFile.readlines()
-	
+def loadXPReferenceFiles():
+	logging.info('Loading XPlane commands...')
+	with open("XPRefFiles/Commands.txt") as commandsFile:
+		XP_CMDFILE_LINES = commandsFile.readlines()
 
-for line in XP_DATAREFSFILE_LINES:
-	#command_chunks = line.split("\\t+", 3)
-	command_chunks = re.split("\t+", line)
-	
-	#logging.debug(command_chunks)
-	if len(command_chunks) >= 3: # ensure the line has at least 3 tab separator
+
+	for line in XP_CMDFILE_LINES:
+		command_chunks = line.split(None, 1)
 		command_elems = command_chunks[0].split("/")
-		if len(command_elems) >= 3: # ensure this text looks like a dataref
-			cmd_category = command_elems[0]+"/"+command_elems[1]+"/"+command_elems[2]
-			if cmd_category in XP_DATAREFS_CATEGORIES:
-				pass
-			else:
-				XP_DATAREFS_CATEGORIES[cmd_category] = ''
-			
-			description = ''
-			unit = ''
-			if len(command_chunks)>=4:
-				unit = command_chunks[3]
-				for i in range(4, len(command_chunks)):
-					description+= command_chunks[i]
-					
-			XP_DATAREFS.append([cmd_category, 
-								command_chunks[0], # dataref
-								command_chunks[1].rstrip(), # type
-								command_chunks[2].rstrip(), # writable
-								unit,
-								description.rstrip()] )
+		cmd_category = command_elems[0]+"/"+command_elems[1]
+		if cmd_category in XP_COMMANDS_CATEGORIES:
+			pass
+		else:
+			XP_COMMANDS_CATEGORIES[cmd_category] = ''
+
+
+		XP_COMMANDS.append([cmd_category, command_chunks[0], command_chunks[1].rstrip()])
+
+	logging.info('Loading XPlane datarefs...')
+
+
+	with open("XPRefFiles/DataRefs.txt") as datarefsFile:
+		XP_DATAREFSFILE_LINES = datarefsFile.readlines()
+
+
+	for line in XP_DATAREFSFILE_LINES:
+		#command_chunks = line.split("\\t+", 3)
+		command_chunks = re.split("\t+", line)
+
+		#logging.debug(command_chunks)
+		if len(command_chunks) >= 3: # ensure the line has at least 3 tab separator
+			command_elems = command_chunks[0].split("/")
+			nr_elems = len(command_elems)
+			if nr_elems >= 3: # ensure this text looks like a dataref
+				cmd_category = ''
+				for i in range(0,nr_elems-1):
+					cmd_category += command_elems[i]+"/"
+				if cmd_category in XP_DATAREFS_CATEGORIES:
+					pass
+				else:
+					XP_DATAREFS_CATEGORIES[cmd_category] = ''
+
+				description = ''
+				unit = ''
+				if len(command_chunks)>=4:
+					unit = command_chunks[3]
+					for i in range(4, len(command_chunks)):
+						description+= command_chunks[i]
+
+				XP_DATAREFS.append([cmd_category,
+									command_chunks[0], # dataref
+									command_chunks[1].rstrip(), # type
+									command_chunks[2].rstrip(), # writable
+									unit,
+									description.rstrip()] )
 
 def getXPCommandList(category, filter):
 	filter_upper = filter.upper()
@@ -74,7 +81,7 @@ def getXPCommandList(category, filter):
 	else:
 		command_list = filtered_commands
 	return command_list
-	
+
 def getXPDatarefList(category, filter):
 	if filter is None:
 		filter = ''
@@ -89,16 +96,16 @@ def getXPDatarefList(category, filter):
 	else:
 		dref_list = filtered_datarefs
 	return dref_list
-	
+
 def getXPDataref(dataref):
 	logging.debug('looking for dataref: '+str(dataref))
 	filtered_datarefs = [dref for dref in XP_DATAREFS if (dataref == dref[1]) ]
 	if len(filtered_datarefs) > 0:
 		return filtered_datarefs[0]
 	else:
-		return ['', 
+		return ['',
 				'', # dataref
 				'', # type
 				'', # writable
 				'',
-				''] 
+				'']

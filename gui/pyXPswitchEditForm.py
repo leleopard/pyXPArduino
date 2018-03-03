@@ -333,11 +333,9 @@ class pyXPswitchEditForm(QtWidgets.QWidget, switchEditForm.Ui_switchEditForm):
 			self.actionSave.setEnabled(True)
 
 	def updatePin(self):
-		print("switch pin updated")
 		self.pinUpdated.emit(self.IDlineEdit.text())
 
 	def addSwitchOnCommand(self):
-		print("ADD SW ON COMMAND")
 		self.SWON_CMDS_TABLE.insertRow(self.SWON_CMDS_TABLE.rowCount())
 		self.SWON_CMDS_TABLE.resizeRowsToContents()
 		self.updateXMLdata()
@@ -388,7 +386,7 @@ class pyXPswitchEditForm(QtWidgets.QWidget, switchEditForm.Ui_switchEditForm):
 	## slot intended to be called from a QTableWidget. The row and cell passed in argument will be assumed to be the XPlane command to edit
 	#
 	def editXPCommand(self, row, column):
-		logging.info("Edit XP cmd, row:", row, " column:", column)
+		logging.debug("Edit XP cmd, row: %s, column: %s", row, column)
 		if column == 0:
 			callingQwidgetTable = self.sender()
 			item = callingQwidgetTable.item(row, column)
@@ -409,7 +407,7 @@ class pyXPswitchEditForm(QtWidgets.QWidget, switchEditForm.Ui_switchEditForm):
 	## slot intended to be called from a QTableWidget. The row and cell passed in argument will be assumed to be the XPlane command to edit
 	#
 	def editXPDataref(self, row, column):
-		logging.info("Edit XP dref, row:"+ str(row)+ " column:" +str(column))
+		logging.debug("Edit XP dref, row:"+ str(row)+ " column:" +str(column))
 		if column == 0: #only edit dref if first column
 			callingQwidgetTable = self.sender()
 			item = callingQwidgetTable.item(row, column)
