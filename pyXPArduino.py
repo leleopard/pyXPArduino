@@ -56,7 +56,7 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 		#self.showMaximized()
 		self.QTableLogger = pyXPQTableLogger.pyXPQTableLogger()
 		self.QTableLogger.setupQtWidget(self.centralwidget)
-		self.gridLayout.addWidget(self.QTableLogger.widget, 1, 0, 1, 1)
+		self.verticalLayout_2.addWidget(self.QTableLogger.widget)
 		logging.getLogger().addHandler(self.QTableLogger)
 
 

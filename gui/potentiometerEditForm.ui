@@ -448,6 +448,9 @@ QSlider::sub-page:horizontal{
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+        <bool>false</bool>
+       </attribute>
        <column>
         <property name="text">
          <string>Dataref</string>
@@ -518,8 +521,8 @@ QSlider::sub-page:horizontal{
    <slot>addDataref()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>98</x>
-     <y>207</y>
+     <x>122</x>
+     <y>220</y>
     </hint>
     <hint type="destinationlabel">
      <x>381</x>
@@ -534,8 +537,8 @@ QSlider::sub-page:horizontal{
    <slot>rmDataref()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>123</x>
-     <y>207</y>
+     <x>148</x>
+     <y>220</y>
     </hint>
     <hint type="destinationlabel">
      <x>456</x>
@@ -550,8 +553,8 @@ QSlider::sub-page:horizontal{
    <slot>addCommand()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>141</x>
-     <y>433</y>
+     <x>205</x>
+     <y>466</y>
     </hint>
     <hint type="destinationlabel">
      <x>119</x>
@@ -566,8 +569,8 @@ QSlider::sub-page:horizontal{
    <slot>rmCommand()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>174</x>
-     <y>437</y>
+     <x>235</x>
+     <y>466</y>
     </hint>
     <hint type="destinationlabel">
      <x>166</x>
@@ -619,7 +622,7 @@ QSlider::sub-page:horizontal{
     </hint>
     <hint type="destinationlabel">
      <x>487</x>
-     <y>-6</y>
+     <y>0</y>
     </hint>
    </hints>
   </connection>
@@ -662,8 +665,8 @@ QSlider::sub-page:horizontal{
    <slot>editXPDataref()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>666</x>
-     <y>346</y>
+     <x>617</x>
+     <y>411</y>
     </hint>
     <hint type="destinationlabel">
      <x>665</x>

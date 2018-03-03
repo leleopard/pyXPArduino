@@ -16,5 +16,6 @@
         <file>ardIconDisconnected.png</file>
         <file>inputIcon.png</file>
         <file>outputIcon.png</file>
+        <file>error_icon.png</file>
     </qresource>
 </RCC>

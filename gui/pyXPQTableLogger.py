@@ -1,5 +1,6 @@
 import logging
 from PyQt5 import QtCore, QtGui, QtWidgets
+import gui.pyXPalertDialog as pyXPalertDialog
 
 class pyXPQTableLogger(logging.Handler):
 	def __init__(self):
@@ -11,7 +12,7 @@ class pyXPQTableLogger(logging.Handler):
 
 	def setupQtWidget(self, parent):
 		self.widget = QtWidgets.QTableWidget(parent)
-		sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Fixed)
+		sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Preferred)
 		sizePolicy.setHorizontalStretch(0)
 		sizePolicy.setVerticalStretch(0)
 		self.widget.setSizePolicy(sizePolicy)
@@ -25,6 +26,8 @@ class pyXPQTableLogger(logging.Handler):
 		self.widget.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
 		self.widget.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows);
 		self.widget.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection);
+
+		self.alertDialog = pyXPalertDialog.alertDialog()
 
 	def emit(self, record):
 		#print(self)
@@ -53,6 +56,8 @@ class pyXPQTableLogger(logging.Handler):
 				color = QtGui.QColor(255,230,150)
 			if record.levelname == 'ERROR':
 				color = QtGui.QColor(255,125,125)
+				self.alertDialog.setMessage(str(record.msg))
+				self.alertDialog.exec()
 
 			if color is not None:
 				for i in range (0,4):

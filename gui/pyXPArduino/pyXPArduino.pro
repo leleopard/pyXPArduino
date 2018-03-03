@@ -44,4 +44,5 @@ FORMS += \
     ../servoEditForm.ui \
     ../digOutputEditForm.ui \
     ../rotencoderEditForm.ui \
-    ../unsavedchanges_confirmationdialog.ui
+    ../unsavedchanges_confirmationdialog.ui \
+    ../alert_dialog.ui

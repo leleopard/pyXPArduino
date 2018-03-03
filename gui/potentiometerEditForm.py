@@ -221,6 +221,7 @@ class Ui_potentiometerEditForm(object):
         self.DREFS_TABLE.setHorizontalHeaderItem(3, item)
         item = QtWidgets.QTableWidgetItem()
         self.DREFS_TABLE.setHorizontalHeaderItem(4, item)
+        self.DREFS_TABLE.horizontalHeader().setSortIndicatorShown(False)
         self.gridLayout_3.addWidget(self.DREFS_TABLE, 3, 1, 1, 1)
         self.drefsHelpText = QtWidgets.QLabel(potentiometerEditForm)
         self.drefsHelpText.setMinimumSize(QtCore.QSize(500, 0))
