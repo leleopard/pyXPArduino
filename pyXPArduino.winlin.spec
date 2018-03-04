@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['pyXPArduino.py'],
-             pathex=['/home/stephane/Desktop/pyXPArduino'],
+             pathex=['/Users/stephaneteisserenc/Desktop/pyXPArduino'],
              binaries=[],
              datas=[('initial_config/config.xml', 'config'),
                     ('initial_config/logging_conf.json', 'config'),
@@ -22,16 +22,20 @@ pyz = PYZ(a.pure, a.zipped_data,
              cipher=block_cipher)
 exe = EXE(pyz,
           a.scripts,
-          exclude_binaries=True,
+          a.binaries,
+          a.zipfiles,
+          a.datas,
           name='pyXPArduino',
           debug=False,
           strip=False,
           upx=True,
-          console=True )
-coll = COLLECT(exe,
-               a.binaries,
-               a.zipfiles,
-               a.datas,
-               strip=False,
-               upx=True,
-               name='pyXPArduino')
+          runtime_tmpdir=None,
+          console=False )
+app = BUNDLE(exe,
+             name='pyXPArduino.app',
+             icon=None,
+             bundle_identifier=None, 
+             info_plist={
+            'NSHighResolutionCapable': 'True'
+            },
+            )

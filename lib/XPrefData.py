@@ -1,7 +1,13 @@
 #!/usr/bin/env python
 import logging
 import re
+import sys, os
 
+if getattr(sys, 'frozen', False):
+	# we are running in a bundle
+	working_dir = sys._MEIPASS
+else:
+	working_dir = os.getcwd()
 
 XP_COMMANDS = []
 XP_COMMANDS_CATEGORIES = {'All':''}
@@ -15,7 +21,7 @@ XP_DATAREFSFILE_LINES = []
 
 def loadXPReferenceFiles():
 	logging.info('Loading XPlane commands...')
-	with open("XPRefFiles/Commands.txt") as commandsFile:
+	with open(os.path.join(working_dir,"XPRefFiles/Commands.txt")) as commandsFile:
 		XP_CMDFILE_LINES = commandsFile.readlines()
 
 
@@ -34,7 +40,7 @@ def loadXPReferenceFiles():
 	logging.info('Loading XPlane datarefs...')
 
 
-	with open("XPRefFiles/DataRefs.txt") as datarefsFile:
+	with open(os.path.join(working_dir,"XPRefFiles/DataRefs.txt")) as datarefsFile:
 		XP_DATAREFSFILE_LINES = datarefsFile.readlines()
 
 

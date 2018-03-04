@@ -1,5 +1,5 @@
-# To distribute, run: pyinstaller pyXPArduino.spec
-#
+# To distribute, run: pyinstaller pyXPArduino.spec --clean
+# on mac: 
 #
 #
 import json
@@ -12,6 +12,8 @@ if getattr(sys, 'frozen', False):
 	working_dir = sys._MEIPASS
 else:
 	working_dir = os.getcwd()
+
+print("Working dir:"+str(working_dir))
 
 with open(os.path.join(working_dir,"config/logging_conf.json"), "r") as fd:
 	logging.config.dictConfig(json.load(fd))
