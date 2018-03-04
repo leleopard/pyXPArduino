@@ -35,16 +35,19 @@ class arduinoConfig():
 		self.configFileLoaded = False
 
 	def loadConfigFile(self, ardXMLconfigFile):
-		try:
-			self.tree = ET.parse(ardXMLconfigFile)
-			self.root = self.tree.getroot()
-			self.ardXMLconfigFile = ardXMLconfigFile
-			self.configFileLoaded = True
+		if ardXMLconfigFile is not None:
+			try:
+				self.tree = ET.parse(ardXMLconfigFile)
+				self.root = self.tree.getroot()
+				self.ardXMLconfigFile = ardXMLconfigFile
+				self.configFileLoaded = True
 
-		except:
-			logger.error('Error while loading arduino config file', exc_info=True)
-			self.configFileLoaded = False
-
+			except:
+				logger.error('Error while loading arduino config file', exc_info=True)
+				self.configFileLoaded = False
+		else:
+			logger.error('No arduino config file specified, please create a new one or open an existing one')
+			
 		for callback in self.fileLoadedStatusCallbacks:
 			callback(self.configFileLoaded)
 
