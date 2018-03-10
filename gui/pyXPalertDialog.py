@@ -11,5 +11,7 @@ class alertDialog(QtWidgets.QDialog, alert_dialog.Ui_Dialog):
 		self.msg_label.setText(msg)
 		if msgType == 'ERROR':
 			self.icon_label.setPixmap(QtGui.QPixmap(":/newPrefix/error_icon.png"))
+			self.setWindowTitle('Error')
 		else:
 			self.icon_label.setPixmap(QtGui.QPixmap(":/newPrefix/attention.png"))
+			self.setWindowTitle('Warning')

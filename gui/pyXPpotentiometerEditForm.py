@@ -12,6 +12,38 @@ import lib.arduinoXMLconfig
 import pyxpudpserver as XPUDP
 import time
 
+class datarefCommandEditWidget(QtWidgets.QWidget):
+	def __init__(self, parent = None):
+		super(datarefCommandEditWidget, self).__init__(parent)
+		self.lineEdit = QtWidgets.QLineEdit(parent)
+		self.checkBox = QtWidgets.QCheckBox(parent)
+		self.checkBox.setChecked(False)
+
+		hbox = QtWidgets.QHBoxLayout(self)
+		# remove the inner margin
+		hbox.setContentsMargins(0, 0, 0, 0)
+		hbox.setSpacing(3)
+		hbox.addWidget(self.lineEdit)
+		hbox.addWidget(self.checkBox)
+		#layout = QtWidgets.QVBoxLayout(self)
+		# set the selection rectangle width
+		#layout.setContentsMargins(2, 2, 2, 2)
+		#layout.addWidget(hbox)
+
+class MyDelegate(QtWidgets.QItemDelegate):
+	def __init__(self, parent = None):
+		super(MyDelegate, self).__init__(parent)
+
+	def createEditor(self, parent, option, index):
+		return datarefCommandEditWidget(parent)
+
+	def setModelData(self, editor, model, index):
+		pass
+
+	def setEditorData(self, editor, model, index):
+		logger.warning("setEditorData called, editor: "+str(editor)+", index: "+str(index))
+		pass
+
 class pyXPpotentiometerEditForm(QtWidgets.QWidget, potentiometerEditForm.Ui_potentiometerEditForm):
 	nameUpdated = QtCore.pyqtSignal(str,str)
 	pinUpdated = QtCore.pyqtSignal(str)
@@ -31,8 +63,7 @@ class pyXPpotentiometerEditForm(QtWidgets.QWidget, potentiometerEditForm.Ui_pote
 		self.pickXPDatarefDialog = pyXPpickXPDatarefDialog.pyXPpickXPDatarefDialog()
 		self.PIN_comboBox.addItems(lib.arduinoXMLconfig.POT_PINS)
 
-
-
+		self.CMDS_TABLE.setItemDelegateForColumn(0, MyDelegate(self))
 
 
 	def show(self, componentID, ardSerialNr = None):
@@ -60,7 +91,9 @@ class pyXPpotentiometerEditForm(QtWidgets.QWidget, potentiometerEditForm.Ui_pote
 				index = self.CMDS_TABLE.rowCount()
 				self.CMDS_TABLE.insertRow(index)
 				item = QtWidgets.QTableWidgetItem(action['cmddref'])
-				self.CMDS_TABLE.setItem(index,0, item)
+				#self.CMDS_TABLE.setItem(index,0, item)
+				self.CMDS_TABLE.setCellWidget(index,0, datarefCommandEditWidget(self))
+
 				item = QtWidgets.QTableWidgetItem(action['state'])
 				self.CMDS_TABLE.setItem(index,1, item)
 

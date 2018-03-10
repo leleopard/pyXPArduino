@@ -56,7 +56,7 @@ class pyXPQTableLogger(logging.Handler):
 				color = QtGui.QColor(255,230,150)
 			if record.levelname == 'ERROR':
 				color = QtGui.QColor(220,94,94)
-				self.alertDialog.setMessage(str(record.msg))
+				self.alertDialog.setMessage(str(record.msg)+str(record.exc_info))
 				self.alertDialog.exec()
 
 			if color is not None:

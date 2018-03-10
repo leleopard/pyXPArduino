@@ -81,6 +81,9 @@
          <height>16777215</height>
         </size>
        </property>
+       <property name="inputMask">
+        <string>99999</string>
+       </property>
       </widget>
      </item>
      <item row="1" column="4">
@@ -90,6 +93,9 @@
          <width>75</width>
          <height>16777215</height>
         </size>
+       </property>
+       <property name="inputMask">
+        <string>99999</string>
        </property>
       </widget>
      </item>
@@ -214,6 +220,9 @@
          <width>75</width>
          <height>16777215</height>
         </size>
+       </property>
+       <property name="inputMask">
+        <string>99999</string>
        </property>
       </widget>
      </item>
