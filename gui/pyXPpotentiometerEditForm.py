@@ -16,19 +16,22 @@ class datarefCommandEditWidget(QtWidgets.QWidget):
 	def __init__(self, parent = None):
 		super(datarefCommandEditWidget, self).__init__(parent)
 		self.lineEdit = QtWidgets.QLineEdit(parent)
-		self.checkBox = QtWidgets.QCheckBox(parent)
-		self.checkBox.setChecked(False)
+		self.lineEdit.setContentsMargins(0, 0, 0, 0)
+		self.lineEdit.setFrame(False)
+		
+		self.lookupDREFCMDbutton = QtWidgets.QToolButton(parent)
+		icon = QtGui.QIcon()
+		icon.addPixmap(QtGui.QPixmap(":/newPrefix/plusIcon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+		self.lookupDREFCMDbutton.setIcon(icon)
+		self.lookupDREFCMDbutton.setAutoRaise(True)
 
 		hbox = QtWidgets.QHBoxLayout(self)
 		# remove the inner margin
 		hbox.setContentsMargins(0, 0, 0, 0)
-		hbox.setSpacing(3)
+		hbox.setSpacing(0)
 		hbox.addWidget(self.lineEdit)
-		hbox.addWidget(self.checkBox)
-		#layout = QtWidgets.QVBoxLayout(self)
-		# set the selection rectangle width
-		#layout.setContentsMargins(2, 2, 2, 2)
-		#layout.addWidget(hbox)
+		hbox.addWidget(self.lookupDREFCMDbutton)
+		
 
 class MyDelegate(QtWidgets.QItemDelegate):
 	def __init__(self, parent = None):
@@ -63,7 +66,7 @@ class pyXPpotentiometerEditForm(QtWidgets.QWidget, potentiometerEditForm.Ui_pote
 		self.pickXPDatarefDialog = pyXPpickXPDatarefDialog.pyXPpickXPDatarefDialog()
 		self.PIN_comboBox.addItems(lib.arduinoXMLconfig.POT_PINS)
 
-		self.CMDS_TABLE.setItemDelegateForColumn(0, MyDelegate(self))
+		#self.CMDS_TABLE.setItemDelegateForColumn(0, MyDelegate(self))
 
 
 	def show(self, componentID, ardSerialNr = None):
@@ -92,7 +95,11 @@ class pyXPpotentiometerEditForm(QtWidgets.QWidget, potentiometerEditForm.Ui_pote
 				self.CMDS_TABLE.insertRow(index)
 				item = QtWidgets.QTableWidgetItem(action['cmddref'])
 				#self.CMDS_TABLE.setItem(index,0, item)
-				self.CMDS_TABLE.setCellWidget(index,0, datarefCommandEditWidget(self))
+				editWidget = datarefCommandEditWidget(self)
+				editWidget.lineEdit.setText(action['cmddref'])
+				editWidget.lineEdit.editingFinished.connect(self.updateXMLdata)
+				editWidget.lookupDREFCMDbutton.clicked.connect(self.editXPCommand)
+				self.CMDS_TABLE.setCellWidget(index,0, editWidget)
 
 				item = QtWidgets.QTableWidgetItem(action['state'])
 				self.CMDS_TABLE.setItem(index,1, item)
@@ -188,11 +195,11 @@ class pyXPpotentiometerEditForm(QtWidgets.QWidget, potentiometerEditForm.Ui_pote
 			actions = []
 			index = 0
 			for i in range(0, self.CMDS_TABLE.rowCount()):
-				item = self.CMDS_TABLE.item(i,0)
+				item = self.CMDS_TABLE.cellWidget(i,0)
 				actioncmddref = ''
 				if item != None:
-					actioncmddref = self.CMDS_TABLE.item(i,0).text()
-
+					actioncmddref = self.CMDS_TABLE.cellWidget(i,0).lineEdit.text()
+					logging.warning("actioncmddref: "+str(actioncmddref))
 				item = self.CMDS_TABLE.item(i,1)
 				state = ''
 				if item != None:
@@ -202,6 +209,7 @@ class pyXPpotentiometerEditForm(QtWidgets.QWidget, potentiometerEditForm.Ui_pote
 							  'action_type':'cmd',
 							  'cmddref':actioncmddref})
 				index = i
+				logging.warning("actions: "+str(actions))
 
 			for i in range(0, self.DREFS_TABLE.rowCount()):
 				item = self.DREFS_TABLE.item(i,0)
@@ -241,7 +249,14 @@ class pyXPpotentiometerEditForm(QtWidgets.QWidget, potentiometerEditForm.Ui_pote
 
 	def addCommand(self):
 		logging.debug("ADD SW ON COMMAND")
-		self.CMDS_TABLE.insertRow(self.CMDS_TABLE.rowCount())
+		index = self.CMDS_TABLE.rowCount()
+		self.CMDS_TABLE.insertRow(index)
+		editWidget = datarefCommandEditWidget(self)
+		editWidget.lineEdit.setText('')
+		editWidget.lineEdit.editingFinished.connect(self.updateXMLdata)
+		editWidget.lookupDREFCMDbutton.clicked.connect(self.editXPCommand)
+		self.CMDS_TABLE.setCellWidget(index,0, editWidget)
+
 		self.CMDS_TABLE.resizeRowsToContents()
 		self.updateXMLdata()
 		self.actionSave.setEnabled(True)
