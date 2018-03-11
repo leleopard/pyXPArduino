@@ -1,5 +1,5 @@
 # To distribute, run: pyinstaller pyXPArduino.spec --clean
-# on mac: 
+# on mac:
 #
 #
 import json
@@ -80,6 +80,7 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
 		self.statusBarUDPServerStatus.setStyleSheet("QLabel { border-left:2px; border-style: solid;border-color: grey; }")
 		self.statusBar.addWidget(self.statusBarUDPServerStatus,1)
 
+	def initialise(self):
 		logging.debug("Running as user: "+getpass.getuser())
 		self.loadConfig()
 		XPrefData.loadXPReferenceFiles()
@@ -537,6 +538,7 @@ def main():
 	app = QApplication(sys.argv)  # A new instance of QApplication
 	form = pyXPArduino()
 	form.show()                         # Show the form
+	form.initialise()
 	app.exec_()                         # and execute the app
 
 
