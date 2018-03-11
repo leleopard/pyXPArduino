@@ -45,7 +45,7 @@ import pyxpudpserver as XPUDP
 import lib.arduinoSerial as ardSerial
 import lib.Arduino as Arduino
 
-VERSION = "v1.1"
+VERSION = "v1.2"
 mainConfigFile = os.path.join(working_dir,'config/config.xml')
 UDPconfigFile = os.path.join(working_dir,'config/UDPSettings.xml')
 
