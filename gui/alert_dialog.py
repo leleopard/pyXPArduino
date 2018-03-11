@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(400, 108)
+        Dialog.resize(458, 128)
         self.verticalLayout = QtWidgets.QVBoxLayout(Dialog)
         self.verticalLayout.setObjectName("verticalLayout")
         self.horizontalLayout = QtWidgets.QHBoxLayout()
@@ -31,6 +31,14 @@ class Ui_Dialog(object):
         self.msg_label.setObjectName("msg_label")
         self.horizontalLayout.addWidget(self.msg_label)
         self.verticalLayout.addLayout(self.horizontalLayout)
+        self.exception_label = QtWidgets.QLabel(Dialog)
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        self.exception_label.setFont(font)
+        self.exception_label.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
+        self.exception_label.setWordWrap(True)
+        self.exception_label.setObjectName("exception_label")
+        self.verticalLayout.addWidget(self.exception_label)
         self.buttonBox = QtWidgets.QDialogButtonBox(Dialog)
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
         self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Close)
@@ -46,5 +54,6 @@ class Ui_Dialog(object):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
         self.msg_label.setText(_translate("Dialog", "TextLabel"))
+        self.exception_label.setText(_translate("Dialog", "TextLabel"))
 
 import resources_rc

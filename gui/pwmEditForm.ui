@@ -143,20 +143,30 @@
    </item>
    <item row="6" column="5">
     <widget class="QPushButton" name="pushButton">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="minimumSize">
       <size>
-       <width>25</width>
+       <width>20</width>
        <height>20</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>50</width>
+       <width>20</width>
        <height>16777215</height>
       </size>
      </property>
      <property name="text">
-      <string>Pick ...</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="resources.qrc">
+       <normaloff>:/newPrefix/find.png</normaloff>:/newPrefix/find.png</iconset>
      </property>
     </widget>
    </item>
@@ -356,7 +366,9 @@ padding: 3px
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>nameLineEdit</sender>

@@ -50,7 +50,7 @@
         </sizepolicy>
        </property>
        <property name="toolTip">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enter intervals where the command should be sent. &lt;/p&gt;&lt;p&gt;For example to send the command if the pot value is between 0 and 200 or between 600 and 800, enter: &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#0000ff;&quot;&gt;(0,200), (600,800)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <string/>
        </property>
        <property name="toolTipDuration">
         <number>3</number>
@@ -126,34 +126,6 @@
      </item>
      <item row="3" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout_7"/>
-     </item>
-     <item row="6" column="1">
-      <widget class="QLabel" name="label">
-       <property name="minimumSize">
-        <size>
-         <width>500</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>300</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enter intervals where the command should be sent. &lt;/p&gt;&lt;p&gt;For example to send the command if the pot value is between 0 and 200 or between 600 and 800, enter: &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#0000ff;&quot;&gt;[0,200], [600,800]&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-       <property name="textFormat">
-        <enum>Qt::RichText</enum>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-       </property>
-       <property name="wordWrap">
-        <bool>true</bool>
-       </property>
-      </widget>
      </item>
     </layout>
    </item>
@@ -382,6 +354,47 @@ QSlider::sub-page:horizontal{
    </item>
    <item row="8" column="0" colspan="6">
     <layout class="QGridLayout" name="gridLayout_3">
+     <item row="2" column="3">
+      <layout class="QHBoxLayout" name="horizontalLayout_5"/>
+     </item>
+     <item row="3" column="1">
+      <widget class="QTableWidget" name="DREFS_TABLE">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+        <bool>false</bool>
+       </attribute>
+       <column>
+        <property name="text">
+         <string>Dataref</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Index</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Set to Value</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Type</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Unit</string>
+        </property>
+       </column>
+      </widget>
+     </item>
      <item row="2" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout_4">
        <property name="spacing">
@@ -437,75 +450,6 @@ QSlider::sub-page:horizontal{
        </item>
       </layout>
      </item>
-     <item row="2" column="4">
-      <layout class="QHBoxLayout" name="horizontalLayout_5"/>
-     </item>
-     <item row="3" column="1">
-      <widget class="QTableWidget" name="DREFS_TABLE">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
-        <bool>false</bool>
-       </attribute>
-       <column>
-        <property name="text">
-         <string>Dataref</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Index</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Set to Value</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Type</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Unit</string>
-        </property>
-       </column>
-      </widget>
-     </item>
-     <item row="3" column="3" colspan="2">
-      <widget class="QLabel" name="drefsHelpText">
-       <property name="minimumSize">
-        <size>
-         <width>500</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>300</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enter series of points [pot input value, output dataref value]. The output value of the dataref in between 2 points will be linearly interpolated. &lt;/p&gt;&lt;p&gt;Note that the potentiometer value varies between 0 and 1023 (this is the raw output reading from the ADC of the arduino)&lt;/p&gt;&lt;p&gt;For example to set the dataref to vary linearly between 10 and 300 when the potentiometer value varies between 0 and 1023, enter: &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#0000ff;&quot;&gt;[0,10], [1023,300]&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-       <property name="textFormat">
-        <enum>Qt::RichText</enum>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-       </property>
-       <property name="wordWrap">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
     </layout>
    </item>
   </layout>
@@ -554,7 +498,7 @@ QSlider::sub-page:horizontal{
    <hints>
     <hint type="sourcelabel">
      <x>205</x>
-     <y>466</y>
+     <y>460</y>
     </hint>
     <hint type="destinationlabel">
      <x>119</x>
@@ -570,27 +514,11 @@ QSlider::sub-page:horizontal{
    <hints>
     <hint type="sourcelabel">
      <x>235</x>
-     <y>466</y>
+     <y>460</y>
     </hint>
     <hint type="destinationlabel">
      <x>166</x>
      <y>0</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>CMDS_TABLE</sender>
-   <signal>cellDoubleClicked(int,int)</signal>
-   <receiver>potentiometerEditForm</receiver>
-   <slot>editXPCommand()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>240</x>
-     <y>497</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>238</x>
-     <y>5</y>
     </hint>
    </hints>
   </connection>
@@ -655,22 +583,6 @@ QSlider::sub-page:horizontal{
     <hint type="destinationlabel">
      <x>344</x>
      <y>163</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>DREFS_TABLE</sender>
-   <signal>cellDoubleClicked(int,int)</signal>
-   <receiver>potentiometerEditForm</receiver>
-   <slot>editXPDataref()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>617</x>
-     <y>411</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>665</x>
-     <y>99</y>
     </hint>
    </hints>
   </connection>

@@ -83,8 +83,8 @@ class pyXPUDPConfigDialog(QtWidgets.QDialog, xpudpconfigdialog.Ui_Dialog):
 					item = QtWidgets.QTableWidgetItem(port)
 					self.FWDIPs_TABLE.setItem(index,1, item)
 
-			self.FWDIPs_TABLE.setColumnWidth(0,350)
-			self.FWDIPs_TABLE.setColumnWidth(1,300)
+			self.FWDIPs_TABLE.setColumnWidth(0,200)
+			self.FWDIPs_TABLE.setColumnWidth(1,150)
 			self.FWDIPs_TABLE.resizeRowsToContents()
 
 		except:

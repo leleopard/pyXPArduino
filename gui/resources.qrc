@@ -17,5 +17,7 @@
         <file>inputIcon.png</file>
         <file>outputIcon.png</file>
         <file>error_icon.png</file>
+        <file>find.png</file>
+        <file>info.png</file>
     </qresource>
 </RCC>
