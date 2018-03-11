@@ -330,7 +330,32 @@ class arduinoConfig():
 	def registerArduinoAttributeChangedCallback(self, callback):
 		self.arduinoAttributeChangedCallbacks.append(callback)
 
+	## update actions for component by component type, pin and arduino serial number.
+	# @param actionsList list of actions in form [{'state': action.attrib['state'],
+	#									'action_type': action.attrib['action_type'],
+	#									'cmddref': action.text}]
+	def updateComponentActions(self, arduinoSerialNr, componentType, pin, actionsList):
+		ardTags = self.root.findall(".//arduino[@serial_nr='"+arduinoSerialNr+"']")
+		if len(ardTags) > 0: # arduino has been found
+			compTag = ardTags[0].findall(".//"+componentType+"[@pin='"+str(pin)+"']")
+			if len(compTag) > 0: # switch has been found
 
+				for action in list(compTag[0]): # first remove all actions
+					compTag[0].remove(action)
+
+				for action in actionsList:
+					actionTag = ET.SubElement(compTag[0], 'action')
+					actionTag.set('state', action['state'])
+					actionTag.set('action_type', action['action_type'])
+					try:
+						actionTag.set('index', action['index'])
+						actionTag.set('setToValue', action['setToValue'])
+					except:
+						pass
+					actionTag.text = action['cmddref']
+
+
+	
 	## updates component data - id, name, arduino pin, and replace actions with those passed in parameter
 	# @param compSerialNr  the id of the component to update
 	# @param componentType the type of component: 'switch', 'potentiometer', 'rot_encoder', 'led', 'pwm'
