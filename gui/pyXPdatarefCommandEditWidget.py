@@ -3,10 +3,16 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 class datarefCommandEditWidget(QtWidgets.QWidget):
 	def __init__(self, parent = None):
+		self.parentTable = parent
 		super(datarefCommandEditWidget, self).__init__(parent)
-		self.lineEdit = QtWidgets.QLineEdit(parent)
+
+		self.lineEdit = QtWidgets.QLineEdit(self)
 		self.lineEdit.setContentsMargins(0, 0, 0, 0)
 		self.lineEdit.setFrame(False)
+		sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.MinimumExpanding)
+		sizePolicy.setHorizontalStretch(0)
+		sizePolicy.setVerticalStretch(0)
+		self.lineEdit.setSizePolicy(sizePolicy)
 
 		self.lookupDREFCMDbutton = QtWidgets.QToolButton(parent)
 		icon = QtGui.QIcon()

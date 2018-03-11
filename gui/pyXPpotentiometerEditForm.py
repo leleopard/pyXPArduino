@@ -32,8 +32,7 @@ class pyXPpotentiometerEditForm(QtWidgets.QWidget, potentiometerEditForm.Ui_pote
 		self.pickXPCommandDialog = pyXPpickXPCommandDialog.pyXPpickXPCommandDialog()
 		self.pickXPDatarefDialog = pyXPpickXPDatarefDialog.pyXPpickXPDatarefDialog()
 		self.PIN_comboBox.addItems(lib.arduinoXMLconfig.POT_PINS)
-
-		#self.CMDS_TABLE.setItemDelegateForColumn(0, MyDelegate(self))
+		self.DREFCMD_COLSIZE = 300
 
 
 	def show(self, componentID, ardSerialNr = None):
@@ -51,7 +50,7 @@ class pyXPpotentiometerEditForm(QtWidgets.QWidget, potentiometerEditForm.Ui_pote
 		try:
 			self.valueSlider.setValue(int(state))
 		except:
-			logging.warning('could not convert state to int, state value: '+ state)
+			logging.debug('could not convert state to int, state value: '+ state)
 
 		self.CMDS_TABLE.setRowCount(0)
 
@@ -93,18 +92,13 @@ class pyXPpotentiometerEditForm(QtWidgets.QWidget, potentiometerEditForm.Ui_pote
 					item = QtWidgets.QTableWidgetItem(drefList[0][4]) # unit
 					self.DREFS_TABLE.setItem(index, 4, item)
 
-
-		self.CMDS_TABLE.setColumnWidth(0,350)
-		self.CMDS_TABLE.setColumnWidth(1,300)
 		self.CMDS_TABLE.resizeRowsToContents()
+		self.CMDS_TABLE.resizeColumnsToContents()
+		self.CMDS_TABLE.setColumnWidth(0,self.DREFCMD_COLSIZE)
 
-		self.DREFS_TABLE.setColumnWidth(0,350)
-		self.DREFS_TABLE.setColumnWidth(1,50)
-		self.DREFS_TABLE.setColumnWidth(2,300)
-		self.DREFS_TABLE.setColumnWidth(3,60)
-		self.DREFS_TABLE.setColumnWidth(4,150)
-
+		self.DREFS_TABLE.resizeColumnsToContents()
 		self.DREFS_TABLE.resizeRowsToContents()
+		self.DREFS_TABLE.setColumnWidth(0,self.DREFCMD_COLSIZE)
 
 		self.repopulating = False
 		super().show()
@@ -126,7 +120,7 @@ class pyXPpotentiometerEditForm(QtWidgets.QWidget, potentiometerEditForm.Ui_pote
 				try:
 					self.valueSlider.setValue(int(state))
 				except:
-					logging.warning('could not convert state to int, state value: '+ state)
+					logging.debug('could not convert state to int, state value: '+ state)
 
 	def activateSave(self):
 		if self.repopulating == False:
@@ -231,6 +225,9 @@ class pyXPpotentiometerEditForm(QtWidgets.QWidget, potentiometerEditForm.Ui_pote
 		item.setToolTip('<html><head/><body><p>Enter intervals where the command should be sent. </p><p>For example to send the command if the pot value is between 0 and 200 or between 600 and 800, enter: </p><p><span style=" color:#0000ff;">[0,200], [600,800]</span></p></body></html>')
 		self.CMDS_TABLE.setItem(index,1, item)
 		self.CMDS_TABLE.resizeRowsToContents()
+		self.CMDS_TABLE.resizeColumnsToContents()
+		self.CMDS_TABLE.setColumnWidth(0,self.DREFCMD_COLSIZE)
+
 		self.updateXMLdata()
 		self.actionSave.setEnabled(True)
 
@@ -256,6 +253,9 @@ class pyXPpotentiometerEditForm(QtWidgets.QWidget, potentiometerEditForm.Ui_pote
 		self.DREFS_TABLE.setItem(index,2, item)
 
 		self.DREFS_TABLE.resizeRowsToContents()
+		self.DREFS_TABLE.resizeColumnsToContents()
+		self.DREFS_TABLE.setColumnWidth(0,self.DREFCMD_COLSIZE)
+
 		self.updateXMLdata()
 		self.actionSave.setEnabled(True)
 
@@ -265,7 +265,7 @@ class pyXPpotentiometerEditForm(QtWidgets.QWidget, potentiometerEditForm.Ui_pote
 		self.updateXMLdata()
 		self.actionSave.setEnabled(True)
 
-	## slot intended to be called from a QTableWidget. The row and cell passed in argument will be assumed to be the XPlane command to edit
+	##
 	#
 	def editXPCommand(self):
 		callingQwidgetButton = self.sender()
@@ -281,7 +281,7 @@ class pyXPpotentiometerEditForm(QtWidgets.QWidget, potentiometerEditForm.Ui_pote
 			self.updateXMLdata()
 			self.actionSave.setEnabled(True)
 
-	## slot intended to be called from a QTableWidget. The row and cell passed in argument will be assumed to be the XPlane command to edit
+	##
 	#
 	def editXPDataref(self):
 		callingQwidgetButton = self.sender()
@@ -289,7 +289,7 @@ class pyXPpotentiometerEditForm(QtWidgets.QWidget, potentiometerEditForm.Ui_pote
 		parentitem = callingQwidgetButton.parent()
 		index = self.DREFS_TABLE.indexAt(parentitem.pos())
 		row = index.row()
-		logging.warning("edit XP dataref row: "+str(row))
+		logging.debug("edit XP dataref row: "+str(row))
 		text = parentitem.lineEdit.text()
 
 		self.pickXPDatarefDialog.datarefLineEdit.setText(text)
@@ -315,6 +315,9 @@ class pyXPpotentiometerEditForm(QtWidgets.QWidget, potentiometerEditForm.Ui_pote
 
 				item = QtWidgets.QTableWidgetItem(drefList[0][4]) # unit
 				self.DREFS_TABLE.setItem(row, 4, item)
+
+			self.DREFS_TABLE.resizeColumnsToContents()
+			self.DREFS_TABLE.setColumnWidth(0,self.DREFCMD_COLSIZE)
 
 			self.updateXMLdata()
 			self.actionSave.setEnabled(True)

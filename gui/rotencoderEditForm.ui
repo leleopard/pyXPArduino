@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>832</width>
+    <width>900</width>
     <height>674</height>
    </rect>
   </property>
@@ -23,7 +23,121 @@
    <property name="sizeConstraint">
     <enum>QLayout::SetDefaultConstraint</enum>
    </property>
-   <item row="0" column="0" colspan="5">
+   <item row="9" column="0">
+    <widget class="QLabel" name="label_5">
+     <property name="maximumSize">
+      <size>
+       <width>110</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Multiplier</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="9">
+    <widget class="QToolButton" name="switchStateButton">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border: 0px;</string>
+     </property>
+     <property name="text">
+      <string>...</string>
+     </property>
+     <property name="icon">
+      <iconset resource="resources.qrc">
+       <normaloff>:/newPrefix/switch_off.png</normaloff>
+       <normalon>:/newPrefix/switch_on.png</normalon>
+       <disabledoff>:/newPrefix/switch_off.png</disabledoff>
+       <disabledon>:/newPrefix/switch_on.png</disabledon>
+       <activeoff>:/newPrefix/switch_off.png</activeoff>
+       <activeon>:/newPrefix/switch_on.png</activeon>
+       <selectedoff>:/newPrefix/switch_off.png</selectedoff>
+       <selectedon>:/newPrefix/switch_on.png</selectedon>:/newPrefix/switch_off.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>66</width>
+       <height>26</height>
+      </size>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="autoRaise">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0">
+    <widget class="QLabel" name="label">
+     <property name="maximumSize">
+      <size>
+       <width>110</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Arduino pin B:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="7">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Steps per notch: </string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="7">
+    <widget class="QLabel" name="label_19">
+     <property name="maximumSize">
+      <size>
+       <width>110</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>ID</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="9">
+    <widget class="QLineEdit" name="IDlineEdit">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>250</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>350</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="9">
+    <widget class="QCheckBox" name="acceleration_checkBox">
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="11">
     <widget class="QLabel" name="label_8">
      <property name="font">
       <font>
@@ -65,7 +179,7 @@ padding: 3px
      </property>
     </widget>
    </item>
-   <item row="12" column="0">
+   <item row="14" column="0">
     <widget class="QLabel" name="label_15">
      <property name="font">
       <font>
@@ -79,86 +193,7 @@ padding: 3px
      </property>
     </widget>
    </item>
-   <item row="4" column="0">
-    <widget class="QLabel" name="label_19">
-     <property name="maximumSize">
-      <size>
-       <width>110</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>ID</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="label_17">
-     <property name="maximumSize">
-      <size>
-       <width>110</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>State</string>
-     </property>
-    </widget>
-   </item>
-   <item row="9" column="0">
-    <spacer name="verticalSpacer_2">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Fixed</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>10</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="5" column="0">
-    <widget class="QLabel" name="label_18">
-     <property name="maximumSize">
-      <size>
-       <width>110</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>Arduino pin A:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="1">
-    <widget class="QComboBox" name="PINA_comboBox">
-     <property name="maximumSize">
-      <size>
-       <width>50</width>
-       <height>16777215</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="10" column="0">
-    <widget class="QLabel" name="label_9">
-     <property name="font">
-      <font>
-       <pointsize>11</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>Rotary encoder UP actions:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="15" column="0">
+   <item row="17" column="0">
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -171,37 +206,18 @@ padding: 3px
      </property>
     </spacer>
    </item>
-   <item row="11" column="0" colspan="5">
+   <item row="13" column="0" colspan="11">
     <layout class="QGridLayout" name="gridLayout_3">
-     <item row="4" column="1">
-      <widget class="QTableWidget" name="UP_CMDS_TABLE">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>75</height>
-        </size>
-       </property>
-       <column>
-        <property name="text">
-         <string>Command</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Send continuously</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Nr times send per step</string>
-        </property>
-       </column>
-      </widget>
-     </item>
      <item row="4" column="4">
       <widget class="QTableWidget" name="UP_DREFS_TABLE">
        <property name="enabled">
         <bool>false</bool>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
        </property>
        <column>
         <property name="text">
@@ -362,6 +378,9 @@ padding: 3px
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Maximum</enum>
+         </property>
          <property name="sizeHint" stdset="0">
           <size>
            <width>40</width>
@@ -372,9 +391,34 @@ padding: 3px
        </item>
       </layout>
      </item>
+     <item row="4" column="1">
+      <widget class="QTableWidget" name="UP_CMDS_TABLE">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>75</height>
+        </size>
+       </property>
+       <column>
+        <property name="text">
+         <string>Command</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Send continuously</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Nr times send per step</string>
+        </property>
+       </column>
+      </widget>
+     </item>
     </layout>
    </item>
-   <item row="13" column="0" colspan="5">
+   <item row="15" column="0" colspan="11">
     <layout class="QGridLayout" name="gridLayout_4">
      <item row="6" column="0">
       <widget class="QTableWidget" name="DOWN_CMDS_TABLE">
@@ -399,6 +443,12 @@ padding: 3px
       <widget class="QTableWidget" name="DOWN_DREFS_TABLE">
        <property name="enabled">
         <bool>false</bool>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
        </property>
        <column>
         <property name="text">
@@ -553,6 +603,9 @@ padding: 3px
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Maximum</enum>
+         </property>
          <property name="sizeHint" stdset="0">
           <size>
            <width>40</width>
@@ -565,34 +618,8 @@ padding: 3px
      </item>
     </layout>
    </item>
-   <item row="7" column="1">
-    <widget class="QComboBox" name="PINB_comboBox">
-     <property name="maximumSize">
-      <size>
-       <width>50</width>
-       <height>16777215</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="1" colspan="3">
-    <widget class="QLineEdit" name="nameLineEdit">
-     <property name="minimumSize">
-      <size>
-       <width>250</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>350</width>
-       <height>16777215</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="0">
-    <widget class="QLabel" name="label">
+   <item row="5" column="0">
+    <widget class="QLabel" name="label_18">
      <property name="maximumSize">
       <size>
        <width>110</width>
@@ -600,96 +627,11 @@ padding: 3px
       </size>
      </property>
      <property name="text">
-      <string>Arduino pin B:</string>
+      <string>Arduino pin A:</string>
      </property>
     </widget>
    </item>
-   <item row="1" column="1">
-    <widget class="QToolButton" name="switchStateButton">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">border: 0px;</string>
-     </property>
-     <property name="text">
-      <string>...</string>
-     </property>
-     <property name="icon">
-      <iconset resource="resources.qrc">
-       <normaloff>:/newPrefix/switch_off.png</normaloff>
-       <normalon>:/newPrefix/switch_on.png</normalon>
-       <disabledoff>:/newPrefix/switch_off.png</disabledoff>
-       <disabledon>:/newPrefix/switch_on.png</disabledon>
-       <activeoff>:/newPrefix/switch_off.png</activeoff>
-       <activeon>:/newPrefix/switch_on.png</activeon>
-       <selectedoff>:/newPrefix/switch_off.png</selectedoff>
-       <selectedon>:/newPrefix/switch_on.png</selectedon>:/newPrefix/switch_off.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>66</width>
-       <height>26</height>
-      </size>
-     </property>
-     <property name="checkable">
-      <bool>true</bool>
-     </property>
-     <property name="autoRaise">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="1" colspan="3">
-    <widget class="QLineEdit" name="IDlineEdit">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>250</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>350</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="readOnly">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="3">
-    <widget class="QComboBox" name="steps_comboBox">
-     <property name="maximumSize">
-      <size>
-       <width>50</width>
-       <height>16777215</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="2">
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>Steps per notch: </string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="3">
-    <widget class="QCheckBox" name="acceleration_checkBox">
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="2">
+   <item row="9" column="7">
     <widget class="QLabel" name="label_4">
      <property name="text">
       <string>Acceleration</string>
@@ -699,8 +641,18 @@ padding: 3px
      </property>
     </widget>
    </item>
-   <item row="8" column="0">
-    <widget class="QLabel" name="label_5">
+   <item row="6" column="9">
+    <widget class="QComboBox" name="steps_comboBox">
+     <property name="maximumSize">
+      <size>
+       <width>50</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="7">
+    <widget class="QLabel" name="label_17">
      <property name="maximumSize">
       <size>
        <width>110</width>
@@ -708,11 +660,25 @@ padding: 3px
       </size>
      </property>
      <property name="text">
-      <string>Multiplier</string>
+      <string>State</string>
      </property>
     </widget>
    </item>
-   <item row="8" column="1">
+   <item row="12" column="0" colspan="3">
+    <widget class="QLabel" name="label_9">
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Rotary encoder UP actions:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="1">
     <widget class="QLineEdit" name="multiplierLineEdit">
      <property name="maximumSize">
       <size>
@@ -724,6 +690,64 @@ padding: 3px
       <string>1.0</string>
      </property>
     </widget>
+   </item>
+   <item row="6" column="1">
+    <widget class="QComboBox" name="PINB_comboBox">
+     <property name="maximumSize">
+      <size>
+       <width>50</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1">
+    <widget class="QComboBox" name="PINA_comboBox">
+     <property name="maximumSize">
+      <size>
+       <width>50</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QLineEdit" name="nameLineEdit">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>240</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>350</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="11" column="0" colspan="2">
+    <spacer name="verticalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>10</height>
+      </size>
+     </property>
+    </spacer>
    </item>
   </layout>
  </widget>
