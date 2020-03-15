@@ -14,9 +14,9 @@ GOTO END
 :INSTALL
 mkdir "./config"
 copy initial_config\*.* config
-pip3 install pyxpudpserver
-pip3 install PyQt5
-pip3 install pyserial
+pip3 install pyxpudpserver --user
+pip3 install PyQt5 --user
+pip3 install pyserial --user
 
 :NO
 echo no changes made
