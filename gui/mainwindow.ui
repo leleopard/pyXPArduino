@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1213</width>
-    <height>805</height>
+    <width>1181</width>
+    <height>785</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -38,463 +38,593 @@
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QSplitter" name="splitter_hor">
+     <widget class="QSplitter" name="splitter_2">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="orientation">
        <enum>Qt::Vertical</enum>
       </property>
-      <widget class="QSplitter" name="splitter">
+      <widget class="QTabWidget" name="tabWidget">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
          <horstretch>0</horstretch>
-         <verstretch>20</verstretch>
+         <verstretch>3</verstretch>
         </sizepolicy>
        </property>
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+       <property name="tabShape">
+        <enum>QTabWidget::Rounded</enum>
        </property>
-       <widget class="QWidget" name="widget" native="true">
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <widget class="QWidget" name="tab_arduino">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
-        <property name="minimumSize">
-         <size>
-          <width>100</width>
-          <height>400</height>
-         </size>
+        <property name="accessibleName">
+         <string/>
         </property>
-        <property name="maximumSize">
-         <size>
-          <width>400</width>
-          <height>16777215</height>
-         </size>
+        <property name="accessibleDescription">
+         <string/>
         </property>
-        <property name="baseSize">
-         <size>
-          <width>0</width>
-          <height>0</height>
-         </size>
+        <property name="autoFillBackground">
+         <bool>false</bool>
         </property>
-        <property name="layoutDirection">
-         <enum>Qt::LeftToRight</enum>
-        </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <property name="sizeConstraint">
-          <enum>QLayout::SetDefaultConstraint</enum>
-         </property>
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
+        <attribute name="icon">
+         <iconset resource="resources.qrc">
+          <normaloff>:/newPrefix/ardIcon2.png</normaloff>:/newPrefix/ardIcon2.png</iconset>
+        </attribute>
+        <attribute name="title">
+         <string>Arduinos</string>
+        </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
          <item>
-          <widget class="QTreeWidget" name="arduinoTreeWidget">
+          <widget class="QSplitter" name="splitter">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
              <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
+             <verstretch>20</verstretch>
             </sizepolicy>
            </property>
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>0</height>
-            </size>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
            </property>
-           <property name="baseSize">
-            <size>
-             <width>0</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="contextMenuPolicy">
-            <enum>Qt::CustomContextMenu</enum>
-           </property>
-           <property name="columnCount">
-            <number>2</number>
-           </property>
-           <column>
-            <property name="text">
-             <string>Name</string>
+           <widget class="QWidget" name="widget" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-           </column>
-           <column>
-            <property name="text">
-             <string>Serial nr</string>
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>400</height>
+             </size>
             </property>
-           </column>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QWidget" name="editPaneWidget" native="true">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-          <horstretch>3</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>500</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="layoutDirection">
-         <enum>Qt::LeftToRight</enum>
-        </property>
-        <layout class="QHBoxLayout" name="horizontalLayoutEditPane">
-         <property name="sizeConstraint">
-          <enum>QLayout::SetDefaultConstraint</enum>
-         </property>
-         <item>
-          <widget class="QWidget" name="arduinoEditForm" native="true">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="layoutDirection">
-            <enum>Qt::LeftToRight</enum>
-           </property>
-           <layout class="QFormLayout" name="formLayout">
-            <property name="sizeConstraint">
-             <enum>QLayout::SetDefaultConstraint</enum>
+            <property name="maximumSize">
+             <size>
+              <width>400</width>
+              <height>16777215</height>
+             </size>
             </property>
-            <item row="10" column="0">
-             <widget class="QLabel" name="label">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>200</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="layoutDirection">
-               <enum>Qt::LeftToRight</enum>
-              </property>
-              <property name="text">
-               <string>Name</string>
-              </property>
-             </widget>
-            </item>
-            <item row="10" column="1">
-             <widget class="QLineEdit" name="ardNameLineEdit">
-              <property name="maximumSize">
-               <size>
-                <width>350</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="layoutDirection">
-               <enum>Qt::LeftToRight</enum>
-              </property>
-             </widget>
-            </item>
-            <item row="13" column="0">
-             <widget class="QLabel" name="label_4">
-              <property name="text">
-               <string>Port</string>
-              </property>
-             </widget>
-            </item>
-            <item row="13" column="1">
-             <widget class="QLineEdit" name="ardPortLineEdit">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>100</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="readOnly">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="14" column="0">
-             <widget class="QLabel" name="label_5">
-              <property name="text">
-               <string>Serial Number  </string>
-              </property>
-             </widget>
-            </item>
-            <item row="14" column="1">
-             <widget class="QLineEdit" name="ardSerialNrLineEdit">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>250</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>350</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="readOnly">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="16" column="0">
-             <widget class="QLabel" name="label_2">
-              <property name="maximumSize">
-               <size>
-                <width>200</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>Description</string>
-              </property>
-             </widget>
-            </item>
-            <item row="16" column="1">
-             <widget class="QLineEdit" name="ardDescriptionLineEdit">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>250</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>350</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="layoutDirection">
-               <enum>Qt::LeftToRight</enum>
-              </property>
-              <property name="readOnly">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="17" column="0">
-             <widget class="QLabel" name="label_6">
-              <property name="text">
-               <string>Manufacturer</string>
-              </property>
-             </widget>
-            </item>
-            <item row="17" column="1">
-             <widget class="QLineEdit" name="ardManufacturerLineEdit">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>250</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>350</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="frame">
-               <bool>true</bool>
-              </property>
-              <property name="readOnly">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="11" column="0">
-             <widget class="QLabel" name="label_3">
-              <property name="text">
-               <string>Baud</string>
-              </property>
-             </widget>
-            </item>
-            <item row="11" column="1">
-             <widget class="QComboBox" name="ardBaudComboBox">
-              <property name="maximumSize">
-               <size>
-                <width>150</width>
-                <height>16777215</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item row="9" column="0" colspan="2">
-             <widget class="QLabel" name="label_7">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>11</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="autoFillBackground">
-               <bool>false</bool>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">color: white;
+            <property name="baseSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="layoutDirection">
+             <enum>Qt::LeftToRight</enum>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="sizeConstraint">
+              <enum>QLayout::SetDefaultConstraint</enum>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QTreeWidget" name="arduinoTreeWidget">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="baseSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="contextMenuPolicy">
+                <enum>Qt::CustomContextMenu</enum>
+               </property>
+               <property name="columnCount">
+                <number>2</number>
+               </property>
+               <column>
+                <property name="text">
+                 <string>Name</string>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string>Serial nr</string>
+                </property>
+               </column>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="editPaneWidget" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>3</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>500</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="layoutDirection">
+             <enum>Qt::LeftToRight</enum>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayoutEditPane">
+             <property name="sizeConstraint">
+              <enum>QLayout::SetDefaultConstraint</enum>
+             </property>
+             <item>
+              <widget class="QWidget" name="arduinoEditForm" native="true">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="layoutDirection">
+                <enum>Qt::LeftToRight</enum>
+               </property>
+               <layout class="QFormLayout" name="formLayout">
+                <property name="sizeConstraint">
+                 <enum>QLayout::SetDefaultConstraint</enum>
+                </property>
+                <item row="10" column="0">
+                 <widget class="QLabel" name="label">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>200</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="layoutDirection">
+                   <enum>Qt::LeftToRight</enum>
+                  </property>
+                  <property name="text">
+                   <string>Name</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="10" column="1">
+                 <widget class="QLineEdit" name="ardNameLineEdit">
+                  <property name="maximumSize">
+                   <size>
+                    <width>350</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="layoutDirection">
+                   <enum>Qt::LeftToRight</enum>
+                  </property>
+                 </widget>
+                </item>
+                <item row="13" column="0">
+                 <widget class="QLabel" name="label_4">
+                  <property name="text">
+                   <string>Port</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="13" column="1">
+                 <widget class="QLineEdit" name="ardPortLineEdit">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>100</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="readOnly">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="14" column="0">
+                 <widget class="QLabel" name="label_5">
+                  <property name="text">
+                   <string>Serial Number  </string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="14" column="1">
+                 <widget class="QLineEdit" name="ardSerialNrLineEdit">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>250</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>350</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="readOnly">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="16" column="0">
+                 <widget class="QLabel" name="label_2">
+                  <property name="maximumSize">
+                   <size>
+                    <width>200</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>Description</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="16" column="1">
+                 <widget class="QLineEdit" name="ardDescriptionLineEdit">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>250</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>350</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="baseSize">
+                   <size>
+                    <width>0</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="layoutDirection">
+                   <enum>Qt::LeftToRight</enum>
+                  </property>
+                  <property name="readOnly">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="17" column="0">
+                 <widget class="QLabel" name="label_6">
+                  <property name="text">
+                   <string>Manufacturer</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="17" column="1">
+                 <widget class="QLineEdit" name="ardManufacturerLineEdit">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>250</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>350</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="frame">
+                   <bool>true</bool>
+                  </property>
+                  <property name="readOnly">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="11" column="0">
+                 <widget class="QLabel" name="label_3">
+                  <property name="text">
+                   <string>Baud</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="11" column="1">
+                 <widget class="QComboBox" name="ardBaudComboBox">
+                  <property name="maximumSize">
+                   <size>
+                    <width>150</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item row="9" column="0" colspan="2">
+                 <widget class="QLabel" name="label_7">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>11</pointsize>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="autoFillBackground">
+                   <bool>false</bool>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: white;
 background: rgb(0, 151, 157);
 padding: 3px
 
 </string>
-              </property>
-              <property name="text">
-               <string>Edit Arduino Settings</string>
-              </property>
-              <property name="margin">
-               <number>1</number>
-              </property>
-             </widget>
-            </item>
-            <item row="7" column="0">
-             <widget class="QLabel" name="label_10">
-              <property name="text">
-               <string>Arduino firmware version</string>
-              </property>
-             </widget>
-            </item>
-            <item row="8" column="0">
-             <spacer name="verticalSpacer">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Fixed</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>40</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item row="1" column="0" colspan="2">
-             <widget class="QLabel" name="label_8">
-              <property name="font">
-               <font>
-                <pointsize>11</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">color: white;
+                  </property>
+                  <property name="text">
+                   <string>Edit Arduino Settings</string>
+                  </property>
+                  <property name="margin">
+                   <number>1</number>
+                  </property>
+                 </widget>
+                </item>
+                <item row="7" column="0">
+                 <widget class="QLabel" name="label_10">
+                  <property name="text">
+                   <string>Arduino firmware version</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="8" column="0">
+                 <spacer name="verticalSpacer">
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                  <property name="sizeType">
+                   <enum>QSizePolicy::Fixed</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>20</width>
+                    <height>40</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item row="1" column="0" colspan="2">
+                 <widget class="QLabel" name="label_8">
+                  <property name="font">
+                   <font>
+                    <pointsize>11</pointsize>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: white;
 background: rgb(0, 151, 157);
 padding: 3px;
 font-size: 150%;
 
 </string>
-              </property>
-              <property name="text">
-               <string>Arduino status</string>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="0">
-             <widget class="QLabel" name="label_9">
-              <property name="frameShape">
-               <enum>QFrame::NoFrame</enum>
-              </property>
-              <property name="text">
-               <string>Serial Connection Status</string>
-              </property>
-             </widget>
-            </item>
-            <item row="7" column="1">
-             <widget class="QLabel" name="ardFirmwareVersionLabel">
-              <property name="styleSheet">
-               <string notr="true">color:blue;</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-             </widget>
-            </item>
-            <item row="5" column="0">
-             <widget class="QLabel" name="ardStatusTitleLabel">
-              <property name="text">
-               <string>Arduino Status</string>
-              </property>
-             </widget>
-            </item>
-            <item row="5" column="1">
-             <widget class="QLabel" name="ardStatusLabel">
-              <property name="maximumSize">
-               <size>
-                <width>150</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="1">
-             <widget class="QLabel" name="ardSerialConnStatusLabel">
-              <property name="maximumSize">
-               <size>
-                <width>150</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-             </widget>
-            </item>
-           </layout>
+                  </property>
+                  <property name="text">
+                   <string>Arduino status</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="4" column="0">
+                 <widget class="QLabel" name="label_9">
+                  <property name="frameShape">
+                   <enum>QFrame::NoFrame</enum>
+                  </property>
+                  <property name="text">
+                   <string>Serial Connection Status</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="7" column="1">
+                 <widget class="QLabel" name="ardFirmwareVersionLabel">
+                  <property name="styleSheet">
+                   <string notr="true">color:blue;</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </widget>
+                </item>
+                <item row="5" column="0">
+                 <widget class="QLabel" name="ardStatusTitleLabel">
+                  <property name="text">
+                   <string>Arduino Status</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="5" column="1">
+                 <widget class="QLabel" name="ardStatusLabel">
+                  <property name="maximumSize">
+                   <size>
+                    <width>150</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="4" column="1">
+                 <widget class="QLabel" name="ardSerialConnStatusLabel">
+                  <property name="maximumSize">
+                   <size>
+                    <width>150</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
+           </widget>
           </widget>
          </item>
         </layout>
+       </widget>
+       <widget class="QWidget" name="tab_instrumentpanels">
+        <attribute name="title">
+         <string>Instrument Panels</string>
+        </attribute>
+       </widget>
+       <widget class="QWidget" name="tab_instruments">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <attribute name="title">
+         <string>Instruments</string>
+        </attribute>
+        <widget class="QSplitter" name="splitter_3">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>1161</width>
+           <height>621</height>
+          </rect>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>20</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <widget class="QWidget" name="widget_2" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <item>
+            <widget class="QTreeWidget" name="instrumentsTreeWidget">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="columnCount">
+              <number>1</number>
+             </property>
+             <column>
+              <property name="text">
+               <string notr="true">Name</string>
+              </property>
+             </column>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="widget_3" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>3</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_4">
+           <item>
+            <layout class="QGridLayout" name="gridLayout">
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_12">
+               <property name="text">
+                <string>TextLabel</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </widget>
        </widget>
       </widget>
       <widget class="QWidget" name="widget_logger" native="true">
@@ -534,7 +664,7 @@ padding: 3px</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1213</width>
+     <width>1181</width>
      <height>22</height>
     </rect>
    </property>
@@ -574,7 +704,7 @@ padding: 3px</string>
     <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
-    <bool>true</bool>
+    <bool>false</bool>
    </attribute>
    <addaction name="actionSave"/>
    <addaction name="actionCreate_new_Arduino_config_file"/>
@@ -651,22 +781,6 @@ padding: 3px</string>
  </resources>
  <connections>
   <connection>
-   <sender>arduinoTreeWidget</sender>
-   <signal>customContextMenuRequested(QPoint)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>ardTreeContextMenuRequested()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>129</x>
-     <y>153</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>2</x>
-     <y>54</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>actionQuit</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
@@ -711,54 +825,6 @@ padding: 3px</string>
     <hint type="destinationlabel">
      <x>606</x>
      <y>375</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>arduinoTreeWidget</sender>
-   <signal>itemSelectionChanged()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>ardTreeSelectionChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>191</x>
-     <y>183</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>151</x>
-     <y>0</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>ardNameLineEdit</sender>
-   <signal>editingFinished()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>ardEditingFinished()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>810</x>
-     <y>300</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>485</x>
-     <y>0</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>ardBaudComboBox</sender>
-   <signal>currentIndexChanged(int)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>ardEditingFinished()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>610</x>
-     <y>331</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>684</x>
-     <y>-2</y>
     </hint>
    </hints>
   </connection>
@@ -810,6 +876,86 @@ padding: 3px</string>
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>ardBaudComboBox</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>ardEditingFinished()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>588</x>
+     <y>492</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>684</x>
+     <y>-2</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>arduinoTreeWidget</sender>
+   <signal>customContextMenuRequested(QPoint)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>ardTreeContextMenuRequested()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>129</x>
+     <y>153</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>2</x>
+     <y>54</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ardNameLineEdit</sender>
+   <signal>editingFinished()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>ardEditingFinished()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>788</x>
+     <y>464</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>485</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>arduinoTreeWidget</sender>
+   <signal>itemSelectionChanged()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>ardTreeSelectionChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>191</x>
+     <y>183</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>151</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>instrumentsTreeWidget</sender>
+   <signal>itemSelectionChanged()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>instrumentTreeSelectionChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>236</x>
+     <y>214</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>386</x>
+     <y>-15</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>ardTreeContextMenuRequested()</slot>
@@ -830,5 +976,6 @@ padding: 3px</string>
   <slot>editXPUDPSettings()</slot>
   <slot>openArduinoConfigFile()</slot>
   <slot>createArduinoConfigFile()</slot>
+  <slot>instrumentTreeSelectionChanged()</slot>
  </slots>
 </ui>

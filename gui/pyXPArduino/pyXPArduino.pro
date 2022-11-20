@@ -33,6 +33,7 @@ RESOURCES += \
 
 FORMS += \
     ../confirmationdialog.ui \
+    ../instrumentEditForm.ui \
     ../mainwindow.ui \
     ../pickarduinodialog.ui \
     ../pickXPCommandDialog.ui \

@@ -1,0 +1,10 @@
+<Container position="[470,670]" size="[300,300]" name="C172_AltimeterXML">
+    <ImagePanel name="C172_AltimeterXML_BlackBackground" texture="instruments/textures/c172_text_standard6.png" layer="0" position="[0,0]" cliprect="[300,300]" origin="[300,1448]" resizeToContainer = "True" resize="None">
+        <translation enabled="False" XPdataref="" indValueToTranslationTable="" translationConvertFunction="False" translationAngle="None" addAngleToRotation="None"></translation>
+        <rotation enabled="False" XPdataref="" indValueToAnglesTable="" rotationConvertFunction=""></rotation>
+    </ImagePanel>
+    <ImagePanel name="C172_AltimeterXML_100sNeedle" texture="instruments/textures/c172_text_standard6.png" layer="0" position="[0,0]" cliprect="[40,300]" origin="[430,248]" resizeToContainer = "False" resize="[40,300]">
+        <translation enabled="False" XPdataref="" indValueToTranslationTable="" translationConvertFunction="False" translationAngle="None" addAngleToRotation="None"></translation>
+        <rotation enabled="True" XPdataref="sim/cockpit2/gauges/indicators/altitude_ft_pilot" indValueToAnglesTable="[0,0],[1.0,360]" rotationConvertFunction="return100s"></rotation>
+    </ImagePanel>
+</Container>

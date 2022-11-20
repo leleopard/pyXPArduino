@@ -130,7 +130,7 @@ class Arduino(threading.Thread):
 							prevDrefValue = float(action['state'])
 						except ValueError:
 							pass
-							#logger.warning('Unable to convert dref value, defaulting to 0.0')
+							logger.warning('Unable to convert dref value, defaulting to 0.0')
 						if (abs(prevDrefValue - drefValue) > 0.01) or forceRefresh == True:
 							action['state'] = str(drefValue)
 							logger.debug(outputType+' XPLANE DREF value, DREF: '+action['cmddref']+' Value: '+str(drefValue))

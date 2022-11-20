@@ -26,10 +26,48 @@
    <property name="horizontalSpacing">
     <number>1</number>
    </property>
-   <item row="11" column="6">
-    <widget class="QLabel" name="PWMoutValueLabel">
+   <item row="0" column="0" colspan="8">
+    <widget class="QLabel" name="label_8">
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: white;
+background: rgb(0, 151, 157);
+padding: 3px
+</string>
+     </property>
      <property name="text">
-      <string>TextLabel</string>
+      <string>Edit PWM output</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="2">
+    <widget class="QComboBox" name="PIN_comboBox">
+     <property name="maximumSize">
+      <size>
+       <width>50</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="2" colspan="2">
+    <widget class="QLineEdit" name="drefLineEdit">
+     <property name="minimumSize">
+      <size>
+       <width>400</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>350</width>
+       <height>16777215</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -55,19 +93,6 @@
      </property>
     </widget>
    </item>
-   <item row="7" column="7">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
    <item row="11" column="5">
     <widget class="QLabel" name="label_7">
      <property name="text">
@@ -75,33 +100,7 @@
      </property>
     </widget>
    </item>
-   <item row="6" column="2" colspan="2">
-    <widget class="QLineEdit" name="drefLineEdit">
-     <property name="minimumSize">
-      <size>
-       <width>400</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>350</width>
-       <height>16777215</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="11" column="0">
-    <widget class="QLabel" name="label_4">
-     <property name="text">
-      <string>PWM Output Values:  </string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-     </property>
-    </widget>
-   </item>
-   <item row="14" column="2">
+   <item row="13" column="2">
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -117,27 +116,39 @@
      </property>
     </spacer>
    </item>
-   <item row="10" column="2">
-    <widget class="QLineEdit" name="drefIndexLineEdit">
-     <property name="maximumSize">
+   <item row="7" column="7">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
       <size>
        <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="2" column="2" colspan="3">
+    <widget class="QLineEdit" name="nameLineEdit">
+     <property name="minimumSize">
+      <size>
+       <width>250</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>350</width>
        <height>16777215</height>
       </size>
      </property>
     </widget>
    </item>
-   <item row="3" column="0">
-    <widget class="QLabel" name="label_19">
+   <item row="7" column="6">
+    <widget class="QLabel" name="drefValueLabel">
      <property name="text">
-      <string>ID</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="0">
-    <widget class="QLabel" name="label_18">
-     <property name="text">
-      <string>Arduino pin:</string>
+      <string/>
      </property>
     </widget>
    </item>
@@ -170,35 +181,10 @@
      </property>
     </widget>
    </item>
-   <item row="4" column="2">
-    <widget class="QComboBox" name="PIN_comboBox">
-     <property name="maximumSize">
-      <size>
-       <width>50</width>
-       <height>16777215</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="2" colspan="3">
-    <widget class="QLineEdit" name="IDlineEdit">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>250</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>350</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="readOnly">
-      <bool>true</bool>
+   <item row="7" column="5">
+    <widget class="QLabel" name="label_6">
+     <property name="text">
+      <string> Dataref Value  </string>
      </property>
     </widget>
    </item>
@@ -218,6 +204,23 @@
      </property>
     </spacer>
    </item>
+   <item row="11" column="0">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>PWM Output Values:  </string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+     </property>
+    </widget>
+   </item>
+   <item row="10" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Dataref index</string>
+     </property>
+    </widget>
+   </item>
    <item row="2" column="0">
     <widget class="QLabel" name="label_3">
      <property name="sizePolicy">
@@ -231,70 +234,6 @@
      </property>
      <property name="text">
       <string>Name</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="5">
-    <widget class="QLabel" name="label_6">
-     <property name="text">
-      <string> Dataref Value  </string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="6">
-    <widget class="QLabel" name="drefValueLabel">
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="0">
-    <widget class="QLabel" name="label_5">
-     <property name="text">
-      <string>Dataref Info</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="0" colspan="8">
-    <widget class="QLabel" name="label_8">
-     <property name="font">
-      <font>
-       <pointsize>11</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: white;
-background: rgb(0, 151, 157);
-padding: 3px
-</string>
-     </property>
-     <property name="text">
-      <string>Edit PWM output</string>
-     </property>
-    </widget>
-   </item>
-   <item row="10" column="0">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Dataref index</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="2" colspan="3">
-    <widget class="QLineEdit" name="nameLineEdit">
-     <property name="minimumSize">
-      <size>
-       <width>250</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>350</width>
-       <height>16777215</height>
-      </size>
      </property>
     </widget>
    </item>
@@ -323,10 +262,46 @@ padding: 3px
      </property>
     </widget>
    </item>
+   <item row="3" column="2" colspan="3">
+    <widget class="QLineEdit" name="IDlineEdit">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>250</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>350</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
    <item row="6" column="0">
     <widget class="QLabel" name="label_2">
      <property name="text">
       <string>XPlane Dataref:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="11" column="6">
+    <widget class="QLabel" name="PWMoutValueLabel">
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="label_18">
+     <property name="text">
+      <string>Arduino pin:</string>
      </property>
     </widget>
    </item>
@@ -361,6 +336,30 @@ padding: 3px
      </property>
      <property name="wordWrap">
       <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0">
+    <widget class="QLabel" name="label_5">
+     <property name="text">
+      <string>Dataref Info</string>
+     </property>
+    </widget>
+   </item>
+   <item row="10" column="2">
+    <widget class="QLineEdit" name="drefIndexLineEdit">
+     <property name="maximumSize">
+      <size>
+       <width>40</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="label_19">
+     <property name="text">
+      <string>ID</string>
      </property>
     </widget>
    </item>
