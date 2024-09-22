@@ -4,45 +4,43 @@
 		<switch id="switches_75633313233351019191-0" name="MIXT_RIGHT_SWITCH" pin="33" state="on" />
 		<switch id="switches_75633313233351019191-1" name="A/P_TEST_SWITCH" pin="31" state="on" />
 		<switch id="switches_75633313233351019191-2" name="GO_AROUND_SWITCH" pin="35" state="off" />
-		<switch id="switches_75633313233351019191-3" name="RIGHT_THROTTLE_CUTOFF_SWITCH" pin="37" state="off">
+		<switch id="switches_75633313233351019191-3" name="RIGHT_THROTTLE_CUTOFF_SWITCH" pin="37" state="on">
 		<action action_type="cmd" continuous="False" index="" setToValue="" state="on">sim/engines/thrust_reverse_toggle_2</action>
 		<action action_type="cmd" continuous="False" index="" setToValue="" state="on">sim/engines/thrust_reverse_toggle_3</action>
 		</switch>
-		<switch id="switches_75633313233351019191-4" name="LEFT_THROTTLE_CUTOFF_SWITCH" pin="41" state="off">
+		<switch id="switches_75633313233351019191-4" name="LEFT_THROTTLE_CUTOFF_SWITCH" pin="41" state="on">
 		<action action_type="cmd" continuous="False" index="" setToValue="" state="on">sim/engines/thrust_reverse_toggle_1</action>
 		</switch>
 		<switch id="switches_75633313233351019191-5" name="MIXT_LEFT_SWITCH" pin="39" state="on" />
-		<switch id="switches_75633313233351019191-6" name="LANDING_GEAR" pin="38" state="on">
+		<switch id="switches_75633313233351019191-6" name="LANDING_GEAR" pin="38" state="off">
 		<action action_type="cmd" continuous="False" index="" setToValue="" state="on">sim/flight_controls/landing_gear_up</action>
 		<action action_type="cmd" continuous="False" index="" setToValue="" state="off">sim/flight_controls/landing_gear_down</action>
 		</switch>
 		<switch id="switches_75633313233351019191-7" name="LIGHTS NIGHT DAY" pin="22" state="off" />
 		</switches>
 		<potentiometers description="Potentiometers">
-		<potentiometer id="potentiometers_75633313233351019191-0" name="MIXT_LEVER_RIGHT" pin="0" state="399">
+		<potentiometer id="potentiometers_75633313233351019191-0" name="MIXT_LEVER_RIGHT" pin="0" state="385">
 		<action action_type="dref" continuous="" index="1" setToValue="[135,0.0],[398,1.0]" state="on">sim/cockpit2/engine/actuators/mixture_ratio</action><action action_type="dref" continuous="" index="2" setToValue="[135,0.0],[398,1.0]" state="on">sim/cockpit2/engine/actuators/mixture_ratio</action></potentiometer>
-		<potentiometer id="potentiometers_75633313233351019191-1" name="MIXT_LEVER_LEFT" pin="1" state="906">
-		<action action_type="dref" continuous="" index="0" setToValue="[628,0.0], [900,1.0]" state="on">sim/cockpit2/engine/actuators/mixture_ratio</action></potentiometer>
-		<potentiometer id="potentiometers_75633313233351019191-2" name="PROP_LEVER_RIGHT" pin="2" state="633"><action action_type="dref" continuous="" index="1" setToValue="[1023,230],[1003,209],[914,177.5],[750,125], [630,105]" state="on">sim/cockpit2/engine/actuators/prop_rotation_speed_rad_sec</action></potentiometer>
-		<potentiometer id="potentiometers_75633313233351019191-3" name="PROP_LEVER_LEFT" pin="3" state="335">
+		<potentiometer id="potentiometers_75633313233351019191-1" name="MIXT_LEVER_LEFT" pin="1" state="779">
+		<action state="on" action_type="dref" continuous="" index="0" setToValue="[517,0.0], [795,1.0]">sim/cockpit2/engine/actuators/mixture_ratio</action></potentiometer>
+		<potentiometer id="potentiometers_75633313233351019191-2" name="PROP_LEVER_RIGHT" pin="2" state="1023"><action action_type="dref" continuous="" index="1" setToValue="[1023,230],[1003,209],[914,177.5],[750,125], [630,105]" state="on">sim/cockpit2/engine/actuators/prop_rotation_speed_rad_sec</action></potentiometer>
+		<potentiometer id="potentiometers_75633313233351019191-3" name="PROP_LEVER_LEFT" pin="3" state="612">
 		<action action_type="dref" continuous="" index="0" setToValue="[782,230],[619,177.5],[459,125], [340,105]" state="on">sim/cockpit2/engine/actuators/prop_rotation_speed_rad_sec</action></potentiometer>
-		<potentiometer id="potentiometers_75633313233351019191-4" name="THROTTLE_LEVER_RIGHT" pin="4" state="856">
+		<potentiometer id="potentiometers_75633313233351019191-4" name="THROTTLE_LEVER_RIGHT" pin="4" state="662">
 		<action action_type="dref" continuous="" index="1" setToValue="[420,1.1],[532,0.5],[700,0.0]" state="on">sim/cockpit2/engine/actuators/throttle_ratio</action>
 		<action action_type="dref" continuous="" index="2" setToValue="[415,1.0],[715,0.0]" state="on">sim/cockpit2/engine/actuators/throttle_ratio</action>
 		<action action_type="dref" continuous="" index="3" setToValue="[415,1.0],[715,0.0]" state="on">sim/cockpit2/engine/actuators/throttle_ratio</action>
 		</potentiometer>
-		<potentiometer id="potentiometers_75633313233351019191-5" name="THROTTLE_LEVER_LEFT" pin="5" state="856">
-		<action action_type="dref" continuous="" index="0" setToValue="[400,1.1],[510,0.5],[700,0.0]" state="on">sim/cockpit2/engine/actuators/throttle_ratio</action>
+		<potentiometer id="potentiometers_75633313233351019191-5" name="THROTTLE_LEVER_LEFT" pin="5" state="686">
+		<action state="on" action_type="dref" continuous="" index="0" setToValue="[400,1.1],[510,0.5],[855,0.0]">sim/cockpit2/engine/actuators/throttle_ratio</action></potentiometer>
+		<potentiometer id="potentiometers_75633313233351019191-6" name="ROLL_TRIM" pin="6" state="887">
 		</potentiometer>
-		<potentiometer id="potentiometers_75633313233351019191-6" name="ROLL_TRIM" pin="6" state="465">
-		<action action_type="dref" continuous="" index="0" setToValue="[915,-1.0],[463,0.0],[235,1.0]" state="on">sim/flightmodel/controls/ail_trim</action>
-		</potentiometer>
-		<potentiometer id="potentiometers_75633313233351019191-7" name="NOSE_TRIMWHEEL" pin="7" state="495"><action action_type="dref" continuous="" index="0" setToValue="[830,-1.0],[519,0.0], [228,1.0]" state="on">sim/flightmodel/controls/rud_trim</action></potentiometer>
-		<potentiometer id="potentiometers_75633313233351019191-8" name="LIGHT INTENSITY" pin="8" state="948">
+		<potentiometer id="potentiometers_75633313233351019191-7" name="NOSE_TRIMWHEEL" pin="7" state="514"><action action_type="dref" continuous="" index="0" setToValue="[830,-1.0],[519,0.0], [228,1.0]" state="on">sim/flightmodel/controls/rud_trim</action></potentiometer>
+		<potentiometer id="potentiometers_75633313233351019191-8" name="LIGHT INTENSITY" pin="8" state="457">
 		<action action_type="dref" continuous="" index="0" setToValue="[1015,0],[0,1.0]" state="on">sim/cockpit/electrical/cockpit_lights</action>
 		</potentiometer></potentiometers>
 		<rot_encoders description="Rotary Encoders">
-		<rot_encoder acceleration="False" id="rot_encoders_75633313233351019191-0" multiplier="6" name="TRIMWHEEL_ENC" pin="29" pin2="27" state="up" stepsPerNotch="4">
+		<rot_encoder acceleration="False" id="rot_encoders_75633313233351019191-0" multiplier="6" name="TRIMWHEEL_ENC" pin="29" pin2="27" state="down" stepsPerNotch="4">
 		<action action_type="cmd" continuous="False" index="" setToValue="" state="up">sim/flight_controls/pitch_trim_down</action>
 		<action action_type="cmd" continuous="False" index="" setToValue="" state="down">sim/flight_controls/pitch_trim_up</action>
 		</rot_encoder>
@@ -61,18 +59,18 @@
 	</dig_outputs>
 	<pwms description="PWMs">
 	<pwm id="pwms_75633313233351019191-0" name="LEFT_LED " pin="8" state="on">
-	<action state="0.06600984930992126" action_type="dref" index="0" setToValue="[0,0],[1,255]">sim/cockpit/electrical/cockpit_lights</action></pwm>
+	<action state="0.5497499704360962" action_type="dref" index="0" setToValue="[0,0],[1,255]">sim/cockpit/electrical/cockpit_lights</action></pwm>
 	<pwm id="pwms_75633313233351019191-1" name="LED_RIGHT" pin="7" state="on">
-	<action state="0.06600984930992126" action_type="dref" index="0" setToValue="[0,0],[1,255]">sim/cockpit2/switches/panel_brightness_ratio</action></pwm>
+	<action state="0.5497499704360962" action_type="dref" index="0" setToValue="[0,0],[1,255]">sim/cockpit2/switches/panel_brightness_ratio</action></pwm>
 	<pwm id="pwms_75633313233351019191-2" name="ROLL_TRIM_LEFT" pin="9" state="on">
 	<action state="0.0" action_type="dref" index="0" setToValue="[-1.0,0],[0.0,0],[1.0,254]">sim/flightmodel/controls/ail_trim</action></pwm>
 	<pwm id="pwms_75633313233351019191-3" name="ROLL_TRIM_RIGHT" pin="10" state="on">
 	<action state="0.0" action_type="dref" index="0" setToValue="[-1.0,254],[0.0,0],[1.0,0]">sim/flightmodel/controls/ail_trim</action></pwm>
 	</pwms>
 	<servos description="Servos"><servo id="servos_75633313233351019191-0" name="servo elev trim" pin="13" state="on">
-	<action state="-0.22304293513298035" action_type="dref" index="0" setToValue="[-1.0,50],[0,103],[1.0,130]">sim/flightmodel/controls/elv_trim</action></servo></servos></outputs>
+	<action state="0.07000000029802322" action_type="dref" index="0" setToValue="[-1.0,50],[0,103],[1.0,130]">sim/flightmodel/controls/elv_trim</action></servo></servos></outputs>
 	</arduino>
-	<arduino ard_status="Running" baud="115200" connected="Connected" description="Arduino Mega 2560 (COM3)" firmware_version="1.2.1" manufacturer="Arduino LLC (www.arduino.cc)" name="RUDDER_EFISCOMMANDS" port="COM3" serial_nr="753313131333511142D1">
+	<arduino ard_status="Running" baud="115200" connected="Connected" description="Arduino Mega 2560 (COM3)" firmware_version="1.2" manufacturer="Arduino LLC (www.arduino.cc)" name="RUDDER_EFISCOMMANDS" port="COM3" serial_nr="753313131333511142D1">
 		<inputs description="Inputs">
 			<switches description="Switches">
 			<switch id="switches_753313131333511142D1-0" name="EFIS_MAP" pin="26" state="on">
@@ -100,26 +98,25 @@
 			<switch id="switches_753313131333511142D1-6" name="EFIS_SOURCE_GPS" pin="27" state="on">
 			<action action_type="dref" continuous="False" index="0" setToValue="2" state="off">sim/cockpit/switches/HSI_selector</action>
 			</switch>
-			<switch id="switches_753313131333511142D1-7" name="EFIS_APP" pin="29" state="off">
+			<switch id="switches_753313131333511142D1-7" name="EFIS_APP" pin="29" state="on">
 			<action action_type="dref" continuous="False" index="0" setToValue="0" state="off">sim/cockpit/switches/EFIS_map_submode</action>
 			</switch>
-			<switch id="switches_753313131333511142D1-8" name="EFIS_NAV" pin="31" state="on">
+			<switch id="switches_753313131333511142D1-8" name="EFIS_NAV" pin="31" state="off">
 			<action action_type="dref" continuous="False" index="0" setToValue="3" state="off">sim/cockpit/switches/EFIS_map_submode</action>
 			</switch>
 			<switch id="switches_753313131333511142D1-9" name="EFIS_SOURCE_NAV1" pin="33" state="off">
 			<action action_type="dref" continuous="False" index="0" setToValue="0" state="off">sim/cockpit/switches/HSI_selector</action>
 			</switch>
-			</switches>
+			<switch id="switches_753313131333511142D1-10" name="EFIS_SOURCE_NAV2" pin="37" state="on"><action state="off" action_type="dref" continuous="False" index="0" setToValue="1">sim/cockpit/switches/HSI_selector</action></switch></switches>
 			<potentiometers description="Potentiometers">
-			<potentiometer id="potentiometers_753313131333511142D1-0" name="RUDDER_POT" pin="0" state="532">
+			<potentiometer id="potentiometers_753313131333511142D1-0" name="RUDDER_POT" pin="0" state="509">
 			<action state="" action_type="cmd" continuous="" index="" setToValue="" /><action state="on" action_type="dref" continuous="" index="0" setToValue="[0,1.0],[1024,1.0]">sim/operation/override/override_joystick_heading</action><action state="on" action_type="dref" continuous="" index="0" setToValue="[98,-1.0],[515,0.0],[890,1.0]">sim/cockpit2/controls/yoke_heading_ratio</action></potentiometer>
 			<potentiometer id="potentiometers_753313131333511142D1-1" name="LEFT_TOE_BRAKE_POT" pin="1" state="1022">
 			<action action_type="dref" continuous="" index="0" setToValue="[660,1.0],[1020,0.0]" state="on">sim/cockpit2/controls/left_brake_ratio</action><action action_type="dref" continuous="" index="0" setToValue="[0,1],[1024,1]" state="on">sim/operation/override/override_toe_brakes</action></potentiometer>
-			<potentiometer id="potentiometers_753313131333511142D1-2" name="RIGHT_TOE_BRAKE_POT" pin="2" state="1021">
+			<potentiometer id="potentiometers_753313131333511142D1-2" name="RIGHT_TOE_BRAKE_POT" pin="2" state="1022">
 			<action action_type="dref" continuous="" index="0" setToValue="[680,1.0],[1020,0.0]" state="on">sim/cockpit2/controls/right_brake_ratio</action><action action_type="dref" continuous="" index="0" setToValue="[0,1],[1024,1]" state="on">sim/operation/override/override_toe_brakes</action></potentiometer>
-			<potentiometer id="potentiometers_753313131333511142D1-3" name="FLAPS_POT" pin="3" state="273">
-			<action action_type="dref" continuous="" index="0" setToValue="[0,0],[265,1]" state="on">sim/flightmodel/controls/flaprqst</action>
-			</potentiometer>
+			<potentiometer id="potentiometers_753313131333511142D1-3" name="FLAPS_POT" pin="3" state="4">
+			<action state="on" action_type="dref" continuous="" index="0" setToValue="[10,0],[265,1]">sim/flightmodel/controls/flaprqst</action></potentiometer>
 			</potentiometers>
 			<rot_encoders description="Rotary Encoders">
 			<rot_encoder acceleration="False" id="rot_encoders_753313131333511142D1-0" multiplier="1" name="EFIS_MAP_ZOOM" pin="44" pin2="45" state="down" stepsPerNotch="4">
@@ -127,7 +124,7 @@
 			<action action_type="cmd" continuous="False" index="" setToValue="" state="down">sim/instruments/map_zoom_out</action>
 			</rot_encoder>
 			<rot_encoder acceleration="False" id="rot_encoders_753313131333511142D1-1" multiplier="1" name="DG_SYNC" pin="50" pin2="51" state="down" stepsPerNotch="4" />
-			<rot_encoder acceleration="False" id="rot_encoders_753313131333511142D1-2" multiplier="1" name="HOR" pin="52" pin2="53" state="down" stepsPerNotch="4">
+			<rot_encoder acceleration="False" id="rot_encoders_753313131333511142D1-2" multiplier="1" name="HOR" pin="52" pin2="53" state="up" stepsPerNotch="4">
 			<action action_type="cmd" continuous="False" index="" setToValue="" state="up">sim/instruments/ah_ref_up</action>
 			<action action_type="cmd" continuous="False" index="" setToValue="" state="down">sim/instruments/ah_ref_down</action>
 			</rot_encoder>
@@ -135,7 +132,7 @@
 			<action action_type="cmd" continuous="False" index="" setToValue="" state="up">sim/radios/obs1_up</action>
 			<action action_type="cmd" continuous="False" index="" setToValue="" state="down">sim/radios/obs1_down</action>
 			</rot_encoder>
-			<rot_encoder acceleration="False" id="rot_encoders_753313131333511142D1-4" multiplier="1" name="OBS2" pin="40" pin2="41" state="down" stepsPerNotch="4">
+			<rot_encoder acceleration="False" id="rot_encoders_753313131333511142D1-4" multiplier="1" name="OBS2" pin="40" pin2="41" state="up" stepsPerNotch="4">
 			<action action_type="cmd" continuous="False" index="" setToValue="" state="up">sim/radios/obs2_up</action>
 			<action action_type="cmd" continuous="False" index="" setToValue="" state="down">sim/radios/obs2_down</action>
 			</rot_encoder>
@@ -143,7 +140,7 @@
 			<action action_type="cmd" continuous="False" index="" setToValue="" state="up">sim/radios/adf1_card_up</action>
 			<action action_type="cmd" continuous="False" index="" setToValue="" state="down">sim/radios/adf1_card_down</action>
 			</rot_encoder>
-			<rot_encoder acceleration="False" id="rot_encoders_753313131333511142D1-6" multiplier="1" name="BARO" pin="47" pin2="46" state="up" stepsPerNotch="4">
+			<rot_encoder acceleration="False" id="rot_encoders_753313131333511142D1-6" multiplier="1" name="BARO" pin="47" pin2="46" state="down" stepsPerNotch="4">
 			<action action_type="cmd" continuous="False" index="" setToValue="" state="up">sim/instruments/barometer_up</action>
 			<action action_type="cmd" continuous="False" index="" setToValue="" state="down">sim/instruments/barometer_down</action>
 			</rot_encoder>
@@ -157,11 +154,11 @@
 		<dig_outputs description="Digital Outputs" />
 		<pwms description="PWMs">
 		<pwm id="pwms_753313131333511142D1-0" name="COCKPIT_LED_LIGHTS" pin="7" state="on">
-		<action state="0.06600984930992126" action_type="dref" index="0" setToValue="[0,0],[1,255]">sim/cockpit/electrical/cockpit_lights</action></pwm>
+		<action state="0.5497499704360962" action_type="dref" index="0" setToValue="[0,0],[1,255]">sim/cockpit/electrical/cockpit_lights</action></pwm>
 		</pwms>
 		<servos description="Servos">
 		<servo id="servos_753313131333511142D1-0" name="FLAPS_POS_SERVO" pin="11" state="on">
-		<action state="1.0" action_type="dref" index="0" setToValue="[0,83],[1,122]">sim/flightmodel2/controls/flap_handle_deploy_ratio</action></servo>
+		<action state="0.01508999988436699" action_type="dref" index="0" setToValue="[0,83],[1,122]">sim/flightmodel2/controls/flap_handle_deploy_ratio</action></servo>
 		</servos>
 		</outputs>
 	</arduino>
@@ -330,4 +327,4 @@
 	</pwms>
 	<servos description="Servos" /></outputs>
 </arduino>
-</arduinoConfig>
+<arduino port="COM5" name="NAME 0" description="Arduino Mega 2560 (COM5)" serial_nr="950383034313515130B0" manufacturer="Arduino LLC (www.arduino.cc)" baud="115200" connected="Connected" ard_status="Running" firmware_version="1.2"><inputs description="Inputs"><switches description="Switches"><switch id="switches_950383034313515130B0-0" name="PARKING_BRAKE" pin="46" state="on"><action state="off" action_type="cmd" continuous="False" index="" setToValue="">sim/flight_controls/brakes_toggle_max</action></switch><switch id="switches_950383034313515130B0-1" name="MASTER_WARNING" pin="48" state="on" /><switch id="switches_950383034313515130B0-2" name="MASTER_CAUTION" pin="50" state="on" /><switch id="switches_950383034313515130B0-3" name="FIRE_WARNING" pin="52" state="on" /></switches><potentiometers description="Potentiometers" /><rot_encoders description="Rotary Encoders" /></inputs><outputs description="Outputs"><dig_outputs description="Digital Outputs" /><pwms description="PWMs" /><servos description="Servos" /></outputs></arduino></arduinoConfig>

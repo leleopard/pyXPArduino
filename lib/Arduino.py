@@ -356,7 +356,7 @@ class Arduino(threading.Thread):
 						/float(linearSeriesPoints[i][0]-linearSeriesPoints[i+1][0]))
 
 					yValue = xValue*a + b
-					return yValue
+					return round(yValue,5)
 
 	## parses a string of points in format [x1,y1],[x2,y2],...[xn,yn] and returns a list of points sorted by their x value in format [[x float1,y float1], ...[x floatn,y floatn]]
 	# @param pointsString 	the string of points to parse

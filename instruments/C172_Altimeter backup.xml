@@ -1,13 +1,13 @@
-<Container position="[0, 0]" size="[500, 500]" name="C172_AltimeterXMLBL">
-    <ImagePanel name="C172_AltimeterXML_BlackBackground" texture="C:\Users\stephane\Desktop\pyXPArduino\instruments\textures\c172_text_standard6.png" layer="0" position="[250, 250]" cliprect="[300, 300]" origin="[300, 1448]" resizeToContainer="True" maintainProportions="True">
+<Container position="[250.0, 250.0]" size="[500, 500]" name="C172_AltimeterXMLBL">
+    <ImagePanel name="C172_AltimeterXML_BlackBackground" texture="instruments\textures\c172_text_standard6.png" layer="0" position="[0,0]" cliprect="[300,300]" origin="[300,1448]" resizeToContainer="True" maintainProportions="True">
         <translation enabled="False" XPdataref="" indValueToTranslationTable="" translationConvertFunction="False" translationAngle="None" addAngleToRotation="None" />
         <rotation enabled="False" XPdataref="" indValueToAnglesTable="" rotationConvertFunction="" />
     </ImagePanel>
-    <ImagePanel name="C172_AltimeterXML_Background" texture="C:\Users\stephane\Desktop\pyXPArduino\instruments\textures\c172_text_standard6.png" layer="0" position="[250, 250]" cliprect="[300, 300]" origin="[300, 1148]" resizeToContainer="True" maintainProportions="True">
+    <ImagePanel name="C172_AltimeterXML_Background" texture="instruments\textures\c172_text_standard6.png" layer="0" position="[500,100]" cliprect="[300,300]" origin="[300,1148]" resizeToContainer="True" maintainProportions="True">
         <translation enabled="False" XPdataref="" indValueToTranslationTable="" translationConvertFunction="False" translationAngle="None" addAngleToRotation="None" />
         <rotation enabled="False" XPdataref="" indValueToAnglesTable="" rotationConvertFunction="" />
     </ImagePanel>
-    <ImagePanel name="C172_AltimeterXML_100sNeedle" texture="C:\Users\stephane\Desktop\pyXPArduino\instruments\textures\c172_text_standard6.png" layer="0" position="[250, 250]" cliprect="[40, 300]" origin="[430, 248]" resizeToContainer="True" maintainProportions="True">
+    <ImagePanel name="C172_AltimeterXML_100sNeedle" texture="instruments\textures\c172_text_standard6.png" layer="0" position="[0,0]" cliprect="[40,300]" origin="[430,248]" resizeToContainer="True" maintainProportions="True">
         <translation enabled="False" XPdataref="" indValueToTranslationTable="" translationConvertFunction="False" translationAngle="None" addAngleToRotation="None" />
         <rotation enabled="True" XPdataref="sim/cockpit2/gauges/indicators/altitude_ft_pilot" indValueToAnglesTable="[0,0],[1.0,360]" rotationConvertFunction="return100s" />
     </ImagePanel>

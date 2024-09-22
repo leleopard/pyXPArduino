@@ -19,5 +19,6 @@
         <file>error_icon.png</file>
         <file>find.png</file>
         <file>info.png</file>
+        <file>play.png</file>
     </qresource>
 </RCC>

@@ -39,6 +39,7 @@ import gui.pyXPpwmEditForm as pyXPpwmEditForm
 import gui.pyXPdigOutputEditForm as pyXPdigOutputEditForm
 import gui.pyXPservoEditForm as pyXPservoEditForm
 import gui.pyXProtencoderEditForm as pyXProtencoderEditForm
+import gui.pyXPinstrumentEditForm as pyXPinstrumentEditForm
 
 import lib.arduinoXMLconfig
 import lib.XPrefData as XPrefData
@@ -46,7 +47,7 @@ import pyxpudpserver as XPUDP
 import lib.arduinoSerial as ardSerial
 import lib.Arduino as Arduino
 
-VERSION = "v1.2"
+VERSION = "v1.3"
 mainConfigFile = os.path.join(working_dir,'config/config.xml')
 UDPconfigFile = os.path.join(working_dir,'config/UDPSettings.xml')
 instrumentsFolder = os.path.join(working_dir,'instruments')
@@ -141,6 +142,11 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
         self.horizontalLayoutEditPane.addWidget(self.ardServoEditForm)
         self.ardServoEditForm.nameUpdated.connect(self.updateComponentName)
 
+        #Instrument edit form
+        self.instrumentEditForm = pyXPinstrumentEditForm.pyXPinstrumentEditForm(self.instrumentEditPane, os.path.join(working_dir, 'config/configGraphics.ini'), self.actionSave)
+        self.horizontalLayout_instrumentEditPane.addWidget(self.instrumentEditForm)
+        #self.ardServoEditForm.nameUpdated.connect(self.updateComponentName)
+        
         self.ardBaudComboBox.addItems(lib.arduinoXMLconfig.ARD_BAUD)
 
         self.refreshArduinoTree()
@@ -151,7 +157,7 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
         self.ardDigOutputEditForm.hide()
         self.ardServoEditForm.hide()
         self.ardRotencoderEditForm.hide()
-
+        self.instrumentEditForm.hide()
         self.refreshInstrumentTree()
         
         self.actionSave.setEnabled(False)
@@ -188,7 +194,7 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
             filename = QtWidgets.QFileDialog.getOpenFileName(self, "Open Arduino config file", '//', "XML files (*.xml)")
             logging.info("File name: "+ str(filename))
 
-            if filename[0] is not '': # if a file has been selected
+            if filename[0] != '': # if a file has been selected
                 ardTags = self.xmlcfgroot.findall(".//ardConfigFilePath")
                 if len(ardTags) > 0: # arduino config file tag
                     ardTags[0].text = filename[0] # update it and write to config file on disk
@@ -214,7 +220,7 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
             filename = QtWidgets.QFileDialog.getSaveFileName(self, "Create new Arduino config file", '//', "XML files (*.xml)")
             logging.info("File name: "+ str(filename))
 
-            if filename[0] is not '': # if a file has been selected
+            if filename[0] != '': # if a file has been selected
                 ardTags = self.xmlcfgroot.findall(".//ardConfigFilePath")
                 if len(ardTags) > 0: # arduino config file tag
                     ardTags[0].text = filename[0] # update it and write to config file on disk
@@ -287,8 +293,14 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
         self._refreshingInstrumentTree = False
     
     def instrumentTreeSelectionChanged(self):
-        pass
+        if len(self.instrumentsTreeWidget.selectedItems()) > 0:
+            instrumentPath = self.instrumentsTreeWidget.selectedItems()[0].text(1)
+            self.instrumentEditForm.show(instrumentPath)
         
+    def instrumentRun(self):
+        self.instrumentEditForm.run()
+        
+    
     def refreshArduinoTree(self):
         self._refreshingArduinoTree = True
         logging.debug ("refreshArduinoTree")
