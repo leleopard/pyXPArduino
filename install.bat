@@ -18,6 +18,13 @@ pip3 install pyxpudpserver --user
 pip3 install PyQt5 --user
 pip3 install pyserial --user
 
+pip3 install numpy --user
+
+pip3 install PyOpenGL --user
+pip3 install PyOpenGL_accelerate --user
+ 
+pip3 install Pillow --user
+
 :NO
 echo no changes made
 :END
