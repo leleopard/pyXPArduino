@@ -1,0 +1,27 @@
+<arduinoConfig>
+	<arduino ard_status="Running" baud="115200" connected="Connected" description="Arduino Mega 2560 (COM4)" firmware_version="1.2.2" manufacturer="Arduino LLC (www.arduino.cc)" name="THROTTLE_QUADRANT" port="COM4" serial_nr="75633313233351019191">
+	<inputs description="Inputs">
+        <switches description="Switches"><switch id="switches_75633313233351019191-0" name="LIGHTS_SWITCH" pin="52" state="on" /></switches>
+		<potentiometers description="Potentiometers">
+		<potentiometer id="potentiometers_75633313233351019191-0" name="MIXT_LEVER_RIGHT" pin="3" state="280">
+		<action state="on" action_type="dref" continuous="" index="1" setToValue="[135,0.0],[398,1.0]">sim/cockpit2/engine/actuators/mixture_ratio</action><action state="on" action_type="dref" continuous="" index="2" setToValue="[135,0.0],[398,1.0]">sim/cockpit2/engine/actuators/mixture_ratio</action></potentiometer>
+		<potentiometer id="potentiometers_75633313233351019191-1" name="MIXT_LEVER_LEFT" pin="0" state="719">
+		<action state="on" action_type="dref" continuous="" index="0" setToValue="[517,0.0], [795,1.0]">sim/cockpit2/engine/actuators/mixture_ratio</action></potentiometer>
+		<potentiometer id="potentiometers_75633313233351019191-2" name="PROP_LEVER_RIGHT" pin="7" state="731"><action state="on" action_type="dref" continuous="" index="1" setToValue="[1023,230],[1003,209],[914,177.5],[750,125], [630,105]">sim/cockpit2/engine/actuators/prop_rotation_speed_rad_sec</action></potentiometer>
+		<potentiometer id="potentiometers_75633313233351019191-3" name="PROP_LEVER_LEFT" pin="1" state="525">
+		<action state="on" action_type="dref" continuous="" index="0" setToValue="[782,230],[619,177.5],[459,125], [340,105]">sim/cockpit2/engine/actuators/prop_rotation_speed_rad_sec</action></potentiometer>
+		<potentiometer id="potentiometers_75633313233351019191-4" name="THROTTLE_LEVER_RIGHT" pin="2" state="387">
+		<action state="on" action_type="dref" continuous="" index="1" setToValue="[400,1.1],[450,0.8],[480,0.6],[530,0.4],[605,0.2],[650,0.0]">sim/cockpit2/engine/actuators/throttle_ratio</action><action state="on" action_type="dref" continuous="" index="2" setToValue="[415,1.0],[715,0.0]">sim/cockpit2/engine/actuators/throttle_ratio</action><action state="on" action_type="dref" continuous="" index="3" setToValue="[415,1.0],[715,0.0]">sim/cockpit2/engine/actuators/throttle_ratio</action></potentiometer>
+		<potentiometer id="potentiometers_75633313233351019191-5" name="THROTTLE_LEVER_LEFT" pin="4" state="395">
+		<action state="on" action_type="dref" continuous="" index="0" setToValue="[410,1.1],[450,0.8],[495,0.6],[555,0.4],[620,0.2],[660,0.0]">sim/cockpit2/engine/actuators/throttle_ratio</action></potentiometer>
+		<potentiometer id="potentiometers_75633313233351019191-6" name="ROLL_TRIM" pin="5" state="684">
+		</potentiometer>
+		<potentiometer id="potentiometers_75633313233351019191-7" name="NOSE_TRIMWHEEL" pin="6" state="496"><action state="on" action_type="dref" continuous="" index="0" setToValue="[830,-1.0],[519,0.0], [228,1.0]">sim/flightmodel/controls/rud_trim</action></potentiometer>
+		<potentiometer id="potentiometers_75633313233351019191-8" name="LIGHT_DIMM_1" pin="8" state="1019" /><potentiometer id="potentiometers_75633313233351019191-9" name="LIGHT_DIMM_2" pin="9" state="234" /><potentiometer id="potentiometers_75633313233351019191-10" name="LIGHT_DIMM_3" pin="10" state="1023" /><potentiometer id="potentiometers_75633313233351019191-11" name="LIGHT_DIMM_4" pin="11" state="1023" /><potentiometer id="potentiometers_75633313233351019191-12" name="LIGHT_DIMM_5" pin="12" state="1023" /><potentiometer id="potentiometers_75633313233351019191-13" name="LIGHT_DIMM_6" pin="13" state="1023" /><potentiometer id="potentiometers_75633313233351019191-14" name="LIGHT_DIMM_7" pin="14" state="1023" /></potentiometers>
+		<rot_encoders description="Rotary Encoders">
+		</rot_encoders>
+	</inputs>
+	<outputs description="Outputs">
+	</outputs>
+	</arduino>
+</arduinoConfig>

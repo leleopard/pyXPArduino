@@ -159,6 +159,7 @@ class pyXPArduino(QMainWindow, mainwindow.Ui_MainWindow):
         self.ardRotencoderEditForm.hide()
         self.instrumentEditForm.hide()
         self.refreshInstrumentTree()
+        self.tabWidget.setCurrentIndex(0)
         
         self.actionSave.setEnabled(False)
         self.updatingCompPanel = False

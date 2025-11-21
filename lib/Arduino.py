@@ -49,7 +49,7 @@ class Arduino(threading.Thread):
 		logger.debug("connected_PORT = "+ str(connected_PORT))
 		if connected_PORT == None: # then the arduino is not connected, no point trying to get a serial connection going
 			self.connected = False
-			logger.error("Arduino serial nr "+self.ardSerialNumber+", unable to connect on port "+ardData['port'])
+			logger.warning("Arduino serial nr "+self.ardSerialNumber+", unable to connect on port "+ardData['port'])
 
 		else: # the arduino is connected, we will attempt to connect on the the PORT value found as the arduino could have been reconnected to another port
 			self.serialConnection = ardSerial.ArduinoSerial(connected_PORT, ardData['baud'])
