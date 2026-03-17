@@ -1,0 +1,1352 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>Arduino API documentation</title>
+<meta name="description" content="Arduino.py
+High-level Arduino controller thread …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>Arduino</code></h1>
+</header>
+<section id="section-intro">
+<h2 id="arduinopy">Arduino.py</h2>
+<p>High-level Arduino controller thread.</p>
+<p>:class:<code><a title="Arduino.Arduino" href="#Arduino.Arduino">Arduino</a></code> sits between the XML configuration layer
+(:mod:<code>lib.arduinoXMLconfig</code>) and the raw serial layer
+(:class:<code>~lib.arduinoSerial.ArduinoSerial</code>).
+One instance is created per
+configured Arduino board.</p>
+<p>Responsibilities
+~~~~~~~~~~~~~~~~
+* <strong>Connection management</strong> — detects the current USB port by serial number
+and opens an :class:<code>~lib.arduinoSerial.ArduinoSerial</code> connection.
+* <strong>Input routing</strong> — receives input-change callbacks from the serial layer
+and translates them into X-Plane commands / dataref writes via
+<code>pyXPUDPServer</code>.
+* <strong>Output refresh</strong> — runs a continuous loop that reads X-Plane dataref
+values and sends the corresponding PWM / servo / digital-output commands to
+the Arduino.
+* <strong>Configuration updates</strong> — listens for XML attribute-change callbacks and
+re-sends pin-configuration messages to the firmware when component pin
+assignments change.</p>
+<p>Supported input types
+~~~~~~~~~~~~~~~~~~~~~
+* <code>'SW'</code>
+— digital switch (on / off).
+* <code>'POT'</code>
+— potentiometer (0–1023 ADC value, mapped via interpolation).
+* <code>'ROTENC'</code> — rotary encoder (±N steps, with optional acceleration).</p>
+<p>Supported output types
+~~~~~~~~~~~~~~~~~~~~~~
+* <code>'pwm'</code>
+— pulse-width modulation output.
+* <code>'servo'</code>
+— servo motor position.
+* <code>'dig_output'</code>— digital on/off output.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="Arduino.Arduino"><code class="flex name class">
+<span>class <span class="ident">Arduino</span></span>
+<span>(</span><span>ardSerialNumber, XPUDPServer, arduinoXMLconfig)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Arduino(threading.Thread):
+    &#34;&#34;&#34;Background thread managing a single Arduino board.
+
+    Inherits from :class:`threading.Thread`.  Start the thread with
+    :meth:`threading.Thread.start`; stop it cleanly with :meth:`quit`.
+
+    Attributes:
+        running (bool): Controls the main output-refresh loop.  Set to
+            ``False`` by :meth:`quit` to stop the thread.
+        connected (bool): ``True`` when a serial connection has been
+            successfully established with the Arduino.
+        ardSerialNumber (str): USB serial number used to identify the board.
+        ardXMLconfig (arduinoConfig): Reference to the shared XML config
+            manager.
+        XPUDPServer: Reference to the ``pyXPUDPServer`` instance used to
+            send commands and datarefs to X-Plane.
+        serialConnection (ArduinoSerial | None): The low-level serial thread,
+            or ``None`` if not connected.
+    &#34;&#34;&#34;
+
+    def __init__(self, ardSerialNumber, XPUDPServer, arduinoXMLconfig):
+        &#34;&#34;&#34;Initialise the Arduino thread and attempt an initial serial connection.
+
+        Registers attribute-change callbacks on the XML config manager and
+        marks the board as ``&#39;Disconnected&#39;`` / ``&#39;Not Running&#39;`` before
+        calling :meth:`connect`.
+
+        Args:
+            ardSerialNumber (str): USB serial number of the Arduino board.
+            XPUDPServer: ``pyxpudpserver.pyXPUDPServer`` singleton used to
+                send X-Plane commands and dataref values.
+            arduinoXMLconfig (arduinoConfig): Shared XML configuration
+                manager instance.
+        &#34;&#34;&#34;
+        threading.Thread.__init__(self)
+        self.running = True
+        self.connected = False
+
+        self.ardSerialNumber = ardSerialNumber
+        self.ardXMLconfig = arduinoXMLconfig
+        self.XPUDPServer = XPUDPServer
+        self.ardXMLconfig.registerArduinoAttributeChangedCallback(self.handleArduinoAttributeChange)
+        self.ardXMLconfig.updateArduinoAttribute(ardSerialNumber, &#39;connected&#39;, &#39;Disconnected&#39;)
+        self.ardXMLconfig.updateArduinoAttribute(self.ardSerialNumber, &#39;ard_status&#39;, &#39;Not Running&#39;)
+
+        self.connect()
+
+    def reconnect(self):
+        &#34;&#34;&#34;Disconnect then immediately reconnect the serial link.
+
+        Called automatically when the baud rate is changed in the
+        configuration.  Delegates to :meth:`disconnect` followed by
+        :meth:`connect`.
+        &#34;&#34;&#34;
+        self.disconnect()
+        self.connect()
+
+    def disconnect(self):
+        &#34;&#34;&#34;Close the serial connection and update configuration status flags.
+
+        If the board is currently connected, marks it as ``&#39;Disconnected&#39;``
+        and ``&#39;Not Running&#39;`` in the XML config, then stops the
+        :class:`~lib.arduinoSerial.ArduinoSerial` thread.
+        &#34;&#34;&#34;
+        if self.connected == True:
+            self.ardXMLconfig.updateArduinoAttribute(self.ardSerialNumber, &#39;connected&#39;, &#39;Disconnected&#39;)
+            self.ardXMLconfig.updateArduinoAttribute(self.ardSerialNumber, &#39;ard_status&#39;, &#39;Not Running&#39;)
+            self.serialConnection.quit()
+
+    def connect(self):
+        &#34;&#34;&#34;Attempt to establish a serial connection with the Arduino.
+
+        Uses :func:`~lib.serialArduinoUtils.returnArduinoPort` to discover
+        the current OS port for this board&#39;s serial number (the port may
+        change if the Arduino is reconnected to a different USB hub).
+
+        On success:
+
+        * Creates and starts an :class:`~lib.arduinoSerial.ArduinoSerial`
+          thread.
+        * Registers :meth:`inputChanged` and :meth:`ardStateChanged`
+          callbacks on the serial layer.
+        * Registers :meth:`updateComponentList` on the XML config manager
+          so pin changes are propagated to the firmware.
+        * Sends the initial full pin-configuration to the Arduino.
+
+        On failure (board not found or port open error), :attr:`connected` is
+        set to ``False`` and a warning/error is logged.
+        &#34;&#34;&#34;
+        # Initialise connection, first we will check that the Arduino with this serial nr is still connected on this port
+        self.ardXMLconfig.updateArduinoAttribute(self.ardSerialNumber, &#39;connected&#39;, &#39;Disconnected&#39;)
+        self.ardXMLconfig.updateArduinoAttribute(self.ardSerialNumber, &#39;ard_status&#39;, &#39;Not Running&#39;)
+        ardData = self.ardXMLconfig.getArduinoData(self.ardSerialNumber)
+
+        connected_PORT = lib.serialArduinoUtils.returnArduinoPort(self.ardSerialNumber)
+
+        logger.debug(&#34;connected_PORT = &#34;+ str(connected_PORT))
+        if connected_PORT == None: # then the arduino is not connected, no point trying to get a serial connection going
+            self.connected = False
+            logger.warning(&#34;Arduino serial nr &#34;+self.ardSerialNumber+&#34;, unable to connect on port &#34;+ardData[&#39;port&#39;])
+
+        else: # the arduino is connected, we will attempt to connect on the the PORT value found as the arduino could have been reconnected to another port
+            self.serialConnection = ardSerial.ArduinoSerial(connected_PORT, ardData[&#39;baud&#39;])
+            if self.serialConnection.connected == True:
+                self.serialConnection.registerInputChangedCallback(self.inputChanged)
+                self.serialConnection.registerArduinoStateChangedCallback(self.ardStateChanged)
+                self.ardXMLconfig.registerComponentAttributeChangedCallback(self.updateComponentList) #
+                time.sleep(0.01)
+
+                self.serialConnection.start()
+
+                self.updateComponentList(&#39;*&#39;, &#39;&#39;, self.ardSerialNumber, &#39;pin&#39;) # set the pins as switches on arduino
+                self.connected = True
+                logger.info(&#34;Arduino serial nr &#34;+str(self.ardSerialNumber)+&#34; connected on port: &#34;+str(connected_PORT)+&#34;, BAUD: &#34;+ str(ardData[&#39;baud&#39;]))
+            else:
+                self.connected = False
+                logger.error(&#34;Arduino serial nr &#34;+self.ardSerialNumber+&#34;, unable to connect on port &#34;+str(connected_PORT)+&#34;, BAUD: &#34;+ str(ardData[&#39;baud&#39;]))
+
+        if self.connected == True:
+            self.ardXMLconfig.updateArduinoAttribute(self.ardSerialNumber, &#39;connected&#39;, &#39;Connected&#39;)
+        else:
+            self.ardXMLconfig.updateArduinoAttribute(self.ardSerialNumber, &#39;connected&#39;, &#39;Disconnected&#39;)
+
+    def ardStateChanged(self, ardState, arduinoFirmwareVersion):
+        &#34;&#34;&#34;Handle Arduino ready-state change notifications from the serial layer.
+
+        Updates the ``&#39;ard_status&#39;`` and ``&#39;firmware_version&#39;`` attributes in
+        the XML config whenever the Arduino reports its ready state or firmware
+        version.  These changes propagate to the UI via registered callbacks.
+
+        Args:
+            ardState (bool): ``True`` if the Arduino is ready; ``False`` if
+                it has disconnected or not yet booted.
+            arduinoFirmwareVersion (str): Firmware version string reported by
+                the Arduino (e.g. ``&#39;1.2&#39;``).
+        &#34;&#34;&#34;
+        logger.debug(&#39;ard state has changed: &#39;+str(self.serialConnection.arduinoReady))
+        if ardState == True:
+            self.ardXMLconfig.updateArduinoAttribute(self.ardSerialNumber, &#39;ard_status&#39;, &#39;Running&#39;)
+        else:
+            self.ardXMLconfig.updateArduinoAttribute(self.ardSerialNumber, &#39;ard_status&#39;, &#39;Not Running&#39;)
+
+        self.ardXMLconfig.updateArduinoAttribute(self.ardSerialNumber, &#39;firmware_version&#39;, arduinoFirmwareVersion)
+
+    def handleArduinoAttributeChange(self, ardSerialNr, attribute):
+        &#34;&#34;&#34;React to Arduino-level attribute changes in the XML configuration.
+
+        Currently only acts on baud-rate changes by triggering a full
+        :meth:`reconnect` so the serial port is reopened at the new speed.
+
+        Args:
+            ardSerialNr (str): Serial number of the Arduino whose attribute
+                changed.
+            attribute (str): Name of the changed attribute (e.g. ``&#39;baud&#39;``).
+        &#34;&#34;&#34;
+        logging.debug(&#34;ard attribute changed: &#34;+attribute)
+        if attribute == &#39;baud&#39;:
+            self.reconnect()
+
+    def run(self):
+        &#34;&#34;&#34;Main thread loop — continuously refresh all configured outputs.
+
+        Do **not** call this method directly.  Use
+        :meth:`threading.Thread.start` to launch the thread.
+
+        The loop runs every 10 ms and calls :meth:`__refreshOutputs` for each
+        output type (``&#39;pwm&#39;``, ``&#39;servo&#39;``, ``&#39;dig_output&#39;``).  A forced
+        refresh is triggered once per second to compensate for any missed
+        updates (e.g. after initial connection).
+
+        The loop exits when :attr:`running` is set to ``False`` (via
+        :meth:`quit`).
+        &#34;&#34;&#34;
+        buffer =&#34;&#34;
+        startTime = time.time()
+        forceRefresh = True
+        lastTime = time.time();
+
+        while self.running:
+            # obtain list of outputs &amp; associated actions
+            if time.time() - lastTime &gt; 1.0:
+                forceRefresh = True
+                lastTime = time.time()
+
+            if self.connected == True:
+                self.__refreshOutputs(&#39;pwm&#39;, forceRefresh)
+                self.__refreshOutputs(&#39;servo&#39;, forceRefresh)
+                self.__refreshOutputs(&#39;dig_output&#39;, forceRefresh)
+                forceRefresh = False # forcing Refresh only on first run of the loop
+            time.sleep(0.01)
+
+    def __refreshOutputs(self, outputType, forceRefresh=False):
+        &#34;&#34;&#34;Query X-Plane dataref values and send updated output commands to the Arduino.
+
+        For each component of ``outputType`` assigned to this Arduino:
+
+        1. Reads the current dataref value from ``pyXPUDPServer``.
+        2. Compares it to the last known value stored in the action&#39;s
+           ``&#39;state&#39;`` field.
+        3. If the value has changed by more than 0.01, or ``forceRefresh`` is
+           ``True``, passes the new value through
+           :meth:`__returnLinearInterpolationY` using the component&#39;s mapping
+           points, and queues the result as a serial output command.
+
+        Args:
+            outputType (str): One of ``&#39;pwm&#39;``, ``&#39;servo&#39;``, or
+                ``&#39;dig_output&#39;``.
+            forceRefresh (bool): If ``True``, sends the output value
+                unconditionally, regardless of whether it has changed.
+                Defaults to ``False``.
+        &#34;&#34;&#34;
+        if self.connected == True:
+            compList = self.ardXMLconfig.getComponentList(self.ardSerialNumber, outputType)
+            for comp in compList:
+                if comp[&#39;pin&#39;] != &#39;&#39;:
+                    compActions = self.ardXMLconfig.getComponentActions(self.ardSerialNumber, outputType, comp[&#39;pin&#39;] )
+                    for action in compActions:
+                        drefValue = self.XPUDPServer.getData(action[&#39;cmddref&#39;] + &#34;[&#34; + action[&#39;index&#39;] + &#34;]&#34;)
+                        prevDrefValue = 0.0
+                        try:
+                            prevDrefValue = float(action[&#39;state&#39;])
+                        except ValueError:
+                            pass
+                            logger.warning(&#39;Unable to convert dref value, defaulting to 0.0&#39;)
+                        if (abs(prevDrefValue - drefValue) &gt; 0.01) or forceRefresh == True:
+                            action[&#39;state&#39;] = str(drefValue)
+                            logger.debug(outputType+&#39; XPLANE DREF value, DREF: &#39;+action[&#39;cmddref&#39;]+&#39; Value: &#39;+str(drefValue))
+                            pointsList = self.__returnPointsList(action[&#39;setToValue&#39;])
+                            outPWMvalue = self.__returnLinearInterpolationY(drefValue, pointsList)
+                            logger.debug(&#39;Out &#39;+ outputType + &#39; value: &#39;+ str(outPWMvalue))
+                            self.ardXMLconfig.updateComponentActions(self.ardSerialNumber, outputType, comp[&#39;pin&#39;], compActions )
+
+                            try:
+                                self.serialConnection.sendOutputValue(comp[&#39;pin&#39;], outputType, int(outPWMvalue))
+                            except:
+                                pass  # BUG-03: silent exception swallows serial failures
+
+    def inputChanged(self, inputType, pin, value):
+        &#34;&#34;&#34;Handle an input-state change received from the Arduino serial layer.
+
+        Dispatches to the appropriate handling block based on ``inputType``:
+
+        * **SW (switch)** — maps value 0/1 to ``&#39;off&#39;``/``&#39;on&#39;``, updates the
+          component state in the XML config, then iterates over all configured
+          actions.  For ``&#39;cmd&#39;`` actions, sends or stops the X-Plane command
+          depending on the switch state and the ``continuous`` flag.  For
+          ``&#39;dref&#39;`` actions, writes the specified value to the dataref.
+
+        * **POT (potentiometer)** — stores the raw ADC value, then for
+          ``&#39;dref&#39;`` actions applies linear interpolation via the configured
+          mapping points before writing to X-Plane.  For ``&#39;cmd&#39;`` actions,
+          fires the command if the value falls within any configured interval.
+
+        * **ROTENC (rotary encoder)** — determines ``&#39;up&#39;``/``&#39;down&#39;``
+          direction from the sign of ``value``.  Applies the ``multiplier``
+          and optional acceleration (``abs(value)`` repetitions) to determine
+          how many times the X-Plane command is sent.
+
+        This method is registered as a callback on the
+        :class:`~lib.arduinoSerial.ArduinoSerial` instance and is called from
+        that thread, not from this thread&#39;s :meth:`run` loop.
+
+        Args:
+            inputType (str): Arduino input type identifier — one of
+                ``&#39;SW&#39;``, ``&#39;POT&#39;``, or ``&#39;ROTENC&#39;``.
+            pin (int): Arduino pin number that changed.
+            value (int): New value on the pin.  Interpretation depends on
+                ``inputType``:
+
+                * ``SW`` — ``0`` (off) or ``1`` (on).
+                * ``POT`` — raw ADC reading, 0–1023.
+                * ``ROTENC`` — signed step count (positive = clockwise).
+        &#34;&#34;&#34;
+        if self.connected == True:
+            logger.debug(&#34;ARD CLASS ard input changed callback, input Type: &#34;+inputType+ &#34;, pin&#34; + str(pin) + &#34; value:&#34; + str(value))
+            if inputType == &#39;SW&#39;:
+                switch_state = &#39;on&#39;
+                if value == 0 :
+                    switch_state = &#39;off&#39;
+
+                logger.debug(&#39;updating switch state to value:&#39; + switch_state)
+                compID = self.ardXMLconfig.getComponentAttribute( self.ardSerialNumber,&#39;switch&#39;, pin, &#39;id&#39;)
+                self.ardXMLconfig.updateComponentAttribute(compID, &#39;switch&#39;, &#39;state&#39;, switch_state)
+
+                for action in self.ardXMLconfig.getComponentActions(self.ardSerialNumber, &#39;switch&#39;, pin):
+                    if action[&#39;cmddref&#39;]!= None:
+                        logger.debug (&#34;action type: &#34;+ action[&#39;action_type&#39;]
+                                        + &#34; action state: &#34;+action[&#39;state&#39;]
+                                        + &#34;switch state: &#34; + switch_state
+                                        + &#34; action: &#34; + action [&#39;cmddref&#39;] )
+                        sendContinuous = False
+                        if action[&#39;continuous&#39;] == &#39;True&#39;:
+                            sendContinuous = True
+
+                        if action[&#39;action_type&#39;] == &#39;cmd&#39; and action[&#39;state&#39;] == switch_state:
+                            self.XPUDPServer.sendXPCmd(action [&#39;cmddref&#39;], sendContinuous)
+                        if action[&#39;action_type&#39;] == &#39;cmd&#39; and action[&#39;state&#39;] != switch_state and action[&#39;continuous&#39;] == &#39;True&#39;: # suppress any continuous cmd
+                            self.XPUDPServer.stopSendingXPCmd(action [&#39;cmddref&#39;])
+
+                        if action[&#39;action_type&#39;] == &#39;dref&#39; and action[&#39;state&#39;] == switch_state:
+                            self.XPUDPServer.sendXPDref(action[&#39;cmddref&#39;],action[&#39;index&#39;],action[&#39;setToValue&#39;])
+
+            if inputType == &#39;POT&#39;:
+                state = str(value)
+                compID = self.ardXMLconfig.getComponentAttribute(self.ardSerialNumber, &#39;potentiometer&#39;, pin, &#39;id&#39;)
+                self.ardXMLconfig.updateComponentAttribute(compID, &#39;potentiometer&#39;, &#39;state&#39;, state)
+
+                for action in self.ardXMLconfig.getComponentActions(self.ardSerialNumber, &#39;potentiometer&#39;, pin):
+                    if action[&#39;cmddref&#39;]!= None:
+                        logger.debug (&#34;action type: &#34;+ action[&#39;action_type&#39;]
+                                        + &#34; action state: &#34;+action[&#39;state&#39;]
+                                        + &#34;pot state: &#34; + state
+                                        + &#34; action: &#34; + action [&#39;cmddref&#39;] )
+
+                        if action[&#39;action_type&#39;] == &#39;dref&#39; :
+                            logger.debug(&#39;DREF set to value:&#39;+action[&#39;setToValue&#39;])
+                            pointsList = self.__returnPointsList(action[&#39;setToValue&#39;])
+                            logger.debug(&#39;Points list: &#39; + str(pointsList))
+                            if len(pointsList) &gt; 0:
+                                outValue = self.__returnLinearInterpolationY(float(state), pointsList)
+
+                                logger.debug(&#39;Output value to XP DREF: &#39; +str(outValue))
+                                self.XPUDPServer.sendXPDref(action[&#39;cmddref&#39;],action[&#39;index&#39;],outValue)
+
+                        if action[&#39;action_type&#39;] == &#39;cmd&#39; :
+                            logger.debug(&#39;CMD state:&#39;+action[&#39;state&#39;])
+                            intervalsList = self.__returnPointsList(action[&#39;state&#39;])
+                            logger.debug(&#39;Intervals list: &#39; + str(intervalsList))
+                            if len(intervalsList) &gt; 0:
+                                if self.__isValueInIntervals(float(state), intervalsList):
+                                    logger.debug(&#39;Send XPlane CMD : &#39; +action[&#39;cmddref&#39;])
+                                    self.XPUDPServer.sendXPCmd(action[&#39;cmddref&#39;])
+
+            if inputType == &#39;ROTENC&#39;:
+                acceleration = self.ardXMLconfig.getComponentAttribute( self.ardSerialNumber,&#39;rot_encoder&#39;, pin, &#39;acceleration&#39;)
+                multiplier = float(self.ardXMLconfig.getComponentAttribute( self.ardSerialNumber,&#39;rot_encoder&#39;, pin, &#39;multiplier&#39;))
+
+                rot_enc_state = &#39;up&#39;
+                if value &lt; 0 :
+                    rot_enc_state = &#39;down&#39;
+                if acceleration == &#39;True&#39;:
+                    numberTimesSendAction = int(abs(value))
+                else:
+                    numberTimesSendAction = 1
+                numberTimesSendAction = numberTimesSendAction * int(multiplier)
+
+                logger.debug(&#39;updating rot encoder state to value:&#39; + rot_enc_state)
+                compID = self.ardXMLconfig.getComponentAttribute( self.ardSerialNumber,&#39;rot_encoder&#39;, pin, &#39;id&#39;)
+                self.ardXMLconfig.updateComponentAttribute(compID, &#39;rot_encoder&#39;, &#39;state&#39;, rot_enc_state)
+
+                for action in self.ardXMLconfig.getComponentActions(self.ardSerialNumber, &#39;rot_encoder&#39;, pin):
+                    if action[&#39;cmddref&#39;]!= None:
+                        logger.debug (&#34;action type: &#34;+ action[&#39;action_type&#39;]
+                                        + &#34; action state: &#34;+action[&#39;state&#39;]
+                                        + &#34;rot_encoder state: &#34; + rot_enc_state
+                                        + &#34; action: &#34; + action [&#39;cmddref&#39;] )
+                        sendContinuous = False
+                        if action[&#39;continuous&#39;] == &#39;True&#39;:
+                            sendContinuous = True
+
+                        if action[&#39;action_type&#39;] == &#39;cmd&#39; and action[&#39;state&#39;] == rot_enc_state:
+                            for i in range(0, numberTimesSendAction):
+                                self.XPUDPServer.sendXPCmd(action [&#39;cmddref&#39;], sendContinuous)
+                        if action[&#39;action_type&#39;] == &#39;cmd&#39; and action[&#39;state&#39;] != rot_enc_state and action[&#39;continuous&#39;] == &#39;True&#39;: # suppress any continuous cmd
+                            self.XPUDPServer.stopSendingXPCmd(action [&#39;cmddref&#39;])
+
+                        if action[&#39;action_type&#39;] == &#39;dref&#39; and action[&#39;state&#39;] == rot_enc_state:
+                            self.XPUDPServer.sendXPDref(action[&#39;cmddref&#39;],action[&#39;index&#39;],action[&#39;setToValue&#39;])
+
+    def updateComponentList(self, componentType, switchSerialNr, ardSerialNr, attribute):
+        &#34;&#34;&#34;Send updated pin-configuration lists to the Arduino firmware.
+
+        Called automatically via the XML config callback whenever a component&#39;s
+        ``pin``, ``pin2``, or ``stepsPerNotch`` attribute changes, and also
+        called explicitly on startup.
+
+        Builds pin lists for each applicable component type and sends them to
+        :meth:`~lib.arduinoSerial.ArduinoSerial.sendPinList`.  For rotary
+        encoders, the combined string ``&#39;&lt;pinA&gt;,&lt;pinB&gt;,&lt;stepsPerNotch&gt;&#39;`` is
+        used as the pin identifier.
+
+        Only acts if ``ardSerialNr`` matches this board&#39;s serial number and
+        the board is currently connected.
+
+        Args:
+            componentType (str): The type of component whose pin changed, or
+                ``&#39;*&#39;`` to refresh all component types at once.
+            switchSerialNr (str): Unused; preserved for callback interface
+                compatibility.
+            ardSerialNr (str): Serial number of the Arduino that owns the
+                changed component.  Must match :attr:`ardSerialNumber` for
+                any action to be taken.
+            attribute (str): The attribute that changed.  Action is only taken
+                when this is ``&#39;pin&#39;``, ``&#39;pin2&#39;``, or ``&#39;stepsPerNotch&#39;``.
+        &#34;&#34;&#34;
+        logger.debug(&#39;update component list, component type: &#39;+str(componentType)+ &#39;attribute: &#39;+str(attribute) )
+        if ardSerialNr == self.ardSerialNumber and (attribute == &#39;pin&#39; or attribute ==&#39;pin2&#39; or attribute == &#39;stepsPerNotch&#39;) and self.connected == True: # only update pins if this is us and the attribute that has changed is pin
+
+            if componentType == &#39;*&#39; or componentType == &#39;switch&#39;:
+                switchList = self.ardXMLconfig.getComponentList(self.ardSerialNumber, &#39;switch&#39;)
+                switchPinList = []
+
+                for switch in switchList:
+                    if switch[&#39;pin&#39;] != &#39;&#39;:
+                        switchPinList.append(switch[&#39;pin&#39;])
+                logger.debug (&#39;Ard serial &#39;+ self.ardSerialNumber+ &#39;switch pin list: &#39; + str(switchPinList))
+                self.serialConnection.sendPinList(&#39;switch&#39;, switchPinList)
+
+            if componentType == &#39;*&#39; or componentType == &#39;potentiometer&#39;:
+                compList = self.ardXMLconfig.getComponentList(self.ardSerialNumber, &#39;potentiometer&#39;)
+                compPinList = []
+
+                for comp in compList:
+                    if comp[&#39;pin&#39;] != &#39;&#39;:
+                        compPinList.append(comp[&#39;pin&#39;])
+                logger.debug (&#39;Ard serial &#39;+ self.ardSerialNumber+ &#39;pot pin list: &#39; + str(compPinList))
+                self.serialConnection.sendPinList(&#39;potentiometer&#39;, compPinList)
+
+            if componentType == &#39;*&#39; or componentType == &#39;rot_encoder&#39;:
+                logger.debug(&#39;updating rot_encoder&#39;)
+                compList = self.ardXMLconfig.getComponentList(self.ardSerialNumber, &#39;rot_encoder&#39;)
+                compPinList = []
+
+                for comp in compList:
+                    if comp[&#39;pin&#39;] != &#39;&#39; and comp[&#39;pin2&#39;] != &#39;&#39; :
+                        compPinList.append(comp[&#39;pin&#39;]+&#39;,&#39;+comp[&#39;pin2&#39;]+&#39;,&#39;+comp[&#39;stepsPerNotch&#39;])
+                logger.debug (&#39;Ard serial &#39;+ self.ardSerialNumber+ &#39;rot encoder pin list: &#39; + str(compPinList))
+                self.serialConnection.sendPinList(&#39;rot_encoder&#39;, compPinList)
+
+            if componentType == &#39;*&#39; or componentType == &#39;pwm&#39;:
+                compList = self.ardXMLconfig.getComponentList(self.ardSerialNumber, &#39;pwm&#39;)
+                compPinList = []
+
+                for comp in compList:
+                    if comp[&#39;pin&#39;] != &#39;&#39;:
+                        compPinList.append(comp[&#39;pin&#39;])
+                logger.debug (&#39;Ard serial &#39;+ self.ardSerialNumber+ &#39;pwm pin list: &#39; + str(compPinList))
+                self.serialConnection.sendPinList(&#39;pwm&#39;, compPinList)
+
+            if componentType == &#39;*&#39; or componentType == &#39;servo&#39;:
+                compList = self.ardXMLconfig.getComponentList(self.ardSerialNumber, &#39;servo&#39;)
+                compPinList = []
+
+                for comp in compList:
+                    if comp[&#39;pin&#39;] != &#39;&#39;:
+                        compPinList.append(comp[&#39;pin&#39;])
+                logger.debug (&#39;Ard serial &#39;+ self.ardSerialNumber+ &#39;servo pin list: &#39; + str(compPinList))
+                self.serialConnection.sendPinList(&#39;servo&#39;, compPinList)
+
+            if componentType == &#39;*&#39; or componentType == &#39;dig_output&#39;:
+                compList = self.ardXMLconfig.getComponentList(self.ardSerialNumber, &#39;dig_output&#39;)
+                compPinList = []
+
+                for comp in compList:
+                    if comp[&#39;pin&#39;] != &#39;&#39;:
+                        compPinList.append(comp[&#39;pin&#39;])
+                logger.debug (&#39;Ard serial &#39;+ self.ardSerialNumber+ &#39;dig_output pin list: &#39; + str(compPinList))
+                self.serialConnection.sendPinList(&#39;dig_output&#39;, compPinList)
+
+    def quit(self):
+        &#34;&#34;&#34;Stop the Arduino thread and close the serial connection cleanly.
+
+        Calls :meth:`disconnect` to close the serial port, then sets
+        :attr:`running` to ``False`` to exit the :meth:`run` loop.  Should be
+        called before the application exits.
+        &#34;&#34;&#34;
+        self.disconnect()
+        self.running = False
+        self.connected = False
+        logger.info(&#39;Arduino thread stopped, ard serial nr&#39;+self.ardSerialNumber)
+
+    def __isValueInIntervals(self, value, intervalsList):
+        &#34;&#34;&#34;Return whether a value falls inside any of the given intervals.
+
+        Used by :meth:`inputChanged` to determine whether a potentiometer
+        value should trigger a command configured with interval-based
+        activation.
+
+        Args:
+            value (float): The value to test.
+            intervalsList (list[list[float, float]]): List of
+                ``[lower, upper]`` bounds pairs, e.g.
+                ``[[0.0, 200.0], [600.0, 800.0]]``.
+
+        Returns:
+            bool: ``True`` if ``value`` is within any interval (inclusive
+                bounds); ``False`` otherwise.
+        &#34;&#34;&#34;
+        for interval in intervalsList:
+            if value &gt;= interval[0] and value &lt;= interval[1]:
+                return True
+
+        return False
+
+    def __returnLinearInterpolationY(self, xValue, linearSeriesPoints):
+        &#34;&#34;&#34;Compute a linearly interpolated output value for a given input.
+
+        Given a sorted list of ``[x, y]`` control points, returns the Y value
+        corresponding to ``xValue`` using piecewise linear interpolation.
+        Values outside the range of the control points are clamped to the Y
+        value of the nearest endpoint.
+
+        Used to map raw sensor values (ADC counts, dataref values) to
+        hardware output ranges (PWM duty cycles, servo angles).
+
+        Args:
+            xValue (float): The input X value to interpolate.
+            linearSeriesPoints (list[list[float, float]]): Sorted list of
+                ``[x, y]`` control points, e.g.
+                ``[[0.0, 0.0], [1023.0, 255.0]]``.
+
+        Returns:
+            float: The interpolated Y value, rounded to 5 decimal places.
+                Returns ``None`` if ``linearSeriesPoints`` is empty.
+        &#34;&#34;&#34;
+        nrPoints = len(linearSeriesPoints)
+        if nrPoints&gt;0:
+            logger.debug(&#39;xValue: &#39;+ str(xValue) +&#39;, linearSeriesPoints: &#39;+ str(linearSeriesPoints))
+            if xValue &lt; linearSeriesPoints[0][0]:
+                return linearSeriesPoints[0][1]
+
+
+            for i in range(0, nrPoints):
+                if i == nrPoints -1: # the xValue is over max point so we return corresponding y of max point
+                    return linearSeriesPoints[i][1]
+
+                elif linearSeriesPoints[i][0] &lt;= xValue and linearSeriesPoints[i+1][0] &gt;= xValue:
+                    a = float(  float(linearSeriesPoints[i][1]-linearSeriesPoints[i+1][1])
+                        /float(linearSeriesPoints[i][0]-linearSeriesPoints[i+1][0]))
+                    b = float(  float(linearSeriesPoints[i][0]*linearSeriesPoints[i+1][1] - linearSeriesPoints[i][1]*linearSeriesPoints[i+1][0])
+                        /float(linearSeriesPoints[i][0]-linearSeriesPoints[i+1][0]))
+
+                    yValue = xValue*a + b
+                    return round(yValue,5)
+
+    def __returnPointsList(self, pointsString):
+        &#34;&#34;&#34;Parse a points string into a sorted list of ``[x, y]`` float pairs.
+
+        Accepts a string in the format ``[x1,y1], [x2,y2], …, [xn,yn]``
+        (spaces are optional; negative numbers are supported).  Uses a regex
+        to extract individual ``[number,number]`` tokens, then converts each
+        to a ``[float, float]`` pair and sorts the result in ascending order
+        of the X value.
+
+        This format is used for both interpolation mapping points (output
+        components) and interval definitions (potentiometer command activation).
+
+        Args:
+            pointsString (str): Raw points string from the XML configuration,
+                e.g. ``&#39;[0,0],[512,127],[1023,255]&#39;``.
+
+        Returns:
+            list[list[float, float]]: Sorted list of ``[x, y]`` pairs.
+                Returns an empty list if no valid pairs are found.
+        &#34;&#34;&#34;
+        pointsList = []
+        logger.debug(&#39;Points list string: &#39;+pointsString)
+        pointsStringList = re.findall(r&#39;\[[ -]*?[0-9]+.*?[0-9]*?[,]+[ -]*?[0-9]+.*?[0-9]*?[ ]*?\]&#39;,
+                                        pointsString)   # find all points format [nr,nr]
+
+        for pointString in pointsStringList:
+            pointString = re.sub(r&#39;[\[\] ]+&#39;, &#39;&#39;, pointString)  #strip spaces, [ and ]
+
+            valueStrings = pointString.split(&#39;,&#39;)
+
+            if len(valueStrings) == 2:
+                pointsList.append([ float(valueStrings[0]), float(valueStrings[1])])
+
+        # let&#39;s order the table by ascending x of each pointString
+        pointsList.sort(key=itemgetter(0))
+
+        return pointsList</code></pre>
+</details>
+<div class="desc"><p>Background thread managing a single Arduino board.</p>
+<p>Inherits from :class:<code>threading.Thread</code>.
+Start the thread with
+:meth:<code>threading.Thread.start</code>; stop it cleanly with :meth:<code>quit</code>.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>running</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Controls the main output-refresh loop.
+Set to
+<code>False</code> by :meth:<code>quit</code> to stop the thread.</dd>
+<dt><strong><code>connected</code></strong> :&ensp;<code>bool</code></dt>
+<dd><code>True</code> when a serial connection has been
+successfully established with the Arduino.</dd>
+<dt><strong><code>ardSerialNumber</code></strong> :&ensp;<code>str</code></dt>
+<dd>USB serial number used to identify the board.</dd>
+<dt><strong><code>ardXMLconfig</code></strong> :&ensp;<code>arduinoConfig</code></dt>
+<dd>Reference to the shared XML config
+manager.</dd>
+<dt><strong><code>XPUDPServer</code></strong></dt>
+<dd>Reference to the <code>pyXPUDPServer</code> instance used to
+send commands and datarefs to X-Plane.</dd>
+<dt><strong><code>serialConnection</code></strong> :&ensp;<code>ArduinoSerial | None</code></dt>
+<dd>The low-level serial thread,
+or <code>None</code> if not connected.</dd>
+</dl>
+<p>Initialise the Arduino thread and attempt an initial serial connection.</p>
+<p>Registers attribute-change callbacks on the XML config manager and
+marks the board as <code>'Disconnected'</code> / <code>'Not Running'</code> before
+calling :meth:<code>connect</code>.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>ardSerialNumber</code></strong> :&ensp;<code>str</code></dt>
+<dd>USB serial number of the Arduino board.</dd>
+<dt><strong><code>XPUDPServer</code></strong></dt>
+<dd><code>pyxpudpserver.pyXPUDPServer</code> singleton used to
+send X-Plane commands and dataref values.</dd>
+<dt><strong><code>arduinoXMLconfig</code></strong> :&ensp;<code>arduinoConfig</code></dt>
+<dd>Shared XML configuration
+manager instance.</dd>
+</dl></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>threading.Thread</li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="Arduino.Arduino.ardStateChanged"><code class="name flex">
+<span>def <span class="ident">ardStateChanged</span></span>(<span>self, ardState, arduinoFirmwareVersion)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def ardStateChanged(self, ardState, arduinoFirmwareVersion):
+    &#34;&#34;&#34;Handle Arduino ready-state change notifications from the serial layer.
+
+    Updates the ``&#39;ard_status&#39;`` and ``&#39;firmware_version&#39;`` attributes in
+    the XML config whenever the Arduino reports its ready state or firmware
+    version.  These changes propagate to the UI via registered callbacks.
+
+    Args:
+        ardState (bool): ``True`` if the Arduino is ready; ``False`` if
+            it has disconnected or not yet booted.
+        arduinoFirmwareVersion (str): Firmware version string reported by
+            the Arduino (e.g. ``&#39;1.2&#39;``).
+    &#34;&#34;&#34;
+    logger.debug(&#39;ard state has changed: &#39;+str(self.serialConnection.arduinoReady))
+    if ardState == True:
+        self.ardXMLconfig.updateArduinoAttribute(self.ardSerialNumber, &#39;ard_status&#39;, &#39;Running&#39;)
+    else:
+        self.ardXMLconfig.updateArduinoAttribute(self.ardSerialNumber, &#39;ard_status&#39;, &#39;Not Running&#39;)
+
+    self.ardXMLconfig.updateArduinoAttribute(self.ardSerialNumber, &#39;firmware_version&#39;, arduinoFirmwareVersion)</code></pre>
+</details>
+<div class="desc"><p>Handle Arduino ready-state change notifications from the serial layer.</p>
+<p>Updates the <code>'ard_status'</code> and <code>'firmware_version'</code> attributes in
+the XML config whenever the Arduino reports its ready state or firmware
+version.
+These changes propagate to the UI via registered callbacks.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>ardState</code></strong> :&ensp;<code>bool</code></dt>
+<dd><code>True</code> if the Arduino is ready; <code>False</code> if
+it has disconnected or not yet booted.</dd>
+<dt><strong><code>arduinoFirmwareVersion</code></strong> :&ensp;<code>str</code></dt>
+<dd>Firmware version string reported by
+the Arduino (e.g. <code>'1.2'</code>).</dd>
+</dl></div>
+</dd>
+<dt id="Arduino.Arduino.connect"><code class="name flex">
+<span>def <span class="ident">connect</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def connect(self):
+    &#34;&#34;&#34;Attempt to establish a serial connection with the Arduino.
+
+    Uses :func:`~lib.serialArduinoUtils.returnArduinoPort` to discover
+    the current OS port for this board&#39;s serial number (the port may
+    change if the Arduino is reconnected to a different USB hub).
+
+    On success:
+
+    * Creates and starts an :class:`~lib.arduinoSerial.ArduinoSerial`
+      thread.
+    * Registers :meth:`inputChanged` and :meth:`ardStateChanged`
+      callbacks on the serial layer.
+    * Registers :meth:`updateComponentList` on the XML config manager
+      so pin changes are propagated to the firmware.
+    * Sends the initial full pin-configuration to the Arduino.
+
+    On failure (board not found or port open error), :attr:`connected` is
+    set to ``False`` and a warning/error is logged.
+    &#34;&#34;&#34;
+    # Initialise connection, first we will check that the Arduino with this serial nr is still connected on this port
+    self.ardXMLconfig.updateArduinoAttribute(self.ardSerialNumber, &#39;connected&#39;, &#39;Disconnected&#39;)
+    self.ardXMLconfig.updateArduinoAttribute(self.ardSerialNumber, &#39;ard_status&#39;, &#39;Not Running&#39;)
+    ardData = self.ardXMLconfig.getArduinoData(self.ardSerialNumber)
+
+    connected_PORT = lib.serialArduinoUtils.returnArduinoPort(self.ardSerialNumber)
+
+    logger.debug(&#34;connected_PORT = &#34;+ str(connected_PORT))
+    if connected_PORT == None: # then the arduino is not connected, no point trying to get a serial connection going
+        self.connected = False
+        logger.warning(&#34;Arduino serial nr &#34;+self.ardSerialNumber+&#34;, unable to connect on port &#34;+ardData[&#39;port&#39;])
+
+    else: # the arduino is connected, we will attempt to connect on the the PORT value found as the arduino could have been reconnected to another port
+        self.serialConnection = ardSerial.ArduinoSerial(connected_PORT, ardData[&#39;baud&#39;])
+        if self.serialConnection.connected == True:
+            self.serialConnection.registerInputChangedCallback(self.inputChanged)
+            self.serialConnection.registerArduinoStateChangedCallback(self.ardStateChanged)
+            self.ardXMLconfig.registerComponentAttributeChangedCallback(self.updateComponentList) #
+            time.sleep(0.01)
+
+            self.serialConnection.start()
+
+            self.updateComponentList(&#39;*&#39;, &#39;&#39;, self.ardSerialNumber, &#39;pin&#39;) # set the pins as switches on arduino
+            self.connected = True
+            logger.info(&#34;Arduino serial nr &#34;+str(self.ardSerialNumber)+&#34; connected on port: &#34;+str(connected_PORT)+&#34;, BAUD: &#34;+ str(ardData[&#39;baud&#39;]))
+        else:
+            self.connected = False
+            logger.error(&#34;Arduino serial nr &#34;+self.ardSerialNumber+&#34;, unable to connect on port &#34;+str(connected_PORT)+&#34;, BAUD: &#34;+ str(ardData[&#39;baud&#39;]))
+
+    if self.connected == True:
+        self.ardXMLconfig.updateArduinoAttribute(self.ardSerialNumber, &#39;connected&#39;, &#39;Connected&#39;)
+    else:
+        self.ardXMLconfig.updateArduinoAttribute(self.ardSerialNumber, &#39;connected&#39;, &#39;Disconnected&#39;)</code></pre>
+</details>
+<div class="desc"><p>Attempt to establish a serial connection with the Arduino.</p>
+<p>Uses :func:<code>~lib.serialArduinoUtils.returnArduinoPort</code> to discover
+the current OS port for this board's serial number (the port may
+change if the Arduino is reconnected to a different USB hub).</p>
+<p>On success:</p>
+<ul>
+<li>Creates and starts an :class:<code>~lib.arduinoSerial.ArduinoSerial</code>
+thread.</li>
+<li>Registers :meth:<code>inputChanged</code> and :meth:<code>ardStateChanged</code>
+callbacks on the serial layer.</li>
+<li>Registers :meth:<code>updateComponentList</code> on the XML config manager
+so pin changes are propagated to the firmware.</li>
+<li>Sends the initial full pin-configuration to the Arduino.</li>
+</ul>
+<p>On failure (board not found or port open error), :attr:<code>connected</code> is
+set to <code>False</code> and a warning/error is logged.</p></div>
+</dd>
+<dt id="Arduino.Arduino.disconnect"><code class="name flex">
+<span>def <span class="ident">disconnect</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def disconnect(self):
+    &#34;&#34;&#34;Close the serial connection and update configuration status flags.
+
+    If the board is currently connected, marks it as ``&#39;Disconnected&#39;``
+    and ``&#39;Not Running&#39;`` in the XML config, then stops the
+    :class:`~lib.arduinoSerial.ArduinoSerial` thread.
+    &#34;&#34;&#34;
+    if self.connected == True:
+        self.ardXMLconfig.updateArduinoAttribute(self.ardSerialNumber, &#39;connected&#39;, &#39;Disconnected&#39;)
+        self.ardXMLconfig.updateArduinoAttribute(self.ardSerialNumber, &#39;ard_status&#39;, &#39;Not Running&#39;)
+        self.serialConnection.quit()</code></pre>
+</details>
+<div class="desc"><p>Close the serial connection and update configuration status flags.</p>
+<p>If the board is currently connected, marks it as <code>'Disconnected'</code>
+and <code>'Not Running'</code> in the XML config, then stops the
+:class:<code>~lib.arduinoSerial.ArduinoSerial</code> thread.</p></div>
+</dd>
+<dt id="Arduino.Arduino.handleArduinoAttributeChange"><code class="name flex">
+<span>def <span class="ident">handleArduinoAttributeChange</span></span>(<span>self, ardSerialNr, attribute)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def handleArduinoAttributeChange(self, ardSerialNr, attribute):
+    &#34;&#34;&#34;React to Arduino-level attribute changes in the XML configuration.
+
+    Currently only acts on baud-rate changes by triggering a full
+    :meth:`reconnect` so the serial port is reopened at the new speed.
+
+    Args:
+        ardSerialNr (str): Serial number of the Arduino whose attribute
+            changed.
+        attribute (str): Name of the changed attribute (e.g. ``&#39;baud&#39;``).
+    &#34;&#34;&#34;
+    logging.debug(&#34;ard attribute changed: &#34;+attribute)
+    if attribute == &#39;baud&#39;:
+        self.reconnect()</code></pre>
+</details>
+<div class="desc"><p>React to Arduino-level attribute changes in the XML configuration.</p>
+<p>Currently only acts on baud-rate changes by triggering a full
+:meth:<code>reconnect</code> so the serial port is reopened at the new speed.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>ardSerialNr</code></strong> :&ensp;<code>str</code></dt>
+<dd>Serial number of the Arduino whose attribute
+changed.</dd>
+<dt><strong><code>attribute</code></strong> :&ensp;<code>str</code></dt>
+<dd>Name of the changed attribute (e.g. <code>'baud'</code>).</dd>
+</dl></div>
+</dd>
+<dt id="Arduino.Arduino.inputChanged"><code class="name flex">
+<span>def <span class="ident">inputChanged</span></span>(<span>self, inputType, pin, value)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def inputChanged(self, inputType, pin, value):
+    &#34;&#34;&#34;Handle an input-state change received from the Arduino serial layer.
+
+    Dispatches to the appropriate handling block based on ``inputType``:
+
+    * **SW (switch)** — maps value 0/1 to ``&#39;off&#39;``/``&#39;on&#39;``, updates the
+      component state in the XML config, then iterates over all configured
+      actions.  For ``&#39;cmd&#39;`` actions, sends or stops the X-Plane command
+      depending on the switch state and the ``continuous`` flag.  For
+      ``&#39;dref&#39;`` actions, writes the specified value to the dataref.
+
+    * **POT (potentiometer)** — stores the raw ADC value, then for
+      ``&#39;dref&#39;`` actions applies linear interpolation via the configured
+      mapping points before writing to X-Plane.  For ``&#39;cmd&#39;`` actions,
+      fires the command if the value falls within any configured interval.
+
+    * **ROTENC (rotary encoder)** — determines ``&#39;up&#39;``/``&#39;down&#39;``
+      direction from the sign of ``value``.  Applies the ``multiplier``
+      and optional acceleration (``abs(value)`` repetitions) to determine
+      how many times the X-Plane command is sent.
+
+    This method is registered as a callback on the
+    :class:`~lib.arduinoSerial.ArduinoSerial` instance and is called from
+    that thread, not from this thread&#39;s :meth:`run` loop.
+
+    Args:
+        inputType (str): Arduino input type identifier — one of
+            ``&#39;SW&#39;``, ``&#39;POT&#39;``, or ``&#39;ROTENC&#39;``.
+        pin (int): Arduino pin number that changed.
+        value (int): New value on the pin.  Interpretation depends on
+            ``inputType``:
+
+            * ``SW`` — ``0`` (off) or ``1`` (on).
+            * ``POT`` — raw ADC reading, 0–1023.
+            * ``ROTENC`` — signed step count (positive = clockwise).
+    &#34;&#34;&#34;
+    if self.connected == True:
+        logger.debug(&#34;ARD CLASS ard input changed callback, input Type: &#34;+inputType+ &#34;, pin&#34; + str(pin) + &#34; value:&#34; + str(value))
+        if inputType == &#39;SW&#39;:
+            switch_state = &#39;on&#39;
+            if value == 0 :
+                switch_state = &#39;off&#39;
+
+            logger.debug(&#39;updating switch state to value:&#39; + switch_state)
+            compID = self.ardXMLconfig.getComponentAttribute( self.ardSerialNumber,&#39;switch&#39;, pin, &#39;id&#39;)
+            self.ardXMLconfig.updateComponentAttribute(compID, &#39;switch&#39;, &#39;state&#39;, switch_state)
+
+            for action in self.ardXMLconfig.getComponentActions(self.ardSerialNumber, &#39;switch&#39;, pin):
+                if action[&#39;cmddref&#39;]!= None:
+                    logger.debug (&#34;action type: &#34;+ action[&#39;action_type&#39;]
+                                    + &#34; action state: &#34;+action[&#39;state&#39;]
+                                    + &#34;switch state: &#34; + switch_state
+                                    + &#34; action: &#34; + action [&#39;cmddref&#39;] )
+                    sendContinuous = False
+                    if action[&#39;continuous&#39;] == &#39;True&#39;:
+                        sendContinuous = True
+
+                    if action[&#39;action_type&#39;] == &#39;cmd&#39; and action[&#39;state&#39;] == switch_state:
+                        self.XPUDPServer.sendXPCmd(action [&#39;cmddref&#39;], sendContinuous)
+                    if action[&#39;action_type&#39;] == &#39;cmd&#39; and action[&#39;state&#39;] != switch_state and action[&#39;continuous&#39;] == &#39;True&#39;: # suppress any continuous cmd
+                        self.XPUDPServer.stopSendingXPCmd(action [&#39;cmddref&#39;])
+
+                    if action[&#39;action_type&#39;] == &#39;dref&#39; and action[&#39;state&#39;] == switch_state:
+                        self.XPUDPServer.sendXPDref(action[&#39;cmddref&#39;],action[&#39;index&#39;],action[&#39;setToValue&#39;])
+
+        if inputType == &#39;POT&#39;:
+            state = str(value)
+            compID = self.ardXMLconfig.getComponentAttribute(self.ardSerialNumber, &#39;potentiometer&#39;, pin, &#39;id&#39;)
+            self.ardXMLconfig.updateComponentAttribute(compID, &#39;potentiometer&#39;, &#39;state&#39;, state)
+
+            for action in self.ardXMLconfig.getComponentActions(self.ardSerialNumber, &#39;potentiometer&#39;, pin):
+                if action[&#39;cmddref&#39;]!= None:
+                    logger.debug (&#34;action type: &#34;+ action[&#39;action_type&#39;]
+                                    + &#34; action state: &#34;+action[&#39;state&#39;]
+                                    + &#34;pot state: &#34; + state
+                                    + &#34; action: &#34; + action [&#39;cmddref&#39;] )
+
+                    if action[&#39;action_type&#39;] == &#39;dref&#39; :
+                        logger.debug(&#39;DREF set to value:&#39;+action[&#39;setToValue&#39;])
+                        pointsList = self.__returnPointsList(action[&#39;setToValue&#39;])
+                        logger.debug(&#39;Points list: &#39; + str(pointsList))
+                        if len(pointsList) &gt; 0:
+                            outValue = self.__returnLinearInterpolationY(float(state), pointsList)
+
+                            logger.debug(&#39;Output value to XP DREF: &#39; +str(outValue))
+                            self.XPUDPServer.sendXPDref(action[&#39;cmddref&#39;],action[&#39;index&#39;],outValue)
+
+                    if action[&#39;action_type&#39;] == &#39;cmd&#39; :
+                        logger.debug(&#39;CMD state:&#39;+action[&#39;state&#39;])
+                        intervalsList = self.__returnPointsList(action[&#39;state&#39;])
+                        logger.debug(&#39;Intervals list: &#39; + str(intervalsList))
+                        if len(intervalsList) &gt; 0:
+                            if self.__isValueInIntervals(float(state), intervalsList):
+                                logger.debug(&#39;Send XPlane CMD : &#39; +action[&#39;cmddref&#39;])
+                                self.XPUDPServer.sendXPCmd(action[&#39;cmddref&#39;])
+
+        if inputType == &#39;ROTENC&#39;:
+            acceleration = self.ardXMLconfig.getComponentAttribute( self.ardSerialNumber,&#39;rot_encoder&#39;, pin, &#39;acceleration&#39;)
+            multiplier = float(self.ardXMLconfig.getComponentAttribute( self.ardSerialNumber,&#39;rot_encoder&#39;, pin, &#39;multiplier&#39;))
+
+            rot_enc_state = &#39;up&#39;
+            if value &lt; 0 :
+                rot_enc_state = &#39;down&#39;
+            if acceleration == &#39;True&#39;:
+                numberTimesSendAction = int(abs(value))
+            else:
+                numberTimesSendAction = 1
+            numberTimesSendAction = numberTimesSendAction * int(multiplier)
+
+            logger.debug(&#39;updating rot encoder state to value:&#39; + rot_enc_state)
+            compID = self.ardXMLconfig.getComponentAttribute( self.ardSerialNumber,&#39;rot_encoder&#39;, pin, &#39;id&#39;)
+            self.ardXMLconfig.updateComponentAttribute(compID, &#39;rot_encoder&#39;, &#39;state&#39;, rot_enc_state)
+
+            for action in self.ardXMLconfig.getComponentActions(self.ardSerialNumber, &#39;rot_encoder&#39;, pin):
+                if action[&#39;cmddref&#39;]!= None:
+                    logger.debug (&#34;action type: &#34;+ action[&#39;action_type&#39;]
+                                    + &#34; action state: &#34;+action[&#39;state&#39;]
+                                    + &#34;rot_encoder state: &#34; + rot_enc_state
+                                    + &#34; action: &#34; + action [&#39;cmddref&#39;] )
+                    sendContinuous = False
+                    if action[&#39;continuous&#39;] == &#39;True&#39;:
+                        sendContinuous = True
+
+                    if action[&#39;action_type&#39;] == &#39;cmd&#39; and action[&#39;state&#39;] == rot_enc_state:
+                        for i in range(0, numberTimesSendAction):
+                            self.XPUDPServer.sendXPCmd(action [&#39;cmddref&#39;], sendContinuous)
+                    if action[&#39;action_type&#39;] == &#39;cmd&#39; and action[&#39;state&#39;] != rot_enc_state and action[&#39;continuous&#39;] == &#39;True&#39;: # suppress any continuous cmd
+                        self.XPUDPServer.stopSendingXPCmd(action [&#39;cmddref&#39;])
+
+                    if action[&#39;action_type&#39;] == &#39;dref&#39; and action[&#39;state&#39;] == rot_enc_state:
+                        self.XPUDPServer.sendXPDref(action[&#39;cmddref&#39;],action[&#39;index&#39;],action[&#39;setToValue&#39;])</code></pre>
+</details>
+<div class="desc"><p>Handle an input-state change received from the Arduino serial layer.</p>
+<p>Dispatches to the appropriate handling block based on <code>inputType</code>:</p>
+<ul>
+<li>
+<p><strong>SW (switch)</strong> — maps value 0/1 to <code>'off'</code>/<code>'on'</code>, updates the
+component state in the XML config, then iterates over all configured
+actions.
+For <code>'cmd'</code> actions, sends or stops the X-Plane command
+depending on the switch state and the <code>continuous</code> flag.
+For
+<code>'dref'</code> actions, writes the specified value to the dataref.</p>
+</li>
+<li>
+<p><strong>POT (potentiometer)</strong> — stores the raw ADC value, then for
+<code>'dref'</code> actions applies linear interpolation via the configured
+mapping points before writing to X-Plane.
+For <code>'cmd'</code> actions,
+fires the command if the value falls within any configured interval.</p>
+</li>
+<li>
+<p><strong>ROTENC (rotary encoder)</strong> — determines <code>'up'</code>/<code>'down'</code>
+direction from the sign of <code>value</code>.
+Applies the <code>multiplier</code>
+and optional acceleration (<code>abs(value)</code> repetitions) to determine
+how many times the X-Plane command is sent.</p>
+</li>
+</ul>
+<p>This method is registered as a callback on the
+:class:<code>~lib.arduinoSerial.ArduinoSerial</code> instance and is called from
+that thread, not from this thread's :meth:<code>run</code> loop.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>inputType</code></strong> :&ensp;<code>str</code></dt>
+<dd>Arduino input type identifier — one of
+<code>'SW'</code>, <code>'POT'</code>, or <code>'ROTENC'</code>.</dd>
+<dt><strong><code>pin</code></strong> :&ensp;<code>int</code></dt>
+<dd>Arduino pin number that changed.</dd>
+<dt><strong><code>value</code></strong> :&ensp;<code>int</code></dt>
+<dd>
+<p>New value on the pin.
+Interpretation depends on
+<code>inputType</code>:</p>
+<ul>
+<li><code>SW</code> — <code>0</code> (off) or <code>1</code> (on).</li>
+<li><code>POT</code> — raw ADC reading, 0–1023.</li>
+<li><code>ROTENC</code> — signed step count (positive = clockwise).</li>
+</ul>
+</dd>
+</dl></div>
+</dd>
+<dt id="Arduino.Arduino.quit"><code class="name flex">
+<span>def <span class="ident">quit</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def quit(self):
+    &#34;&#34;&#34;Stop the Arduino thread and close the serial connection cleanly.
+
+    Calls :meth:`disconnect` to close the serial port, then sets
+    :attr:`running` to ``False`` to exit the :meth:`run` loop.  Should be
+    called before the application exits.
+    &#34;&#34;&#34;
+    self.disconnect()
+    self.running = False
+    self.connected = False
+    logger.info(&#39;Arduino thread stopped, ard serial nr&#39;+self.ardSerialNumber)</code></pre>
+</details>
+<div class="desc"><p>Stop the Arduino thread and close the serial connection cleanly.</p>
+<p>Calls :meth:<code>disconnect</code> to close the serial port, then sets
+:attr:<code>running</code> to <code>False</code> to exit the :meth:<code>run</code> loop.
+Should be
+called before the application exits.</p></div>
+</dd>
+<dt id="Arduino.Arduino.reconnect"><code class="name flex">
+<span>def <span class="ident">reconnect</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def reconnect(self):
+    &#34;&#34;&#34;Disconnect then immediately reconnect the serial link.
+
+    Called automatically when the baud rate is changed in the
+    configuration.  Delegates to :meth:`disconnect` followed by
+    :meth:`connect`.
+    &#34;&#34;&#34;
+    self.disconnect()
+    self.connect()</code></pre>
+</details>
+<div class="desc"><p>Disconnect then immediately reconnect the serial link.</p>
+<p>Called automatically when the baud rate is changed in the
+configuration.
+Delegates to :meth:<code>disconnect</code> followed by
+:meth:<code>connect</code>.</p></div>
+</dd>
+<dt id="Arduino.Arduino.run"><code class="name flex">
+<span>def <span class="ident">run</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def run(self):
+    &#34;&#34;&#34;Main thread loop — continuously refresh all configured outputs.
+
+    Do **not** call this method directly.  Use
+    :meth:`threading.Thread.start` to launch the thread.
+
+    The loop runs every 10 ms and calls :meth:`__refreshOutputs` for each
+    output type (``&#39;pwm&#39;``, ``&#39;servo&#39;``, ``&#39;dig_output&#39;``).  A forced
+    refresh is triggered once per second to compensate for any missed
+    updates (e.g. after initial connection).
+
+    The loop exits when :attr:`running` is set to ``False`` (via
+    :meth:`quit`).
+    &#34;&#34;&#34;
+    buffer =&#34;&#34;
+    startTime = time.time()
+    forceRefresh = True
+    lastTime = time.time();
+
+    while self.running:
+        # obtain list of outputs &amp; associated actions
+        if time.time() - lastTime &gt; 1.0:
+            forceRefresh = True
+            lastTime = time.time()
+
+        if self.connected == True:
+            self.__refreshOutputs(&#39;pwm&#39;, forceRefresh)
+            self.__refreshOutputs(&#39;servo&#39;, forceRefresh)
+            self.__refreshOutputs(&#39;dig_output&#39;, forceRefresh)
+            forceRefresh = False # forcing Refresh only on first run of the loop
+        time.sleep(0.01)</code></pre>
+</details>
+<div class="desc"><p>Main thread loop — continuously refresh all configured outputs.</p>
+<p>Do <strong>not</strong> call this method directly.
+Use
+:meth:<code>threading.Thread.start</code> to launch the thread.</p>
+<p>The loop runs every 10 ms and calls :meth:<code>__refreshOutputs</code> for each
+output type (<code>'pwm'</code>, <code>'servo'</code>, <code>'dig_output'</code>).
+A forced
+refresh is triggered once per second to compensate for any missed
+updates (e.g. after initial connection).</p>
+<p>The loop exits when :attr:<code>running</code> is set to <code>False</code> (via
+:meth:<code>quit</code>).</p></div>
+</dd>
+<dt id="Arduino.Arduino.updateComponentList"><code class="name flex">
+<span>def <span class="ident">updateComponentList</span></span>(<span>self, componentType, switchSerialNr, ardSerialNr, attribute)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def updateComponentList(self, componentType, switchSerialNr, ardSerialNr, attribute):
+    &#34;&#34;&#34;Send updated pin-configuration lists to the Arduino firmware.
+
+    Called automatically via the XML config callback whenever a component&#39;s
+    ``pin``, ``pin2``, or ``stepsPerNotch`` attribute changes, and also
+    called explicitly on startup.
+
+    Builds pin lists for each applicable component type and sends them to
+    :meth:`~lib.arduinoSerial.ArduinoSerial.sendPinList`.  For rotary
+    encoders, the combined string ``&#39;&lt;pinA&gt;,&lt;pinB&gt;,&lt;stepsPerNotch&gt;&#39;`` is
+    used as the pin identifier.
+
+    Only acts if ``ardSerialNr`` matches this board&#39;s serial number and
+    the board is currently connected.
+
+    Args:
+        componentType (str): The type of component whose pin changed, or
+            ``&#39;*&#39;`` to refresh all component types at once.
+        switchSerialNr (str): Unused; preserved for callback interface
+            compatibility.
+        ardSerialNr (str): Serial number of the Arduino that owns the
+            changed component.  Must match :attr:`ardSerialNumber` for
+            any action to be taken.
+        attribute (str): The attribute that changed.  Action is only taken
+            when this is ``&#39;pin&#39;``, ``&#39;pin2&#39;``, or ``&#39;stepsPerNotch&#39;``.
+    &#34;&#34;&#34;
+    logger.debug(&#39;update component list, component type: &#39;+str(componentType)+ &#39;attribute: &#39;+str(attribute) )
+    if ardSerialNr == self.ardSerialNumber and (attribute == &#39;pin&#39; or attribute ==&#39;pin2&#39; or attribute == &#39;stepsPerNotch&#39;) and self.connected == True: # only update pins if this is us and the attribute that has changed is pin
+
+        if componentType == &#39;*&#39; or componentType == &#39;switch&#39;:
+            switchList = self.ardXMLconfig.getComponentList(self.ardSerialNumber, &#39;switch&#39;)
+            switchPinList = []
+
+            for switch in switchList:
+                if switch[&#39;pin&#39;] != &#39;&#39;:
+                    switchPinList.append(switch[&#39;pin&#39;])
+            logger.debug (&#39;Ard serial &#39;+ self.ardSerialNumber+ &#39;switch pin list: &#39; + str(switchPinList))
+            self.serialConnection.sendPinList(&#39;switch&#39;, switchPinList)
+
+        if componentType == &#39;*&#39; or componentType == &#39;potentiometer&#39;:
+            compList = self.ardXMLconfig.getComponentList(self.ardSerialNumber, &#39;potentiometer&#39;)
+            compPinList = []
+
+            for comp in compList:
+                if comp[&#39;pin&#39;] != &#39;&#39;:
+                    compPinList.append(comp[&#39;pin&#39;])
+            logger.debug (&#39;Ard serial &#39;+ self.ardSerialNumber+ &#39;pot pin list: &#39; + str(compPinList))
+            self.serialConnection.sendPinList(&#39;potentiometer&#39;, compPinList)
+
+        if componentType == &#39;*&#39; or componentType == &#39;rot_encoder&#39;:
+            logger.debug(&#39;updating rot_encoder&#39;)
+            compList = self.ardXMLconfig.getComponentList(self.ardSerialNumber, &#39;rot_encoder&#39;)
+            compPinList = []
+
+            for comp in compList:
+                if comp[&#39;pin&#39;] != &#39;&#39; and comp[&#39;pin2&#39;] != &#39;&#39; :
+                    compPinList.append(comp[&#39;pin&#39;]+&#39;,&#39;+comp[&#39;pin2&#39;]+&#39;,&#39;+comp[&#39;stepsPerNotch&#39;])
+            logger.debug (&#39;Ard serial &#39;+ self.ardSerialNumber+ &#39;rot encoder pin list: &#39; + str(compPinList))
+            self.serialConnection.sendPinList(&#39;rot_encoder&#39;, compPinList)
+
+        if componentType == &#39;*&#39; or componentType == &#39;pwm&#39;:
+            compList = self.ardXMLconfig.getComponentList(self.ardSerialNumber, &#39;pwm&#39;)
+            compPinList = []
+
+            for comp in compList:
+                if comp[&#39;pin&#39;] != &#39;&#39;:
+                    compPinList.append(comp[&#39;pin&#39;])
+            logger.debug (&#39;Ard serial &#39;+ self.ardSerialNumber+ &#39;pwm pin list: &#39; + str(compPinList))
+            self.serialConnection.sendPinList(&#39;pwm&#39;, compPinList)
+
+        if componentType == &#39;*&#39; or componentType == &#39;servo&#39;:
+            compList = self.ardXMLconfig.getComponentList(self.ardSerialNumber, &#39;servo&#39;)
+            compPinList = []
+
+            for comp in compList:
+                if comp[&#39;pin&#39;] != &#39;&#39;:
+                    compPinList.append(comp[&#39;pin&#39;])
+            logger.debug (&#39;Ard serial &#39;+ self.ardSerialNumber+ &#39;servo pin list: &#39; + str(compPinList))
+            self.serialConnection.sendPinList(&#39;servo&#39;, compPinList)
+
+        if componentType == &#39;*&#39; or componentType == &#39;dig_output&#39;:
+            compList = self.ardXMLconfig.getComponentList(self.ardSerialNumber, &#39;dig_output&#39;)
+            compPinList = []
+
+            for comp in compList:
+                if comp[&#39;pin&#39;] != &#39;&#39;:
+                    compPinList.append(comp[&#39;pin&#39;])
+            logger.debug (&#39;Ard serial &#39;+ self.ardSerialNumber+ &#39;dig_output pin list: &#39; + str(compPinList))
+            self.serialConnection.sendPinList(&#39;dig_output&#39;, compPinList)</code></pre>
+</details>
+<div class="desc"><p>Send updated pin-configuration lists to the Arduino firmware.</p>
+<p>Called automatically via the XML config callback whenever a component's
+<code>pin</code>, <code>pin2</code>, or <code>stepsPerNotch</code> attribute changes, and also
+called explicitly on startup.</p>
+<p>Builds pin lists for each applicable component type and sends them to
+:meth:<code>~lib.arduinoSerial.ArduinoSerial.sendPinList</code>.
+For rotary
+encoders, the combined string <code>'&lt;pinA&gt;,&lt;pinB&gt;,&lt;stepsPerNotch&gt;'</code> is
+used as the pin identifier.</p>
+<p>Only acts if <code>ardSerialNr</code> matches this board's serial number and
+the board is currently connected.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>componentType</code></strong> :&ensp;<code>str</code></dt>
+<dd>The type of component whose pin changed, or
+<code>'*'</code> to refresh all component types at once.</dd>
+<dt><strong><code>switchSerialNr</code></strong> :&ensp;<code>str</code></dt>
+<dd>Unused; preserved for callback interface
+compatibility.</dd>
+<dt><strong><code>ardSerialNr</code></strong> :&ensp;<code>str</code></dt>
+<dd>Serial number of the Arduino that owns the
+changed component.
+Must match :attr:<code>ardSerialNumber</code> for
+any action to be taken.</dd>
+<dt><strong><code>attribute</code></strong> :&ensp;<code>str</code></dt>
+<dd>The attribute that changed.
+Action is only taken
+when this is <code>'pin'</code>, <code>'pin2'</code>, or <code>'stepsPerNotch'</code>.</dd>
+</dl></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul>
+<li><a href="#arduinopy">Arduino.py</a></li>
+</ul>
+</div>
+<ul id="index">
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="Arduino.Arduino" href="#Arduino.Arduino">Arduino</a></code></h4>
+<ul class="">
+<li><code><a title="Arduino.Arduino.ardStateChanged" href="#Arduino.Arduino.ardStateChanged">ardStateChanged</a></code></li>
+<li><code><a title="Arduino.Arduino.connect" href="#Arduino.Arduino.connect">connect</a></code></li>
+<li><code><a title="Arduino.Arduino.disconnect" href="#Arduino.Arduino.disconnect">disconnect</a></code></li>
+<li><code><a title="Arduino.Arduino.handleArduinoAttributeChange" href="#Arduino.Arduino.handleArduinoAttributeChange">handleArduinoAttributeChange</a></code></li>
+<li><code><a title="Arduino.Arduino.inputChanged" href="#Arduino.Arduino.inputChanged">inputChanged</a></code></li>
+<li><code><a title="Arduino.Arduino.quit" href="#Arduino.Arduino.quit">quit</a></code></li>
+<li><code><a title="Arduino.Arduino.reconnect" href="#Arduino.Arduino.reconnect">reconnect</a></code></li>
+<li><code><a title="Arduino.Arduino.run" href="#Arduino.Arduino.run">run</a></code></li>
+<li><code><a title="Arduino.Arduino.updateComponentList" href="#Arduino.Arduino.updateComponentList">updateComponentList</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

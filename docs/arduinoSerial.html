@@ -1,0 +1,828 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>arduinoSerial API documentation</title>
+<meta name="description" content="arduinoSerial.py
+Serial communication layer between pyXPArduino and an Arduino board …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>arduinoSerial</code></h1>
+</header>
+<section id="section-intro">
+<h2 id="arduinoserialpy">arduinoSerial.py</h2>
+<p>Serial communication layer between pyXPArduino and an Arduino board.</p>
+<p>:class:<code><a title="arduinoSerial.ArduinoSerial" href="#arduinoSerial.ArduinoSerial">ArduinoSerial</a></code> runs as a dedicated background thread.
+It opens a
+serial port, resets the Arduino via the DTR line, and then enters a
+read/write loop:</p>
+<ul>
+<li><strong>Outbound</strong> — commands queued by :meth:<code><a title="arduinoSerial.ArduinoSerial.sendPinList" href="#arduinoSerial.ArduinoSerial.sendPinList">ArduinoSerial.sendPinList()</a></code> and
+:meth:<code><a title="arduinoSerial.ArduinoSerial.sendOutputValue" href="#arduinoSerial.ArduinoSerial.sendOutputValue">ArduinoSerial.sendOutputValue()</a></code> are flushed to the serial port once
+the Arduino has signalled it is ready.</li>
+<li><strong>Inbound</strong> — raw bytes from the Arduino are accumulated into a text buffer,
+split on the <code>';'</code> delimiter, and dispatched to
+:meth:<code>ArduinoSerial.__processArduinoCmd</code>.</li>
+</ul>
+<p>Serial protocol summary
+~~~~~~~~~~~~~~~~~~~~~~~
+All messages are plain ASCII terminated with <code>';'</code>.</p>
+<p>Inbound (Arduino → PC):</p>
+<ul>
+<li><code>READY;</code>
+— board has booted and is ready</li>
+<li><code>VERSION:&lt;ver&gt;;</code>
+— firmware version string</li>
+<li><code>SW:&lt;pin&gt;:&lt;value&gt;;</code>
+— switch state change (value 0 or 1)</li>
+<li><code>POT:&lt;pin&gt;:&lt;value&gt;;</code>
+— potentiometer value change (0–1023)</li>
+<li><code>ROTENC:&lt;pin&gt;:&lt;value&gt;;</code>
+— rotary encoder step (+N or −N)</li>
+</ul>
+<p>Outbound (PC → Arduino):</p>
+<ul>
+<li><code>SW_PINS:&lt;p1&gt;:&lt;p2&gt;:…;</code>
+— configure switch pins</li>
+<li><code>POT_PINS:&lt;p1&gt;:…;</code>
+— configure potentiometer pins</li>
+<li><code>PWM_PINS:&lt;p1&gt;:…;</code>
+— configure PWM output pins</li>
+<li><code>ROTENC_PINS:&lt;p1&gt;,&lt;p2&gt;,&lt;s&gt;;</code> — configure encoder pins + steps/notch</li>
+<li><code>DIGOUT_PINS:&lt;p1&gt;:…;</code>
+— configure digital output pins</li>
+<li><code>SERVO_PINS:&lt;p1&gt;:…;</code>
+— configure servo pins</li>
+<li><code>PWM:&lt;pin&gt;:&lt;value&gt;;</code>
+— set PWM duty cycle</li>
+<li><code>SERVO:&lt;pin&gt;:&lt;value&gt;;</code>
+— set servo position</li>
+<li><code>DIGOUT:&lt;pin&gt;:&lt;value&gt;;</code>
+— set digital output state</li>
+</ul>
+<p>Example usage::</p>
+<pre><code>import ArduinoSerial
+ard = ArduinoSerial.ArduinoSerial("COM3", 115200)
+ard.start()
+# … later …
+ard.quit()
+</code></pre>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="arduinoSerial.ArduinoSerial"><code class="flex name class">
+<span>class <span class="ident">ArduinoSerial</span></span>
+<span>(</span><span>PORT, BAUD, XPUDPServer=None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ArduinoSerial(threading.Thread):
+    &#34;&#34;&#34;Background thread managing serial I/O with a single Arduino board.
+
+    One instance is created per connected Arduino.  The thread opens the
+    serial port in ``__init__``, then :meth:`run` loops continuously reading
+    inbound data and flushing outbound command queues.
+
+    Attributes:
+        arduinoReady (bool): ``True`` once the Arduino has sent its ``READY``
+            message and is accepting commands.
+        arduinoFirmwareVersion (str): Firmware version string reported by the
+            Arduino, e.g. ``&#39;1.2&#39;``.
+        connected (bool): ``True`` if the serial port was opened successfully.
+        running (bool): Controls the main loop; set to ``False`` by
+            :meth:`quit` to stop the thread.
+        queuedCommands (list[str]): Buffer of outbound command strings waiting
+            to be written to the serial port.
+        PORT (str): The OS port identifier this instance is bound to.
+    &#34;&#34;&#34;
+
+    #: dict[str, str]: Maps component type names to the Arduino pin-list
+    #: command prefixes used when configuring hardware pins.
+    COMP_PIN_CMDS = {&#39;switch&#39;                   : &#34;SW_PINS:&#34;,
+                    &#39;potentiometer&#39;     : &#34;POT_PINS:&#34;,
+                    &#39;pwm&#39;                               : &#34;PWM_PINS:&#34;,
+                    &#39;rot_encoder&#39;               : &#34;ROTENC_PINS:&#34;,
+                    &#39;dig_output&#39;                : &#34;DIGOUT_PINS:&#34;,
+                    &#39;servo&#39;                             : &#34;SERVO_PINS:&#34;
+                    }
+
+    #: dict[str, str]: Maps output component type names to the Arduino value
+    #: command prefixes used when sending output values.
+    OUTPUT_TYPE_CMDS = {&#39;pwm&#39;                           : &#34;PWM:&#34;,
+                        &#39;servo&#39;                         : &#34;SERVO:&#34;,
+                        &#39;dig_output&#39;            : &#34;DIGOUT:&#34;
+                        }
+
+    def __init__(self, PORT, BAUD, XPUDPServer=None):
+        &#34;&#34;&#34;Open a serial connection to an Arduino and prepare the I/O thread.
+
+        Performs the following initialisation sequence:
+
+        1. Opens ``PORT`` at ``BAUD`` with 8N1 framing.
+        2. Pulses DTR low then high to trigger the Arduino hardware reset /
+           bootloader entry sequence.
+        3. Flushes any stale bytes from the input buffer.
+        4. Waits 500 ms for the Arduino to finish booting.
+
+        If the port cannot be opened a :class:`serial.SerialException` is
+        caught, ``connected`` is set to ``False``, and an error is logged —
+        the thread can still be *started* but will exit its loop immediately.
+
+        Args:
+            PORT (str): OS serial port identifier, e.g. ``&#39;COM3&#39;`` or
+                ``&#39;/dev/ttyUSB0&#39;``.
+            BAUD (int | str): Baud rate.  Must match the rate compiled into the
+                Arduino firmware.
+            XPUDPServer (optional): Reference to the pyXPUDPServer instance.
+                Only required when the legacy ``CMND``/``DREF`` inbound
+                message types are used (not used in normal operation).
+        &#34;&#34;&#34;
+        threading.Thread.__init__(self)
+        self.arduinoReady = False
+        self.arduinoFirmwareVersion = &#39;&#39;
+        self.running = True
+        self.queuedCommands = []
+        self.inputCallbacks = []
+        self.ardStateChangedCallbacks = []
+
+        self.connected = False  # are we connected (serial connection successful) to the arduino
+        logger.debug(&#34;Ardserial running as user: &#34;+getpass.getuser())
+        logger.debug(&#34;Initialising serial Arduino connection on port: &#34;+ str(PORT)+ &#34;, BAUD: &#34;+ str(BAUD))
+        self.serialConnection = None
+        self.PORT = PORT
+
+        try:
+            self.serialConnection = serial.Serial(PORT, BAUD,
+                                                serial.EIGHTBITS, serial.PARITY_NONE,   #bytesize=EIGHTBITS, parity=PARITY_NONE
+                                                serial.STOPBITS_ONE,                                            #stopbits=STOPBITS_ONE,
+                                                None, False,                            #timeout=None, xonxoff=False,
+                                                False, None,                    # rtscts=False, write_timeout=None,
+                                                False, )                                                                #dsrdtr=False,
+            #reset arduino
+            self.serialConnection.setDTR(False) # Drop DTR
+            time.sleep(0.022)
+            self.serialConnection.setDTR(True)  # UP the DTR back
+
+            self.XPUDPServer = XPUDPServer
+
+            time.sleep(0.01)
+            # ensure there is no stale data in the buffer
+            self.serialConnection.flushInput()
+            self.connected = True
+
+        except serial.SerialException as e:
+            errorMsg =  str(e)
+            self.connected = False
+            logger.error ( &#34;Serial exception, unable to open connection with Arduino: &#34;+errorMsg)
+
+        time.sleep(0.5) # leave time for the arduino to boot up
+
+    def registerInputChangedCallback(self, callbackFunction):
+        &#34;&#34;&#34;Register a callback to be notified when an Arduino input changes state.
+
+        The callback is invoked by :meth:`__processArduinoCmd` whenever a
+        ``SW``, ``POT``, or ``ROTENC`` message is received from the Arduino.
+
+        Args:
+            callbackFunction (callable): Function with signature
+                ``(inputType: str, pin: int, value: int) -&gt; None``
+                where *inputType* is ``&#39;SW&#39;``, ``&#39;POT&#39;``, or ``&#39;ROTENC&#39;``.
+        &#34;&#34;&#34;
+        self.inputCallbacks.append(callbackFunction)
+
+    def registerArduinoStateChangedCallback(self, callbackFunction):
+        &#34;&#34;&#34;Register a callback to be notified when the Arduino ready-state changes.
+
+        After booting, the Arduino sends a ``READY`` message.  This callback
+        is also fired when the firmware version string is received, and again
+        on :meth:`quit` so callers can update UI indicators.
+
+        Args:
+            callbackFunction (callable): Function with signature
+                ``(ready: bool, firmwareVersion: str) -&gt; None``.
+        &#34;&#34;&#34;
+        self.ardStateChangedCallbacks.append(callbackFunction)
+
+    def sendOutputValue(self, pin, outputType, value):
+        &#34;&#34;&#34;Queue an output-value command to be sent to the Arduino.
+
+        The command is only queued (not sent immediately); it is flushed to
+        the serial port on the next iteration of the :meth:`run` loop, but
+        only if the Arduino has already signalled it is ready.
+
+        Args:
+            pin (str): Arduino pin number as a string, e.g. ``&#39;9&#39;``.
+            outputType (str): One of ``&#39;pwm&#39;``, ``&#39;servo&#39;``, or
+                ``&#39;dig_output&#39;``.
+            value (int): The value to set on the pin (0–255 for PWM,
+                0–180 for servo, 0/1 for digital output).
+        &#34;&#34;&#34;
+        if self.arduinoReady == True:
+            logger.debug(&#39;serial connection, sending output value &#39;+ str(value) + &#39; for output type &#39; + outputType)
+            command = self.OUTPUT_TYPE_CMDS[outputType]+pin+&#39;:&#39;+str(value)+&#39;;&#39;
+            self.queuedCommands.append(command)
+            logger.debug (&#34;Queuing output command: &#34;+ command)
+
+    def sendPinList(self, componentType, pinList):
+        &#34;&#34;&#34;Queue a pin-configuration command to send the active pin list to the Arduino.
+
+        Builds a ``&lt;PREFIX&gt;:&lt;pin1&gt;:&lt;pin2&gt;:…;`` command string and appends it
+        to the outbound queue.  Nothing is sent if ``pinList`` is empty.
+
+        For rotary encoders, each entry in ``pinList`` should already be the
+        combined string ``&#39;&lt;pinA&gt;,&lt;pinB&gt;,&lt;stepsPerNotch&gt;&#39;``.
+
+        Args:
+            componentType (str): Component type key — one of ``&#39;switch&#39;``,
+                ``&#39;potentiometer&#39;``, ``&#39;pwm&#39;``, ``&#39;rot_encoder&#39;``,
+                ``&#39;dig_output&#39;``, or ``&#39;servo&#39;``.
+            pinList (list[str]): Ordered list of pin identifiers to activate
+                for this component type.
+        &#34;&#34;&#34;
+        if self.serialConnection != None:
+            logger.debug(&#39;arduinoSerial::sending pin list to arduino&#39; + str(pinList))
+            if len(pinList)&gt;0: # only send if there are any pins!
+                command = self.COMP_PIN_CMDS[componentType]
+
+                for pin in pinList:
+                    command += pin
+                    command += &#39;:&#39;
+                command = command[:-1]
+                command += &#39;;&#39;
+
+                self.queuedCommands.append(command)
+                logger.debug (&#34;Queuing command: &#34;+ command)
+
+    def run(self):
+        &#34;&#34;&#34;Main thread loop — reads inbound serial data and flushes outbound commands.
+
+        Do **not** call this method directly.  Use :meth:`threading.Thread.start`
+        to launch the thread; Python will call :meth:`run` automatically.
+
+        Loop behaviour:
+
+        * If the Arduino is ready and there are queued commands, each command
+          is written to the serial port with a 20 ms inter-command delay to
+          allow the Arduino firmware time to process each one.
+        * Any available bytes are read from the port, decoded as ``latin-1``,
+          and appended to an internal text buffer.
+        * Complete messages (delimited by ``&#39;;&#39;``) are extracted from the
+          buffer and passed to :meth:`__processArduinoCmd`.
+        * The loop sleeps 1 ms between iterations to avoid busy-waiting.
+
+        The loop exits when :attr:`running` is set to ``False`` (via
+        :meth:`quit`) or the serial connection is ``None``.
+        &#34;&#34;&#34;
+        buffer =&#34;&#34;
+        startTime = time.time()
+        lastTime = time.time()
+
+        for callback in self.ardStateChangedCallbacks:
+            callback(self.arduinoReady, self.arduinoFirmwareVersion)
+
+        while self.running and self.serialConnection!=None:
+            time_running = time.time() - startTime
+            current_time = time.time()
+
+            # send commands
+            if self.arduinoReady == True :
+                if len(self.queuedCommands) &gt;0:
+                    logger.debug(&#39;command queue: &#39;+str(self.queuedCommands))
+                for command in self.queuedCommands:
+                    self.serialConnection.write(command.encode())
+                    time.sleep(0.02) # leave time for arduino to process to transmit
+                self.queuedCommands = []
+
+            data = self.serialConnection.read(self.serialConnection.in_waiting)
+
+            if len(data) &gt; 0:
+                logger.debug(&#34;Arduino data (&#34;+ str( len(data)) +&#34; chars): &#34;+ str(data) )
+                buffer += data.decode(encoding = &#39;latin_1&#39;)
+
+                if &#39;;&#39; in buffer: # we have at least one valid command
+                    commands = buffer.split(&#39;;&#39;)
+                    buffer = commands[len(commands)-1]  # we can now empty the buffer
+                    commands.pop() # remove the last element in the list which is an incomplete command
+                    for elem in commands:
+                        self.__processArduinoCmd(elem)  # we should now have a complete command from arduino to process
+
+                else:
+                    commands = []
+                logger.debug(&#39;commands: &#39; + str(commands))
+
+
+            time.sleep(0.001)
+
+    def __processArduinoCmd(self, buffer):
+        &#34;&#34;&#34;Parse and dispatch a single complete command received from the Arduino.
+
+        Called by :meth:`run` for each ``&#39;;&#39;``-terminated message.  Recognised
+        message types:
+
+        * ``READY``        — marks the Arduino as ready; fires state callbacks.
+        * ``VERSION:&lt;v&gt;``  — stores firmware version; fires state callbacks.
+        * ``SW:&lt;pin&gt;:&lt;v&gt;`` — switch state; fires input callbacks.
+        * ``POT:&lt;pin&gt;:&lt;v&gt;``— potentiometer value; fires input callbacks.
+        * ``ROTENC:&lt;pin&gt;:&lt;v&gt;`` — encoder step; fires input callbacks.
+        * ``CMND:&lt;cmd&gt;``   — legacy direct X-Plane command passthrough.
+        * ``DREF:&lt;dref&gt;``  — legacy direct X-Plane dataref passthrough.
+
+        Unknown or malformed messages are silently ignored (logged at DEBUG).
+
+        Args:
+            buffer (str): A single message string with the trailing ``&#39;;&#39;``
+                already stripped.
+        &#34;&#34;&#34;
+        logger.debug (&#34;Process arduino command: &#34;+ buffer)
+        if buffer [0:5] == &#39;READY&#39;:
+            logger.info(&#34;Arduino is ready&#34;)
+            self.arduinoReady = True
+            for callback in self.ardStateChangedCallbacks:
+                callback(self.arduinoReady, self.arduinoFirmwareVersion)
+
+        if buffer [0:4] == &#39;CMND&#39;:
+            command = buffer[5:len(buffer)-1]
+            logger.debug(&#34;i see a command&#34;+ command+&#39;\0&#39;)
+
+            self.XPUDPServer.sendXPCmd(command+&#39;\0&#39;)
+
+        elif buffer [0:4] == &#39;DREF&#39;:
+            dataref = buffer[5:len(buffer)-1]
+
+            logger.debug(&#34;i see a dataref&#34;+ dataref+&#39;\0&#39;)
+
+            self.XPUDPServer.sendXPDref(dataref+&#39;\0&#39;)
+
+        else:
+            command_elems = buffer.split(&#34;:&#34;)
+            if command_elems[0] == &#39;VERSION&#39;:
+                self.arduinoFirmwareVersion = command_elems[1]
+                logger.info(&#34;Arduino is running firmware version &#34;+self.arduinoFirmwareVersion)
+                for callback in self.ardStateChangedCallbacks:
+                    callback(self.arduinoReady, self.arduinoFirmwareVersion)
+
+            if (command_elems[0] == &#39;SW&#39; or command_elems[0] == &#39;POT&#39; or command_elems[0] == &#39;ROTENC&#39;) and len(command_elems) == 3:
+                value = None
+                pin = None
+                try:
+                    pin = int(command_elems[1])
+                    value = int(command_elems[2])
+                except ValueError:
+                    logger.error(&#34;Error in reading input command from Arduino&#34;)
+                    logger.error(&#34;Command: &#34; + buffer)
+                logger.debug(&#39;callbacks:&#39;+ str(self.inputCallbacks))
+
+                if value is not None:
+                    for callback in self.inputCallbacks:
+                        callback(command_elems[0], pin, value)
+                    logger.debug(&#34;Input &#34;+command_elems[0]+ &#34; on pin&#34;+ command_elems[1]+ &#34; Value: &#34;+ command_elems[2])
+
+    def quit(self):
+        &#34;&#34;&#34;Stop the serial thread and close the serial port cleanly.
+
+        Sets :attr:`running` to ``False`` to exit the :meth:`run` loop, closes
+        the serial port if it is open, resets the firmware version string, and
+        fires all registered state-changed callbacks so that UI components can
+        update their connection indicators.
+
+        Call this method when the application is shutting down or when
+        disconnecting the Arduino.
+        &#34;&#34;&#34;
+        self.running = False
+        if self.serialConnection!=None:
+            self.serialConnection.close()
+        self.arduinoReady == False  # NOTE: BUG-01 — should be = not ==
+        self.arduinoFirmwareVersion = &#39;&#39;
+        for callback in self.ardStateChangedCallbacks:
+            callback(self.arduinoReady, self.arduinoFirmwareVersion)
+        logger.info(&#34;Arduino Connection on port &#34; + self.PORT + &#34; stopped...&#34;)</code></pre>
+</details>
+<div class="desc"><p>Background thread managing serial I/O with a single Arduino board.</p>
+<p>One instance is created per connected Arduino.
+The thread opens the
+serial port in <code>__init__</code>, then :meth:<code>run</code> loops continuously reading
+inbound data and flushing outbound command queues.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>arduinoReady</code></strong> :&ensp;<code>bool</code></dt>
+<dd><code>True</code> once the Arduino has sent its <code>READY</code>
+message and is accepting commands.</dd>
+<dt><strong><code>arduinoFirmwareVersion</code></strong> :&ensp;<code>str</code></dt>
+<dd>Firmware version string reported by the
+Arduino, e.g. <code>'1.2'</code>.</dd>
+<dt><strong><code>connected</code></strong> :&ensp;<code>bool</code></dt>
+<dd><code>True</code> if the serial port was opened successfully.</dd>
+<dt><strong><code>running</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Controls the main loop; set to <code>False</code> by
+:meth:<code>quit</code> to stop the thread.</dd>
+<dt><strong><code>queuedCommands</code></strong> :&ensp;<code>list[str]</code></dt>
+<dd>Buffer of outbound command strings waiting
+to be written to the serial port.</dd>
+<dt><strong><code>PORT</code></strong> :&ensp;<code>str</code></dt>
+<dd>The OS port identifier this instance is bound to.</dd>
+</dl>
+<p>Open a serial connection to an Arduino and prepare the I/O thread.</p>
+<p>Performs the following initialisation sequence:</p>
+<ol>
+<li>Opens <code>PORT</code> at <code>BAUD</code> with 8N1 framing.</li>
+<li>Pulses DTR low then high to trigger the Arduino hardware reset /
+bootloader entry sequence.</li>
+<li>Flushes any stale bytes from the input buffer.</li>
+<li>Waits 500 ms for the Arduino to finish booting.</li>
+</ol>
+<p>If the port cannot be opened a :class:<code>serial.SerialException</code> is
+caught, <code>connected</code> is set to <code>False</code>, and an error is logged —
+the thread can still be <em>started</em> but will exit its loop immediately.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>PORT</code></strong> :&ensp;<code>str</code></dt>
+<dd>OS serial port identifier, e.g. <code>'COM3'</code> or
+<code>'/dev/ttyUSB0'</code>.</dd>
+<dt><strong><code>BAUD</code></strong> :&ensp;<code>int | str</code></dt>
+<dd>Baud rate.
+Must match the rate compiled into the
+Arduino firmware.</dd>
+<dt><strong><code>XPUDPServer</code></strong> :&ensp;<code>optional</code></dt>
+<dd>Reference to the pyXPUDPServer instance.
+Only required when the legacy <code>CMND</code>/<code>DREF</code> inbound
+message types are used (not used in normal operation).</dd>
+</dl></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>threading.Thread</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="arduinoSerial.ArduinoSerial.COMP_PIN_CMDS"><code class="name">var <span class="ident">COMP_PIN_CMDS</span></code></dt>
+<dd>
+<div class="desc"><p>dict[str, str]: Maps component type names to the Arduino pin-list
+command prefixes used when configuring hardware pins.</p></div>
+</dd>
+<dt id="arduinoSerial.ArduinoSerial.OUTPUT_TYPE_CMDS"><code class="name">var <span class="ident">OUTPUT_TYPE_CMDS</span></code></dt>
+<dd>
+<div class="desc"><p>dict[str, str]: Maps output component type names to the Arduino value
+command prefixes used when sending output values.</p></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="arduinoSerial.ArduinoSerial.quit"><code class="name flex">
+<span>def <span class="ident">quit</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def quit(self):
+    &#34;&#34;&#34;Stop the serial thread and close the serial port cleanly.
+
+    Sets :attr:`running` to ``False`` to exit the :meth:`run` loop, closes
+    the serial port if it is open, resets the firmware version string, and
+    fires all registered state-changed callbacks so that UI components can
+    update their connection indicators.
+
+    Call this method when the application is shutting down or when
+    disconnecting the Arduino.
+    &#34;&#34;&#34;
+    self.running = False
+    if self.serialConnection!=None:
+        self.serialConnection.close()
+    self.arduinoReady == False  # NOTE: BUG-01 — should be = not ==
+    self.arduinoFirmwareVersion = &#39;&#39;
+    for callback in self.ardStateChangedCallbacks:
+        callback(self.arduinoReady, self.arduinoFirmwareVersion)
+    logger.info(&#34;Arduino Connection on port &#34; + self.PORT + &#34; stopped...&#34;)</code></pre>
+</details>
+<div class="desc"><p>Stop the serial thread and close the serial port cleanly.</p>
+<p>Sets :attr:<code>running</code> to <code>False</code> to exit the :meth:<code>run</code> loop, closes
+the serial port if it is open, resets the firmware version string, and
+fires all registered state-changed callbacks so that UI components can
+update their connection indicators.</p>
+<p>Call this method when the application is shutting down or when
+disconnecting the Arduino.</p></div>
+</dd>
+<dt id="arduinoSerial.ArduinoSerial.registerArduinoStateChangedCallback"><code class="name flex">
+<span>def <span class="ident">registerArduinoStateChangedCallback</span></span>(<span>self, callbackFunction)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def registerArduinoStateChangedCallback(self, callbackFunction):
+    &#34;&#34;&#34;Register a callback to be notified when the Arduino ready-state changes.
+
+    After booting, the Arduino sends a ``READY`` message.  This callback
+    is also fired when the firmware version string is received, and again
+    on :meth:`quit` so callers can update UI indicators.
+
+    Args:
+        callbackFunction (callable): Function with signature
+            ``(ready: bool, firmwareVersion: str) -&gt; None``.
+    &#34;&#34;&#34;
+    self.ardStateChangedCallbacks.append(callbackFunction)</code></pre>
+</details>
+<div class="desc"><p>Register a callback to be notified when the Arduino ready-state changes.</p>
+<p>After booting, the Arduino sends a <code>READY</code> message.
+This callback
+is also fired when the firmware version string is received, and again
+on :meth:<code>quit</code> so callers can update UI indicators.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>callbackFunction</code></strong> :&ensp;<code>callable</code></dt>
+<dd>Function with signature
+<code>(ready: bool, firmwareVersion: str) -&gt; None</code>.</dd>
+</dl></div>
+</dd>
+<dt id="arduinoSerial.ArduinoSerial.registerInputChangedCallback"><code class="name flex">
+<span>def <span class="ident">registerInputChangedCallback</span></span>(<span>self, callbackFunction)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def registerInputChangedCallback(self, callbackFunction):
+    &#34;&#34;&#34;Register a callback to be notified when an Arduino input changes state.
+
+    The callback is invoked by :meth:`__processArduinoCmd` whenever a
+    ``SW``, ``POT``, or ``ROTENC`` message is received from the Arduino.
+
+    Args:
+        callbackFunction (callable): Function with signature
+            ``(inputType: str, pin: int, value: int) -&gt; None``
+            where *inputType* is ``&#39;SW&#39;``, ``&#39;POT&#39;``, or ``&#39;ROTENC&#39;``.
+    &#34;&#34;&#34;
+    self.inputCallbacks.append(callbackFunction)</code></pre>
+</details>
+<div class="desc"><p>Register a callback to be notified when an Arduino input changes state.</p>
+<p>The callback is invoked by :meth:<code>__processArduinoCmd</code> whenever a
+<code>SW</code>, <code>POT</code>, or <code>ROTENC</code> message is received from the Arduino.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>callbackFunction</code></strong> :&ensp;<code>callable</code></dt>
+<dd>Function with signature
+<code>(inputType: str, pin: int, value: int) -&gt; None</code>
+where <em>inputType</em> is <code>'SW'</code>, <code>'POT'</code>, or <code>'ROTENC'</code>.</dd>
+</dl></div>
+</dd>
+<dt id="arduinoSerial.ArduinoSerial.run"><code class="name flex">
+<span>def <span class="ident">run</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def run(self):
+    &#34;&#34;&#34;Main thread loop — reads inbound serial data and flushes outbound commands.
+
+    Do **not** call this method directly.  Use :meth:`threading.Thread.start`
+    to launch the thread; Python will call :meth:`run` automatically.
+
+    Loop behaviour:
+
+    * If the Arduino is ready and there are queued commands, each command
+      is written to the serial port with a 20 ms inter-command delay to
+      allow the Arduino firmware time to process each one.
+    * Any available bytes are read from the port, decoded as ``latin-1``,
+      and appended to an internal text buffer.
+    * Complete messages (delimited by ``&#39;;&#39;``) are extracted from the
+      buffer and passed to :meth:`__processArduinoCmd`.
+    * The loop sleeps 1 ms between iterations to avoid busy-waiting.
+
+    The loop exits when :attr:`running` is set to ``False`` (via
+    :meth:`quit`) or the serial connection is ``None``.
+    &#34;&#34;&#34;
+    buffer =&#34;&#34;
+    startTime = time.time()
+    lastTime = time.time()
+
+    for callback in self.ardStateChangedCallbacks:
+        callback(self.arduinoReady, self.arduinoFirmwareVersion)
+
+    while self.running and self.serialConnection!=None:
+        time_running = time.time() - startTime
+        current_time = time.time()
+
+        # send commands
+        if self.arduinoReady == True :
+            if len(self.queuedCommands) &gt;0:
+                logger.debug(&#39;command queue: &#39;+str(self.queuedCommands))
+            for command in self.queuedCommands:
+                self.serialConnection.write(command.encode())
+                time.sleep(0.02) # leave time for arduino to process to transmit
+            self.queuedCommands = []
+
+        data = self.serialConnection.read(self.serialConnection.in_waiting)
+
+        if len(data) &gt; 0:
+            logger.debug(&#34;Arduino data (&#34;+ str( len(data)) +&#34; chars): &#34;+ str(data) )
+            buffer += data.decode(encoding = &#39;latin_1&#39;)
+
+            if &#39;;&#39; in buffer: # we have at least one valid command
+                commands = buffer.split(&#39;;&#39;)
+                buffer = commands[len(commands)-1]  # we can now empty the buffer
+                commands.pop() # remove the last element in the list which is an incomplete command
+                for elem in commands:
+                    self.__processArduinoCmd(elem)  # we should now have a complete command from arduino to process
+
+            else:
+                commands = []
+            logger.debug(&#39;commands: &#39; + str(commands))
+
+
+        time.sleep(0.001)</code></pre>
+</details>
+<div class="desc"><p>Main thread loop — reads inbound serial data and flushes outbound commands.</p>
+<p>Do <strong>not</strong> call this method directly.
+Use :meth:<code>threading.Thread.start</code>
+to launch the thread; Python will call :meth:<code>run</code> automatically.</p>
+<p>Loop behaviour:</p>
+<ul>
+<li>If the Arduino is ready and there are queued commands, each command
+is written to the serial port with a 20 ms inter-command delay to
+allow the Arduino firmware time to process each one.</li>
+<li>Any available bytes are read from the port, decoded as <code>latin-1</code>,
+and appended to an internal text buffer.</li>
+<li>Complete messages (delimited by <code>';'</code>) are extracted from the
+buffer and passed to :meth:<code>__processArduinoCmd</code>.</li>
+<li>The loop sleeps 1 ms between iterations to avoid busy-waiting.</li>
+</ul>
+<p>The loop exits when :attr:<code>running</code> is set to <code>False</code> (via
+:meth:<code>quit</code>) or the serial connection is <code>None</code>.</p></div>
+</dd>
+<dt id="arduinoSerial.ArduinoSerial.sendOutputValue"><code class="name flex">
+<span>def <span class="ident">sendOutputValue</span></span>(<span>self, pin, outputType, value)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def sendOutputValue(self, pin, outputType, value):
+    &#34;&#34;&#34;Queue an output-value command to be sent to the Arduino.
+
+    The command is only queued (not sent immediately); it is flushed to
+    the serial port on the next iteration of the :meth:`run` loop, but
+    only if the Arduino has already signalled it is ready.
+
+    Args:
+        pin (str): Arduino pin number as a string, e.g. ``&#39;9&#39;``.
+        outputType (str): One of ``&#39;pwm&#39;``, ``&#39;servo&#39;``, or
+            ``&#39;dig_output&#39;``.
+        value (int): The value to set on the pin (0–255 for PWM,
+            0–180 for servo, 0/1 for digital output).
+    &#34;&#34;&#34;
+    if self.arduinoReady == True:
+        logger.debug(&#39;serial connection, sending output value &#39;+ str(value) + &#39; for output type &#39; + outputType)
+        command = self.OUTPUT_TYPE_CMDS[outputType]+pin+&#39;:&#39;+str(value)+&#39;;&#39;
+        self.queuedCommands.append(command)
+        logger.debug (&#34;Queuing output command: &#34;+ command)</code></pre>
+</details>
+<div class="desc"><p>Queue an output-value command to be sent to the Arduino.</p>
+<p>The command is only queued (not sent immediately); it is flushed to
+the serial port on the next iteration of the :meth:<code>run</code> loop, but
+only if the Arduino has already signalled it is ready.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>pin</code></strong> :&ensp;<code>str</code></dt>
+<dd>Arduino pin number as a string, e.g. <code>'9'</code>.</dd>
+<dt><strong><code>outputType</code></strong> :&ensp;<code>str</code></dt>
+<dd>One of <code>'pwm'</code>, <code>'servo'</code>, or
+<code>'dig_output'</code>.</dd>
+<dt><strong><code>value</code></strong> :&ensp;<code>int</code></dt>
+<dd>The value to set on the pin (0–255 for PWM,
+0–180 for servo, 0/1 for digital output).</dd>
+</dl></div>
+</dd>
+<dt id="arduinoSerial.ArduinoSerial.sendPinList"><code class="name flex">
+<span>def <span class="ident">sendPinList</span></span>(<span>self, componentType, pinList)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def sendPinList(self, componentType, pinList):
+    &#34;&#34;&#34;Queue a pin-configuration command to send the active pin list to the Arduino.
+
+    Builds a ``&lt;PREFIX&gt;:&lt;pin1&gt;:&lt;pin2&gt;:…;`` command string and appends it
+    to the outbound queue.  Nothing is sent if ``pinList`` is empty.
+
+    For rotary encoders, each entry in ``pinList`` should already be the
+    combined string ``&#39;&lt;pinA&gt;,&lt;pinB&gt;,&lt;stepsPerNotch&gt;&#39;``.
+
+    Args:
+        componentType (str): Component type key — one of ``&#39;switch&#39;``,
+            ``&#39;potentiometer&#39;``, ``&#39;pwm&#39;``, ``&#39;rot_encoder&#39;``,
+            ``&#39;dig_output&#39;``, or ``&#39;servo&#39;``.
+        pinList (list[str]): Ordered list of pin identifiers to activate
+            for this component type.
+    &#34;&#34;&#34;
+    if self.serialConnection != None:
+        logger.debug(&#39;arduinoSerial::sending pin list to arduino&#39; + str(pinList))
+        if len(pinList)&gt;0: # only send if there are any pins!
+            command = self.COMP_PIN_CMDS[componentType]
+
+            for pin in pinList:
+                command += pin
+                command += &#39;:&#39;
+            command = command[:-1]
+            command += &#39;;&#39;
+
+            self.queuedCommands.append(command)
+            logger.debug (&#34;Queuing command: &#34;+ command)</code></pre>
+</details>
+<div class="desc"><p>Queue a pin-configuration command to send the active pin list to the Arduino.</p>
+<p>Builds a <code>&lt;PREFIX&gt;:&lt;pin1&gt;:&lt;pin2&gt;:…;</code> command string and appends it
+to the outbound queue.
+Nothing is sent if <code>pinList</code> is empty.</p>
+<p>For rotary encoders, each entry in <code>pinList</code> should already be the
+combined string <code>'&lt;pinA&gt;,&lt;pinB&gt;,&lt;stepsPerNotch&gt;'</code>.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>componentType</code></strong> :&ensp;<code>str</code></dt>
+<dd>Component type key — one of <code>'switch'</code>,
+<code>'potentiometer'</code>, <code>'pwm'</code>, <code>'rot_encoder'</code>,
+<code>'dig_output'</code>, or <code>'servo'</code>.</dd>
+<dt><strong><code>pinList</code></strong> :&ensp;<code>list[str]</code></dt>
+<dd>Ordered list of pin identifiers to activate
+for this component type.</dd>
+</dl></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul>
+<li><a href="#arduinoserialpy">arduinoSerial.py</a></li>
+</ul>
+</div>
+<ul id="index">
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="arduinoSerial.ArduinoSerial" href="#arduinoSerial.ArduinoSerial">ArduinoSerial</a></code></h4>
+<ul class="">
+<li><code><a title="arduinoSerial.ArduinoSerial.COMP_PIN_CMDS" href="#arduinoSerial.ArduinoSerial.COMP_PIN_CMDS">COMP_PIN_CMDS</a></code></li>
+<li><code><a title="arduinoSerial.ArduinoSerial.OUTPUT_TYPE_CMDS" href="#arduinoSerial.ArduinoSerial.OUTPUT_TYPE_CMDS">OUTPUT_TYPE_CMDS</a></code></li>
+<li><code><a title="arduinoSerial.ArduinoSerial.quit" href="#arduinoSerial.ArduinoSerial.quit">quit</a></code></li>
+<li><code><a title="arduinoSerial.ArduinoSerial.registerArduinoStateChangedCallback" href="#arduinoSerial.ArduinoSerial.registerArduinoStateChangedCallback">registerArduinoStateChangedCallback</a></code></li>
+<li><code><a title="arduinoSerial.ArduinoSerial.registerInputChangedCallback" href="#arduinoSerial.ArduinoSerial.registerInputChangedCallback">registerInputChangedCallback</a></code></li>
+<li><code><a title="arduinoSerial.ArduinoSerial.run" href="#arduinoSerial.ArduinoSerial.run">run</a></code></li>
+<li><code><a title="arduinoSerial.ArduinoSerial.sendOutputValue" href="#arduinoSerial.ArduinoSerial.sendOutputValue">sendOutputValue</a></code></li>
+<li><code><a title="arduinoSerial.ArduinoSerial.sendPinList" href="#arduinoSerial.ArduinoSerial.sendPinList">sendPinList</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

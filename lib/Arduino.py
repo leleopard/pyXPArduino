@@ -603,11 +603,11 @@ class Arduino(threading.Thread):
         """
         pointsList = []
         logger.debug('Points list string: '+pointsString)
-        pointsStringList = re.findall('\[[ -]*?[0-9]+.*?[0-9]*?[,]+[ -]*?[0-9]+.*?[0-9]*?[ ]*?\]',
+        pointsStringList = re.findall(r'\[[ -]*?[0-9]+.*?[0-9]*?[,]+[ -]*?[0-9]+.*?[0-9]*?[ ]*?\]',
                                         pointsString)	# find all points format [nr,nr]
 
         for pointString in pointsStringList:
-            pointString = re.sub('[\[\] ]+', '', pointString)	#strip spaces, [ and ]
+            pointString = re.sub(r'[\[\] ]+', '', pointString)	#strip spaces, [ and ]
 
             valueStrings = pointString.split(',')
 

@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>XPrefData API documentation</title>
+<meta name="description" content="XPrefData.py
+Loads and exposes the X-Plane command and dataref reference databases …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>XPrefData</code></h1>
+</header>
+<section id="section-intro">
+<h2 id="xprefdatapy">XPrefData.py</h2>
+<p>Loads and exposes the X-Plane command and dataref reference databases.</p>
+<p>At startup, :func:<code><a title="XPrefData.loadXPReferenceFiles" href="#XPrefData.loadXPReferenceFiles">loadXPReferenceFiles()</a></code> reads the two plain-text reference
+files shipped with X-Plane (<code>XPRefFiles/Commands.txt</code> and
+<code>XPRefFiles/DataRefs.txt</code>) and populates four module-level lists/dicts
+that the rest of the application queries:</p>
+<ul>
+<li>:data:<code><a title="XPrefData.XP_COMMANDS" href="#XPrefData.XP_COMMANDS">XP_COMMANDS</a></code> — flat list of all commands.</li>
+<li>:data:<code><a title="XPrefData.XP_COMMANDS_CATEGORIES" href="#XPrefData.XP_COMMANDS_CATEGORIES">XP_COMMANDS_CATEGORIES</a></code> — unique category prefixes for commands.</li>
+<li>:data:<code><a title="XPrefData.XP_DATAREFS" href="#XPrefData.XP_DATAREFS">XP_DATAREFS</a></code> — flat list of all datarefs with metadata.</li>
+<li>:data:<code><a title="XPrefData.XP_DATAREFS_CATEGORIES" href="#XPrefData.XP_DATAREFS_CATEGORIES">XP_DATAREFS_CATEGORIES</a></code> — unique category prefixes for datarefs.</li>
+</ul>
+<p>Filter helpers (:func:<code><a title="XPrefData.getXPCommandList" href="#XPrefData.getXPCommandList">getXPCommandList()</a></code>, :func:<code><a title="XPrefData.getXPDatarefList" href="#XPrefData.getXPDatarefList">getXPDatarefList()</a></code>,
+:func:<code><a title="XPrefData.getXPDataref" href="#XPrefData.getXPDataref">getXPDataref()</a></code>) are used by the GUI picker dialogs.</p>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-variables">Global variables</h2>
+<dl>
+<dt id="XPrefData.XP_COMMANDS"><code class="name">var <span class="ident">XP_COMMANDS</span></code></dt>
+<dd>
+<div class="desc"><p>list[list]: All X-Plane commands loaded from Commands.txt.
+Each entry is <code>[category, command_id, description]</code>.</p></div>
+</dd>
+<dt id="XPrefData.XP_COMMANDS_CATEGORIES"><code class="name">var <span class="ident">XP_COMMANDS_CATEGORIES</span></code></dt>
+<dd>
+<div class="desc"><p>dict[str, str]: Unique top-level category strings for commands (keys).
+Values are always empty strings — the dict is used as an ordered set.</p></div>
+</dd>
+<dt id="XPrefData.XP_DATAREFS"><code class="name">var <span class="ident">XP_DATAREFS</span></code></dt>
+<dd>
+<div class="desc"><p>list[list]: All X-Plane datarefs loaded from DataRefs.txt.
+Each entry is <code>[category, dataref, type, writable, unit, description]</code>.</p></div>
+</dd>
+<dt id="XPrefData.XP_DATAREFS_CATEGORIES"><code class="name">var <span class="ident">XP_DATAREFS_CATEGORIES</span></code></dt>
+<dd>
+<div class="desc"><p>dict[str, str]: Unique top-level category strings for datarefs (keys).
+Values are always empty strings — the dict is used as an ordered set.</p></div>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="XPrefData.getXPCommandList"><code class="name flex">
+<span>def <span class="ident">getXPCommandList</span></span>(<span>category, filter)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getXPCommandList(category, filter):
+    &#34;&#34;&#34;Return a filtered list of X-Plane commands.
+
+    Filters :data:`XP_COMMANDS` by an optional category and a free-text
+    search string.  Both the command ID and description are searched
+    (case-insensitive).
+
+    Args:
+        category (str | None): Category prefix to restrict results to, or
+            ``&#39;All&#39;`` / ``None`` to include every category.
+        filter (str): Free-text substring to search for in the command ID or
+            description.  Pass ``&#39;&#39;`` to return all commands in the category.
+
+    Returns:
+        list[list]: Matching commands, each in the form
+        ``[category, command_id, description]``.
+    &#34;&#34;&#34;
+    filter_upper = filter.upper()
+    if filter !=&#39;&#39;:
+        filtered_commands = [cmd for cmd in XP_COMMANDS if (filter_upper in cmd[1].upper() or filter_upper in cmd[2].upper())]
+    else:
+        filtered_commands = XP_COMMANDS
+    if category != None and category != &#34;All&#34;:
+        command_list = [cmd for cmd in filtered_commands if cmd[0] == category]
+    else:
+        command_list = filtered_commands
+    return command_list</code></pre>
+</details>
+<div class="desc"><p>Return a filtered list of X-Plane commands.</p>
+<p>Filters :data:<code><a title="XPrefData.XP_COMMANDS" href="#XPrefData.XP_COMMANDS">XP_COMMANDS</a></code> by an optional category and a free-text
+search string.
+Both the command ID and description are searched
+(case-insensitive).</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>category</code></strong> :&ensp;<code>str | None</code></dt>
+<dd>Category prefix to restrict results to, or
+<code>'All'</code> / <code>None</code> to include every category.</dd>
+<dt><strong><code>filter</code></strong> :&ensp;<code>str</code></dt>
+<dd>Free-text substring to search for in the command ID or
+description.
+Pass <code>''</code> to return all commands in the category.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>list[list]</code></dt>
+<dd>Matching commands, each in the form</dd>
+</dl>
+<p><code>[category, command_id, description]</code>.</p></div>
+</dd>
+<dt id="XPrefData.getXPDataref"><code class="name flex">
+<span>def <span class="ident">getXPDataref</span></span>(<span>dataref)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getXPDataref(dataref):
+    &#34;&#34;&#34;Look up a single dataref by its exact path string.
+
+    Args:
+        dataref (str): The fully-qualified dataref path to look up, e.g.
+            ``&#39;sim/cockpit/switches/gear_handle_status&#39;``.
+
+    Returns:
+        list: The first matching dataref entry in the form
+        ``[category, dataref, type, writable, unit, description]``, or a
+        list of six empty strings if the dataref is not found.
+    &#34;&#34;&#34;
+    logging.debug(&#39;looking for dataref: &#39;+str(dataref))
+    filtered_datarefs = [dref for dref in XP_DATAREFS if (dataref == dref[1]) ]
+    if len(filtered_datarefs) &gt; 0:
+        return filtered_datarefs[0]
+    else:
+        return [&#39;&#39;,
+                &#39;&#39;, # dataref
+                &#39;&#39;, # type
+                &#39;&#39;, # writable
+                &#39;&#39;,
+                &#39;&#39;]</code></pre>
+</details>
+<div class="desc"><p>Look up a single dataref by its exact path string.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>dataref</code></strong> :&ensp;<code>str</code></dt>
+<dd>The fully-qualified dataref path to look up, e.g.
+<code>'sim/cockpit/switches/gear_handle_status'</code>.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>list</code></dt>
+<dd>The first matching dataref entry in the form</dd>
+</dl>
+<p><code>[category, dataref, type, writable, unit, description]</code>, or a
+list of six empty strings if the dataref is not found.</p></div>
+</dd>
+<dt id="XPrefData.getXPDatarefList"><code class="name flex">
+<span>def <span class="ident">getXPDatarefList</span></span>(<span>category, filter)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getXPDatarefList(category, filter):
+    &#34;&#34;&#34;Return a filtered list of X-Plane datarefs.
+
+    Filters :data:`XP_DATAREFS` by an optional category and a free-text
+    search string applied to the dataref path and description
+    (case-insensitive).  The search is only applied when ``filter`` is at
+    least 2 characters long to avoid returning enormous unfiltered lists.
+
+    Args:
+        category (str | None): Category prefix to restrict results to, or
+            ``&#39;All&#39;`` / ``None`` for all categories.
+        filter (str | None): Free-text substring to search within the dataref
+            path or description.  Pass ``&#39;&#39;`` or ``None`` to skip filtering.
+
+    Returns:
+        list[list]: Matching datarefs, each in the form
+        ``[category, dataref, type, writable, unit, description]``.
+    &#34;&#34;&#34;
+    if filter is None:
+        filter = &#39;&#39;
+    filter_upper = filter.upper()
+    if filter !=&#39;&#39; and len(filter) &gt;=2:
+        filtered_datarefs = [dref for dref in XP_DATAREFS if (filter_upper in dref[1].upper() or filter_upper in dref[5].upper())]
+    else:
+        filtered_datarefs = XP_DATAREFS
+    if category != None and category != &#34;All&#34;:
+        dref_list = [dref for dref in filtered_datarefs if dref[0] == category]
+    else:
+        dref_list = filtered_datarefs
+    return dref_list</code></pre>
+</details>
+<div class="desc"><p>Return a filtered list of X-Plane datarefs.</p>
+<p>Filters :data:<code><a title="XPrefData.XP_DATAREFS" href="#XPrefData.XP_DATAREFS">XP_DATAREFS</a></code> by an optional category and a free-text
+search string applied to the dataref path and description
+(case-insensitive).
+The search is only applied when <code>filter</code> is at
+least 2 characters long to avoid returning enormous unfiltered lists.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>category</code></strong> :&ensp;<code>str | None</code></dt>
+<dd>Category prefix to restrict results to, or
+<code>'All'</code> / <code>None</code> for all categories.</dd>
+<dt><strong><code>filter</code></strong> :&ensp;<code>str | None</code></dt>
+<dd>Free-text substring to search within the dataref
+path or description.
+Pass <code>''</code> or <code>None</code> to skip filtering.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>list[list]</code></dt>
+<dd>Matching datarefs, each in the form</dd>
+</dl>
+<p><code>[category, dataref, type, writable, unit, description]</code>.</p></div>
+</dd>
+<dt id="XPrefData.loadXPReferenceFiles"><code class="name flex">
+<span>def <span class="ident">loadXPReferenceFiles</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def loadXPReferenceFiles():
+    &#34;&#34;&#34;Load X-Plane command and dataref reference files into module-level lists.
+
+    Reads ``XPRefFiles/Commands.txt`` and ``XPRefFiles/DataRefs.txt`` from the
+    application working directory and populates :data:`XP_COMMANDS`,
+    :data:`XP_COMMANDS_CATEGORIES`, :data:`XP_DATAREFS`, and
+    :data:`XP_DATAREFS_CATEGORIES`.
+
+    This function must be called once at application startup before any of the
+    picker dialogs or filter helpers are used.
+
+    Commands file format (space-separated)::
+
+        sim/flight_controls/flaps_down    Lower the flaps
+
+    DataRefs file format (tab-separated)::
+
+        sim/cockpit/switches/gear_handle_status  int  y  ratio  Gear handle position
+
+    Raises:
+        FileNotFoundError: If either reference file is missing from the
+            ``XPRefFiles/`` directory.
+    &#34;&#34;&#34;
+    logging.info(&#39;Loading XPlane commands...&#39;)
+    with open(os.path.join(working_dir,&#34;XPRefFiles/Commands.txt&#34;)) as commandsFile:
+        XP_CMDFILE_LINES = commandsFile.readlines()
+
+
+    for line in XP_CMDFILE_LINES:
+        command_chunks = line.split(None, 1)
+        command_elems = command_chunks[0].split(&#34;/&#34;)
+        cmd_category = command_elems[0]+&#34;/&#34;+command_elems[1]
+        if cmd_category in XP_COMMANDS_CATEGORIES:
+            pass
+        else:
+            XP_COMMANDS_CATEGORIES[cmd_category] = &#39;&#39;
+
+
+        XP_COMMANDS.append([cmd_category, command_chunks[0], command_chunks[1].rstrip()])
+
+    logging.info(&#39;Loading XPlane datarefs...&#39;)
+
+
+    with open(os.path.join(working_dir,&#34;XPRefFiles/DataRefs.txt&#34;)) as datarefsFile:
+        XP_DATAREFSFILE_LINES = datarefsFile.readlines()
+
+
+    for line in XP_DATAREFSFILE_LINES:
+        command_chunks = re.split(&#34;\t+&#34;, line)
+
+        if len(command_chunks) &gt;= 3: # ensure the line has at least 3 tab separator
+            command_elems = command_chunks[0].split(&#34;/&#34;)
+            nr_elems = len(command_elems)
+            if nr_elems &gt;= 3: # ensure this text looks like a dataref
+                cmd_category = &#39;&#39;
+                for i in range(0,nr_elems-1):
+                    cmd_category += command_elems[i]+&#34;/&#34;
+                if cmd_category in XP_DATAREFS_CATEGORIES:
+                    pass
+                else:
+                    XP_DATAREFS_CATEGORIES[cmd_category] = &#39;&#39;
+
+                description = &#39;&#39;
+                unit = &#39;&#39;
+                if len(command_chunks)&gt;=4:
+                    unit = command_chunks[3]
+                    for i in range(4, len(command_chunks)):
+                        description+= command_chunks[i]
+
+                XP_DATAREFS.append([cmd_category,
+                                    command_chunks[0], # dataref
+                                    command_chunks[1].rstrip(), # type
+                                    command_chunks[2].rstrip(), # writable
+                                    unit,
+                                    description.rstrip()] )</code></pre>
+</details>
+<div class="desc"><p>Load X-Plane command and dataref reference files into module-level lists.</p>
+<p>Reads <code>XPRefFiles/Commands.txt</code> and <code>XPRefFiles/DataRefs.txt</code> from the
+application working directory and populates :data:<code><a title="XPrefData.XP_COMMANDS" href="#XPrefData.XP_COMMANDS">XP_COMMANDS</a></code>,
+:data:<code><a title="XPrefData.XP_COMMANDS_CATEGORIES" href="#XPrefData.XP_COMMANDS_CATEGORIES">XP_COMMANDS_CATEGORIES</a></code>, :data:<code><a title="XPrefData.XP_DATAREFS" href="#XPrefData.XP_DATAREFS">XP_DATAREFS</a></code>, and
+:data:<code><a title="XPrefData.XP_DATAREFS_CATEGORIES" href="#XPrefData.XP_DATAREFS_CATEGORIES">XP_DATAREFS_CATEGORIES</a></code>.</p>
+<p>This function must be called once at application startup before any of the
+picker dialogs or filter helpers are used.</p>
+<p>Commands file format (space-separated)::</p>
+<pre><code>sim/flight_controls/flaps_down    Lower the flaps
+</code></pre>
+<p>DataRefs file format (tab-separated)::</p>
+<pre><code>sim/cockpit/switches/gear_handle_status  int  y  ratio  Gear handle position
+</code></pre>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>FileNotFoundError</code></dt>
+<dd>If either reference file is missing from the
+<code>XPRefFiles/</code> directory.</dd>
+</dl></div>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul>
+<li><a href="#xprefdatapy">XPrefData.py</a></li>
+</ul>
+</div>
+<ul id="index">
+<li><h3><a href="#header-variables">Global variables</a></h3>
+<ul class="">
+<li><code><a title="XPrefData.XP_COMMANDS" href="#XPrefData.XP_COMMANDS">XP_COMMANDS</a></code></li>
+<li><code><a title="XPrefData.XP_COMMANDS_CATEGORIES" href="#XPrefData.XP_COMMANDS_CATEGORIES">XP_COMMANDS_CATEGORIES</a></code></li>
+<li><code><a title="XPrefData.XP_DATAREFS" href="#XPrefData.XP_DATAREFS">XP_DATAREFS</a></code></li>
+<li><code><a title="XPrefData.XP_DATAREFS_CATEGORIES" href="#XPrefData.XP_DATAREFS_CATEGORIES">XP_DATAREFS_CATEGORIES</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="XPrefData.getXPCommandList" href="#XPrefData.getXPCommandList">getXPCommandList</a></code></li>
+<li><code><a title="XPrefData.getXPDataref" href="#XPrefData.getXPDataref">getXPDataref</a></code></li>
+<li><code><a title="XPrefData.getXPDatarefList" href="#XPrefData.getXPDatarefList">getXPDatarefList</a></code></li>
+<li><code><a title="XPrefData.loadXPReferenceFiles" href="#XPrefData.loadXPReferenceFiles">loadXPReferenceFiles</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

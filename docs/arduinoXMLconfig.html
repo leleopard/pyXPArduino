@@ -1,0 +1,2292 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>arduinoXMLconfig API documentation</title>
+<meta name="description" content="arduinoXMLconfig.py
+XML-based configuration manager for Arduino boards and their components …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>arduinoXMLconfig</code></h1>
+</header>
+<section id="section-intro">
+<h2 id="arduinoxmlconfigpy">arduinoXMLconfig.py</h2>
+<p>XML-based configuration manager for Arduino boards and their components.</p>
+<p>:class:<code><a title="arduinoXMLconfig.arduinoConfig" href="#arduinoXMLconfig.arduinoConfig">arduinoConfig</a></code> is the single source of truth for the hardware
+configuration at runtime.
+It parses an XML file on disk into an
+ElementTree, exposes CRUD operations for Arduino boards and individual
+input/output components, and notifies registered observers via callbacks
+whenever attributes change.</p>
+<p>XML structure overview::</p>
+<pre><code>&lt;arduinoConfig&gt;
+    &lt;arduino name="…" serial_nr="…" port="…" baud="…" …&gt;
+        &lt;inputs description="Inputs"&gt;
+            &lt;switches description="Switches"&gt;
+                &lt;switch id="…" name="…" pin="…" state="on"&gt;
+                    &lt;action state="on" action_type="cmd" …&gt;sim/cmd/foo&lt;/action&gt;
+                &lt;/switch&gt;
+            &lt;/switches&gt;
+            &lt;potentiometers …&gt; … &lt;/potentiometers&gt;
+            &lt;rot_encoders …&gt; … &lt;/rot_encoders&gt;
+        &lt;/inputs&gt;
+        &lt;outputs description="Outputs"&gt;
+            &lt;dig_outputs …&gt; … &lt;/dig_outputs&gt;
+            &lt;pwms …&gt; … &lt;/pwms&gt;
+            &lt;servos …&gt; … &lt;/servos&gt;
+        &lt;/outputs&gt;
+    &lt;/arduino&gt;
+&lt;/arduinoConfig&gt;
+</code></pre>
+<p>Module-level constants
+~~~~~~~~~~~~~~~~~~~~~~
+* :data:<code><a title="arduinoXMLconfig.ARD_BAUD" href="#arduinoXMLconfig.ARD_BAUD">ARD_BAUD</a></code> — supported baud rates.
+* :data:<code><a title="arduinoXMLconfig.DIG_IO_PINS" href="#arduinoXMLconfig.DIG_IO_PINS">DIG_IO_PINS</a></code> — available digital I/O pin numbers for the Mega 2560.
+* :data:<code><a title="arduinoXMLconfig.POT_PINS" href="#arduinoXMLconfig.POT_PINS">POT_PINS</a></code> — analog input pin numbers (A0–A15).
+* :data:<code><a title="arduinoXMLconfig.PWM_PINS" href="#arduinoXMLconfig.PWM_PINS">PWM_PINS</a></code> — PWM-capable pin numbers.
+* :data:<code><a title="arduinoXMLconfig.SERVO_PINS" href="#arduinoXMLconfig.SERVO_PINS">SERVO_PINS</a></code> — servo-capable pin numbers.
+* :data:<code><a title="arduinoXMLconfig.INPUT_OUTPUT_TAGS" href="#arduinoXMLconfig.INPUT_OUTPUT_TAGS">INPUT_OUTPUT_TAGS</a></code> — XML tag names for input/output category containers.
+* :data:<code><a title="arduinoXMLconfig.INPUT_OUTPUT_ELEMS_TAGS" href="#arduinoXMLconfig.INPUT_OUTPUT_ELEMS_TAGS">INPUT_OUTPUT_ELEMS_TAGS</a></code> — XML tag names for individual component elements.
+* :data:<code><a title="arduinoXMLconfig.INPUT_OUTPUT_TAGS_REF" href="#arduinoXMLconfig.INPUT_OUTPUT_TAGS_REF">INPUT_OUTPUT_TAGS_REF</a></code> — metadata dict mapping container tags to UI labels
+and child element tag names.</p>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-variables">Global variables</h2>
+<dl>
+<dt id="arduinoXMLconfig.ARD_BAUD"><code class="name">var <span class="ident">ARD_BAUD</span></code></dt>
+<dd>
+<div class="desc"><p>list[str]: Supported Arduino serial baud rates, in ascending order.</p></div>
+</dd>
+<dt id="arduinoXMLconfig.DIG_IO_PINS"><code class="name">var <span class="ident">DIG_IO_PINS</span></code></dt>
+<dd>
+<div class="desc"><p>list[str]: Available digital I/O pin numbers for the Arduino Mega 2560.
+Pins 2, 3, 5 are excluded (reserved for Timer 3 / PWM).
+Pins 0–13 are excluded (reserved for serial comms, PWM, and servos).</p></div>
+</dd>
+<dt id="arduinoXMLconfig.INPUT_OUTPUT_ELEMS_TAGS"><code class="name">var <span class="ident">INPUT_OUTPUT_ELEMS_TAGS</span></code></dt>
+<dd>
+<div class="desc"><p>list[str]: XML element tag names for individual component nodes.</p></div>
+</dd>
+<dt id="arduinoXMLconfig.INPUT_OUTPUT_TAGS"><code class="name">var <span class="ident">INPUT_OUTPUT_TAGS</span></code></dt>
+<dd>
+<div class="desc"><p>list[str]: XML container tag names for input/output category nodes.</p></div>
+</dd>
+<dt id="arduinoXMLconfig.INPUT_OUTPUT_TAGS_REF"><code class="name">var <span class="ident">INPUT_OUTPUT_TAGS_REF</span></code></dt>
+<dd>
+<div class="desc"><p>dict[str, dict]: Metadata for each input/output container tag.
+Each entry maps a container tag name to a dict with keys:
+<code>'add_action'</code> — the UI menu label for adding a component, and
+<code>'child_tag'</code>
+— the XML tag used for individual component elements.</p></div>
+</dd>
+<dt id="arduinoXMLconfig.POT_PINS"><code class="name">var <span class="ident">POT_PINS</span></code></dt>
+<dd>
+<div class="desc"><p>list[str]: Analog input pin numbers (A0–A15) represented as <code>'0'</code>–<code>'15'</code>.</p></div>
+</dd>
+<dt id="arduinoXMLconfig.PWM_PINS"><code class="name">var <span class="ident">PWM_PINS</span></code></dt>
+<dd>
+<div class="desc"><p>list[str]: PWM-capable digital pin numbers on the Mega 2560.
+Pins 2, 3, 5 are removed (Timer 3 — reserved).</p></div>
+</dd>
+<dt id="arduinoXMLconfig.SERVO_PINS"><code class="name">var <span class="ident">SERVO_PINS</span></code></dt>
+<dd>
+<div class="desc"><p>list[str]: Servo-capable pin numbers.</p></div>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="arduinoXMLconfig.arduinoConfig"><code class="flex name class">
+<span>class <span class="ident">arduinoConfig</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class arduinoConfig():
+    &#34;&#34;&#34;Manages the Arduino hardware configuration stored in an XML file.
+
+    Provides load, save, and CRUD operations for Arduino boards and their
+    input/output components.  Registered observer callbacks are fired
+    whenever attributes change so that the UI and Arduino threads can react
+    without polling.
+
+    Attributes:
+        componentAttributeChangedCallbacks (list[callable]): Functions called
+            when a component attribute is updated.  Signature:
+            ``(componentType, compSerialNr, ardSerialNr, attribute) -&gt; None``.
+        arduinoAttributeChangedCallbacks (list[callable]): Functions called
+            when an Arduino-level attribute is updated.  Signature:
+            ``(ardSerialNr, attribute) -&gt; None``.
+        fileLoadedStatusCallbacks (list[callable]): Functions called when the
+            config file load status changes.  Signature:
+            ``(loaded: bool) -&gt; None``.
+        configFileLoaded (bool): ``True`` if a valid config file is currently
+            loaded into memory.
+        root (xml.etree.ElementTree.Element): Root element of the parsed XML
+            tree.  Available only after a successful :meth:`loadConfigFile`.
+        tree (xml.etree.ElementTree.ElementTree): The full parsed XML tree.
+        ardXMLconfigFile (str): Path of the currently loaded config file.
+    &#34;&#34;&#34;
+
+    def __init__(self):
+        &#34;&#34;&#34;Initialise the config manager with empty callback lists and no loaded file.&#34;&#34;&#34;
+        self.componentAttributeChangedCallbacks = []
+        self.arduinoAttributeChangedCallbacks = []
+        self.fileLoadedStatusCallbacks = []
+        self.configFileLoaded = False
+
+    def loadConfigFile(self, ardXMLconfigFile):
+        &#34;&#34;&#34;Parse an XML configuration file and load it into memory.
+
+        On success, :attr:`configFileLoaded` is set to ``True`` and the
+        ElementTree is available via :attr:`tree` and :attr:`root`.  On
+        failure (file not found, malformed XML, or ``None`` path) the flag is
+        set to ``False`` and an error is logged.
+
+        All registered :attr:`fileLoadedStatusCallbacks` are called with the
+        resulting status regardless of success or failure.
+
+        Args:
+            ardXMLconfigFile (str | None): Absolute or relative path to the
+                Arduino XML configuration file.  Pass ``None`` to trigger the
+                &#34;no file specified&#34; error path.
+        &#34;&#34;&#34;
+        if ardXMLconfigFile is not None:
+            try:
+                self.tree = ET.parse(ardXMLconfigFile)
+                self.root = self.tree.getroot()
+                self.ardXMLconfigFile = ardXMLconfigFile
+                self.configFileLoaded = True
+
+            except:
+                logger.error(&#39;Error while loading arduino config file&#39;, exc_info=True)
+                self.configFileLoaded = False
+        else:
+            logger.error(&#39;No arduino config file specified, please create a new one or open an existing one&#39;)
+
+        for callback in self.fileLoadedStatusCallbacks:
+            callback(self.configFileLoaded)
+
+    def registerFileLoadedStatusCallback(self, callback):
+        &#34;&#34;&#34;Register a callback to be notified when the config file load status changes.
+
+        Args:
+            callback (callable): Function with signature ``(loaded: bool) -&gt; None``.
+        &#34;&#34;&#34;
+        self.fileLoadedStatusCallbacks.append(callback)
+
+    def createConfigFile(self, ardXMLconfigFile):
+        &#34;&#34;&#34;Create a new, empty Arduino XML configuration file on disk.
+
+        Writes the minimal valid XML skeleton ``&lt;arduinoConfig&gt;&lt;/arduinoConfig&gt;``
+        to the specified path, overwriting any existing file.  The file is
+        **not** automatically loaded — call :meth:`loadConfigFile` afterwards.
+
+        Args:
+            ardXMLconfigFile (str): Destination file path.
+        &#34;&#34;&#34;
+        config_file = open(ardXMLconfigFile, &#34;w&#34;)
+        config_file.write(&#34;&lt;arduinoConfig&gt;&lt;/arduinoConfig&gt;&#34;)
+        config_file.close()
+
+    def addInputOutput(self, arduinoSerialNr, inputOutputType):
+        &#34;&#34;&#34;Add a new input/output component of the given type to an Arduino.
+
+        Appends a new child element under the appropriate container tag (e.g.
+        ``&lt;switches&gt;``), assigning it a unique ID in the format
+        ``&lt;containerTag&gt;_&lt;serialNr&gt;-&lt;index&gt;`` and a default name.
+
+        The new component is given an empty ``pin`` attribute and ``state``
+        set to ``&#39;on&#39;``.  The configuration is **not** automatically saved to
+        disk — call :meth:`saveToXMLfile` when ready.
+
+        Args:
+            arduinoSerialNr (str): Serial number of the target Arduino.
+            inputOutputType (str): Container tag name, e.g. ``&#39;switches&#39;``,
+                ``&#39;potentiometers&#39;``, ``&#39;pwms&#39;``, etc.
+        &#34;&#34;&#34;
+        if self.configFileLoaded == True:
+            logger.debug(&#34;Add InOutput type &#34;+str(inputOutputType)+ &#34; to Arduino serial nr: &#34;+str(arduinoSerialNr))
+            ardTag = self.root.findall(&#34;.//arduino[@serial_nr=&#39;&#34;+arduinoSerialNr+&#34;&#39;]&#34;)[0]
+            inputOutputTag = ardTag.findall(&#34;.//&#34;+inputOutputType)[0]
+            # find all existing items under this tag
+            items = list(inputOutputTag.iter(INPUT_OUTPUT_TAGS_REF[inputOutputTag.tag][&#39;child_tag&#39;]))
+            highest_index = 0
+            for item in items:
+                item_id = str(item.attrib[&#39;id&#39;])
+                tokens = item_id.split(&#34;-&#34;)
+                index = int(tokens[1])
+                if index&gt;= highest_index:
+                    highest_index = index +1
+
+
+            inputoutput = ET.SubElement(inputOutputTag,INPUT_OUTPUT_TAGS_REF[inputOutputTag.tag][&#39;child_tag&#39;])
+            inputoutput.set(&#39;id&#39;, inputOutputTag.tag+&#34;_&#34;+arduinoSerialNr+&#34;-&#34;+str(highest_index))
+            inputoutput.set(&#39;name&#39;, INPUT_OUTPUT_TAGS_REF[inputOutputTag.tag][&#39;child_tag&#39;]+&#34; &#34;+str(highest_index))
+            inputoutput.set(&#39;pin&#39;, &#39;&#39;)
+            inputoutput.set(&#39;state&#39;, &#39;on&#39;)
+
+    def addArduino(self, port, name, description, serial_number, manufacturer):
+        &#34;&#34;&#34;Add a new Arduino board entry to the configuration.
+
+        Creates an ``&lt;arduino&gt;`` element with all required attributes and the
+        full input/output sub-tree (inputs → switches, potentiometers,
+        rot_encoders; outputs → dig_outputs, pwms, servos).  The default baud
+        rate is set to ``&#39;57600&#39;``.
+
+        The configuration is **not** automatically saved to disk.
+
+        Args:
+            port (str): Serial port the Arduino is connected to, e.g.
+                ``&#39;COM3&#39;`` or ``&#39;/dev/ttyUSB0&#39;``.
+            name (str): Human-readable display name.
+            description (str): Board description (e.g. ``&#39;Arduino Mega 2560&#39;``).
+            serial_number (str): USB serial number used as the unique
+                identifier throughout the application.
+            manufacturer (str): Manufacturer string reported by the OS.
+        &#34;&#34;&#34;
+        if self.configFileLoaded == True:
+            logger.info(&#39;Adding Arduino: port: %s, name: %s, description: %s, serial nr: %s, manufacturer: %s&#39;, port, name, description, serial_number, manufacturer)
+            ardTag = ET.SubElement(self.root, &#39;arduino&#39;)
+            ardTag.set(&#39;port&#39;, port)
+            ardTag.set(&#39;name&#39;, name)
+            ardTag.set(&#39;description&#39;, description)
+            ardTag.set(&#39;serial_nr&#39;, serial_number)
+            ardTag.set(&#39;manufacturer&#39;, manufacturer)
+            ardTag.set(&#39;baud&#39;, &#39;57600&#39;)
+            ardTag.set(&#39;connected&#39;, &#39;&#39;)
+
+            inputTag = ET.SubElement(ardTag, &#39;inputs&#39;)
+            inputTag.set(&#39;description&#39;, &#39;Inputs&#39;)
+
+            outputTag = ET.SubElement(ardTag, &#39;outputs&#39;)
+            outputTag.set(&#39;description&#39;, &#39;Outputs&#39;)
+
+            switchesTag = ET.SubElement(inputTag, &#39;switches&#39;)
+            switchesTag.set(&#39;description&#39;, &#39;Switches&#39;)
+            potentiometersTag = ET.SubElement(inputTag, &#39;potentiometers&#39;)
+            potentiometersTag.set(&#39;description&#39;, &#39;Potentiometers&#39;)
+            rot_encodersTag = ET.SubElement(inputTag, &#39;rot_encoders&#39;)
+            rot_encodersTag.set(&#39;description&#39;, &#39;Rotary Encoders&#39;)
+
+            digOutputsTag = ET.SubElement(outputTag, &#39;dig_outputs&#39;)
+            digOutputsTag.set(&#39;description&#39;, &#39;Digital Outputs&#39;)
+            pwmsTag = ET.SubElement(outputTag, &#39;pwms&#39;)
+            pwmsTag.set(&#39;description&#39;, &#39;PWMs&#39;)
+            servosTag = ET.SubElement(outputTag, &#39;servos&#39;)
+            servosTag.set(&#39;description&#39;, &#39;Servos&#39;)
+        else:
+            logger.warning(&#34;No config file loaded, please create config file first&#34;)
+
+    def removeArduino(self, arduinoSerialNr):
+        &#34;&#34;&#34;Remove an Arduino and all its components from the configuration.
+
+        Locates the ``&lt;arduino&gt;`` element by serial number and removes it from
+        the XML tree.  The configuration is **not** automatically saved to disk.
+
+        Args:
+            arduinoSerialNr (str): Serial number of the Arduino to remove.
+        &#34;&#34;&#34;
+        if self.configFileLoaded == True:
+            ardTag = self.root.findall(&#34;.//arduino[@serial_nr=&#39;&#34;+arduinoSerialNr+&#34;&#39;]&#34;)[0]
+            self.root.remove(ardTag)
+        else:
+            logger.warning(&#34;No config file loaded, please create config file first&#34;)
+
+    def getArduinoList(self):
+        &#34;&#34;&#34;Return a list of all Arduino boards defined in the configuration.
+
+        Returns:
+            list[dict]: One dict per Arduino with keys ``&#39;port&#39;``, ``&#39;baud&#39;``,
+                ``&#39;name&#39;``, ``&#39;description&#39;``, ``&#39;serial_nr&#39;``, and
+                ``&#39;manufacturer&#39;``.  Returns an empty list if no config file
+                is loaded or no ``&lt;arduino&gt;`` elements are found.
+        &#34;&#34;&#34;
+        ardList = []
+        if self.configFileLoaded == True:
+            ardTags = self.root.findall(&#34;.//arduino&#34;)
+
+            if len(ardTags) &gt; 0: # arduino has been found
+                for ardTag in ardTags:
+                    ardDict = {&#39;port&#39;: ardTag.attrib[&#39;port&#39;],
+                            &#39;baud&#39;: ardTag.attrib[&#39;baud&#39;],
+                            &#39;name&#39;: ardTag.attrib[&#39;name&#39;],
+                            &#39;description&#39;: ardTag.attrib[&#39;description&#39;],
+                            &#39;serial_nr&#39;: ardTag.attrib[&#39;serial_nr&#39;],
+                            &#39;manufacturer&#39;: ardTag.attrib[&#39;manufacturer&#39;]}
+                    ardList.append(ardDict)
+            return ardList
+        else:
+            logger.warning(&#34;No config file loaded, please create config file first&#34;)
+            return ardList
+
+    def removeInputOutput(self, arduinoSerialNr, inputOutputID):
+        &#34;&#34;&#34;Remove a single input/output component from an Arduino.
+
+        Finds the component by its unique ID attribute and removes it from its
+        parent container element.  The configuration is **not** saved automatically.
+
+        Args:
+            arduinoSerialNr (str): Serial number of the owning Arduino.
+            inputOutputID (str): Unique component ID (``id`` XML attribute),
+                e.g. ``&#39;switches_A1B2C3-0&#39;``.
+        &#34;&#34;&#34;
+        if self.configFileLoaded == True:
+            logger.debug(&#34;Remove InOutput ID &#34;,inputOutputID, &#34;from Arduino serial nr:&#34;, arduinoSerialNr)
+            ardTag = self.root.findall(&#34;.//arduino[@serial_nr=&#39;&#34;+arduinoSerialNr+&#34;&#39;]&#34;)[0]
+            inputOutputTag = ardTag.findall(&#34;.//*[@id=&#39;&#34;+inputOutputID+&#34;&#39;]&#34;)[0]
+            logger.debug(&#34;ID to remove found: &#34;, inputOutputTag.attrib[&#39;id&#39;])
+            parent = ardTag.findall(&#34;.//*[@id=&#39;&#34;+inputOutputID+&#34;&#39;]/..&#34;)[0]
+            parent.remove(inputOutputTag)
+        else:
+            logger.warning(&#34;No config file loaded, please create config file first&#34;)
+
+    def saveToXMLfile(self):
+        &#34;&#34;&#34;Persist the current in-memory configuration tree to the XML file on disk.
+
+        Writes to the path stored in :attr:`ardXMLconfigFile` (set during the
+        last successful :meth:`loadConfigFile` call).
+        &#34;&#34;&#34;
+        if self.configFileLoaded == True:
+            self.tree.write(self.ardXMLconfigFile)
+        else:
+            logger.warning(&#34;No config file loaded, please create config file first&#34;)
+
+    def getComponentActions(self, arduinoSerialNr, componentType, pin):
+        &#34;&#34;&#34;Return the list of actions configured for a component identified by pin.
+
+        Searches for a component of ``componentType`` on the given ``pin``
+        belonging to ``arduinoSerialNr``, and returns all of its child
+        ``&lt;action&gt;`` elements as dicts.
+
+        Args:
+            arduinoSerialNr (str): Serial number of the Arduino board.
+            componentType (str): Component type tag, e.g. ``&#39;switch&#39;``,
+                ``&#39;potentiometer&#39;``, ``&#39;rot_encoder&#39;``.
+            pin (str | int): Pin number to look up.
+
+        Returns:
+            list[dict]: One dict per action with keys:
+
+            * ``&#39;state&#39;`` (str) — trigger state, e.g. ``&#39;on&#39;``, ``&#39;off&#39;``,
+              ``&#39;up&#39;``, ``&#39;down&#39;``.
+            * ``&#39;action_type&#39;`` (str) — ``&#39;cmd&#39;`` or ``&#39;dref&#39;``.
+            * ``&#39;cmddref&#39;`` (str) — X-Plane command or dataref string.
+            * ``&#39;index&#39;`` (str) — array index for dataref actions (default ``&#39;0&#39;``).
+            * ``&#39;setToValue&#39;`` (str) — value to write to the dataref or
+              interpolation point string (default ``&#39;0.0&#39;``).
+            * ``&#39;continuous&#39;`` (str) — ``&#39;True&#39;`` or ``&#39;False&#39;``.
+
+            Returns an empty list if the Arduino or component is not found.
+        &#34;&#34;&#34;
+        actionsList = []
+        if self.configFileLoaded == True:
+            ardTags = self.root.findall(&#34;.//arduino[@serial_nr=&#39;&#34;+arduinoSerialNr+&#34;&#39;]&#34;)
+            if len(ardTags) &gt; 0: # arduino has been found
+                compTag = ardTags[0].findall(&#34;.//&#34;+componentType+&#34;[@pin=&#39;&#34;+str(pin)+&#34;&#39;]&#34;)
+                if len(compTag) &gt; 0: # component has been found
+                    actions = list(compTag[0].iter(&#39;action&#39;))
+
+                    for action in actions:
+                        index = &#39;0&#39;
+                        setToValue = &#39;0.0&#39;
+                        continuous = &#39;False&#39;
+                        cmddref = &#39;&#39;
+                        if action.text != None:
+                            cmddref = action.text
+
+                        try:
+                            index = action.attrib[&#39;index&#39;]
+                            setToValue = action.attrib[&#39;setToValue&#39;]
+                            continuous = action.attrib[&#39;continuous&#39;]
+                        except:
+                            pass
+                        actionsList.append({&#39;state&#39;: action.attrib[&#39;state&#39;],
+                                            &#39;action_type&#39;: action.attrib[&#39;action_type&#39;],
+                                            &#39;cmddref&#39;: cmddref,
+                                            &#39;index&#39;: index,
+                                            &#39;setToValue&#39;: setToValue,
+                                            &#39;continuous&#39;: continuous})
+        else:
+            logger.warning(&#34;No config file loaded, please create config file first&#34;)
+
+        return actionsList
+
+    def getComponentAttribute(self, arduinoSerialNr, componentType, pin, attribute):
+        &#34;&#34;&#34;Return a single attribute value for a component identified by pin.
+
+        Args:
+            arduinoSerialNr (str): Serial number of the Arduino.
+            componentType (str): Component type tag, e.g. ``&#39;switch&#39;``.
+            pin (str | int): Pin number of the component.
+            attribute (str): Name of the XML attribute to retrieve.
+
+        Returns:
+            str: The attribute value, or ``&#39;&#39;`` if the Arduino or component
+                is not found, or if the attribute does not exist.
+        &#34;&#34;&#34;
+        if self.configFileLoaded == True:
+            ardTags = self.root.findall(&#34;.//arduino[@serial_nr=&#39;&#34;+arduinoSerialNr+&#34;&#39;]&#34;)
+            if len(ardTags) &gt; 0: # arduino has been found
+                compTag = ardTags[0].findall(&#34;.//&#34;+componentType+&#34;[@pin=&#39;&#34;+str(pin)+&#34;&#39;]&#34;)
+                if len(compTag) &gt; 0: # component has been found
+                    return compTag[0].attrib[attribute]
+            return &#39;&#39;
+        else:
+            logger.warning(&#34;No config file loaded, please create config file first&#34;)
+
+        return &#39;&#39;
+
+    def getComponentList(self, arduinoSerialNr, componentType):
+        &#34;&#34;&#34;Return all components of a given type belonging to an Arduino.
+
+        Args:
+            arduinoSerialNr (str): Serial number of the Arduino.
+            componentType (str): Component type tag, e.g. ``&#39;switch&#39;``,
+                ``&#39;potentiometer&#39;``, ``&#39;pwm&#39;``, ``&#39;servo&#39;``,
+                ``&#39;dig_output&#39;``, ``&#39;rot_encoder&#39;``.
+
+        Returns:
+            list[dict]: One dict per component with keys:
+
+            * ``&#39;name&#39;`` (str) — display name.
+            * ``&#39;id&#39;`` (str) — unique component ID.
+            * ``&#39;pin&#39;`` (str) — primary pin number, or ``&#39;&#39;`` if unset.
+            * ``&#39;pin2&#39;`` (str) — secondary pin (rotary encoders), or ``&#39;&#39;``.
+            * ``&#39;stepsPerNotch&#39;`` (str) — encoder steps per detent, or ``&#39;&#39;``.
+            * ``&#39;state&#39;`` (str) — last known state.
+
+            Returns an empty list if the Arduino is not found or the config is
+            not loaded.
+        &#34;&#34;&#34;
+        compList = []
+        if self.configFileLoaded == True:
+            ardTags = self.root.findall(&#34;.//arduino[@serial_nr=&#39;&#34;+arduinoSerialNr+&#34;&#39;]&#34;)
+            if len(ardTags) &gt; 0: # arduino has been found
+                compTags = ardTags[0].findall(&#34;.//&#34;+componentType)
+                for compTag in compTags:
+                    pin =&#39;&#39;
+                    if &#39;pin&#39; in compTag.attrib:
+                        pin = compTag.attrib[&#39;pin&#39;]
+                    pin2 =&#39;&#39;
+                    if &#39;pin2&#39; in compTag.attrib:
+                        pin2 = compTag.attrib[&#39;pin2&#39;]
+                    stepsPerNotch = &#39;&#39;
+                    if &#39;stepsPerNotch&#39; in compTag.attrib:
+                        stepsPerNotch = compTag.attrib[&#39;stepsPerNotch&#39;]
+
+                    compList.append({&#39;name&#39;: compTag.attrib[&#39;name&#39;],
+                                    &#39;id&#39;: compTag.attrib[&#39;id&#39;],
+                                    &#39;pin&#39;: pin,
+                                    &#39;pin2&#39;: pin2,
+                                    &#39;stepsPerNotch&#39;: stepsPerNotch,
+                                    &#39;state&#39;: compTag.attrib[&#39;state&#39;]})
+        else:
+            logger.warning(&#34;No config file loaded, please create config file first&#34;)
+
+        return compList
+
+    def getComponentData(self, compSerialNr, componentType):
+        &#34;&#34;&#34;Return the full data dict for a component identified by its unique ID.
+
+        Unlike :meth:`getComponentList` (which searches by Arduino serial
+        number), this method searches the entire tree by component ID and
+        returns all attributes plus the full actions list.
+
+        Args:
+            compSerialNr (str): Unique component ID (``id`` XML attribute).
+            componentType (str): Component type tag, e.g. ``&#39;switch&#39;``,
+                ``&#39;rot_encoder&#39;``.
+
+        Returns:
+            dict | None: A dict with keys ``&#39;name&#39;``, ``&#39;id&#39;``, ``&#39;pin&#39;``,
+                ``&#39;pin2&#39;``, ``&#39;stepsPerNotch&#39;``, ``&#39;state&#39;``,
+                ``&#39;acceleration&#39;``, ``&#39;multiplier&#39;``, and ``&#39;actions&#39;``
+                (list of action dicts as described in :meth:`getComponentActions`).
+                Returns ``None`` if the component is not found or no config
+                file is loaded.
+        &#34;&#34;&#34;
+        if self.configFileLoaded == True:
+            compTag = self.root.findall(&#34;.//&#34;+componentType+&#34;[@id=&#39;&#34;+compSerialNr+&#34;&#39;]&#34;)
+            if len(    compTag) &gt; 0: # comp has been found
+                pin =&#39;&#39;
+                pin2 = &#39;&#39;
+                stepsPerNotch = &#39;4&#39;
+                acceleration = &#39;False&#39;
+                multiplier = &#39;1.0&#39;
+                if &#39;pin&#39; in compTag[0].attrib:
+                    pin = compTag[0].attrib[&#39;pin&#39;]
+                if &#39;pin2&#39; in compTag[0].attrib:
+                    pin2 = compTag[0].attrib[&#39;pin2&#39;]
+                if &#39;stepsPerNotch&#39; in compTag[0].attrib:
+                    stepsPerNotch = compTag[0].attrib[&#39;stepsPerNotch&#39;]
+                if &#39;acceleration&#39; in compTag[0].attrib:
+                    acceleration = compTag[0].attrib[&#39;acceleration&#39;]
+                if &#39;multiplier&#39; in compTag[0].attrib:
+                    multiplier = compTag[0].attrib[&#39;multiplier&#39;]
+
+
+                actions = list(compTag[0].iter(&#39;action&#39;))
+                actionsList = []
+                for action in actions:
+                    index = &#39;0&#39;
+                    setToValue = &#39;0.0&#39;
+                    continuous = &#39;False&#39;
+                    try:
+                        index = action.attrib[&#39;index&#39;]
+                        setToValue = action.attrib[&#39;setToValue&#39;]
+                        continuous = action.attrib[&#39;continuous&#39;]
+                    except:
+                        pass
+
+                    actionsList.append({&#39;state&#39;: action.attrib[&#39;state&#39;],
+                                        &#39;action_type&#39;: action.attrib[&#39;action_type&#39;],
+                                        &#39;cmddref&#39;: action.text,
+                                        &#39;index&#39;: index,
+                                        &#39;setToValue&#39;: setToValue,
+                                        &#39;continuous&#39;: continuous})
+                compDict = {&#39;name&#39;: compTag[0].attrib[&#39;name&#39;],
+                        &#39;id&#39;: compTag[0].attrib[&#39;id&#39;],
+                        &#39;pin&#39;: pin,
+                        &#39;pin2&#39;: pin2,
+                        &#39;stepsPerNotch&#39;: stepsPerNotch,
+                        &#39;state&#39;: compTag[0].attrib[&#39;state&#39;],
+                        &#39;acceleration&#39;: acceleration,
+                        &#39;multiplier&#39;: multiplier,
+                        &#39;actions&#39;: actionsList}
+
+                return compDict
+            else:
+                return None
+        else:
+            logger.warning(&#34;No config file loaded, please create config file first&#34;)
+            return None
+
+    def registerComponentAttributeChangedCallback(self, callback):
+        &#34;&#34;&#34;Register a callback to be notified when any component attribute changes.
+
+        Args:
+            callback (callable): Function with signature
+                ``(componentType: str, compSerialNr: str, ardSerialNr: str,
+                attribute: str) -&gt; None``.
+        &#34;&#34;&#34;
+        self.componentAttributeChangedCallbacks.append(callback)
+
+    def registerArduinoAttributeChangedCallback(self, callback):
+        &#34;&#34;&#34;Register a callback to be notified when any Arduino-level attribute changes.
+
+        Args:
+            callback (callable): Function with signature
+                ``(ardSerialNr: str, attribute: str) -&gt; None``.
+        &#34;&#34;&#34;
+        self.arduinoAttributeChangedCallbacks.append(callback)
+
+    def updateComponentActions(self, arduinoSerialNr, componentType, pin, actionsList):
+        &#34;&#34;&#34;Replace all actions for a component with the provided list.
+
+        Removes all existing ``&lt;action&gt;`` child elements from the component and
+        replaces them with new elements built from ``actionsList``.  Typically
+        called by :class:`~lib.Arduino.Arduino` after reading updated dataref
+        values so the ``state`` field stays current.
+
+        Args:
+            arduinoSerialNr (str): Serial number of the Arduino.
+            componentType (str): Component type tag, e.g. ``&#39;pwm&#39;``.
+            pin (str | int): Pin number identifying the component.
+            actionsList (list[dict]): New list of action dicts.  Each dict
+                must contain at minimum ``&#39;state&#39;``, ``&#39;action_type&#39;``, and
+                ``&#39;cmddref&#39;``.  Optional keys are ``&#39;index&#39;`` and
+                ``&#39;setToValue&#39;``.
+        &#34;&#34;&#34;
+        ardTags = self.root.findall(&#34;.//arduino[@serial_nr=&#39;&#34;+arduinoSerialNr+&#34;&#39;]&#34;)
+        if len(ardTags) &gt; 0: # arduino has been found
+            compTag = ardTags[0].findall(&#34;.//&#34;+componentType+&#34;[@pin=&#39;&#34;+str(pin)+&#34;&#39;]&#34;)
+            if len(compTag) &gt; 0: # switch has been found
+
+                for action in list(compTag[0]): # first remove all actions
+                    compTag[0].remove(action)
+
+                for action in actionsList:
+                    actionTag = ET.SubElement(compTag[0], &#39;action&#39;)
+                    actionTag.set(&#39;state&#39;, action[&#39;state&#39;])
+                    actionTag.set(&#39;action_type&#39;, action[&#39;action_type&#39;])
+                    try:
+                        actionTag.set(&#39;index&#39;, action[&#39;index&#39;])
+                        actionTag.set(&#39;setToValue&#39;, action[&#39;setToValue&#39;])
+                    except:
+                        pass
+                    actionTag.text = action[&#39;cmddref&#39;]
+
+    def updateComponentData(self, compSerialNr, componentType, compData, actions=[]):
+        &#34;&#34;&#34;Update a component&#39;s attributes and replace its actions in the XML tree.
+
+        Updates the ``id``, ``name``, ``pin``, and optionally ``pin2``,
+        ``stepsPerNotch``, ``acceleration``, and ``multiplier`` attributes,
+        then replaces all ``&lt;action&gt;`` children with those from ``actions``.
+
+        .. note::
+            BUG-02 — the XPath expression used to locate the parent Arduino
+            element on line 371 contains extra dots and will always return an
+            empty list, causing an ``IndexError`` when the ardSerialNr lookup
+            is attempted.
+
+        Args:
+            compSerialNr (str): Current unique ID of the component to update.
+            componentType (str): Component type tag, e.g. ``&#39;switch&#39;``,
+                ``&#39;rot_encoder&#39;``.
+            compData (dict): Dict of updated attributes.  Required keys:
+                ``&#39;id&#39;``, ``&#39;name&#39;``, ``&#39;pin&#39;``.  Optional keys: ``&#39;pin2&#39;``,
+                ``&#39;stepsPerNotch&#39;``, ``&#39;acceleration&#39;``, ``&#39;multiplier&#39;``.
+            actions (list[dict], optional): Replacement action list.  Each
+                dict must contain ``&#39;state&#39;``, ``&#39;action_type&#39;``, ``&#39;cmddref&#39;``,
+                and optionally ``&#39;continuous&#39;``, ``&#39;index&#39;``, ``&#39;setToValue&#39;``.
+                Defaults to an empty list (removes all existing actions).
+
+        Returns:
+            int: Returns ``-1`` if the component is not found or no config
+                file is loaded; otherwise implicitly returns ``None``.
+        &#34;&#34;&#34;
+        if self.configFileLoaded == True:
+            logger.debug(&#39;Update Component Data, type: &#39;+componentType)
+            compTag = self.root.findall(&#34;.//&#34;+componentType+&#34;[@id=&#39;&#34;+compSerialNr+&#34;&#39;]&#34;)
+            if len(compTag) &gt; 0: # component has been found
+                #find the switch arduino parent element
+                ardTag = self.root.findall(&#34;.//&#34;+componentType+&#34;[@id=&#39;&#34;+compSerialNr+&#34;&#39;]......&#34;)
+                ardSerialNr = ardTag[0].attrib[&#39;serial_nr&#39;]
+
+                self.updateComponentAttribute(compSerialNr, componentType,&#39;id&#39;, compData[&#39;id&#39;])
+                self.updateComponentAttribute(compSerialNr, componentType,&#39;name&#39;, compData[&#39;name&#39;])
+                self.updateComponentAttribute(compSerialNr, componentType,&#39;pin&#39;, compData[&#39;pin&#39;])
+                if &#39;pin2&#39; in compData: # test if 2nd pin provided
+                    self.updateComponentAttribute(compSerialNr, componentType,&#39;pin2&#39;, compData[&#39;pin2&#39;])
+                if &#39;stepsPerNotch&#39; in compData: # test if stepsPerNotch provided
+                    self.updateComponentAttribute(compSerialNr, componentType,&#39;stepsPerNotch&#39;, compData[&#39;stepsPerNotch&#39;])
+                if &#39;acceleration&#39; in compData: # test if acceleration provided
+                    self.updateComponentAttribute(compSerialNr, componentType,&#39;acceleration&#39;, compData[&#39;acceleration&#39;])
+                if &#39;multiplier&#39; in compData: # test if multiplier provided
+                    self.updateComponentAttribute(compSerialNr, componentType,&#39;multiplier&#39;, compData[&#39;multiplier&#39;])
+
+                for action in list(compTag[0]): # first remove all actions
+                    compTag[0].remove(action)
+
+                for action in actions:
+                    actionTag = ET.SubElement(compTag[0], &#39;action&#39;)
+                    actionTag.set(&#39;state&#39;, action[&#39;state&#39;])
+                    actionTag.set(&#39;action_type&#39;, action[&#39;action_type&#39;])
+                    try:
+                        actionTag.set(&#39;continuous&#39;, action[&#39;continuous&#39;])
+                    except:
+                        actionTag.set(&#39;continuous&#39;, &#39;&#39;)
+                    try:
+                        actionTag.set(&#39;index&#39;, action[&#39;index&#39;])
+                    except:
+                        actionTag.set(&#39;index&#39;, &#39;&#39;)
+                    try:
+                        actionTag.set(&#39;setToValue&#39;, action[&#39;setToValue&#39;])
+                    except:
+                        actionTag.set(&#39;setToValue&#39;, &#39;&#39;)
+                    actionTag.text = action[&#39;cmddref&#39;]
+
+            else:
+                return -1
+        else:
+            logger.warning(&#34;No config file loaded, please create config file first&#34;)
+            return -1
+
+    def updateComponentAttribute(self, compSerialNr, componentType, attribute, attributeValue):
+        &#34;&#34;&#34;Update a single attribute of a component and notify observers.
+
+        If the attribute does not already exist on the element it is created
+        (backward-compatibility for new attributes added in later versions).
+        Observers are only notified if the value actually changes.
+
+        .. note::
+            BUG-02 — the XPath expression used to locate the parent Arduino
+            element contains extra dots and will always fail with an
+            ``IndexError``.  The ``ardSerialNr`` lookup on the following line
+            is therefore unreachable in the current code.
+
+        Args:
+            compSerialNr (str): Unique component ID.
+            componentType (str): Component type tag, e.g. ``&#39;switch&#39;``.
+            attribute (str): Name of the XML attribute to update.
+            attributeValue (str): New value for the attribute.
+
+        Returns:
+            int: Returns ``-1`` if the component is not found or no config
+                file is loaded; otherwise implicitly returns ``None``.
+        &#34;&#34;&#34;
+        if self.configFileLoaded == True:
+            logger.debug(&#39;Update component attribute: &#39;+compSerialNr+&#39; attribute: &#39; +attribute+&#39; value:&#39;+attributeValue )
+            compTag = self.root.findall(&#34;.//&#34;+componentType+&#34;[@id=&#39;&#34;+compSerialNr+&#34;&#39;]&#34;)
+            if len(compTag) &gt; 0: # component has been found
+                #find the component arduino parent element
+                ardTag = self.root.findall(&#34;.//&#34;+componentType+&#34;[@id=&#39;&#34;+compSerialNr+&#34;&#39;]......&#34;)
+                ardSerialNr = ardTag[0].attrib[&#39;serial_nr&#39;]
+                if attribute not in compTag[0].attrib: # this attribute does not exist so lets create it
+                    compTag[0].set(attribute, &#39;&#39;)
+                if compTag[0].attrib[attribute] != attributeValue: # then the value has changed and must be updated
+                    compTag[0].set(attribute, attributeValue)
+                    # and we notify all callbacks of this attribute change
+                    for callback in self.componentAttributeChangedCallbacks:
+                        callback(componentType, compSerialNr,ardSerialNr, attribute)
+            else:
+                return -1
+        else:
+            logger.warning(&#34;No config file loaded, please create config file first&#34;)
+            return -1
+
+    def getArduinoData(self, arduinoSerialNr):
+        &#34;&#34;&#34;Return a full attribute dict for an Arduino board.
+
+        Dynamically creates any missing runtime attributes (``&#39;connected&#39;``,
+        ``&#39;firmware_version&#39;``, ``&#39;ard_status&#39;``) in the element if they are
+        absent — this ensures backward compatibility with config files saved
+        by older versions of the application.
+
+        Args:
+            arduinoSerialNr (str): Serial number of the Arduino to retrieve.
+
+        Returns:
+            dict | None: Dict with keys ``&#39;port&#39;``, ``&#39;baud&#39;``, ``&#39;name&#39;``,
+                ``&#39;description&#39;``, ``&#39;serial_nr&#39;``, ``&#39;manufacturer&#39;``,
+                ``&#39;connected&#39;``, ``&#39;firmware_version&#39;``, and ``&#39;ard_status&#39;``.
+                Returns ``None`` if the Arduino is not found or no config file
+                is loaded.
+        &#34;&#34;&#34;
+        if self.configFileLoaded == True:
+            ardTags = self.root.findall(&#34;.//arduino[@serial_nr=&#39;&#34;+arduinoSerialNr+&#34;&#39;]&#34;)
+            if len(ardTags) &gt; 0: # arduino has been found
+                if &#39;connected&#39; not in ardTags[0].attrib: # this attribute does not exist so lets create it
+                    ardTags[0].set(&#39;connected&#39;, &#39;&#39;)
+                if &#39;firmware_version&#39; not in ardTags[0].attrib: # this attribute does not exist so lets create it
+                    ardTags[0].set(&#39;firmware_version&#39;, &#39;&#39;)
+                if &#39;ard_status&#39; not in ardTags[0].attrib: # this attribute does not exist so lets create it
+                    ardTags[0].set(&#39;ard_status&#39;, &#39;&#39;)
+
+                ardDict = {&#39;port&#39;: ardTags[0].attrib[&#39;port&#39;],
+                        &#39;baud&#39;: ardTags[0].attrib[&#39;baud&#39;],
+                        &#39;name&#39;: ardTags[0].attrib[&#39;name&#39;],
+                        &#39;description&#39;: ardTags[0].attrib[&#39;description&#39;],
+                        &#39;serial_nr&#39;: ardTags[0].attrib[&#39;serial_nr&#39;],
+                        &#39;manufacturer&#39;: ardTags[0].attrib[&#39;manufacturer&#39;],
+                        &#39;connected&#39;: ardTags[0].attrib[&#39;connected&#39;],
+                        &#39;firmware_version&#39;: ardTags[0].attrib[&#39;firmware_version&#39;],
+                        &#39;ard_status&#39;: ardTags[0].attrib[&#39;ard_status&#39;]}
+
+                return ardDict
+            else:
+                return None
+        else:
+            logger.warning(&#34;No config file loaded, please create config file first&#34;)
+            return None
+
+    def updateArduinoData(self, arduinoSerialNr, ardData):
+        &#34;&#34;&#34;Update the editable attributes of an Arduino and notify observers.
+
+        Compares each attribute in ``ardData`` against the current XML value
+        and only writes (and fires callbacks for) attributes that have actually
+        changed.  Handles: ``&#39;port&#39;``, ``&#39;baud&#39;``, ``&#39;name&#39;``,
+        ``&#39;description&#39;``, ``&#39;serial_nr&#39;``, ``&#39;manufacturer&#39;``.
+
+        Args:
+            arduinoSerialNr (str): Serial number of the Arduino to update.
+            ardData (dict): Dict of new values.  Must contain the keys listed
+                above.
+
+        Returns:
+            int: Returns ``-1`` if the Arduino is not found or no config file
+                is loaded; otherwise implicitly returns ``None``.
+        &#34;&#34;&#34;
+        if self.configFileLoaded == True:
+            logger.debug(&#34;updating arduino data for arduino serial nr %s, data: %s&#34;,arduinoSerialNr, ardData)
+            ardTags = self.root.findall(&#34;.//arduino[@serial_nr=&#39;&#34;+arduinoSerialNr+&#34;&#39;]&#34;)
+            if len(ardTags) &gt; 0: # arduino has been found
+                if ardTags[0].attrib[&#39;port&#39;] != ardData[&#39;port&#39;]:
+                    ardTags[0].set(&#39;port&#39;, ardData[&#39;port&#39;])
+                    for callback in self.arduinoAttributeChangedCallbacks:
+                        callback(arduinoSerialNr, &#39;port&#39;)
+
+                if ardTags[0].attrib[&#39;baud&#39;] != ardData[&#39;baud&#39;]:
+                    ardTags[0].set(&#39;baud&#39;, ardData[&#39;baud&#39;])
+                    for callback in self.arduinoAttributeChangedCallbacks:
+                        callback(arduinoSerialNr, &#39;baud&#39;)
+
+                if ardTags[0].attrib[&#39;name&#39;] != ardData[&#39;name&#39;]:
+                    ardTags[0].set(&#39;name&#39;, ardData[&#39;name&#39;])
+                    for callback in self.arduinoAttributeChangedCallbacks:
+                        callback(arduinoSerialNr, &#39;name&#39;)
+
+                if ardTags[0].attrib[&#39;description&#39;] != ardData[&#39;description&#39;]:
+                    ardTags[0].set(&#39;description&#39;, ardData[&#39;description&#39;])
+                    for callback in self.arduinoAttributeChangedCallbacks:
+                        callback(arduinoSerialNr, &#39;description&#39;)
+
+                if ardTags[0].attrib[&#39;serial_nr&#39;] != ardData[&#39;serial_nr&#39;]:
+                    ardTags[0].set(&#39;serial_nr&#39;, ardData[&#39;serial_nr&#39;])
+                    for callback in self.arduinoAttributeChangedCallbacks:
+                        callback(arduinoSerialNr, &#39;serial_nr&#39;)
+
+                if ardTags[0].attrib[&#39;manufacturer&#39;] != ardData[&#39;manufacturer&#39;]:
+                    ardTags[0].set(&#39;manufacturer&#39;, ardData[&#39;manufacturer&#39;])
+                    for callback in self.arduinoAttributeChangedCallbacks:
+                        callback(arduinoSerialNr, &#39;manufacturer&#39;)
+            else :
+                return -1
+        else:
+            logger.warning(&#34;No config file loaded, please create config file first&#34;)
+            return -1
+
+    def updateArduinoAttribute(self, arduinoSerialNr, attribute, attributeValue):
+        &#34;&#34;&#34;Set a single attribute on an Arduino element and notify observers.
+
+        Unlike :meth:`updateArduinoData`, this method unconditionally sets the
+        value without comparing to the previous one, making it suitable for
+        runtime-only attributes such as ``&#39;connected&#39;``, ``&#39;ard_status&#39;``,
+        and ``&#39;firmware_version&#39;`` that are not user-editable.
+
+        If the attribute does not yet exist on the element it is created
+        (backward compatibility).
+
+        Args:
+            arduinoSerialNr (str): Serial number of the Arduino to update.
+            attribute (str): XML attribute name to set.
+            attributeValue (str): New value.
+
+        Returns:
+            int: Returns ``-1`` if the Arduino is not found or no config file
+                is loaded; otherwise implicitly returns ``None``.
+        &#34;&#34;&#34;
+        if self.configFileLoaded == True:
+            ardTags = self.root.findall(&#34;.//arduino[@serial_nr=&#39;&#34;+arduinoSerialNr+&#34;&#39;]&#34;)
+            if len(ardTags) &gt; 0: # arduino has been found
+                ardTags[0].set(attribute, attributeValue)
+                for callback in self.arduinoAttributeChangedCallbacks:
+                    callback(arduinoSerialNr, attribute)
+            else :
+                return -1
+        else:
+            logger.warning(&#34;No config file loaded, please create config file first&#34;)
+            return -1</code></pre>
+</details>
+<div class="desc"><p>Manages the Arduino hardware configuration stored in an XML file.</p>
+<p>Provides load, save, and CRUD operations for Arduino boards and their
+input/output components.
+Registered observer callbacks are fired
+whenever attributes change so that the UI and Arduino threads can react
+without polling.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>componentAttributeChangedCallbacks</code></strong> :&ensp;<code>list[callable]</code></dt>
+<dd>Functions called
+when a component attribute is updated.
+Signature:
+<code>(componentType, compSerialNr, ardSerialNr, attribute) -&gt; None</code>.</dd>
+<dt><strong><code>arduinoAttributeChangedCallbacks</code></strong> :&ensp;<code>list[callable]</code></dt>
+<dd>Functions called
+when an Arduino-level attribute is updated.
+Signature:
+<code>(ardSerialNr, attribute) -&gt; None</code>.</dd>
+<dt><strong><code>fileLoadedStatusCallbacks</code></strong> :&ensp;<code>list[callable]</code></dt>
+<dd>Functions called when the
+config file load status changes.
+Signature:
+<code>(loaded: bool) -&gt; None</code>.</dd>
+<dt><strong><code>configFileLoaded</code></strong> :&ensp;<code>bool</code></dt>
+<dd><code>True</code> if a valid config file is currently
+loaded into memory.</dd>
+<dt><strong><code>root</code></strong> :&ensp;<code>xml.etree.ElementTree.Element</code></dt>
+<dd>Root element of the parsed XML
+tree.
+Available only after a successful :meth:<code>loadConfigFile</code>.</dd>
+<dt><strong><code>tree</code></strong> :&ensp;<code>xml.etree.ElementTree.ElementTree</code></dt>
+<dd>The full parsed XML tree.</dd>
+<dt><strong><code>ardXMLconfigFile</code></strong> :&ensp;<code>str</code></dt>
+<dd>Path of the currently loaded config file.</dd>
+</dl>
+<p>Initialise the config manager with empty callback lists and no loaded file.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="arduinoXMLconfig.arduinoConfig.addArduino"><code class="name flex">
+<span>def <span class="ident">addArduino</span></span>(<span>self, port, name, description, serial_number, manufacturer)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def addArduino(self, port, name, description, serial_number, manufacturer):
+    &#34;&#34;&#34;Add a new Arduino board entry to the configuration.
+
+    Creates an ``&lt;arduino&gt;`` element with all required attributes and the
+    full input/output sub-tree (inputs → switches, potentiometers,
+    rot_encoders; outputs → dig_outputs, pwms, servos).  The default baud
+    rate is set to ``&#39;57600&#39;``.
+
+    The configuration is **not** automatically saved to disk.
+
+    Args:
+        port (str): Serial port the Arduino is connected to, e.g.
+            ``&#39;COM3&#39;`` or ``&#39;/dev/ttyUSB0&#39;``.
+        name (str): Human-readable display name.
+        description (str): Board description (e.g. ``&#39;Arduino Mega 2560&#39;``).
+        serial_number (str): USB serial number used as the unique
+            identifier throughout the application.
+        manufacturer (str): Manufacturer string reported by the OS.
+    &#34;&#34;&#34;
+    if self.configFileLoaded == True:
+        logger.info(&#39;Adding Arduino: port: %s, name: %s, description: %s, serial nr: %s, manufacturer: %s&#39;, port, name, description, serial_number, manufacturer)
+        ardTag = ET.SubElement(self.root, &#39;arduino&#39;)
+        ardTag.set(&#39;port&#39;, port)
+        ardTag.set(&#39;name&#39;, name)
+        ardTag.set(&#39;description&#39;, description)
+        ardTag.set(&#39;serial_nr&#39;, serial_number)
+        ardTag.set(&#39;manufacturer&#39;, manufacturer)
+        ardTag.set(&#39;baud&#39;, &#39;57600&#39;)
+        ardTag.set(&#39;connected&#39;, &#39;&#39;)
+
+        inputTag = ET.SubElement(ardTag, &#39;inputs&#39;)
+        inputTag.set(&#39;description&#39;, &#39;Inputs&#39;)
+
+        outputTag = ET.SubElement(ardTag, &#39;outputs&#39;)
+        outputTag.set(&#39;description&#39;, &#39;Outputs&#39;)
+
+        switchesTag = ET.SubElement(inputTag, &#39;switches&#39;)
+        switchesTag.set(&#39;description&#39;, &#39;Switches&#39;)
+        potentiometersTag = ET.SubElement(inputTag, &#39;potentiometers&#39;)
+        potentiometersTag.set(&#39;description&#39;, &#39;Potentiometers&#39;)
+        rot_encodersTag = ET.SubElement(inputTag, &#39;rot_encoders&#39;)
+        rot_encodersTag.set(&#39;description&#39;, &#39;Rotary Encoders&#39;)
+
+        digOutputsTag = ET.SubElement(outputTag, &#39;dig_outputs&#39;)
+        digOutputsTag.set(&#39;description&#39;, &#39;Digital Outputs&#39;)
+        pwmsTag = ET.SubElement(outputTag, &#39;pwms&#39;)
+        pwmsTag.set(&#39;description&#39;, &#39;PWMs&#39;)
+        servosTag = ET.SubElement(outputTag, &#39;servos&#39;)
+        servosTag.set(&#39;description&#39;, &#39;Servos&#39;)
+    else:
+        logger.warning(&#34;No config file loaded, please create config file first&#34;)</code></pre>
+</details>
+<div class="desc"><p>Add a new Arduino board entry to the configuration.</p>
+<p>Creates an <code>&lt;arduino&gt;</code> element with all required attributes and the
+full input/output sub-tree (inputs → switches, potentiometers,
+rot_encoders; outputs → dig_outputs, pwms, servos).
+The default baud
+rate is set to <code>'57600'</code>.</p>
+<p>The configuration is <strong>not</strong> automatically saved to disk.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>port</code></strong> :&ensp;<code>str</code></dt>
+<dd>Serial port the Arduino is connected to, e.g.
+<code>'COM3'</code> or <code>'/dev/ttyUSB0'</code>.</dd>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>Human-readable display name.</dd>
+<dt><strong><code>description</code></strong> :&ensp;<code>str</code></dt>
+<dd>Board description (e.g. <code>'Arduino Mega 2560'</code>).</dd>
+<dt><strong><code>serial_number</code></strong> :&ensp;<code>str</code></dt>
+<dd>USB serial number used as the unique
+identifier throughout the application.</dd>
+<dt><strong><code>manufacturer</code></strong> :&ensp;<code>str</code></dt>
+<dd>Manufacturer string reported by the OS.</dd>
+</dl></div>
+</dd>
+<dt id="arduinoXMLconfig.arduinoConfig.addInputOutput"><code class="name flex">
+<span>def <span class="ident">addInputOutput</span></span>(<span>self, arduinoSerialNr, inputOutputType)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def addInputOutput(self, arduinoSerialNr, inputOutputType):
+    &#34;&#34;&#34;Add a new input/output component of the given type to an Arduino.
+
+    Appends a new child element under the appropriate container tag (e.g.
+    ``&lt;switches&gt;``), assigning it a unique ID in the format
+    ``&lt;containerTag&gt;_&lt;serialNr&gt;-&lt;index&gt;`` and a default name.
+
+    The new component is given an empty ``pin`` attribute and ``state``
+    set to ``&#39;on&#39;``.  The configuration is **not** automatically saved to
+    disk — call :meth:`saveToXMLfile` when ready.
+
+    Args:
+        arduinoSerialNr (str): Serial number of the target Arduino.
+        inputOutputType (str): Container tag name, e.g. ``&#39;switches&#39;``,
+            ``&#39;potentiometers&#39;``, ``&#39;pwms&#39;``, etc.
+    &#34;&#34;&#34;
+    if self.configFileLoaded == True:
+        logger.debug(&#34;Add InOutput type &#34;+str(inputOutputType)+ &#34; to Arduino serial nr: &#34;+str(arduinoSerialNr))
+        ardTag = self.root.findall(&#34;.//arduino[@serial_nr=&#39;&#34;+arduinoSerialNr+&#34;&#39;]&#34;)[0]
+        inputOutputTag = ardTag.findall(&#34;.//&#34;+inputOutputType)[0]
+        # find all existing items under this tag
+        items = list(inputOutputTag.iter(INPUT_OUTPUT_TAGS_REF[inputOutputTag.tag][&#39;child_tag&#39;]))
+        highest_index = 0
+        for item in items:
+            item_id = str(item.attrib[&#39;id&#39;])
+            tokens = item_id.split(&#34;-&#34;)
+            index = int(tokens[1])
+            if index&gt;= highest_index:
+                highest_index = index +1
+
+
+        inputoutput = ET.SubElement(inputOutputTag,INPUT_OUTPUT_TAGS_REF[inputOutputTag.tag][&#39;child_tag&#39;])
+        inputoutput.set(&#39;id&#39;, inputOutputTag.tag+&#34;_&#34;+arduinoSerialNr+&#34;-&#34;+str(highest_index))
+        inputoutput.set(&#39;name&#39;, INPUT_OUTPUT_TAGS_REF[inputOutputTag.tag][&#39;child_tag&#39;]+&#34; &#34;+str(highest_index))
+        inputoutput.set(&#39;pin&#39;, &#39;&#39;)
+        inputoutput.set(&#39;state&#39;, &#39;on&#39;)</code></pre>
+</details>
+<div class="desc"><p>Add a new input/output component of the given type to an Arduino.</p>
+<p>Appends a new child element under the appropriate container tag (e.g.
+<code>&lt;switches&gt;</code>), assigning it a unique ID in the format
+<code>&lt;containerTag&gt;_&lt;serialNr&gt;-&lt;index&gt;</code> and a default name.</p>
+<p>The new component is given an empty <code>pin</code> attribute and <code>state</code>
+set to <code>'on'</code>.
+The configuration is <strong>not</strong> automatically saved to
+disk — call :meth:<code>saveToXMLfile</code> when ready.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>arduinoSerialNr</code></strong> :&ensp;<code>str</code></dt>
+<dd>Serial number of the target Arduino.</dd>
+<dt><strong><code>inputOutputType</code></strong> :&ensp;<code>str</code></dt>
+<dd>Container tag name, e.g. <code>'switches'</code>,
+<code>'potentiometers'</code>, <code>'pwms'</code>, etc.</dd>
+</dl></div>
+</dd>
+<dt id="arduinoXMLconfig.arduinoConfig.createConfigFile"><code class="name flex">
+<span>def <span class="ident">createConfigFile</span></span>(<span>self, ardXMLconfigFile)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def createConfigFile(self, ardXMLconfigFile):
+    &#34;&#34;&#34;Create a new, empty Arduino XML configuration file on disk.
+
+    Writes the minimal valid XML skeleton ``&lt;arduinoConfig&gt;&lt;/arduinoConfig&gt;``
+    to the specified path, overwriting any existing file.  The file is
+    **not** automatically loaded — call :meth:`loadConfigFile` afterwards.
+
+    Args:
+        ardXMLconfigFile (str): Destination file path.
+    &#34;&#34;&#34;
+    config_file = open(ardXMLconfigFile, &#34;w&#34;)
+    config_file.write(&#34;&lt;arduinoConfig&gt;&lt;/arduinoConfig&gt;&#34;)
+    config_file.close()</code></pre>
+</details>
+<div class="desc"><p>Create a new, empty Arduino XML configuration file on disk.</p>
+<p>Writes the minimal valid XML skeleton <code>&lt;arduinoConfig&gt;&lt;/arduinoConfig&gt;</code>
+to the specified path, overwriting any existing file.
+The file is
+<strong>not</strong> automatically loaded — call :meth:<code>loadConfigFile</code> afterwards.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>ardXMLconfigFile</code></strong> :&ensp;<code>str</code></dt>
+<dd>Destination file path.</dd>
+</dl></div>
+</dd>
+<dt id="arduinoXMLconfig.arduinoConfig.getArduinoData"><code class="name flex">
+<span>def <span class="ident">getArduinoData</span></span>(<span>self, arduinoSerialNr)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getArduinoData(self, arduinoSerialNr):
+    &#34;&#34;&#34;Return a full attribute dict for an Arduino board.
+
+    Dynamically creates any missing runtime attributes (``&#39;connected&#39;``,
+    ``&#39;firmware_version&#39;``, ``&#39;ard_status&#39;``) in the element if they are
+    absent — this ensures backward compatibility with config files saved
+    by older versions of the application.
+
+    Args:
+        arduinoSerialNr (str): Serial number of the Arduino to retrieve.
+
+    Returns:
+        dict | None: Dict with keys ``&#39;port&#39;``, ``&#39;baud&#39;``, ``&#39;name&#39;``,
+            ``&#39;description&#39;``, ``&#39;serial_nr&#39;``, ``&#39;manufacturer&#39;``,
+            ``&#39;connected&#39;``, ``&#39;firmware_version&#39;``, and ``&#39;ard_status&#39;``.
+            Returns ``None`` if the Arduino is not found or no config file
+            is loaded.
+    &#34;&#34;&#34;
+    if self.configFileLoaded == True:
+        ardTags = self.root.findall(&#34;.//arduino[@serial_nr=&#39;&#34;+arduinoSerialNr+&#34;&#39;]&#34;)
+        if len(ardTags) &gt; 0: # arduino has been found
+            if &#39;connected&#39; not in ardTags[0].attrib: # this attribute does not exist so lets create it
+                ardTags[0].set(&#39;connected&#39;, &#39;&#39;)
+            if &#39;firmware_version&#39; not in ardTags[0].attrib: # this attribute does not exist so lets create it
+                ardTags[0].set(&#39;firmware_version&#39;, &#39;&#39;)
+            if &#39;ard_status&#39; not in ardTags[0].attrib: # this attribute does not exist so lets create it
+                ardTags[0].set(&#39;ard_status&#39;, &#39;&#39;)
+
+            ardDict = {&#39;port&#39;: ardTags[0].attrib[&#39;port&#39;],
+                    &#39;baud&#39;: ardTags[0].attrib[&#39;baud&#39;],
+                    &#39;name&#39;: ardTags[0].attrib[&#39;name&#39;],
+                    &#39;description&#39;: ardTags[0].attrib[&#39;description&#39;],
+                    &#39;serial_nr&#39;: ardTags[0].attrib[&#39;serial_nr&#39;],
+                    &#39;manufacturer&#39;: ardTags[0].attrib[&#39;manufacturer&#39;],
+                    &#39;connected&#39;: ardTags[0].attrib[&#39;connected&#39;],
+                    &#39;firmware_version&#39;: ardTags[0].attrib[&#39;firmware_version&#39;],
+                    &#39;ard_status&#39;: ardTags[0].attrib[&#39;ard_status&#39;]}
+
+            return ardDict
+        else:
+            return None
+    else:
+        logger.warning(&#34;No config file loaded, please create config file first&#34;)
+        return None</code></pre>
+</details>
+<div class="desc"><p>Return a full attribute dict for an Arduino board.</p>
+<p>Dynamically creates any missing runtime attributes (<code>'connected'</code>,
+<code>'firmware_version'</code>, <code>'ard_status'</code>) in the element if they are
+absent — this ensures backward compatibility with config files saved
+by older versions of the application.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>arduinoSerialNr</code></strong> :&ensp;<code>str</code></dt>
+<dd>Serial number of the Arduino to retrieve.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict | None</code></dt>
+<dd>Dict with keys <code>'port'</code>, <code>'baud'</code>, <code>'name'</code>,
+<code>'description'</code>, <code>'serial_nr'</code>, <code>'manufacturer'</code>,
+<code>'connected'</code>, <code>'firmware_version'</code>, and <code>'ard_status'</code>.
+Returns <code>None</code> if the Arduino is not found or no config file
+is loaded.</dd>
+</dl></div>
+</dd>
+<dt id="arduinoXMLconfig.arduinoConfig.getArduinoList"><code class="name flex">
+<span>def <span class="ident">getArduinoList</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getArduinoList(self):
+    &#34;&#34;&#34;Return a list of all Arduino boards defined in the configuration.
+
+    Returns:
+        list[dict]: One dict per Arduino with keys ``&#39;port&#39;``, ``&#39;baud&#39;``,
+            ``&#39;name&#39;``, ``&#39;description&#39;``, ``&#39;serial_nr&#39;``, and
+            ``&#39;manufacturer&#39;``.  Returns an empty list if no config file
+            is loaded or no ``&lt;arduino&gt;`` elements are found.
+    &#34;&#34;&#34;
+    ardList = []
+    if self.configFileLoaded == True:
+        ardTags = self.root.findall(&#34;.//arduino&#34;)
+
+        if len(ardTags) &gt; 0: # arduino has been found
+            for ardTag in ardTags:
+                ardDict = {&#39;port&#39;: ardTag.attrib[&#39;port&#39;],
+                        &#39;baud&#39;: ardTag.attrib[&#39;baud&#39;],
+                        &#39;name&#39;: ardTag.attrib[&#39;name&#39;],
+                        &#39;description&#39;: ardTag.attrib[&#39;description&#39;],
+                        &#39;serial_nr&#39;: ardTag.attrib[&#39;serial_nr&#39;],
+                        &#39;manufacturer&#39;: ardTag.attrib[&#39;manufacturer&#39;]}
+                ardList.append(ardDict)
+        return ardList
+    else:
+        logger.warning(&#34;No config file loaded, please create config file first&#34;)
+        return ardList</code></pre>
+</details>
+<div class="desc"><p>Return a list of all Arduino boards defined in the configuration.</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>list[dict]</code></dt>
+<dd>One dict per Arduino with keys <code>'port'</code>, <code>'baud'</code>,
+<code>'name'</code>, <code>'description'</code>, <code>'serial_nr'</code>, and
+<code>'manufacturer'</code>.
+Returns an empty list if no config file
+is loaded or no <code>&lt;arduino&gt;</code> elements are found.</dd>
+</dl></div>
+</dd>
+<dt id="arduinoXMLconfig.arduinoConfig.getComponentActions"><code class="name flex">
+<span>def <span class="ident">getComponentActions</span></span>(<span>self, arduinoSerialNr, componentType, pin)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getComponentActions(self, arduinoSerialNr, componentType, pin):
+    &#34;&#34;&#34;Return the list of actions configured for a component identified by pin.
+
+    Searches for a component of ``componentType`` on the given ``pin``
+    belonging to ``arduinoSerialNr``, and returns all of its child
+    ``&lt;action&gt;`` elements as dicts.
+
+    Args:
+        arduinoSerialNr (str): Serial number of the Arduino board.
+        componentType (str): Component type tag, e.g. ``&#39;switch&#39;``,
+            ``&#39;potentiometer&#39;``, ``&#39;rot_encoder&#39;``.
+        pin (str | int): Pin number to look up.
+
+    Returns:
+        list[dict]: One dict per action with keys:
+
+        * ``&#39;state&#39;`` (str) — trigger state, e.g. ``&#39;on&#39;``, ``&#39;off&#39;``,
+          ``&#39;up&#39;``, ``&#39;down&#39;``.
+        * ``&#39;action_type&#39;`` (str) — ``&#39;cmd&#39;`` or ``&#39;dref&#39;``.
+        * ``&#39;cmddref&#39;`` (str) — X-Plane command or dataref string.
+        * ``&#39;index&#39;`` (str) — array index for dataref actions (default ``&#39;0&#39;``).
+        * ``&#39;setToValue&#39;`` (str) — value to write to the dataref or
+          interpolation point string (default ``&#39;0.0&#39;``).
+        * ``&#39;continuous&#39;`` (str) — ``&#39;True&#39;`` or ``&#39;False&#39;``.
+
+        Returns an empty list if the Arduino or component is not found.
+    &#34;&#34;&#34;
+    actionsList = []
+    if self.configFileLoaded == True:
+        ardTags = self.root.findall(&#34;.//arduino[@serial_nr=&#39;&#34;+arduinoSerialNr+&#34;&#39;]&#34;)
+        if len(ardTags) &gt; 0: # arduino has been found
+            compTag = ardTags[0].findall(&#34;.//&#34;+componentType+&#34;[@pin=&#39;&#34;+str(pin)+&#34;&#39;]&#34;)
+            if len(compTag) &gt; 0: # component has been found
+                actions = list(compTag[0].iter(&#39;action&#39;))
+
+                for action in actions:
+                    index = &#39;0&#39;
+                    setToValue = &#39;0.0&#39;
+                    continuous = &#39;False&#39;
+                    cmddref = &#39;&#39;
+                    if action.text != None:
+                        cmddref = action.text
+
+                    try:
+                        index = action.attrib[&#39;index&#39;]
+                        setToValue = action.attrib[&#39;setToValue&#39;]
+                        continuous = action.attrib[&#39;continuous&#39;]
+                    except:
+                        pass
+                    actionsList.append({&#39;state&#39;: action.attrib[&#39;state&#39;],
+                                        &#39;action_type&#39;: action.attrib[&#39;action_type&#39;],
+                                        &#39;cmddref&#39;: cmddref,
+                                        &#39;index&#39;: index,
+                                        &#39;setToValue&#39;: setToValue,
+                                        &#39;continuous&#39;: continuous})
+    else:
+        logger.warning(&#34;No config file loaded, please create config file first&#34;)
+
+    return actionsList</code></pre>
+</details>
+<div class="desc"><p>Return the list of actions configured for a component identified by pin.</p>
+<p>Searches for a component of <code>componentType</code> on the given <code>pin</code>
+belonging to <code>arduinoSerialNr</code>, and returns all of its child
+<code>&lt;action&gt;</code> elements as dicts.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>arduinoSerialNr</code></strong> :&ensp;<code>str</code></dt>
+<dd>Serial number of the Arduino board.</dd>
+<dt><strong><code>componentType</code></strong> :&ensp;<code>str</code></dt>
+<dd>Component type tag, e.g. <code>'switch'</code>,
+<code>'potentiometer'</code>, <code>'rot_encoder'</code>.</dd>
+<dt><strong><code>pin</code></strong> :&ensp;<code>str | int</code></dt>
+<dd>Pin number to look up.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>list[dict]</code></dt>
+<dd>One dict per action with keys:</dd>
+</dl>
+<ul>
+<li><code>'state'</code> (str) — trigger state, e.g. <code>'on'</code>, <code>'off'</code>,
+<code>'up'</code>, <code>'down'</code>.</li>
+<li><code>'action_type'</code> (str) — <code>'cmd'</code> or <code>'dref'</code>.</li>
+<li><code>'cmddref'</code> (str) — X-Plane command or dataref string.</li>
+<li><code>'index'</code> (str) — array index for dataref actions (default <code>'0'</code>).</li>
+<li><code>'setToValue'</code> (str) — value to write to the dataref or
+interpolation point string (default <code>'0.0'</code>).</li>
+<li><code>'continuous'</code> (str) — <code>'True'</code> or <code>'False'</code>.</li>
+</ul>
+<p>Returns an empty list if the Arduino or component is not found.</p></div>
+</dd>
+<dt id="arduinoXMLconfig.arduinoConfig.getComponentAttribute"><code class="name flex">
+<span>def <span class="ident">getComponentAttribute</span></span>(<span>self, arduinoSerialNr, componentType, pin, attribute)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getComponentAttribute(self, arduinoSerialNr, componentType, pin, attribute):
+    &#34;&#34;&#34;Return a single attribute value for a component identified by pin.
+
+    Args:
+        arduinoSerialNr (str): Serial number of the Arduino.
+        componentType (str): Component type tag, e.g. ``&#39;switch&#39;``.
+        pin (str | int): Pin number of the component.
+        attribute (str): Name of the XML attribute to retrieve.
+
+    Returns:
+        str: The attribute value, or ``&#39;&#39;`` if the Arduino or component
+            is not found, or if the attribute does not exist.
+    &#34;&#34;&#34;
+    if self.configFileLoaded == True:
+        ardTags = self.root.findall(&#34;.//arduino[@serial_nr=&#39;&#34;+arduinoSerialNr+&#34;&#39;]&#34;)
+        if len(ardTags) &gt; 0: # arduino has been found
+            compTag = ardTags[0].findall(&#34;.//&#34;+componentType+&#34;[@pin=&#39;&#34;+str(pin)+&#34;&#39;]&#34;)
+            if len(compTag) &gt; 0: # component has been found
+                return compTag[0].attrib[attribute]
+        return &#39;&#39;
+    else:
+        logger.warning(&#34;No config file loaded, please create config file first&#34;)
+
+    return &#39;&#39;</code></pre>
+</details>
+<div class="desc"><p>Return a single attribute value for a component identified by pin.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>arduinoSerialNr</code></strong> :&ensp;<code>str</code></dt>
+<dd>Serial number of the Arduino.</dd>
+<dt><strong><code>componentType</code></strong> :&ensp;<code>str</code></dt>
+<dd>Component type tag, e.g. <code>'switch'</code>.</dd>
+<dt><strong><code>pin</code></strong> :&ensp;<code>str | int</code></dt>
+<dd>Pin number of the component.</dd>
+<dt><strong><code>attribute</code></strong> :&ensp;<code>str</code></dt>
+<dd>Name of the XML attribute to retrieve.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>str</code></dt>
+<dd>The attribute value, or <code>''</code> if the Arduino or component
+is not found, or if the attribute does not exist.</dd>
+</dl></div>
+</dd>
+<dt id="arduinoXMLconfig.arduinoConfig.getComponentData"><code class="name flex">
+<span>def <span class="ident">getComponentData</span></span>(<span>self, compSerialNr, componentType)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getComponentData(self, compSerialNr, componentType):
+    &#34;&#34;&#34;Return the full data dict for a component identified by its unique ID.
+
+    Unlike :meth:`getComponentList` (which searches by Arduino serial
+    number), this method searches the entire tree by component ID and
+    returns all attributes plus the full actions list.
+
+    Args:
+        compSerialNr (str): Unique component ID (``id`` XML attribute).
+        componentType (str): Component type tag, e.g. ``&#39;switch&#39;``,
+            ``&#39;rot_encoder&#39;``.
+
+    Returns:
+        dict | None: A dict with keys ``&#39;name&#39;``, ``&#39;id&#39;``, ``&#39;pin&#39;``,
+            ``&#39;pin2&#39;``, ``&#39;stepsPerNotch&#39;``, ``&#39;state&#39;``,
+            ``&#39;acceleration&#39;``, ``&#39;multiplier&#39;``, and ``&#39;actions&#39;``
+            (list of action dicts as described in :meth:`getComponentActions`).
+            Returns ``None`` if the component is not found or no config
+            file is loaded.
+    &#34;&#34;&#34;
+    if self.configFileLoaded == True:
+        compTag = self.root.findall(&#34;.//&#34;+componentType+&#34;[@id=&#39;&#34;+compSerialNr+&#34;&#39;]&#34;)
+        if len(    compTag) &gt; 0: # comp has been found
+            pin =&#39;&#39;
+            pin2 = &#39;&#39;
+            stepsPerNotch = &#39;4&#39;
+            acceleration = &#39;False&#39;
+            multiplier = &#39;1.0&#39;
+            if &#39;pin&#39; in compTag[0].attrib:
+                pin = compTag[0].attrib[&#39;pin&#39;]
+            if &#39;pin2&#39; in compTag[0].attrib:
+                pin2 = compTag[0].attrib[&#39;pin2&#39;]
+            if &#39;stepsPerNotch&#39; in compTag[0].attrib:
+                stepsPerNotch = compTag[0].attrib[&#39;stepsPerNotch&#39;]
+            if &#39;acceleration&#39; in compTag[0].attrib:
+                acceleration = compTag[0].attrib[&#39;acceleration&#39;]
+            if &#39;multiplier&#39; in compTag[0].attrib:
+                multiplier = compTag[0].attrib[&#39;multiplier&#39;]
+
+
+            actions = list(compTag[0].iter(&#39;action&#39;))
+            actionsList = []
+            for action in actions:
+                index = &#39;0&#39;
+                setToValue = &#39;0.0&#39;
+                continuous = &#39;False&#39;
+                try:
+                    index = action.attrib[&#39;index&#39;]
+                    setToValue = action.attrib[&#39;setToValue&#39;]
+                    continuous = action.attrib[&#39;continuous&#39;]
+                except:
+                    pass
+
+                actionsList.append({&#39;state&#39;: action.attrib[&#39;state&#39;],
+                                    &#39;action_type&#39;: action.attrib[&#39;action_type&#39;],
+                                    &#39;cmddref&#39;: action.text,
+                                    &#39;index&#39;: index,
+                                    &#39;setToValue&#39;: setToValue,
+                                    &#39;continuous&#39;: continuous})
+            compDict = {&#39;name&#39;: compTag[0].attrib[&#39;name&#39;],
+                    &#39;id&#39;: compTag[0].attrib[&#39;id&#39;],
+                    &#39;pin&#39;: pin,
+                    &#39;pin2&#39;: pin2,
+                    &#39;stepsPerNotch&#39;: stepsPerNotch,
+                    &#39;state&#39;: compTag[0].attrib[&#39;state&#39;],
+                    &#39;acceleration&#39;: acceleration,
+                    &#39;multiplier&#39;: multiplier,
+                    &#39;actions&#39;: actionsList}
+
+            return compDict
+        else:
+            return None
+    else:
+        logger.warning(&#34;No config file loaded, please create config file first&#34;)
+        return None</code></pre>
+</details>
+<div class="desc"><p>Return the full data dict for a component identified by its unique ID.</p>
+<p>Unlike :meth:<code>getComponentList</code> (which searches by Arduino serial
+number), this method searches the entire tree by component ID and
+returns all attributes plus the full actions list.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>compSerialNr</code></strong> :&ensp;<code>str</code></dt>
+<dd>Unique component ID (<code>id</code> XML attribute).</dd>
+<dt><strong><code>componentType</code></strong> :&ensp;<code>str</code></dt>
+<dd>Component type tag, e.g. <code>'switch'</code>,
+<code>'rot_encoder'</code>.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict | None</code></dt>
+<dd>A dict with keys <code>'name'</code>, <code>'id'</code>, <code>'pin'</code>,
+<code>'pin2'</code>, <code>'stepsPerNotch'</code>, <code>'state'</code>,
+<code>'acceleration'</code>, <code>'multiplier'</code>, and <code>'actions'</code>
+(list of action dicts as described in :meth:<code>getComponentActions</code>).
+Returns <code>None</code> if the component is not found or no config
+file is loaded.</dd>
+</dl></div>
+</dd>
+<dt id="arduinoXMLconfig.arduinoConfig.getComponentList"><code class="name flex">
+<span>def <span class="ident">getComponentList</span></span>(<span>self, arduinoSerialNr, componentType)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getComponentList(self, arduinoSerialNr, componentType):
+    &#34;&#34;&#34;Return all components of a given type belonging to an Arduino.
+
+    Args:
+        arduinoSerialNr (str): Serial number of the Arduino.
+        componentType (str): Component type tag, e.g. ``&#39;switch&#39;``,
+            ``&#39;potentiometer&#39;``, ``&#39;pwm&#39;``, ``&#39;servo&#39;``,
+            ``&#39;dig_output&#39;``, ``&#39;rot_encoder&#39;``.
+
+    Returns:
+        list[dict]: One dict per component with keys:
+
+        * ``&#39;name&#39;`` (str) — display name.
+        * ``&#39;id&#39;`` (str) — unique component ID.
+        * ``&#39;pin&#39;`` (str) — primary pin number, or ``&#39;&#39;`` if unset.
+        * ``&#39;pin2&#39;`` (str) — secondary pin (rotary encoders), or ``&#39;&#39;``.
+        * ``&#39;stepsPerNotch&#39;`` (str) — encoder steps per detent, or ``&#39;&#39;``.
+        * ``&#39;state&#39;`` (str) — last known state.
+
+        Returns an empty list if the Arduino is not found or the config is
+        not loaded.
+    &#34;&#34;&#34;
+    compList = []
+    if self.configFileLoaded == True:
+        ardTags = self.root.findall(&#34;.//arduino[@serial_nr=&#39;&#34;+arduinoSerialNr+&#34;&#39;]&#34;)
+        if len(ardTags) &gt; 0: # arduino has been found
+            compTags = ardTags[0].findall(&#34;.//&#34;+componentType)
+            for compTag in compTags:
+                pin =&#39;&#39;
+                if &#39;pin&#39; in compTag.attrib:
+                    pin = compTag.attrib[&#39;pin&#39;]
+                pin2 =&#39;&#39;
+                if &#39;pin2&#39; in compTag.attrib:
+                    pin2 = compTag.attrib[&#39;pin2&#39;]
+                stepsPerNotch = &#39;&#39;
+                if &#39;stepsPerNotch&#39; in compTag.attrib:
+                    stepsPerNotch = compTag.attrib[&#39;stepsPerNotch&#39;]
+
+                compList.append({&#39;name&#39;: compTag.attrib[&#39;name&#39;],
+                                &#39;id&#39;: compTag.attrib[&#39;id&#39;],
+                                &#39;pin&#39;: pin,
+                                &#39;pin2&#39;: pin2,
+                                &#39;stepsPerNotch&#39;: stepsPerNotch,
+                                &#39;state&#39;: compTag.attrib[&#39;state&#39;]})
+    else:
+        logger.warning(&#34;No config file loaded, please create config file first&#34;)
+
+    return compList</code></pre>
+</details>
+<div class="desc"><p>Return all components of a given type belonging to an Arduino.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>arduinoSerialNr</code></strong> :&ensp;<code>str</code></dt>
+<dd>Serial number of the Arduino.</dd>
+<dt><strong><code>componentType</code></strong> :&ensp;<code>str</code></dt>
+<dd>Component type tag, e.g. <code>'switch'</code>,
+<code>'potentiometer'</code>, <code>'pwm'</code>, <code>'servo'</code>,
+<code>'dig_output'</code>, <code>'rot_encoder'</code>.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>list[dict]</code></dt>
+<dd>One dict per component with keys:</dd>
+</dl>
+<ul>
+<li><code>'name'</code> (str) — display name.</li>
+<li><code>'id'</code> (str) — unique component ID.</li>
+<li><code>'pin'</code> (str) — primary pin number, or <code>''</code> if unset.</li>
+<li><code>'pin2'</code> (str) — secondary pin (rotary encoders), or <code>''</code>.</li>
+<li><code>'stepsPerNotch'</code> (str) — encoder steps per detent, or <code>''</code>.</li>
+<li><code>'state'</code> (str) — last known state.</li>
+</ul>
+<p>Returns an empty list if the Arduino is not found or the config is
+not loaded.</p></div>
+</dd>
+<dt id="arduinoXMLconfig.arduinoConfig.loadConfigFile"><code class="name flex">
+<span>def <span class="ident">loadConfigFile</span></span>(<span>self, ardXMLconfigFile)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def loadConfigFile(self, ardXMLconfigFile):
+    &#34;&#34;&#34;Parse an XML configuration file and load it into memory.
+
+    On success, :attr:`configFileLoaded` is set to ``True`` and the
+    ElementTree is available via :attr:`tree` and :attr:`root`.  On
+    failure (file not found, malformed XML, or ``None`` path) the flag is
+    set to ``False`` and an error is logged.
+
+    All registered :attr:`fileLoadedStatusCallbacks` are called with the
+    resulting status regardless of success or failure.
+
+    Args:
+        ardXMLconfigFile (str | None): Absolute or relative path to the
+            Arduino XML configuration file.  Pass ``None`` to trigger the
+            &#34;no file specified&#34; error path.
+    &#34;&#34;&#34;
+    if ardXMLconfigFile is not None:
+        try:
+            self.tree = ET.parse(ardXMLconfigFile)
+            self.root = self.tree.getroot()
+            self.ardXMLconfigFile = ardXMLconfigFile
+            self.configFileLoaded = True
+
+        except:
+            logger.error(&#39;Error while loading arduino config file&#39;, exc_info=True)
+            self.configFileLoaded = False
+    else:
+        logger.error(&#39;No arduino config file specified, please create a new one or open an existing one&#39;)
+
+    for callback in self.fileLoadedStatusCallbacks:
+        callback(self.configFileLoaded)</code></pre>
+</details>
+<div class="desc"><p>Parse an XML configuration file and load it into memory.</p>
+<p>On success, :attr:<code>configFileLoaded</code> is set to <code>True</code> and the
+ElementTree is available via :attr:<code>tree</code> and :attr:<code>root</code>.
+On
+failure (file not found, malformed XML, or <code>None</code> path) the flag is
+set to <code>False</code> and an error is logged.</p>
+<p>All registered :attr:<code>fileLoadedStatusCallbacks</code> are called with the
+resulting status regardless of success or failure.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>ardXMLconfigFile</code></strong> :&ensp;<code>str | None</code></dt>
+<dd>Absolute or relative path to the
+Arduino XML configuration file.
+Pass <code>None</code> to trigger the
+"no file specified" error path.</dd>
+</dl></div>
+</dd>
+<dt id="arduinoXMLconfig.arduinoConfig.registerArduinoAttributeChangedCallback"><code class="name flex">
+<span>def <span class="ident">registerArduinoAttributeChangedCallback</span></span>(<span>self, callback)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def registerArduinoAttributeChangedCallback(self, callback):
+    &#34;&#34;&#34;Register a callback to be notified when any Arduino-level attribute changes.
+
+    Args:
+        callback (callable): Function with signature
+            ``(ardSerialNr: str, attribute: str) -&gt; None``.
+    &#34;&#34;&#34;
+    self.arduinoAttributeChangedCallbacks.append(callback)</code></pre>
+</details>
+<div class="desc"><p>Register a callback to be notified when any Arduino-level attribute changes.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>callback</code></strong> :&ensp;<code>callable</code></dt>
+<dd>Function with signature
+<code>(ardSerialNr: str, attribute: str) -&gt; None</code>.</dd>
+</dl></div>
+</dd>
+<dt id="arduinoXMLconfig.arduinoConfig.registerComponentAttributeChangedCallback"><code class="name flex">
+<span>def <span class="ident">registerComponentAttributeChangedCallback</span></span>(<span>self, callback)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def registerComponentAttributeChangedCallback(self, callback):
+    &#34;&#34;&#34;Register a callback to be notified when any component attribute changes.
+
+    Args:
+        callback (callable): Function with signature
+            ``(componentType: str, compSerialNr: str, ardSerialNr: str,
+            attribute: str) -&gt; None``.
+    &#34;&#34;&#34;
+    self.componentAttributeChangedCallbacks.append(callback)</code></pre>
+</details>
+<div class="desc"><p>Register a callback to be notified when any component attribute changes.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>callback</code></strong> :&ensp;<code>callable</code></dt>
+<dd>Function with signature
+<code>(componentType: str, compSerialNr: str, ardSerialNr: str,
+attribute: str) -&gt; None</code>.</dd>
+</dl></div>
+</dd>
+<dt id="arduinoXMLconfig.arduinoConfig.registerFileLoadedStatusCallback"><code class="name flex">
+<span>def <span class="ident">registerFileLoadedStatusCallback</span></span>(<span>self, callback)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def registerFileLoadedStatusCallback(self, callback):
+    &#34;&#34;&#34;Register a callback to be notified when the config file load status changes.
+
+    Args:
+        callback (callable): Function with signature ``(loaded: bool) -&gt; None``.
+    &#34;&#34;&#34;
+    self.fileLoadedStatusCallbacks.append(callback)</code></pre>
+</details>
+<div class="desc"><p>Register a callback to be notified when the config file load status changes.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>callback</code></strong> :&ensp;<code>callable</code></dt>
+<dd>Function with signature <code>(loaded: bool) -&gt; None</code>.</dd>
+</dl></div>
+</dd>
+<dt id="arduinoXMLconfig.arduinoConfig.removeArduino"><code class="name flex">
+<span>def <span class="ident">removeArduino</span></span>(<span>self, arduinoSerialNr)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def removeArduino(self, arduinoSerialNr):
+    &#34;&#34;&#34;Remove an Arduino and all its components from the configuration.
+
+    Locates the ``&lt;arduino&gt;`` element by serial number and removes it from
+    the XML tree.  The configuration is **not** automatically saved to disk.
+
+    Args:
+        arduinoSerialNr (str): Serial number of the Arduino to remove.
+    &#34;&#34;&#34;
+    if self.configFileLoaded == True:
+        ardTag = self.root.findall(&#34;.//arduino[@serial_nr=&#39;&#34;+arduinoSerialNr+&#34;&#39;]&#34;)[0]
+        self.root.remove(ardTag)
+    else:
+        logger.warning(&#34;No config file loaded, please create config file first&#34;)</code></pre>
+</details>
+<div class="desc"><p>Remove an Arduino and all its components from the configuration.</p>
+<p>Locates the <code>&lt;arduino&gt;</code> element by serial number and removes it from
+the XML tree.
+The configuration is <strong>not</strong> automatically saved to disk.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>arduinoSerialNr</code></strong> :&ensp;<code>str</code></dt>
+<dd>Serial number of the Arduino to remove.</dd>
+</dl></div>
+</dd>
+<dt id="arduinoXMLconfig.arduinoConfig.removeInputOutput"><code class="name flex">
+<span>def <span class="ident">removeInputOutput</span></span>(<span>self, arduinoSerialNr, inputOutputID)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def removeInputOutput(self, arduinoSerialNr, inputOutputID):
+    &#34;&#34;&#34;Remove a single input/output component from an Arduino.
+
+    Finds the component by its unique ID attribute and removes it from its
+    parent container element.  The configuration is **not** saved automatically.
+
+    Args:
+        arduinoSerialNr (str): Serial number of the owning Arduino.
+        inputOutputID (str): Unique component ID (``id`` XML attribute),
+            e.g. ``&#39;switches_A1B2C3-0&#39;``.
+    &#34;&#34;&#34;
+    if self.configFileLoaded == True:
+        logger.debug(&#34;Remove InOutput ID &#34;,inputOutputID, &#34;from Arduino serial nr:&#34;, arduinoSerialNr)
+        ardTag = self.root.findall(&#34;.//arduino[@serial_nr=&#39;&#34;+arduinoSerialNr+&#34;&#39;]&#34;)[0]
+        inputOutputTag = ardTag.findall(&#34;.//*[@id=&#39;&#34;+inputOutputID+&#34;&#39;]&#34;)[0]
+        logger.debug(&#34;ID to remove found: &#34;, inputOutputTag.attrib[&#39;id&#39;])
+        parent = ardTag.findall(&#34;.//*[@id=&#39;&#34;+inputOutputID+&#34;&#39;]/..&#34;)[0]
+        parent.remove(inputOutputTag)
+    else:
+        logger.warning(&#34;No config file loaded, please create config file first&#34;)</code></pre>
+</details>
+<div class="desc"><p>Remove a single input/output component from an Arduino.</p>
+<p>Finds the component by its unique ID attribute and removes it from its
+parent container element.
+The configuration is <strong>not</strong> saved automatically.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>arduinoSerialNr</code></strong> :&ensp;<code>str</code></dt>
+<dd>Serial number of the owning Arduino.</dd>
+<dt><strong><code>inputOutputID</code></strong> :&ensp;<code>str</code></dt>
+<dd>Unique component ID (<code>id</code> XML attribute),
+e.g. <code>'switches_A1B2C3-0'</code>.</dd>
+</dl></div>
+</dd>
+<dt id="arduinoXMLconfig.arduinoConfig.saveToXMLfile"><code class="name flex">
+<span>def <span class="ident">saveToXMLfile</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def saveToXMLfile(self):
+    &#34;&#34;&#34;Persist the current in-memory configuration tree to the XML file on disk.
+
+    Writes to the path stored in :attr:`ardXMLconfigFile` (set during the
+    last successful :meth:`loadConfigFile` call).
+    &#34;&#34;&#34;
+    if self.configFileLoaded == True:
+        self.tree.write(self.ardXMLconfigFile)
+    else:
+        logger.warning(&#34;No config file loaded, please create config file first&#34;)</code></pre>
+</details>
+<div class="desc"><p>Persist the current in-memory configuration tree to the XML file on disk.</p>
+<p>Writes to the path stored in :attr:<code>ardXMLconfigFile</code> (set during the
+last successful :meth:<code>loadConfigFile</code> call).</p></div>
+</dd>
+<dt id="arduinoXMLconfig.arduinoConfig.updateArduinoAttribute"><code class="name flex">
+<span>def <span class="ident">updateArduinoAttribute</span></span>(<span>self, arduinoSerialNr, attribute, attributeValue)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def updateArduinoAttribute(self, arduinoSerialNr, attribute, attributeValue):
+    &#34;&#34;&#34;Set a single attribute on an Arduino element and notify observers.
+
+    Unlike :meth:`updateArduinoData`, this method unconditionally sets the
+    value without comparing to the previous one, making it suitable for
+    runtime-only attributes such as ``&#39;connected&#39;``, ``&#39;ard_status&#39;``,
+    and ``&#39;firmware_version&#39;`` that are not user-editable.
+
+    If the attribute does not yet exist on the element it is created
+    (backward compatibility).
+
+    Args:
+        arduinoSerialNr (str): Serial number of the Arduino to update.
+        attribute (str): XML attribute name to set.
+        attributeValue (str): New value.
+
+    Returns:
+        int: Returns ``-1`` if the Arduino is not found or no config file
+            is loaded; otherwise implicitly returns ``None``.
+    &#34;&#34;&#34;
+    if self.configFileLoaded == True:
+        ardTags = self.root.findall(&#34;.//arduino[@serial_nr=&#39;&#34;+arduinoSerialNr+&#34;&#39;]&#34;)
+        if len(ardTags) &gt; 0: # arduino has been found
+            ardTags[0].set(attribute, attributeValue)
+            for callback in self.arduinoAttributeChangedCallbacks:
+                callback(arduinoSerialNr, attribute)
+        else :
+            return -1
+    else:
+        logger.warning(&#34;No config file loaded, please create config file first&#34;)
+        return -1</code></pre>
+</details>
+<div class="desc"><p>Set a single attribute on an Arduino element and notify observers.</p>
+<p>Unlike :meth:<code>updateArduinoData</code>, this method unconditionally sets the
+value without comparing to the previous one, making it suitable for
+runtime-only attributes such as <code>'connected'</code>, <code>'ard_status'</code>,
+and <code>'firmware_version'</code> that are not user-editable.</p>
+<p>If the attribute does not yet exist on the element it is created
+(backward compatibility).</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>arduinoSerialNr</code></strong> :&ensp;<code>str</code></dt>
+<dd>Serial number of the Arduino to update.</dd>
+<dt><strong><code>attribute</code></strong> :&ensp;<code>str</code></dt>
+<dd>XML attribute name to set.</dd>
+<dt><strong><code>attributeValue</code></strong> :&ensp;<code>str</code></dt>
+<dd>New value.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>int</code></dt>
+<dd>Returns <code>-1</code> if the Arduino is not found or no config file
+is loaded; otherwise implicitly returns <code>None</code>.</dd>
+</dl></div>
+</dd>
+<dt id="arduinoXMLconfig.arduinoConfig.updateArduinoData"><code class="name flex">
+<span>def <span class="ident">updateArduinoData</span></span>(<span>self, arduinoSerialNr, ardData)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def updateArduinoData(self, arduinoSerialNr, ardData):
+    &#34;&#34;&#34;Update the editable attributes of an Arduino and notify observers.
+
+    Compares each attribute in ``ardData`` against the current XML value
+    and only writes (and fires callbacks for) attributes that have actually
+    changed.  Handles: ``&#39;port&#39;``, ``&#39;baud&#39;``, ``&#39;name&#39;``,
+    ``&#39;description&#39;``, ``&#39;serial_nr&#39;``, ``&#39;manufacturer&#39;``.
+
+    Args:
+        arduinoSerialNr (str): Serial number of the Arduino to update.
+        ardData (dict): Dict of new values.  Must contain the keys listed
+            above.
+
+    Returns:
+        int: Returns ``-1`` if the Arduino is not found or no config file
+            is loaded; otherwise implicitly returns ``None``.
+    &#34;&#34;&#34;
+    if self.configFileLoaded == True:
+        logger.debug(&#34;updating arduino data for arduino serial nr %s, data: %s&#34;,arduinoSerialNr, ardData)
+        ardTags = self.root.findall(&#34;.//arduino[@serial_nr=&#39;&#34;+arduinoSerialNr+&#34;&#39;]&#34;)
+        if len(ardTags) &gt; 0: # arduino has been found
+            if ardTags[0].attrib[&#39;port&#39;] != ardData[&#39;port&#39;]:
+                ardTags[0].set(&#39;port&#39;, ardData[&#39;port&#39;])
+                for callback in self.arduinoAttributeChangedCallbacks:
+                    callback(arduinoSerialNr, &#39;port&#39;)
+
+            if ardTags[0].attrib[&#39;baud&#39;] != ardData[&#39;baud&#39;]:
+                ardTags[0].set(&#39;baud&#39;, ardData[&#39;baud&#39;])
+                for callback in self.arduinoAttributeChangedCallbacks:
+                    callback(arduinoSerialNr, &#39;baud&#39;)
+
+            if ardTags[0].attrib[&#39;name&#39;] != ardData[&#39;name&#39;]:
+                ardTags[0].set(&#39;name&#39;, ardData[&#39;name&#39;])
+                for callback in self.arduinoAttributeChangedCallbacks:
+                    callback(arduinoSerialNr, &#39;name&#39;)
+
+            if ardTags[0].attrib[&#39;description&#39;] != ardData[&#39;description&#39;]:
+                ardTags[0].set(&#39;description&#39;, ardData[&#39;description&#39;])
+                for callback in self.arduinoAttributeChangedCallbacks:
+                    callback(arduinoSerialNr, &#39;description&#39;)
+
+            if ardTags[0].attrib[&#39;serial_nr&#39;] != ardData[&#39;serial_nr&#39;]:
+                ardTags[0].set(&#39;serial_nr&#39;, ardData[&#39;serial_nr&#39;])
+                for callback in self.arduinoAttributeChangedCallbacks:
+                    callback(arduinoSerialNr, &#39;serial_nr&#39;)
+
+            if ardTags[0].attrib[&#39;manufacturer&#39;] != ardData[&#39;manufacturer&#39;]:
+                ardTags[0].set(&#39;manufacturer&#39;, ardData[&#39;manufacturer&#39;])
+                for callback in self.arduinoAttributeChangedCallbacks:
+                    callback(arduinoSerialNr, &#39;manufacturer&#39;)
+        else :
+            return -1
+    else:
+        logger.warning(&#34;No config file loaded, please create config file first&#34;)
+        return -1</code></pre>
+</details>
+<div class="desc"><p>Update the editable attributes of an Arduino and notify observers.</p>
+<p>Compares each attribute in <code>ardData</code> against the current XML value
+and only writes (and fires callbacks for) attributes that have actually
+changed.
+Handles: <code>'port'</code>, <code>'baud'</code>, <code>'name'</code>,
+<code>'description'</code>, <code>'serial_nr'</code>, <code>'manufacturer'</code>.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>arduinoSerialNr</code></strong> :&ensp;<code>str</code></dt>
+<dd>Serial number of the Arduino to update.</dd>
+<dt><strong><code>ardData</code></strong> :&ensp;<code>dict</code></dt>
+<dd>Dict of new values.
+Must contain the keys listed
+above.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>int</code></dt>
+<dd>Returns <code>-1</code> if the Arduino is not found or no config file
+is loaded; otherwise implicitly returns <code>None</code>.</dd>
+</dl></div>
+</dd>
+<dt id="arduinoXMLconfig.arduinoConfig.updateComponentActions"><code class="name flex">
+<span>def <span class="ident">updateComponentActions</span></span>(<span>self, arduinoSerialNr, componentType, pin, actionsList)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def updateComponentActions(self, arduinoSerialNr, componentType, pin, actionsList):
+    &#34;&#34;&#34;Replace all actions for a component with the provided list.
+
+    Removes all existing ``&lt;action&gt;`` child elements from the component and
+    replaces them with new elements built from ``actionsList``.  Typically
+    called by :class:`~lib.Arduino.Arduino` after reading updated dataref
+    values so the ``state`` field stays current.
+
+    Args:
+        arduinoSerialNr (str): Serial number of the Arduino.
+        componentType (str): Component type tag, e.g. ``&#39;pwm&#39;``.
+        pin (str | int): Pin number identifying the component.
+        actionsList (list[dict]): New list of action dicts.  Each dict
+            must contain at minimum ``&#39;state&#39;``, ``&#39;action_type&#39;``, and
+            ``&#39;cmddref&#39;``.  Optional keys are ``&#39;index&#39;`` and
+            ``&#39;setToValue&#39;``.
+    &#34;&#34;&#34;
+    ardTags = self.root.findall(&#34;.//arduino[@serial_nr=&#39;&#34;+arduinoSerialNr+&#34;&#39;]&#34;)
+    if len(ardTags) &gt; 0: # arduino has been found
+        compTag = ardTags[0].findall(&#34;.//&#34;+componentType+&#34;[@pin=&#39;&#34;+str(pin)+&#34;&#39;]&#34;)
+        if len(compTag) &gt; 0: # switch has been found
+
+            for action in list(compTag[0]): # first remove all actions
+                compTag[0].remove(action)
+
+            for action in actionsList:
+                actionTag = ET.SubElement(compTag[0], &#39;action&#39;)
+                actionTag.set(&#39;state&#39;, action[&#39;state&#39;])
+                actionTag.set(&#39;action_type&#39;, action[&#39;action_type&#39;])
+                try:
+                    actionTag.set(&#39;index&#39;, action[&#39;index&#39;])
+                    actionTag.set(&#39;setToValue&#39;, action[&#39;setToValue&#39;])
+                except:
+                    pass
+                actionTag.text = action[&#39;cmddref&#39;]</code></pre>
+</details>
+<div class="desc"><p>Replace all actions for a component with the provided list.</p>
+<p>Removes all existing <code>&lt;action&gt;</code> child elements from the component and
+replaces them with new elements built from <code>actionsList</code>.
+Typically
+called by :class:<code>~lib.Arduino.Arduino</code> after reading updated dataref
+values so the <code>state</code> field stays current.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>arduinoSerialNr</code></strong> :&ensp;<code>str</code></dt>
+<dd>Serial number of the Arduino.</dd>
+<dt><strong><code>componentType</code></strong> :&ensp;<code>str</code></dt>
+<dd>Component type tag, e.g. <code>'pwm'</code>.</dd>
+<dt><strong><code>pin</code></strong> :&ensp;<code>str | int</code></dt>
+<dd>Pin number identifying the component.</dd>
+<dt><strong><code>actionsList</code></strong> :&ensp;<code>list[dict]</code></dt>
+<dd>New list of action dicts.
+Each dict
+must contain at minimum <code>'state'</code>, <code>'action_type'</code>, and
+<code>'cmddref'</code>.
+Optional keys are <code>'index'</code> and
+<code>'setToValue'</code>.</dd>
+</dl></div>
+</dd>
+<dt id="arduinoXMLconfig.arduinoConfig.updateComponentAttribute"><code class="name flex">
+<span>def <span class="ident">updateComponentAttribute</span></span>(<span>self, compSerialNr, componentType, attribute, attributeValue)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def updateComponentAttribute(self, compSerialNr, componentType, attribute, attributeValue):
+    &#34;&#34;&#34;Update a single attribute of a component and notify observers.
+
+    If the attribute does not already exist on the element it is created
+    (backward-compatibility for new attributes added in later versions).
+    Observers are only notified if the value actually changes.
+
+    .. note::
+        BUG-02 — the XPath expression used to locate the parent Arduino
+        element contains extra dots and will always fail with an
+        ``IndexError``.  The ``ardSerialNr`` lookup on the following line
+        is therefore unreachable in the current code.
+
+    Args:
+        compSerialNr (str): Unique component ID.
+        componentType (str): Component type tag, e.g. ``&#39;switch&#39;``.
+        attribute (str): Name of the XML attribute to update.
+        attributeValue (str): New value for the attribute.
+
+    Returns:
+        int: Returns ``-1`` if the component is not found or no config
+            file is loaded; otherwise implicitly returns ``None``.
+    &#34;&#34;&#34;
+    if self.configFileLoaded == True:
+        logger.debug(&#39;Update component attribute: &#39;+compSerialNr+&#39; attribute: &#39; +attribute+&#39; value:&#39;+attributeValue )
+        compTag = self.root.findall(&#34;.//&#34;+componentType+&#34;[@id=&#39;&#34;+compSerialNr+&#34;&#39;]&#34;)
+        if len(compTag) &gt; 0: # component has been found
+            #find the component arduino parent element
+            ardTag = self.root.findall(&#34;.//&#34;+componentType+&#34;[@id=&#39;&#34;+compSerialNr+&#34;&#39;]......&#34;)
+            ardSerialNr = ardTag[0].attrib[&#39;serial_nr&#39;]
+            if attribute not in compTag[0].attrib: # this attribute does not exist so lets create it
+                compTag[0].set(attribute, &#39;&#39;)
+            if compTag[0].attrib[attribute] != attributeValue: # then the value has changed and must be updated
+                compTag[0].set(attribute, attributeValue)
+                # and we notify all callbacks of this attribute change
+                for callback in self.componentAttributeChangedCallbacks:
+                    callback(componentType, compSerialNr,ardSerialNr, attribute)
+        else:
+            return -1
+    else:
+        logger.warning(&#34;No config file loaded, please create config file first&#34;)
+        return -1</code></pre>
+</details>
+<div class="desc"><p>Update a single attribute of a component and notify observers.</p>
+<p>If the attribute does not already exist on the element it is created
+(backward-compatibility for new attributes added in later versions).
+Observers are only notified if the value actually changes.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>BUG-02 — the XPath expression used to locate the parent Arduino
+element contains extra dots and will always fail with an
+<code>IndexError</code>.
+The <code>ardSerialNr</code> lookup on the following line
+is therefore unreachable in the current code.</p>
+</div>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>compSerialNr</code></strong> :&ensp;<code>str</code></dt>
+<dd>Unique component ID.</dd>
+<dt><strong><code>componentType</code></strong> :&ensp;<code>str</code></dt>
+<dd>Component type tag, e.g. <code>'switch'</code>.</dd>
+<dt><strong><code>attribute</code></strong> :&ensp;<code>str</code></dt>
+<dd>Name of the XML attribute to update.</dd>
+<dt><strong><code>attributeValue</code></strong> :&ensp;<code>str</code></dt>
+<dd>New value for the attribute.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>int</code></dt>
+<dd>Returns <code>-1</code> if the component is not found or no config
+file is loaded; otherwise implicitly returns <code>None</code>.</dd>
+</dl></div>
+</dd>
+<dt id="arduinoXMLconfig.arduinoConfig.updateComponentData"><code class="name flex">
+<span>def <span class="ident">updateComponentData</span></span>(<span>self, compSerialNr, componentType, compData, actions=[])</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def updateComponentData(self, compSerialNr, componentType, compData, actions=[]):
+    &#34;&#34;&#34;Update a component&#39;s attributes and replace its actions in the XML tree.
+
+    Updates the ``id``, ``name``, ``pin``, and optionally ``pin2``,
+    ``stepsPerNotch``, ``acceleration``, and ``multiplier`` attributes,
+    then replaces all ``&lt;action&gt;`` children with those from ``actions``.
+
+    .. note::
+        BUG-02 — the XPath expression used to locate the parent Arduino
+        element on line 371 contains extra dots and will always return an
+        empty list, causing an ``IndexError`` when the ardSerialNr lookup
+        is attempted.
+
+    Args:
+        compSerialNr (str): Current unique ID of the component to update.
+        componentType (str): Component type tag, e.g. ``&#39;switch&#39;``,
+            ``&#39;rot_encoder&#39;``.
+        compData (dict): Dict of updated attributes.  Required keys:
+            ``&#39;id&#39;``, ``&#39;name&#39;``, ``&#39;pin&#39;``.  Optional keys: ``&#39;pin2&#39;``,
+            ``&#39;stepsPerNotch&#39;``, ``&#39;acceleration&#39;``, ``&#39;multiplier&#39;``.
+        actions (list[dict], optional): Replacement action list.  Each
+            dict must contain ``&#39;state&#39;``, ``&#39;action_type&#39;``, ``&#39;cmddref&#39;``,
+            and optionally ``&#39;continuous&#39;``, ``&#39;index&#39;``, ``&#39;setToValue&#39;``.
+            Defaults to an empty list (removes all existing actions).
+
+    Returns:
+        int: Returns ``-1`` if the component is not found or no config
+            file is loaded; otherwise implicitly returns ``None``.
+    &#34;&#34;&#34;
+    if self.configFileLoaded == True:
+        logger.debug(&#39;Update Component Data, type: &#39;+componentType)
+        compTag = self.root.findall(&#34;.//&#34;+componentType+&#34;[@id=&#39;&#34;+compSerialNr+&#34;&#39;]&#34;)
+        if len(compTag) &gt; 0: # component has been found
+            #find the switch arduino parent element
+            ardTag = self.root.findall(&#34;.//&#34;+componentType+&#34;[@id=&#39;&#34;+compSerialNr+&#34;&#39;]......&#34;)
+            ardSerialNr = ardTag[0].attrib[&#39;serial_nr&#39;]
+
+            self.updateComponentAttribute(compSerialNr, componentType,&#39;id&#39;, compData[&#39;id&#39;])
+            self.updateComponentAttribute(compSerialNr, componentType,&#39;name&#39;, compData[&#39;name&#39;])
+            self.updateComponentAttribute(compSerialNr, componentType,&#39;pin&#39;, compData[&#39;pin&#39;])
+            if &#39;pin2&#39; in compData: # test if 2nd pin provided
+                self.updateComponentAttribute(compSerialNr, componentType,&#39;pin2&#39;, compData[&#39;pin2&#39;])
+            if &#39;stepsPerNotch&#39; in compData: # test if stepsPerNotch provided
+                self.updateComponentAttribute(compSerialNr, componentType,&#39;stepsPerNotch&#39;, compData[&#39;stepsPerNotch&#39;])
+            if &#39;acceleration&#39; in compData: # test if acceleration provided
+                self.updateComponentAttribute(compSerialNr, componentType,&#39;acceleration&#39;, compData[&#39;acceleration&#39;])
+            if &#39;multiplier&#39; in compData: # test if multiplier provided
+                self.updateComponentAttribute(compSerialNr, componentType,&#39;multiplier&#39;, compData[&#39;multiplier&#39;])
+
+            for action in list(compTag[0]): # first remove all actions
+                compTag[0].remove(action)
+
+            for action in actions:
+                actionTag = ET.SubElement(compTag[0], &#39;action&#39;)
+                actionTag.set(&#39;state&#39;, action[&#39;state&#39;])
+                actionTag.set(&#39;action_type&#39;, action[&#39;action_type&#39;])
+                try:
+                    actionTag.set(&#39;continuous&#39;, action[&#39;continuous&#39;])
+                except:
+                    actionTag.set(&#39;continuous&#39;, &#39;&#39;)
+                try:
+                    actionTag.set(&#39;index&#39;, action[&#39;index&#39;])
+                except:
+                    actionTag.set(&#39;index&#39;, &#39;&#39;)
+                try:
+                    actionTag.set(&#39;setToValue&#39;, action[&#39;setToValue&#39;])
+                except:
+                    actionTag.set(&#39;setToValue&#39;, &#39;&#39;)
+                actionTag.text = action[&#39;cmddref&#39;]
+
+        else:
+            return -1
+    else:
+        logger.warning(&#34;No config file loaded, please create config file first&#34;)
+        return -1</code></pre>
+</details>
+<div class="desc"><p>Update a component's attributes and replace its actions in the XML tree.</p>
+<p>Updates the <code>id</code>, <code>name</code>, <code>pin</code>, and optionally <code>pin2</code>,
+<code>stepsPerNotch</code>, <code>acceleration</code>, and <code>multiplier</code> attributes,
+then replaces all <code>&lt;action&gt;</code> children with those from <code>actions</code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>BUG-02 — the XPath expression used to locate the parent Arduino
+element on line 371 contains extra dots and will always return an
+empty list, causing an <code>IndexError</code> when the ardSerialNr lookup
+is attempted.</p>
+</div>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>compSerialNr</code></strong> :&ensp;<code>str</code></dt>
+<dd>Current unique ID of the component to update.</dd>
+<dt><strong><code>componentType</code></strong> :&ensp;<code>str</code></dt>
+<dd>Component type tag, e.g. <code>'switch'</code>,
+<code>'rot_encoder'</code>.</dd>
+<dt><strong><code>compData</code></strong> :&ensp;<code>dict</code></dt>
+<dd>Dict of updated attributes.
+Required keys:
+<code>'id'</code>, <code>'name'</code>, <code>'pin'</code>.
+Optional keys: <code>'pin2'</code>,
+<code>'stepsPerNotch'</code>, <code>'acceleration'</code>, <code>'multiplier'</code>.</dd>
+<dt><strong><code>actions</code></strong> :&ensp;<code>list[dict]</code>, optional</dt>
+<dd>Replacement action list.
+Each
+dict must contain <code>'state'</code>, <code>'action_type'</code>, <code>'cmddref'</code>,
+and optionally <code>'continuous'</code>, <code>'index'</code>, <code>'setToValue'</code>.
+Defaults to an empty list (removes all existing actions).</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>int</code></dt>
+<dd>Returns <code>-1</code> if the component is not found or no config
+file is loaded; otherwise implicitly returns <code>None</code>.</dd>
+</dl></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul>
+<li><a href="#arduinoxmlconfigpy">arduinoXMLconfig.py</a></li>
+</ul>
+</div>
+<ul id="index">
+<li><h3><a href="#header-variables">Global variables</a></h3>
+<ul class="">
+<li><code><a title="arduinoXMLconfig.ARD_BAUD" href="#arduinoXMLconfig.ARD_BAUD">ARD_BAUD</a></code></li>
+<li><code><a title="arduinoXMLconfig.DIG_IO_PINS" href="#arduinoXMLconfig.DIG_IO_PINS">DIG_IO_PINS</a></code></li>
+<li><code><a title="arduinoXMLconfig.INPUT_OUTPUT_ELEMS_TAGS" href="#arduinoXMLconfig.INPUT_OUTPUT_ELEMS_TAGS">INPUT_OUTPUT_ELEMS_TAGS</a></code></li>
+<li><code><a title="arduinoXMLconfig.INPUT_OUTPUT_TAGS" href="#arduinoXMLconfig.INPUT_OUTPUT_TAGS">INPUT_OUTPUT_TAGS</a></code></li>
+<li><code><a title="arduinoXMLconfig.INPUT_OUTPUT_TAGS_REF" href="#arduinoXMLconfig.INPUT_OUTPUT_TAGS_REF">INPUT_OUTPUT_TAGS_REF</a></code></li>
+<li><code><a title="arduinoXMLconfig.POT_PINS" href="#arduinoXMLconfig.POT_PINS">POT_PINS</a></code></li>
+<li><code><a title="arduinoXMLconfig.PWM_PINS" href="#arduinoXMLconfig.PWM_PINS">PWM_PINS</a></code></li>
+<li><code><a title="arduinoXMLconfig.SERVO_PINS" href="#arduinoXMLconfig.SERVO_PINS">SERVO_PINS</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="arduinoXMLconfig.arduinoConfig" href="#arduinoXMLconfig.arduinoConfig">arduinoConfig</a></code></h4>
+<ul class="">
+<li><code><a title="arduinoXMLconfig.arduinoConfig.addArduino" href="#arduinoXMLconfig.arduinoConfig.addArduino">addArduino</a></code></li>
+<li><code><a title="arduinoXMLconfig.arduinoConfig.addInputOutput" href="#arduinoXMLconfig.arduinoConfig.addInputOutput">addInputOutput</a></code></li>
+<li><code><a title="arduinoXMLconfig.arduinoConfig.createConfigFile" href="#arduinoXMLconfig.arduinoConfig.createConfigFile">createConfigFile</a></code></li>
+<li><code><a title="arduinoXMLconfig.arduinoConfig.getArduinoData" href="#arduinoXMLconfig.arduinoConfig.getArduinoData">getArduinoData</a></code></li>
+<li><code><a title="arduinoXMLconfig.arduinoConfig.getArduinoList" href="#arduinoXMLconfig.arduinoConfig.getArduinoList">getArduinoList</a></code></li>
+<li><code><a title="arduinoXMLconfig.arduinoConfig.getComponentActions" href="#arduinoXMLconfig.arduinoConfig.getComponentActions">getComponentActions</a></code></li>
+<li><code><a title="arduinoXMLconfig.arduinoConfig.getComponentAttribute" href="#arduinoXMLconfig.arduinoConfig.getComponentAttribute">getComponentAttribute</a></code></li>
+<li><code><a title="arduinoXMLconfig.arduinoConfig.getComponentData" href="#arduinoXMLconfig.arduinoConfig.getComponentData">getComponentData</a></code></li>
+<li><code><a title="arduinoXMLconfig.arduinoConfig.getComponentList" href="#arduinoXMLconfig.arduinoConfig.getComponentList">getComponentList</a></code></li>
+<li><code><a title="arduinoXMLconfig.arduinoConfig.loadConfigFile" href="#arduinoXMLconfig.arduinoConfig.loadConfigFile">loadConfigFile</a></code></li>
+<li><code><a title="arduinoXMLconfig.arduinoConfig.registerArduinoAttributeChangedCallback" href="#arduinoXMLconfig.arduinoConfig.registerArduinoAttributeChangedCallback">registerArduinoAttributeChangedCallback</a></code></li>
+<li><code><a title="arduinoXMLconfig.arduinoConfig.registerComponentAttributeChangedCallback" href="#arduinoXMLconfig.arduinoConfig.registerComponentAttributeChangedCallback">registerComponentAttributeChangedCallback</a></code></li>
+<li><code><a title="arduinoXMLconfig.arduinoConfig.registerFileLoadedStatusCallback" href="#arduinoXMLconfig.arduinoConfig.registerFileLoadedStatusCallback">registerFileLoadedStatusCallback</a></code></li>
+<li><code><a title="arduinoXMLconfig.arduinoConfig.removeArduino" href="#arduinoXMLconfig.arduinoConfig.removeArduino">removeArduino</a></code></li>
+<li><code><a title="arduinoXMLconfig.arduinoConfig.removeInputOutput" href="#arduinoXMLconfig.arduinoConfig.removeInputOutput">removeInputOutput</a></code></li>
+<li><code><a title="arduinoXMLconfig.arduinoConfig.saveToXMLfile" href="#arduinoXMLconfig.arduinoConfig.saveToXMLfile">saveToXMLfile</a></code></li>
+<li><code><a title="arduinoXMLconfig.arduinoConfig.updateArduinoAttribute" href="#arduinoXMLconfig.arduinoConfig.updateArduinoAttribute">updateArduinoAttribute</a></code></li>
+<li><code><a title="arduinoXMLconfig.arduinoConfig.updateArduinoData" href="#arduinoXMLconfig.arduinoConfig.updateArduinoData">updateArduinoData</a></code></li>
+<li><code><a title="arduinoXMLconfig.arduinoConfig.updateComponentActions" href="#arduinoXMLconfig.arduinoConfig.updateComponentActions">updateComponentActions</a></code></li>
+<li><code><a title="arduinoXMLconfig.arduinoConfig.updateComponentAttribute" href="#arduinoXMLconfig.arduinoConfig.updateComponentAttribute">updateComponentAttribute</a></code></li>
+<li><code><a title="arduinoXMLconfig.arduinoConfig.updateComponentData" href="#arduinoXMLconfig.arduinoConfig.updateComponentData">updateComponentData</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

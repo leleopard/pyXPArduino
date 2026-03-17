@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pyXPArduino Documentation</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; max-width: 800px; margin: 60px auto; padding: 0 20px; color: #333; }
+        h1 { border-bottom: 2px solid #007acc; padding-bottom: 10px; }
+        h2 { color: #555; margin-top: 40px; }
+        ul { line-height: 2; }
+        a { color: #007acc; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .badge { display: inline-block; background: #007acc; color: white; font-size: 11px; padding: 2px 7px; border-radius: 3px; margin-left: 8px; vertical-align: middle; }
+        .desc { color: #666; font-size: 0.92em; margin-left: 8px; }
+    </style>
+</head>
+<body>
+    <h1>pyXPArduino <span style="font-size:0.6em; color:#888;">v1.3</span></h1>
+    <p>Python/PyQt5 application that bridges Arduino microcontrollers with X-Plane flight simulator.
+    Configure physical cockpit hardware (switches, potentiometers, servos, rotary encoders, PWM) and
+    map them to X-Plane datarefs and commands via USB serial + UDP.</p>
+
+    <h2>Main Application</h2>
+    <ul>
+        <li><a href="pyXPArduino.html">pyXPArduino</a> <span class="desc">Main window, UI orchestration, config and thread lifecycle management</span></li>
+    </ul>
+
+    <h2>Core Library Modules</h2>
+    <ul>
+        <li><a href="Arduino.html">lib.Arduino</a> <span class="badge">Thread</span> <span class="desc">Per-board controller — input routing, output refresh, interpolation</span></li>
+        <li><a href="arduinoXMLconfig.html">lib.arduinoXMLconfig</a> <span class="desc">XML configuration CRUD, observer callbacks, pin constants</span></li>
+        <li><a href="arduinoSerial.html">lib.arduinoSerial</a> <span class="badge">Thread</span> <span class="desc">Low-level serial I/O, Arduino serial protocol, command queue</span></li>
+        <li><a href="XPrefData.html">lib.XPrefData</a> <span class="desc">X-Plane dataref and command reference file loader and filter helpers</span></li>
+        <li><a href="serialArduinoUtils.html">lib.serialArduinoUtils</a> <span class="desc">USB serial port discovery by Arduino serial number</span></li>
+    </ul>
+
+    <h2>Serial Protocol Reference</h2>
+    <p>See <a href="arduinoSerial.html">lib.arduinoSerial</a> module documentation for the full Arduino ↔ PC message format.</p>
+
+    <h2>Known Defects</h2>
+    <ul>
+        <li><strong>BUG-01</strong> — <a href="arduinoSerial.html#arduinoSerial.ArduinoSerial.quit"><code>ArduinoSerial.quit()</code></a>: <code>arduinoReady</code> not reset on disconnect (== instead of =)</li>
+        <li><strong>BUG-02</strong> — <a href="arduinoXMLconfig.html#arduinoXMLconfig.arduinoConfig.updateComponentData"><code>arduinoConfig.updateComponentData()</code></a>: malformed XPath causes IndexError</li>
+        <li><strong>BUG-03</strong> — <a href="Arduino.html#Arduino.Arduino.__refreshOutputs"><code>Arduino.__refreshOutputs()</code></a>: silent <code>except: pass</code> swallows serial failures</li>
+        <li><strong>BUG-04</strong> — Multiple bare <code>except:</code> clauses across modules suppress error context</li>
+    </ul>
+
+    <hr style="margin-top:60px; border:none; border-top:1px solid #ddd;">
+    <p style="color:#aaa; font-size:0.85em;">Generated with pdoc3 &mdash; pyXPArduino v1.3</p>
+</body>
+</html>
